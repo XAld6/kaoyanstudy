@@ -211,11 +211,18 @@ function App() {
     <main className="app">
       <aside className="side-rail" aria-label="主导航">
         <div className="mark">Z</div>
-        <button title="上传检测"><Upload size={20} /></button>
-        <button title="历史记录"><History size={20} /></button>
-        <button title="Agent工作流"><Workflow size={20} /></button>
+        <button
+          aria-label="上传检测"
+          title="上传检测"
+          onClick={() => inputRef.current?.click()}
+          disabled={uploading || backendOnline === "offline"}
+        >
+          <Upload size={20} />
+        </button>
+        <button aria-label="历史记录" title="历史记录"><History size={20} /></button>
+        <button aria-label="Agent工作流" title="Agent工作流"><Workflow size={20} /></button>
         <div className="rail-spacer" />
-        <button title="运行状态"><Activity size={20} /></button>
+        <button aria-label="运行状态" title="运行状态"><Activity size={20} /></button>
       </aside>
 
       <section className="console-shell">

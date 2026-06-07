@@ -87,6 +87,11 @@ h3 { margin-bottom: 0; font-size: 16px; }
   box-shadow: var(--shadow);
 }
 
+.side-rail button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .rail-spacer { flex: 1; }
 
 .console-shell {
