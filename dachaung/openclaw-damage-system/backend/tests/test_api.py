@@ -14,6 +14,14 @@ def make_crack_image() -> BytesIO:
     return buf
 
 
+def make_plain_image(size: tuple[int, int]) -> BytesIO:
+    image = Image.new("RGB", size, "#d8d1c5")
+    buf = BytesIO()
+    image.save(buf, format="PNG")
+    buf.seek(0)
+    return buf
+
+
 def test_health_endpoint_reports_service_ready(client: TestClient):
     response = client.get("/api/health")
 
@@ -129,4 +137,15 @@ def test_rejects_invalid_image_payloads(client: TestClient, tmp_path):
 
     assert response.status_code == 400
     assert "无法读取图片" in response.json()["detail"]
+    assert not any((tmp_path / "uploads").iterdir())
+
+
+def test_rejects_too_small_images(client: TestClient, tmp_path):
+    response = client.post(
+        "/api/detect",
+        files={"file": ("tiny.png", make_plain_image((32, 32)), "image/png")},
+    )
+
+    assert response.status_code == 400
+    assert "图片尺寸过小" in response.json()["detail"]
     assert not any((tmp_path / "uploads").iterdir())
