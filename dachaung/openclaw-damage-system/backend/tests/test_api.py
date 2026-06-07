@@ -119,3 +119,14 @@ def test_rejects_non_image_uploads(client: TestClient):
 
     assert response.status_code == 400
     assert "图片" in response.json()["detail"]
+
+
+def test_rejects_invalid_image_payloads(client: TestClient, tmp_path):
+    response = client.post(
+        "/api/detect",
+        files={"file": ("bad.png", BytesIO(b"not a real png"), "image/png")},
+    )
+
+    assert response.status_code == 400
+    assert "无法读取图片" in response.json()["detail"]
+    assert not any((tmp_path / "uploads").iterdir())
