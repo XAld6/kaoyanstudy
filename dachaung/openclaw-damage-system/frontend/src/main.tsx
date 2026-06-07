@@ -319,16 +319,16 @@ function App() {
 
           <section className="diagnosis-panel">
             {!active ? (
-              <div
+              <button
+                type="button"
                 className={`drop-zone ${canUpload ? "" : "disabled"}`}
                 onClick={openFilePicker}
-                role="button"
-                aria-disabled={!canUpload}
+                disabled={!canUpload}
               >
                 <FileImage size={42} />
                 <h2>上传一张巡检图片</h2>
                 <p>系统将自动完成图像质量检查、病害候选识别、风险判断、人工复核入口和报告生成。</p>
-              </div>
+              </button>
             ) : (
               <ResultView
                 active={active}
