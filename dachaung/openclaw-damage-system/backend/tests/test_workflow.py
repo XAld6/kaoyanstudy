@@ -60,3 +60,21 @@ def test_run_damage_workflow_routes_low_risk_results_to_auto_pass(monkeypatch, t
     assert result["confidence"] == 0.0
     assert len(result["workflow"]) == 6
     assert result["workflow"][-1]["agent"] == "ReportArchiveAgent"
+
+
+def test_run_damage_workflow_routes_high_risk_results_to_manual_review(monkeypatch, tmp_path):
+    def fake_analyze_image(image_path, annotated_path):
+        return {
+            "quality": {"readable": True},
+            "detections": [{"kind": "crack", "confidence": 0.8}],
+            "metrics": make_metrics(detection_count=8, avg_confidence=0.8),
+        }
+
+    monkeypatch.setattr(workflow_module, "analyze_image", fake_analyze_image)
+
+    result = run_damage_workflow(tmp_path / "source.png", tmp_path / "annotated.png")
+
+    assert result["risk_level"] == "高"
+    assert result["review_status"] == "待复核"
+    assert result["confidence"] == 0.8
+    assert "优先复核" in result["workflow"][3]["summary"]
