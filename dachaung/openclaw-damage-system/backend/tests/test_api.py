@@ -74,6 +74,15 @@ def test_review_endpoint_rejects_invalid_risk_level(client: TestClient):
     assert response.status_code == 422
 
 
+def test_review_endpoint_rejects_oversized_review_note(client: TestClient):
+    response = client.post(
+        "/api/records/1/review",
+        json={"status": "已复核", "risk_level": "中", "review_note": "x" * 801},
+    )
+
+    assert response.status_code == 422
+
+
 def test_report_endpoint_returns_pdf(client: TestClient):
     image = make_crack_image()
     detected = client.post(
