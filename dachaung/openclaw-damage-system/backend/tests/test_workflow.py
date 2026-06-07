@@ -1,4 +1,5 @@
-from app.workflow import assess_risk
+from app import workflow as workflow_module
+from app.workflow import assess_risk, run_damage_workflow
 
 
 def make_metrics(**overrides):
@@ -6,6 +7,8 @@ def make_metrics(**overrides):
         "detection_count": 0,
         "total_area_ratio": 0.0,
         "crack_count": 0,
+        "spalling_count": 0,
+        "stain_count": 0,
         "avg_confidence": 0.0,
     }
     metrics.update(overrides)
@@ -38,3 +41,22 @@ def test_assess_risk_returns_low_for_clean_readable_images():
 
     assert level == "低"
     assert "常规巡检" in reason
+
+
+def test_run_damage_workflow_routes_low_risk_results_to_auto_pass(monkeypatch, tmp_path):
+    def fake_analyze_image(image_path, annotated_path):
+        return {
+            "quality": {"readable": True},
+            "detections": [],
+            "metrics": make_metrics(),
+        }
+
+    monkeypatch.setattr(workflow_module, "analyze_image", fake_analyze_image)
+
+    result = run_damage_workflow(tmp_path / "source.png", tmp_path / "annotated.png")
+
+    assert result["risk_level"] == "低"
+    assert result["review_status"] == "自动通过"
+    assert result["confidence"] == 0.0
+    assert len(result["workflow"]) == 6
+    assert result["workflow"][-1]["agent"] == "ReportArchiveAgent"
