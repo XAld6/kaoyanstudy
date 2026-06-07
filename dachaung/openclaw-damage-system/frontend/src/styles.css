@@ -196,6 +196,12 @@ button, .download {
   cursor: wait;
 }
 
+.upload-banner:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .spin { animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -399,6 +405,11 @@ button, .download {
 .drop-zone {
   min-height: 610px;
   cursor: pointer;
+}
+
+.drop-zone.disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
 }
 
 .drop-zone svg { color: var(--blue); }

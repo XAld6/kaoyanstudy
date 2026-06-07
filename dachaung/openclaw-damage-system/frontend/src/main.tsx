@@ -111,6 +111,7 @@ function App() {
   const [error, setError] = useState("");
   const [reviewNote, setReviewNote] = useState("");
   const [reviewRisk, setReviewRisk] = useState<RiskLevel>("低");
+  const canUpload = !uploading && backendOnline !== "offline";
 
   const stats = useMemo(() => {
     const total = records.length;
@@ -155,6 +156,11 @@ function App() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "记录详情加载失败");
     }
+  }
+
+  function openFilePicker() {
+    if (!canUpload) return;
+    inputRef.current?.click();
   }
 
   async function onFile(file: File | null) {
@@ -232,8 +238,8 @@ function App() {
         <button
           aria-label="上传检测"
           title="上传检测"
-          onClick={() => inputRef.current?.click()}
-          disabled={uploading || backendOnline === "offline"}
+          onClick={openFilePicker}
+          disabled={!canUpload}
         >
           <Upload size={20} />
         </button>
@@ -263,18 +269,18 @@ function App() {
             <button className="ghost" onClick={refreshRecords}>
               <RefreshCw size={17} />刷新
             </button>
-            <button className="primary" onClick={() => inputRef.current?.click()} disabled={uploading || backendOnline === "offline"}>
+            <button className="primary" onClick={openFilePicker} disabled={!canUpload}>
               {uploading ? <Loader2 className="spin" size={18} /> : <Upload size={18} />}
               上传巡检图
             </button>
-            <input ref={inputRef} type="file" accept="image/*" onChange={(event) => onFile(event.target.files?.[0] ?? null)} />
+            <input ref={inputRef} type="file" accept="image/*" disabled={!canUpload} onChange={(event) => onFile(event.target.files?.[0] ?? null)} />
           </div>
         </header>
 
         {error && <div className="notice">{error}</div>}
 
         <section className="overview-grid">
-          <button className="upload-banner" onClick={() => inputRef.current?.click()} disabled={uploading || backendOnline === "offline"}>
+          <button className="upload-banner" onClick={openFilePicker} disabled={!canUpload}>
             <span>
               <strong>{uploading ? "正在执行AI诊断" : "上传巡检图片开始诊断"}</strong>
               <small>{backendOnline === "offline" ? "后端当前离线，请先启动服务再上传巡检图片" : uploading ? "6个OpenClaw兼容Agent正在依次完成质检、识别、量化、评估、复核路由和报告归档" : "支持桥梁、道路、隧道、构件表面巡检图，生成标注图与PDF报告"}</small>
@@ -313,7 +319,12 @@ function App() {
 
           <section className="diagnosis-panel">
             {!active ? (
-              <div className="drop-zone" onClick={() => inputRef.current?.click()}>
+              <div
+                className={`drop-zone ${canUpload ? "" : "disabled"}`}
+                onClick={openFilePicker}
+                role="button"
+                aria-disabled={!canUpload}
+              >
                 <FileImage size={42} />
                 <h2>上传一张巡检图片</h2>
                 <p>系统将自动完成图像质量检查、病害候选识别、风险判断、人工复核入口和报告生成。</p>
