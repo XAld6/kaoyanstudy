@@ -107,11 +107,13 @@ function App() {
   const [records, setRecords] = useState<RecordSummary[]>([]);
   const [active, setActive] = useState<RecordDetail | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [isDragging, setDragging] = useState(false);
   const [backendOnline, setBackendOnline] = useState<"unknown" | "online" | "offline">("unknown");
   const [error, setError] = useState("");
   const [reviewNote, setReviewNote] = useState("");
   const [reviewRisk, setReviewRisk] = useState<RiskLevel>("低");
   const canUpload = !uploading && backendOnline !== "offline";
+  const dropZoneClass = ["drop-zone", canUpload ? "" : "disabled", canUpload && isDragging ? "dragging" : ""].filter(Boolean).join(" ");
 
   const stats = useMemo(() => {
     const total = records.length;
@@ -164,8 +166,12 @@ function App() {
   }
 
   async function onFile(file: File | null) {
-    if (!file) return;
+    if (!file) {
+      setDragging(false);
+      return;
+    }
     if (file.size > MAX_UPLOAD_BYTES) {
+      setDragging(false);
       setError("上传图片不能超过 8MB，请压缩后再试。");
       if (inputRef.current) inputRef.current.value = "";
       return;
@@ -187,9 +193,31 @@ function App() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "检测失败");
     } finally {
+      setDragging(false);
       setUploading(false);
       if (inputRef.current) inputRef.current.value = "";
     }
+  }
+
+  function onDropZoneDragOver(event: React.DragEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    if (!canUpload) return;
+    event.dataTransfer.dropEffect = "copy";
+    setDragging(true);
+  }
+
+  function onDropZoneDragLeave(event: React.DragEvent<HTMLButtonElement>) {
+    const nextTarget = event.relatedTarget;
+    if (!(nextTarget instanceof Node) || !event.currentTarget.contains(nextTarget)) {
+      setDragging(false);
+    }
+  }
+
+  function onDropZoneDrop(event: React.DragEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    setDragging(false);
+    if (!canUpload) return;
+    void onFile(event.dataTransfer.files.item(0));
   }
 
   async function saveReview() {
@@ -321,8 +349,11 @@ function App() {
             {!active ? (
               <button
                 type="button"
-                className={`drop-zone ${canUpload ? "" : "disabled"}`}
+                className={dropZoneClass}
                 onClick={openFilePicker}
+                onDragOver={onDropZoneDragOver}
+                onDragLeave={onDropZoneDragLeave}
+                onDrop={onDropZoneDrop}
                 disabled={!canUpload}
               >
                 <FileImage size={42} />

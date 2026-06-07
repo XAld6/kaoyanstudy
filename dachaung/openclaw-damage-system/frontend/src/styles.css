@@ -413,11 +413,18 @@ button, .download {
 .drop-zone {
   min-height: 610px;
   cursor: pointer;
+  transition: border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
 }
 
 .drop-zone.disabled {
   opacity: 0.62;
   cursor: not-allowed;
+}
+
+.drop-zone.dragging {
+  border-color: #9bb6ff;
+  background: #eef7fb;
+  box-shadow: inset 0 0 0 2px rgba(49, 95, 221, 0.15);
 }
 
 .drop-zone svg { color: var(--blue); }
