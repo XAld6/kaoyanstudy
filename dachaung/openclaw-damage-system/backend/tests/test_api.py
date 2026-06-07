@@ -65,6 +65,15 @@ def test_review_endpoint_updates_status_and_note(client: TestClient):
     assert "持续观察" in body["review_note"]
 
 
+def test_review_endpoint_rejects_invalid_risk_level(client: TestClient):
+    response = client.post(
+        "/api/records/1/review",
+        json={"status": "已复核", "risk_level": "严重", "review_note": ""},
+    )
+
+    assert response.status_code == 422
+
+
 def test_report_endpoint_returns_pdf(client: TestClient):
     image = make_crack_image()
     detected = client.post(
