@@ -24,6 +24,20 @@ def test_health_endpoint_reports_service_ready(client: TestClient):
     assert body["service"] == "openclaw-damage-system"
 
 
+def test_cors_preflight_does_not_enable_credentials(client: TestClient):
+    response = client.options(
+        "/api/records",
+        headers={
+            "Origin": "http://127.0.0.1:5173",
+            "Access-Control-Request-Method": "GET",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "*"
+    assert "access-control-allow-credentials" not in response.headers
+
+
 def test_detection_creates_record_with_workflow_and_images(client: TestClient):
     image = make_crack_image()
     response = client.post(
