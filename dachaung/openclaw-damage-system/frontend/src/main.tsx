@@ -139,6 +139,24 @@ function App() {
     setReviewRisk(data.risk_level);
   }
 
+  async function refreshRecords() {
+    try {
+      await loadRecords(true);
+      setError("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "历史记录加载失败");
+    }
+  }
+
+  async function selectRecord(id: number) {
+    try {
+      await openRecord(id);
+      setError("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "记录详情加载失败");
+    }
+  }
+
   async function onFile(file: File | null) {
     if (!file) return;
     if (file.size > MAX_UPLOAD_BYTES) {
@@ -242,7 +260,7 @@ function App() {
             <span className="status-pill"><Microscope size={15} />OpenCV识别</span>
           </div>
           <div className="top-actions">
-            <button className="ghost" onClick={() => loadRecords(true)}>
+            <button className="ghost" onClick={refreshRecords}>
               <RefreshCw size={17} />刷新
             </button>
             <button className="primary" onClick={() => inputRef.current?.click()} disabled={uploading || backendOnline === "offline"}>
@@ -277,7 +295,7 @@ function App() {
             </div>
             <div className="record-list">
               {records.map((record) => (
-                <button key={record.id} className={`record-row ${active?.id === record.id ? "active" : ""}`} onClick={() => openRecord(record.id)}>
+                <button key={record.id} className={`record-row ${active?.id === record.id ? "active" : ""}`} onClick={() => selectRecord(record.id)}>
                   <span className={`risk-chip risk-${record.risk_level}`}>{record.risk_level}</span>
                   <span className="record-copy">
                     <strong>{record.filename}</strong>
