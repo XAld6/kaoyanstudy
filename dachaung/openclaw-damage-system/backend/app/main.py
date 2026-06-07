@@ -14,7 +14,7 @@ from app.schemas import DetectionRecord, RecordSummary, ReviewRequest
 from app.storage import OUTPUT_DIR, UPLOAD_DIR, get_record, init_db, insert_record, list_records, update_review
 from app.workflow import run_damage_workflow
 
-app = FastAPI(title="鏅虹埅璇嗘崯 OpenClaw Damage System", version="1.0.0")
+app = FastAPI(title="智爪识损 OpenClaw Damage System", version="1.0.0")
 MAX_UPLOAD_BYTES = 8 * 1024 * 1024
 
 app.add_middleware(

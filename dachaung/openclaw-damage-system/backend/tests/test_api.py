@@ -18,6 +18,7 @@ def test_health_endpoint_reports_service_ready(client: TestClient):
     response = client.get("/api/health")
 
     assert response.status_code == 200
+    assert client.app.title == "智爪识损 OpenClaw Damage System"
     body = response.json()
     assert body["status"] == "ok"
     assert body["service"] == "openclaw-damage-system"
