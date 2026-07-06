@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}校园外墙巡检系统{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">校园外墙巡检</a>
+    <nav>
+      <a href="/">识别首页</a>
+      <a href="/records">历史记录</a>
+      <a href="/tasks">巡检任务</a>
+      <a href="/work-orders">维修工单</a>
+    </nav>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

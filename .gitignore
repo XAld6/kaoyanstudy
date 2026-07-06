@@ -1,0 +1,107 @@
+# D:\xm 工作区级忽略规则
+# 说明：此文件用于把本工作区中的依赖、缓存、构建产物、日志和本地数据排除在 Git 之外。
+# 不影响各子项目已有 .gitignore；如果子项目单独建仓，也建议保留对应项目内 .gitignore。
+
+# OS / 编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 环境变量 / 本地配置 / 密钥
+.env
+.env.*
+*.local
+*.local.json
+llm_config.local.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+ENV/
+env/
+marker312/
+*.egg-info/
+build/
+dist/
+
+# Node / 前端
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+coverage/
+*.tsbuildinfo
+.next/
+.nuxt/
+.vite/
+.turbo/
+.wrangler/
+
+# 日志 / 临时文件
+logs/
+*.log
+*.err.log
+*.out.log
+*.tmp
+*.temp
+*.bak
+.cache/
+tmp/
+temp/
+
+# 运行时目录
+.runtime/
+.chrome-desktop/
+.codex-playwright/
+
+# 数据库和运行生成数据
+*.db
+*.sqlite
+*.sqlite3
+uploads/
+outputs/
+results/
+runs/
+
+# 模型权重 / 大文件产物
+*.pt
+*.onnx
+*.engine
+*.zip
+*.rar
+*.7z
+*.tar.gz
+
+# LaTeX / PDF 编译中间产物
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fls
+*.fdb_latexmk
+*.lof
+*.lot
+*.out
+*.synctex.gz
+*.toc
+
+# 批量渲染、OCR 和预览产物
+preview/
+render/
+*_render/
+*_preview/
+ocr/
+final_render_check/

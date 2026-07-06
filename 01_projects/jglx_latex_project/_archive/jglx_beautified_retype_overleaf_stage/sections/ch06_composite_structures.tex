@@ -1,0 +1,355 @@
+\chapter{组合结构}
+
+\begin{notecard}
+组合结构同时含有受弯杆、桁架杆或链杆。求解时先把结构拆成“梁段、刚架段、二力杆段”，能单独平衡的部分先算；链杆只承受轴力，受弯杆则可能同时有轴力、剪力和弯矩，不能把梁式杆漏算成纯桁架杆。
+\end{notecard}
+
+\section{一、轴力判断与受弯杆内力}
+
+\begin{problemcard}{2-33 杆 \(AB\) 的轴力}
+图示结构中杆 \(AB\) 的轴力为多少？
+\[
+  \text{选项：}\quad
+  \mathrm{A.}\ 0,\quad
+  \mathrm{B.}\ -0.894F_p,\quad
+  \mathrm{C.}\ -0.5F_p,\quad
+  \mathrm{D.}\ -F_p.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \coordinate (L) at (0,0);
+  \coordinate (P) at (1.4,0);
+  \coordinate (A) at (2.8,0);
+  \coordinate (R) at (4.2,0);
+  \coordinate (S) at (5.6,0);
+  \coordinate (T) at (2.8,1.4);
+  \coordinate (B) at (2.8,-1.4);
+  \draw[member] (L)--(S) (P)--(T)--(R) (P)--(B)--(R) (A)--(B);
+  \foreach \p in {L,P,A,R,S,T,B} \node[smallpin] at (\p) {};
+  \wallroller{0}{0}
+  \roller{0}{0}
+  \roller{5.6}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (T)+(0,0.75)--(T)+(0,0.05) node[midway,right] {\(F_p\)};
+  \node[right] at (A) {\(A\)};
+  \node[right] at (B) {\(B\)};
+  \draw[<->] (0,-1.85)--(1.4,-1.85) node[midway,below] {\(a\)};
+  \draw[<->] (1.4,-1.85)--(2.8,-1.85) node[midway,below] {\(a\)};
+  \draw[<->] (2.8,-1.85)--(4.2,-1.85) node[midway,below] {\(a\)};
+  \draw[<->] (4.2,-1.85)--(5.6,-1.85) node[midway,below] {\(a\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：C，即 \(F_{NAB}=-0.5F_p\)。}
+
+本题容易错在把梁式水平杆当成普通桁架杆。由整体对称性，左右支座竖向反力均为
+\[
+  F_{Ly}=F_{Sy}=\frac12F_p.
+\]
+上部三角形节点处两根斜杆方向对称，设斜杆轴力为 \(F_N\)，则
+\[
+  2F_N\sin45^\circ=F_p,\qquad F_N=\frac{F_p}{\sqrt2}.
+\]
+将中部 \(A\) 点附近隔离，竖向杆 \(AB\) 需平衡相邻斜杆传来的竖向分量，故
+\[
+  F_{NAB}=-F_N\sin45^\circ=-\frac12F_p.
+\]
+负号表示 \(AB\) 杆受压。
+\end{solutioncard}
+
+\begin{problemcard}{2-34 受弯杆弯矩图与链杆轴力}
+对图示结构，作受弯杆件的弯矩图，并算出各链杆的轴力，标注在杆件旁边。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.76,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (1.4,1.4);
+  \coordinate (C) at (2.8,1.4);
+  \coordinate (D) at (4.2,0);
+  \coordinate (E) at (1.4,2.8);
+  \coordinate (F) at (2.8,2.8);
+  \coordinate (G) at (1.4,4.2);
+  \coordinate (H) at (2.8,4.2);
+  \draw[member] (A)--(B)--(C)--(D) (B)--(E)--(G)--(H)--(F)--(C) (E)--(F) (B)--(F);
+  \foreach \p in {A,B,C,D,E,F,G,H} \node[smallpin] at (\p) {};
+  \wallroller{0}{0}
+  \roller{0}{0}
+  \roller{4.2}{0}
+  \foreach \x in {1.55,1.85,...,2.65}
+    \draw[Brand,-{Stealth[length=1.3mm]}] (\x,4.75)--(\x,4.25);
+  \draw[Brand] (1.4,4.75)--(2.8,4.75);
+  \node[above] at (2.1,4.75) {\(q\)};
+  \draw[<->] (0,-0.45)--(1.4,-0.45) node[midway,below] {\(a\)};
+  \draw[<->] (1.4,-0.45)--(2.8,-0.45) node[midway,below] {\(a\)};
+  \draw[<->] (2.8,-0.45)--(4.2,-0.45) node[midway,below] {\(a\)};
+  \draw[<->] (4.55,0)--(4.55,1.4) node[midway,right] {\(a\)};
+  \draw[<->] (4.55,1.4)--(4.55,2.8) node[midway,right] {\(a\)};
+  \draw[<->] (4.55,2.8)--(4.55,4.2) node[midway,right] {\(a\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+先取顶层受弯杆，均布荷载合力为 \(qa\)，由对称性传到两侧竖杆的竖向作用为 \(qa/2\)。顶梁弯矩图为简支梁抛物线：
+\[
+  M_{\max}=\frac18qa^2.
+\]
+中层水平杆无横向荷载，且两端铰结传力，弯矩为零。两根竖向受弯杆受侧向链杆作用，其端部控制弯矩为
+\[
+  M=-\frac12qa.
+\]
+底部两根斜链杆与水平成 \(45^\circ\)，由节点竖向平衡得其轴力大小为
+\[
+  F_N=\frac{qa/2}{\sin45^\circ}=\frac{\sqrt2}{2}qa.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.76,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(1.4,1.4)--(2.8,1.4)--(4.2,0) (1.4,1.4)--(1.4,4.2)--(2.8,4.2)--(2.8,1.4) (1.4,2.8)--(2.8,2.8);
+    \draw[Brand,thick] (1.4,4.45) parabola bend (2.1,4.85) (2.8,4.45);
+    \node[above] at (2.1,4.85) {\(qa^2/8\)};
+    \node[left] at (1.15,3.5) {\(-qa/2\)};
+    \node[right] at (3.05,3.5) {\(-qa/2\)};
+    \node[above] at (2.1,2.8) {\(0\)};
+    \node[below] at (2.1,-0.35) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(6,0)}]
+    \draw[member] (0,0)--(1.4,1.4)--(2.8,1.4)--(4.2,0);
+    \node[above left] at (0.7,0.7) {\(\frac{\sqrt2}{2}qa\)};
+    \node[above right] at (3.5,0.7) {\(\frac{\sqrt2}{2}qa\)};
+    \node[above] at (2.1,1.4) {\(0\)};
+    \node[below] at (2.1,-0.35) {链杆轴力};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{2-35 弯矩图与杆 1 轴力}
+对图示结构作弯矩图，并求杆件 1 的轴力。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \draw[member] (0,0)--(2,0)--(4,0)--(4,2)--(2,2)--(2,0);
+  \draw[member] (0,0)--(4,2);
+  \wallroller{0}{0}
+  \roller{4}{0}
+  \foreach \x in {0.25,0.55,...,3.75}
+    \draw[Brand,-{Stealth[length=1.2mm]}] (\x,2.55)--(\x,2.05);
+  \draw[Brand] (0,2.55)--(4,2.55);
+  \node[above] at (2,2.55) {\(q\)};
+  \node[right] at (2,1.0) {1};
+  \draw[<->] (0,-0.45)--(2,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (2,-0.45)--(4,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (4.4,0)--(4.4,2) node[midway,right] {\(l\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{\(F_{N1}=-2ql\)。}
+
+顶梁均布荷载合力为 \(2ql\)，由组合结构传至中竖杆。杆 1 为竖向链杆，只传轴力；由节点竖向平衡可得
+\[
+  F_{N1}+2ql=0,\qquad F_{N1}=-2ql.
+\]
+受弯杆的弯矩图控制值按答案图整理为
+\[
+  M_{\text{左端}}=2ql^2,\qquad M_{\text{顶梁中点}}=\frac12ql^2.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \draw[member] (0,0)--(2,0)--(4,0)--(4,2)--(2,2)--(2,0) (0,0)--(4,2);
+  \draw[Brand,thick] (0,0.9)--(2,0)--(4,0) (2,2.4) parabola bend (3,2.75) (4,2.4);
+  \node[left] at (0,0.9) {\(2ql^2\)};
+  \node[above] at (3,2.75) {\(ql^2/2\)};
+  \node[right] at (2,1.0) {\(F_{N1}=-2ql\)};
+  \node[below] at (2,-0.35) {\(M\) 图与杆 1 轴力};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\section{二、内力图综合}
+
+\begin{problemcard}{2-36 弯矩图、剪力图与轴力图}
+试作图示结构的弯矩图、剪力图、轴力图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.75,>=Stealth]
+  \draw[member] (0,0)--(0,3)--(3,3)--(3,0);
+  \draw[member] (0,0)--(3,3);
+  \wallroller{0}{0}
+  \wallroller{0}{3}
+  \roller{0}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (3,4.0)--(3,3.1) node[midway,right] {\(20\,\mathrm{kN}\)};
+  \foreach \x in {0.35,0.75,...,2.65}
+    \draw[Brand,-{Stealth[length=1.2mm]}] (\x,3.55)--(\x,3.05);
+  \draw[Brand] (0.2,3.55)--(2.8,3.55);
+  \node[above] at (1.5,3.55) {\(20\,\mathrm{kN/m}\)};
+  \draw[<->] (0,-0.45)--(3,-0.45) node[midway,below] {\(4m+2m\)};
+  \draw[<->] (3.4,0)--(3.4,1.5) node[midway,right] {\(3m\)};
+  \draw[<->] (3.4,1.5)--(3.4,3) node[midway,right] {\(3m\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+按答案图，弯矩、剪力和轴力主要控制值为：
+\[
+  M:\ 40,\ 140\quad(\mathrm{kN\cdot m});
+\]
+\[
+  F_Q:\ \frac{140}{3},\ 30,\ 50,\ 20\quad(\mathrm{kN});
+\]
+\[
+  F_N:\ 30,\ \frac{280}{3},\ \frac{350}{3}\quad(\mathrm{kN}).
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(0,3)--(3,3)--(3,0) (0,0)--(3,3);
+    \draw[Brand,thick] (0.25,0)--(0.25,3)--(1.6,2.55)--(3.2,3);
+    \node[above] at (1.6,2.55) {\(140\)};
+    \node[above] at (2.4,3.22) {\(40\)};
+    \node[below] at (1.5,-0.35) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(5.2,0)}]
+    \draw[member] (0,0)--(0,3)--(3,3)--(3,0) (0,0)--(3,3);
+    \node[left] at (0,2.2) {\(140/3\)};
+    \node[above] at (1.5,3) {\(30\)};
+    \node[right] at (3,2.2) {\(20\)};
+    \node[below] at (1.5,-0.35) {\(F_Q,F_N\) 控制值};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+检查时应把斜链杆作为二力杆处理，受弯杆则按梁段分别作 \(M,Q,N\) 图。
+\end{solutioncard}
+
+\begin{problemcard}{2-37 作弯矩图}
+作图示组合结构的弯矩图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (4,0);
+  \coordinate (D) at (1,0.25);
+  \coordinate (E) at (1,1.7);
+  \coordinate (G) at (1,3);
+  \coordinate (F) at (2.6,3);
+  \coordinate (C) at (2.6,0.5);
+  \draw[member] (A)--(B) (D)--(G)--(F) (D)--(E)--(F) (E)--(C) (G)--(D);
+  \foreach \p in {A,B,D,E,G,F,C} \node[smallpin] at (\p) {};
+  \roller{0}{0}
+  \roller{4}{0}
+  \draw[Brand,->,thick] (0.7,1.8) arc[start angle=120,end angle=-240,radius=0.35];
+  \node[left] at (0.55,1.7) {\(F_pl\)};
+  \node[below] at (A) {\(A\)};
+  \node[below] at (B) {\(B\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+答案弯矩图的主要控制值为底梁跨中下侧
+\[
+  M=\frac{2F_pl}{3}.
+\]
+上部桁架链杆只传轴力，弯矩图仅画在受弯梁杆上。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \draw[member] (0,0)--(4,0) (1,0.25)--(1,3)--(2.6,3) (1,1.7)--(2.6,3) (1,1.7)--(2.6,0.5);
+  \draw[Brand,thick] (0,0)--(2,-0.65)--(4,0);
+  \node[below] at (2,-0.65) {\(\frac{2F_pl}{3}\)};
+  \node[below] at (2,-1.05) {\(M\) 图};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{2-38 作弯矩图}
+作图示结构的弯矩图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \draw[member] (0,0)--(0,3)--(2,3)--(4,3)--(4,0);
+  \draw[member] (0,0)--(2,3) (0,1.4)--(2,3) (0,0)--(4,3) (4,0)--(4.8,-0.4);
+  \wallroller{0}{0}
+  \fixedbase{4}{0}
+  \node[smallpin] at (0,0) {};
+  \node[smallpin] at (0,1.4) {};
+  \node[smallpin] at (0,3) {};
+  \node[smallpin] at (2,3) {};
+  \node[smallpin] at (4,3) {};
+  \draw[<->] (0.3,1.4)--(1.3,2.3) node[midway,right] {\(4\)};
+  \draw[<->] (0.3,0)--(1.6,2.0) node[midway,below] {\(24\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+答案图中弯矩控制值为
+\[
+  4,\qquad 24,\qquad 32,\qquad 48\quad(\mathrm{kN\cdot m}).
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \draw[member] (0,0)--(0,3)--(2,3)--(4,3)--(4,0);
+  \draw[Brand,thick] (0.2,0)--(0.8,1.4)--(2,2.35)--(4,3.45)--(4.65,0);
+  \node[left] at (0.8,1.4) {\(24\)};
+  \node[above] at (2,2.35) {\(32\)};
+  \node[right] at (4.65,0) {\(48\)};
+  \node[below] at (2,-0.35) {\(M\) 图};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{2-39 作弯矩图并求桁架杆轴力}
+作图示结构的弯矩图，并求桁架杆件的轴力。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (C) at (0,1.5);
+  \coordinate (D) at (0,3);
+  \coordinate (B) at (2,3.1);
+  \draw[member] (A)--(D)--(B) (A)--(B) (C)--(B);
+  \foreach \p in {A,C,D,B} \node[smallpin] at (\p) {};
+  \wallroller{0}{0}
+  \roller{2}{3.1}
+  \draw[Brand,->,thick] (0.05,0.35) arc[start angle=180,end angle=-120,radius=0.33];
+  \node[left] at (0,0.4) {\(2F_pl\)};
+  \draw[Brand,->,thick] (0.05,2.7) arc[start angle=180,end angle=-120,radius=0.33];
+  \node[left] at (0,2.7) {\(F_pl\)};
+  \node[below] at (A) {\(A\)};
+  \node[right] at (B) {\(B\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+答案弯矩图如图示，斜向 \(AB\) 杆所在桁架杆轴力为零：
+\[
+  F_{N,AB}=0.
+\]
+底部受弯杆端部控制力偶为 \(2F_pl\)，上端控制力偶为 \(F_pl\)。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \draw[member] (0,0)--(0,3)--(2,3.1) (0,0)--(2,3.1) (0,1.5)--(2,3.1);
+  \draw[Brand,thick] (0.32,0)--(0.32,3)--(2,3.1);
+  \node[left] at (0.32,0.5) {\(2F_pl\)};
+  \node[left] at (0.32,2.5) {\(F_pl\)};
+  \node[right] at (1.25,2.05) {\(0\)};
+  \node[below] at (1,-0.35) {\(M\) 图};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{notecard}
+第 6 次作业讲解笔记补充：组合结构的关键是“谁能弯、谁只能拉压”。链杆、桁架杆和两端铰接无横向荷载的杆只传轴力；连续梁段和刚接杆件必须画弯矩图。作图时先把二力杆替换为节点力，再对受弯杆列平衡。
+\end{notecard}

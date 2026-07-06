@@ -1,0 +1,948 @@
+\chapter{高等数学：二重积分}
+
+\section{Riemann 和、对称性与区域重心}
+
+\begin{problemblock}
+\textbf{例1.} 已知
+\[
+\lim_{n\to\infty}\sum_{i=1}^n\sum_{j=1}^n
+\frac{4}{(2n+2i-1)(2n+2j-1)}=k
+\]
+（\(k\) 为常数），则下列说法中错误的是（\quad）
+
+A. \(\displaystyle \lim_{n\to\infty}\sum_{i=1}^n\sum_{j=1}^n
+\frac1{(n+i)(n+j)}=k\)
+
+B. \(\displaystyle \lim_{n\to\infty}\sum_{i=1}^{2n}\sum_{j=1}^{2n}
+\frac1{(2n+i)(2n+j)}=k\)
+
+C. \(\displaystyle \lim_{n\to\infty}\sum_{i=1}^n\sum_{j=1}^{2026n}
+\frac1{(n+i)(2026n+j)}=k\)
+
+D. \(\displaystyle \lim_{n\to\infty}\sum_{i=1}^{2026n}\sum_{j=1}^n
+\frac1{(n+2026i)(n+j)}=\frac{k}{2026}\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这类双重和本质是两个一维和的乘积。先识别每个因子对应的对数极限。}
+原式可写成
+\[
+\left[\sum_{i=1}^n\frac{2}{2n+2i-1}\right]^2.
+\]
+它对应
+\[
+\int_0^1\frac{dx}{1+x}=\ln2,
+\]
+所以
+\[
+k=(\ln2)^2.
+\]
+A 中
+\[
+\sum_{i=1}^n\frac1{n+i}\to\ln2,
+\]
+故极限为 \(k\)，A 正确。
+
+B 中
+\[
+\sum_{i=1}^{2n}\frac1{2n+i}\to\ln2,
+\]
+故极限也为 \(k\)，B 正确。
+
+C 中
+\[
+\sum_{i=1}^n\frac1{n+i}\to\ln2,\qquad
+\sum_{j=1}^{2026n}\frac1{2026n+j}\to\ln2,
+\]
+故极限仍为 \(k\)，C 正确。
+
+D 中第一因子为
+\[
+\sum_{i=1}^{2026n}\frac1{n+2026i}
+\to
+\int_0^{2026}\frac{dt}{1+2026t}
+=\frac1{2026}\ln(1+2026^2),
+\]
+并非 \(\frac1{2026}\ln2\)。因此 D 错误。
+\answer{D}
+\examnote{双重和若可分离，先拆成两个一维 Riemann 和；注意分母中 \(2026i\) 与 \(2026n+i\) 的差别。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例2.} 设函数 \(f(x,y)\) 在区域
+\[
+D=\{(x,y)\mid 0\le x\le1,\ 0\le y\le1\}
+\]
+上连续，且 \(f(x,y)=f(y,x)\)，则
+\[
+\iint_D f(x,y)\,dxdy=(\quad)
+\]
+\begin{enumerate}[label=\Alph*., leftmargin=2.2em]
+\item \(\displaystyle 2\lim_{n\to\infty}\sum_{i=1}^n\sum_{j=n+1-i}^n
+f\left(\frac in,\frac jn\right)\frac1{n^2}\)
+\item \(\displaystyle \frac12\lim_{n\to\infty}\sum_{i=1}^n\sum_{j=1}^n
+f\left(\frac in,\frac jn\right)\frac1{n^2}\)
+\item \(\displaystyle 2\lim_{n\to\infty}\sum_{i=1}^{2n}\sum_{j=1}^{2n+1-i}
+f\left(\frac i{2n},\frac j{2n}\right)\frac1{n^2}\)
+\item \(\displaystyle \frac12\lim_{n\to\infty}\sum_{i=1}^{2n}\sum_{j=1}^{i}
+f\left(\frac i{2n},\frac j{2n}\right)\frac1{n^2}\)
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{条件 \(f(x,y)=f(y,x)\) 说明正方形关于直线 \(y=x\) 的两个三角形积分相等。}
+在 \(2n\times2n\) 网格下，单个小矩形面积为
+\[
+\frac1{(2n)^2}=\frac1{4n^2}.
+\]
+选项 D 中的和覆盖三角形
+\[
+0\le y\le x\le1,
+\]
+但权重是 \(1/n^2=4\cdot 1/(2n)^2\)。因此
+\[
+\lim_{n\to\infty}\sum_{i=1}^{2n}\sum_{j=1}^{i}
+f\left(\frac i{2n},\frac j{2n}\right)\frac1{n^2}
+=4\iint_{0\le y\le x\le1}f(x,y)\,dxdy.
+\]
+再乘以 \(\frac12\)，得
+\[
+2\iint_{0\le y\le x\le1}f(x,y)\,dxdy.
+\]
+由于 \(f(x,y)=f(y,x)\)，该值正好等于整个正方形上的积分。
+\answer{D}
+\examnote{对称函数在正方形上下两个三角形上的积分相等，但网格权重必须同步检查。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例3.} 设 \(D\) 是 \(xOy\) 平面上以 \((1,1),(-1,1),(-1,-1)\) 为顶点的三角形区域，\(D_1\) 是 \(D\) 在第一象限的部分，则
+\[
+\iint_D\bigl(xy+\cos x\sin y\bigr)\,dxdy=(\quad)
+\]
+
+A. \(\displaystyle 2\iint_{D_1}\cos x\sin y\,dxdy\)
+\quad
+B. \(\displaystyle 2\iint_{D_1}xy\,dxdy\)
+
+C. \(\displaystyle 4\iint_{D_1}(xy+\cos x\sin y)\,dxdy\)
+\quad
+D. \(0\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{区域 \(D\) 可表示为 \(-1\le x\le1,\ x\le y\le1\)。直接利用奇偶性和第一象限部分比较。}
+先看 \(xy\) 项：
+\[
+\iint_D xy\,dxdy
+=\int_{-1}^1x\left(\int_x^1y\,dy\right)dx
+=\int_{-1}^1\frac{x(1-x^2)}2\,dx=0.
+\]
+再看
+\[
+\iint_D\cos x\sin y\,dxdy
+=\int_{-1}^1\cos x\left(\int_x^1\sin y\,dy\right)dx.
+\]
+而 \(D_1=\{(x,y)\mid 0\le x\le y\le1\}\)。同样计算可知
+\[
+\iint_D\cos x\sin y\,dxdy
+=2\iint_{D_1}\cos x\sin y\,dxdy.
+\]
+故原积分等于选项 A。
+\answer{A}
+\examnote{区域不一定整体关于坐标轴对称，必要时直接写出积分限验证奇偶项是否消失。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例4.} 设
+\[
+D=\{(x,y)\mid 2(x-1)^2+3(y-2)^2\le6\},
+\]
+求
+\[
+\iint_D(x+y)\,dxdy.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{椭圆关于中心 \((1,2)\) 对称，线性函数在对称区域上的积分等于中心函数值乘面积。}
+区域可写为
+\[
+\frac{(x-1)^2}{3}+\frac{(y-2)^2}{2}\le1.
+\]
+椭圆中心为 \((1,2)\)，面积为
+\[
+S=\pi\sqrt3\sqrt2=\pi\sqrt6.
+\]
+由中心对称性，
+\[
+\iint_Dx\,dxdy=1\cdot S,\qquad
+\iint_Dy\,dxdy=2\cdot S.
+\]
+所以
+\[
+\iint_D(x+y)\,dxdy=3S=3\pi\sqrt6.
+\]
+\answer{\(3\pi\sqrt6\)}
+\examnote{对称区域上线性函数积分：\(\iint_D(ax+by+c)= [a x_c+b y_c+c]\,S_D\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例5.} 计算
+\[
+\iint_D(x+y)\,dxdy,
+\qquad
+D=\{(x,y)\mid x^2+y^2\le x+y+1\}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{配方后得到圆盘，仍用中心乘面积。}
+配方：
+\[
+x^2-x+y^2-y\le1
+\]
+即
+\[
+\left(x-\frac12\right)^2+\left(y-\frac12\right)^2\le\frac32.
+\]
+圆心为 \((1/2,1/2)\)，半径为 \(\sqrt{3/2}\)，面积为
+\[
+S=\frac32\pi.
+\]
+在圆心处
+\[
+x+y=1.
+\]
+故
+\[
+\iint_D(x+y)\,dxdy=1\cdot S=\frac{3\pi}{2}.
+\]
+\answer{\(\displaystyle \frac{3\pi}{2}\)}
+\examnote{二次区域先配方；若被积函数是线性的，中心对称能直接给答案。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例6.} 设 \(f(x)\) 为连续奇函数，区域
+\[
+D=\{(x,y)\mid (x+1)^2+(y+1)^2\le1\},
+\]
+则（\quad）
+
+A. \(\displaystyle \iint_D f(x+y)\,dxdy=0\)
+\quad
+B. \(\displaystyle \iint_D f(x-y)\,dxdy=0\)
+
+C. \(\displaystyle \iint_D f(x^2y)\,dxdy=0\)
+\quad
+D. \(\displaystyle \iint_D f(xy^2)\,dxdy=0\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{圆盘中心在 \((-1,-1)\)，但它关于直线 \(x=y\) 对称。只有 \(x-y\) 在交换 \(x,y\) 时变号。}
+区域 \(D\) 满足：若 \((x,y)\in D\)，则 \((y,x)\in D\)。在变换
+\[
+(x,y)\mapsto(y,x)
+\]
+下，
+\[
+x-y\mapsto y-x=-(x-y).
+\]
+由于 \(f\) 是奇函数，
+\[
+f(y-x)=-f(x-y).
+\]
+区域和面积元不变，因此
+\[
+\iint_D f(x-y)\,dxdy
+=-\iint_D f(x-y)\,dxdy,
+\]
+故该积分为 \(0\)。
+\answer{B}
+\examnote{判断“任意奇函数积分为零”，关键是找到保持区域不变且使函数自变量变号的变换。}
+\end{solutionblock}
+
+\section{换序、变量替换与证明}
+
+\begin{problemblock}
+\textbf{例7.} 计算
+\[
+\int_0^1dy\int_y^1
+\left(\frac{e^y}{1+x^2}+\frac{e^y}{1+y^2}\right)dx.
+\]
+\begin{enumerate}[label=\Alph*., leftmargin=2.2em]
+\item \(\displaystyle \frac{\pi(e-1)}4\)
+\item \(\displaystyle \frac{\pi e}{4}\)
+\item \(\displaystyle \frac{\pi(e-1)}2\)
+\item \(\displaystyle \frac{\pi e}{2}\)
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先严格按原图题面计算。原图中第二项也是 \(e^y/(1+y^2)\)，若把它误看或校正为 \(e^x/(1+y^2)\)，答案会变成 A。}
+严格按原图题面，积分区域为
+\[
+0\le y\le x\le1.
+\]
+原积分为
+\[
+\int_0^1e^y\left[
+\int_y^1\frac{dx}{1+x^2}
++\int_y^1\frac{dx}{1+y^2}
+\right]dy.
+\]
+即
+\[
+\int_0^1e^y\left[
+\frac\pi4-\arctan y+\frac{1-y}{1+y^2}
+\right]dy.
+\]
+对第一项分部积分：
+\[
+\int_0^1e^y\left(\frac\pi4-\arctan y\right)dy
+=-\frac\pi4+\int_0^1\frac{e^y}{1+y^2}\,dy.
+\]
+所以原题面对应的真实积分值为
+\[
+I=-\frac\pi4+\int_0^1\frac{(2-y)e^y}{1+y^2}\,dy
+\approx1.093560681.
+\]
+而四个选项的数值分别约为
+\[
+1.3495,\quad 2.1349,\quad 2.6991,\quad 4.2699,
+\]
+均不等于该值。因此严格按原印刷题面，四个选项无正确项。
+
+若将第二项按命题意图校正为
+\[
+\frac{e^x}{1+y^2},
+\]
+则令
+\[
+h(x,y)=\frac{e^y}{1+x^2},
+\]
+被积函数变为 \(h(x,y)+h(y,x)\)。三角形
+\[
+0\le y\le x\le1
+\]
+与其关于直线 \(y=x\) 的对称三角形合成单位正方形，于是校正后的积分为
+\[
+\iint_{[0,1]^2}\frac{e^y}{1+x^2}\,dxdy
+=\int_0^1e^y\,dy\int_0^1\frac{dx}{1+x^2}
+=\frac{\pi(e-1)}4.
+\]
+\answer{严格按原印刷选项：无正确项；若将第二项校正为 \(\dfrac{e^x}{1+y^2}\)，则选 A。}
+\examnote{对称扩展法要求被积函数确为 \(h(x,y)+h(y,x)\)；本题原图第二项指数会改变答案，必须先核准题面。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例8.} 计算
+\[
+\iint_D\frac{\sin\sqrt{y^2-xy}}{y}\,dxdy,
+\]
+其中 \(D\) 是由直线 \(y=x\)、直线 \(y=1\) 和 \(y\) 轴围成的平面区域。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{区域为 \(0\le x\le y\le1\)。根号中 \(y^2-xy=y(y-x)\)，令 \(u=\sqrt{y^2-xy}\) 可化简。}
+区域写为
+\[
+0\le y\le1,\qquad 0\le x\le y.
+\]
+令
+\[
+u=y,\qquad v=\sqrt{y^2-xy}.
+\]
+则
+\[
+y=u,\qquad x=u-\frac{v^2}{u}.
+\]
+当 \(0\le x\le y\le1\) 时，
+\[
+0\le v\le u\le1.
+\]
+Jacobian 为
+\[
+\left|\frac{\partial(x,y)}{\partial(u,v)}\right|
+=\frac{2v}{u}.
+\]
+原积分变为
+\[
+\int_0^1\int_0^u \frac{\sin v}{u}\cdot\frac{2v}{u}\,dvdu.
+\]
+换序：
+\[
+\int_0^1 2v\sin v\int_v^1\frac{du}{u^2}\,dv
+=\int_0^1 2v\sin v\left(\frac1v-1\right)dv.
+\]
+即
+\[
+2\int_0^1(1-v)\sin v\,dv
+=2(1-\sin1).
+\]
+\answer{\(\displaystyle 2(1-\sin1)\)}
+\examnote{根式 \(\sqrt{y(y-x)}\) 与区域 \(0\le x\le y\) 匹配时，可令新变量为该根式。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例9.} 设
+\[
+f(t)=\int_t^{2t}dx\int_x^t e^{(x-y+1)^2}\,dy,
+\]
+则
+\[
+\lim_{t\to0^+}\frac{f(t)}{t^2}=(\quad)
+\]
+
+A. \(\dfrac e2\)\qquad B. \(-\dfrac e2\)\qquad C. \(2e\)\qquad D. \(-2e\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{积分区域随 \(t\) 缩小，令 \(x=ta,\ y=tb\)，区域固定后看被积函数极限。注意内层积分上限 \(t\) 小于 \(x\)，带负向。}
+令
+\[
+x=ta,\qquad y=tb.
+\]
+则 \(a\in[1,2]\)，内层 \(b\) 从 \(a\) 到 \(1\)，且 \(dxdy=t^2dadb\)。于是
+\[
+\frac{f(t)}{t^2}
+=\int_1^2 da\int_a^1 e^{(t(a-b)+1)^2}\,db.
+\]
+令 \(t\to0^+\)，被积函数趋于 \(e\)，故
+\[
+\lim_{t\to0^+}\frac{f(t)}{t^2}
+=e\int_1^2(1-a)\,da
+=-\frac e2.
+\]
+\answer{B}
+\examnote{变区域极限常用伸缩变换；积分方向若反向，符号最容易错。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例10.} 设
+\[
+D=\{(x,y)\mid 0\le x\le2,\ 0\le y\le2\}.
+\]
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 求
+\[
+A=\iint_D|xy-1|\,dxdy;
+\]
+\item 设 \(f(x,y)\) 在 \(D\) 上连续，且
+\[
+\iint_Df(x,y)\,dxdy=0,\qquad
+\iint_Dxyf(x,y)\,dxdy=1.
+\]
+证明：存在 \((\xi,\eta)\in D\)，使
+\[
+|f(\xi,\eta)|\ge\frac1A.
+\]
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{第 (1) 问按曲线 \(xy=1\) 分区；第 (2) 问把两个积分条件相减，得到 \(\iint_D(xy-1)f=1\)。}
+(1) 当 \(0\le x\le1/2\) 时，\(0\le xy\le1\)，内层积分为
+\[
+\int_0^2(1-xy)\,dy=2-2x.
+\]
+当 \(1/2\le x\le2\) 时，以 \(y=1/x\) 分段：
+\[
+\int_0^2|xy-1|\,dy
+=\int_0^{1/x}(1-xy)\,dy+\int_{1/x}^{2}(xy-1)\,dy
+=2x-2+\frac1x.
+\]
+所以
+\[
+\begin{aligned}
+A&=\int_0^{1/2}(2-2x)\,dx
++\int_{1/2}^{2}\left(2x-2+\frac1x\right)dx\\
+&=\frac34+\frac34+2\ln2
+=\frac32+2\ln2.
+\end{aligned}
+\]
+
+(2) 由题设
+\[
+1=\iint_Dxyf(x,y)\,dxdy-\iint_Df(x,y)\,dxdy
+=\iint_D(xy-1)f(x,y)\,dxdy.
+\]
+于是
+\[
+1\le \iint_D|xy-1|\,|f(x,y)|\,dxdy
+\le \max_D|f(x,y)|\iint_D|xy-1|\,dxdy.
+\]
+即
+\[
+\max_D|f(x,y)|\ge\frac1A.
+\]
+因 \(f\) 连续，\(|f|\) 在闭区域 \(D\) 上取到最大值，故存在 \((\xi,\eta)\in D\)，使
+\[
+|f(\xi,\eta)|\ge\frac1A.
+\]
+\answer{(1) \(\displaystyle A=\frac32+2\ln2\)；(2) 已证。}
+\examnote{证明“存在一点使函数值不小于某数”时，常用积分估计反推最大值下界。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例11.} 设 \(f(x,y)\) 为连续函数，求
+\[
+\int_1^2dx\int_0^{\sqrt{2x-x^2}}f(x,y)\,dy
+\]
+的等价积分表示。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{区域为圆 \((x-1)^2+y^2\le1\) 的上半部分中 \(x\ge1\) 的右半块。极坐标下边界为 \(r=2\cos\theta\)，并且 \(x\ge1\) 即 \(r\cos\theta\ge1\)。}
+区域满足
+\[
+(x-1)^2+y^2\le1,\qquad y\ge0,\qquad x\ge1.
+\]
+用极坐标
+\[
+x=r\cos\theta,\qquad y=r\sin\theta.
+\]
+圆边界为
+\[
+r^2=2r\cos\theta,\qquad r=2\cos\theta.
+\]
+条件 \(x\ge1\) 为
+\[
+r\cos\theta\ge1,\qquad r\ge\sec\theta.
+\]
+又 \(y\ge0\)，且交点方向给出
+\[
+0\le\theta\le\frac\pi4.
+\]
+所以
+\[
+\int_1^2dx\int_0^{\sqrt{2x-x^2}}f(x,y)\,dy
+=\int_0^{\pi/4}d\theta
+\int_{\sec\theta}^{2\cos\theta}
+f(r\cos\theta,r\sin\theta)r\,dr.
+\]
+若改为先定 \(r\)，则 \(1\le r\le2\)，且
+\[
+\theta\le \arccos\frac1r,\qquad
+\theta\le \arccos\frac r2.
+\]
+两者在 \(r=\sqrt2\) 处分界，因此
+\[
+\int_1^{\sqrt2}r\,dr\int_0^{\arccos(1/r)}
+f(r\cos\theta,r\sin\theta)\,d\theta
++\int_{\sqrt2}^{2}r\,dr\int_0^{\arccos(r/2)}
+f(r\cos\theta,r\sin\theta)\,d\theta,
+\]
+这正是原题选项 C。
+\answer{原题选项 C；等价地，\(\displaystyle \int_0^{\pi/4}\int_{\sec\theta}^{2\cos\theta} f(r\cos\theta,r\sin\theta)r\,dr\,d\theta\)}
+\examnote{极坐标中不要漏掉 \(x\ge1\) 产生的下界 \(r=\sec\theta\)。}
+\end{solutionblock}
+
+\section{特殊变量替换与复杂区域}
+
+\begin{problemblock}
+\textbf{例12.} 设平面有界区域 \(D\) 位于第一象限，由
+\[
+xy=\frac13,\quad xy=3,\quad y=\frac13x,\quad y=3x
+\]
+围成。计算
+\[
+\iint_D(1+x-y)\,dxdy.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{边界正好提示令 \(u=xy,\ v=y/x\)。}
+令
+\[
+u=xy,\qquad v=\frac yx.
+\]
+在第一象限中
+\[
+x=\sqrt{\frac uv},\qquad y=\sqrt{uv}.
+\]
+边界变为
+\[
+\frac13\le u\le3,\qquad \frac13\le v\le3.
+\]
+Jacobian：
+\[
+\frac{\partial(u,v)}{\partial(x,y)}
+=2v,
+\qquad
+dxdy=\frac1{2v}\,dudv.
+\]
+于是
+\[
+\iint_D(1+x-y)\,dxdy
+=\int_{1/3}^3\int_{1/3}^3
+\left(1+\sqrt{\frac uv}-\sqrt{uv}\right)\frac1{2v}\,dvdu.
+\]
+其中
+\[
+\int_{1/3}^3v^{-3/2}\,dv
+=\int_{1/3}^3v^{-1/2}\,dv=\frac4{\sqrt3},
+\]
+所以含 \(\sqrt u\) 的两项相消。剩下
+\[
+\frac12\int_{1/3}^3du\int_{1/3}^3\frac{dv}{v}
+=\frac12\cdot\frac83\cdot\ln9
+=\frac83\ln3.
+\]
+\answer{\(\displaystyle \frac83\ln3\)}
+\examnote{双曲线 \(xy=\text{常数}\) 与射线 \(y=kx\) 围成区域，标准换元是 \(u=xy,\ v=y/x\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例13.}（仅数一、数二）设平面有界区域 \(D\) 位于第一象限，由曲线
+\[
+x^2+y^2-xy=1,\qquad x^2+y^2-xy=2
+\]
+与直线
+\[
+y=\sqrt3x,\qquad y=0
+\]
+围成。计算
+\[
+\iint_D\frac1{3x^2+y^2}\,dxdy.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{曲线含 \(x^2+y^2-xy\)，在极坐标下变为 \(r^2(1-\frac12\sin2\theta)\)。}
+令
+\[
+x=r\cos\theta,\qquad y=r\sin\theta.
+\]
+区域角度为
+\[
+0\le\theta\le\frac\pi3.
+\]
+且
+\[
+x^2+y^2-xy=r^2(1-\sin\theta\cos\theta).
+\]
+对固定 \(\theta\)，\(r\) 从
+\[
+\sqrt{\frac1{1-\sin\theta\cos\theta}}
+\]
+到
+\[
+\sqrt{\frac2{1-\sin\theta\cos\theta}}.
+\]
+又
+\[
+3x^2+y^2=r^2(3\cos^2\theta+\sin^2\theta),
+\]
+所以
+\[
+\begin{aligned}
+I&=\int_0^{\pi/3}
+\frac{1}{3\cos^2\theta+\sin^2\theta}
+\int_{r_1}^{r_2}\frac{dr}{r}\,d\theta\\
+&=\frac12\ln2\int_0^{\pi/3}
+\frac{d\theta}{3\cos^2\theta+\sin^2\theta}.
+\end{aligned}
+\]
+令 \(t=\tan\theta\)，则
+\[
+\int_0^{\pi/3}
+\frac{d\theta}{3\cos^2\theta+\sin^2\theta}
+=\int_0^{\sqrt3}\frac{dt}{t^2+3}
+=\frac{\pi}{4\sqrt3}.
+\]
+因此
+\[
+I=\frac{\pi\ln2}{8\sqrt3}.
+\]
+\answer{\(\displaystyle \frac{\pi\ln2}{8\sqrt3}\)}
+\examnote{二次型区域常用极坐标；若只含角度的因子，径向积分往往给出 \(\ln\) 常数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例14.} 设有界区域 \(D\) 是由圆 \(x^2+y^2=1\)、直线 \(y=x\) 以及 \(x\) 轴在第一象限内围成的部分，计算
+\[
+\iint_D e^{(x+y)^2}(x^2-y^2)\,dxdy.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{区域是扇形 \(0\le\theta\le\pi/4,\ 0\le r\le1\)。被积函数中的 \(x^2-y^2\) 与 \((x+y)^2\) 在极坐标下可配合换元。}
+令
+\[
+x=r\cos\theta,\qquad y=r\sin\theta.
+\]
+则
+\[
+0\le r\le1,\qquad 0\le\theta\le\frac\pi4,
+\]
+\[
+x^2-y^2=r^2\cos2\theta,
+\]
+\[
+(x+y)^2=r^2(\cos\theta+\sin\theta)^2=r^2(1+\sin2\theta).
+\]
+原积分为
+\[
+\int_0^1r^3dr\int_0^{\pi/4}
+e^{r^2(1+\sin2\theta)}\cos2\theta\,d\theta.
+\]
+令
+\[
+w=1+\sin2\theta,\qquad dw=2\cos2\theta\,d\theta.
+\]
+当 \(\theta=0\) 时 \(w=1\)，当 \(\theta=\pi/4\) 时 \(w=2\)。故内层积分为
+\[
+\frac12\int_1^2e^{r^2w}\,dw
+=\frac{e^{2r^2}-e^{r^2}}{2r^2}.
+\]
+于是原积分
+\[
+\frac12\int_0^1r(e^{2r^2}-e^{r^2})\,dr
+=\frac18(e-1)^2.
+\]
+\answer{\(\displaystyle \frac{(e-1)^2}{8}\)}
+\examnote{看到 \(x^2-y^2\) 和 \((x+y)^2\)，极坐标后用 \(1+\sin2\theta\) 换元非常顺。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例15.} 设平面区域 \(D\) 由曲线
+\[
+x=t-\sin t,\qquad y=1-\cos t,\qquad 0\le t\le2\pi
+\]
+与 \(x\) 轴围成。计算
+\[
+\iint_D(x+2y)\,d\sigma.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{曲线是一个摆线拱。因 \(dx/dt=1-\cos t=y\ge0\)，可用竖条积分。}
+记
+\[
+X(t)=t-\sin t,\qquad Y(t)=1-\cos t.
+\]
+区域可按 \(0\le y\le Y(t)\) 竖向积分，且
+\[
+dx=Y(t)\,dt.
+\]
+对固定 \(x=X(t)\)，
+\[
+\int_0^{Y(t)}(x+2y)\,dy
+=X(t)Y(t)+Y^2(t).
+\]
+故
+\[
+I=\int_0^{2\pi}\bigl[X(t)Y(t)+Y^2(t)\bigr]Y(t)\,dt.
+\]
+即
+\[
+I=\int_0^{2\pi}(t-\sin t)(1-\cos t)^2\,dt
++\int_0^{2\pi}(1-\cos t)^3\,dt.
+\]
+利用周期对称性，
+\[
+\int_0^{2\pi}t(1-\cos t)^2dt
+=\pi\int_0^{2\pi}(1-\cos t)^2dt=3\pi^2,
+\]
+且
+\[
+\int_0^{2\pi}\sin t(1-\cos t)^2dt=0,
+\]
+\[
+\int_0^{2\pi}(1-\cos t)^3dt=5\pi.
+\]
+因此
+\[
+I=3\pi^2+5\pi.
+\]
+\answer{\(\displaystyle 3\pi^2+5\pi\)}
+\examnote{参数曲线围成区域可用 \(dx=x'(t)dt\) 的竖条法；摆线中 \(x'(t)=y(t)\) 是关键。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例16.} 设二元函数
+\[
+f(x,y)=
+\begin{cases}
+x^2,& |x|+|y|\le1,\\[2mm]
+\dfrac1{\sqrt{x^2+y^2}},&1<|x|+|y|\le2.
+\end{cases}
+\]
+计算
+\[
+\iint_D f(x,y)\,d\sigma,\qquad
+D=\{(x,y)\mid |x|+|y|\le2\}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{区域是菱形。内层菱形直接算 \(x^2\)，外层用极坐标下的菱形边界 \(r(|\cos\theta|+|\sin\theta|)=a\)。}
+内层
+\[
+D_1=\{|x|+|y|\le1\}
+\]
+上
+\[
+\iint_{D_1}x^2\,d\sigma
+=4\int_0^1\int_0^{1-x}x^2\,dy\,dx
+=4\int_0^1x^2(1-x)\,dx=\frac13.
+\]
+外层为 \(\{|x|+|y|\le2\}\setminus\{|x|+|y|\le1\}\)。在第一象限中，边界为
+\[
+r(\cos\theta+\sin\theta)=a.
+\]
+由于被积函数为 \(1/r\)，面积元为 \(rdrd\theta\)，外层积分为
+\[
+4\int_0^{\pi/2}\int_{\frac1{\cos\theta+\sin\theta}}^{\frac2{\cos\theta+\sin\theta}}dr\,d\theta.
+\]
+即
+\[
+4\int_0^{\pi/2}\frac{d\theta}{\cos\theta+\sin\theta}.
+\]
+而
+\[
+\cos\theta+\sin\theta=\sqrt2\cos\left(\theta-\frac\pi4\right),
+\]
+所以外层积分为
+\[
+4\sqrt2\ln(1+\sqrt2).
+\]
+总积分为
+\[
+\frac13+4\sqrt2\ln(1+\sqrt2).
+\]
+\answer{\(\displaystyle \frac13+4\sqrt2\ln(1+\sqrt2)\)}
+\examnote{\(|x|+|y|\le a\) 的菱形在极坐标下边界是 \(r=a/(|\cos\theta|+|\sin\theta|)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例17.} 计算
+\[
+I=\iint_D |y-x^2|\max\{x,y\}\,d\sigma,
+\qquad
+D=\{(x,y)\mid 0\le x\le1,\ 0\le y\le1\}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{在单位正方形内有 \(x^2\le x\)。按 \(y=x^2\) 和 \(y=x\) 分成三块。}
+对固定 \(x\in[0,1]\)，分三段：
+\[
+0\le y\le x^2,\qquad x^2\le y\le x,\qquad x\le y\le1.
+\]
+于是
+\[
+\begin{aligned}
+I=\int_0^1&\left[
+\int_0^{x^2}(x^2-y)x\,dy
++\int_{x^2}^{x}(y-x^2)x\,dy\right.\\
+&\left.+\int_x^1(y-x^2)y\,dy
+\right]dx.
+\end{aligned}
+\]
+逐项计算后，内层总和为
+\[
+\frac13-\frac{x^2}{2}+\frac{x^3}{6}-\frac{x^4}{2}+x^5.
+\]
+因此
+\[
+I=\int_0^1\left(
+\frac13-\frac{x^2}{2}+\frac{x^3}{6}-\frac{x^4}{2}+x^5
+\right)dx
+=\frac{11}{40}.
+\]
+\answer{\(\displaystyle \frac{11}{40}\)}
+\examnote{含绝对值和 \(\max\) 的二重积分，先画出分界曲线；本题分界为 \(y=x^2\) 与 \(y=x\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例18.} 已知平面区域
+\[
+D=\{(x,y)\mid (x-1)^2+y^2\le1\},
+\]
+计算
+\[
+\iint_D\left|\sqrt{x^2+y^2}-1\right|\,dxdy.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{区域是以 \((1,0)\) 为圆心、半径为 \(1\) 的圆盘。用以原点为极点的极坐标，边界为 \(r=2\cos\theta\)。}
+在极坐标中，
+\[
+D:\quad -\frac\pi2\le\theta\le\frac\pi2,\qquad 0\le r\le2\cos\theta.
+\]
+积分为
+\[
+I=\int_{-\pi/2}^{\pi/2}\int_0^{2\cos\theta}|r-1|r\,drd\theta.
+\]
+当 \(|\theta|\le\pi/3\) 时，\(2\cos\theta\ge1\)，需在 \(r=1\) 分段；当 \(\pi/3<|\theta|\le\pi/2\) 时，\(2\cos\theta<1\)。利用偶对称：
+\[
+\begin{aligned}
+I=2\bigg[&
+\int_0^{\pi/3}\left(\int_0^1(1-r)r\,dr+\int_1^{2\cos\theta}(r-1)r\,dr\right)d\theta\\
+&+\int_{\pi/3}^{\pi/2}\int_0^{2\cos\theta}(1-r)r\,drd\theta
+\bigg].
+\end{aligned}
+\]
+计算得
+\[
+I=3\sqrt3-\frac{\pi}{9}-\frac{32}{9}.
+\]
+\answer{\(\displaystyle 3\sqrt3-\frac{\pi}{9}-\frac{32}{9}\)}
+\examnote{偏心圆盘遇到 \(\sqrt{x^2+y^2}\) 时，以原点为极点更自然，但要按 \(r=1\) 分段。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例19.} 设闭区域
+\[
+D=\{(x,y)\mid0\le x\le1,\ 0\le y\le1\},
+\]
+\(f(x,y)\) 为 \(D\) 上的连续函数，且
+\[
+f(x,y)=\sqrt{x^2+y^2}\max\{x,y\}
++2\int_0^1f(x,0)\,dx+\iint_Df(x,y)\,dxdy.
+\]
+求 \(f(x,y)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{右侧后两项是常数。设其为 \(C\)，把问题化成常数方程。}
+记
+\[
+h(x,y)=\sqrt{x^2+y^2}\max\{x,y\},
+\]
+并设
+\[
+C=2\int_0^1f(x,0)\,dx+\iint_Df(x,y)\,dxdy.
+\]
+则
+\[
+f(x,y)=h(x,y)+C.
+\]
+先计算
+\[
+\int_0^1 f(x,0)\,dx
+=\int_0^1 x^2\,dx+C=\frac13+C.
+\]
+再记
+\[
+H=\iint_D h(x,y)\,dxdy.
+\]
+利用对称性，
+\[
+H=2\int_0^1\int_0^x x\sqrt{x^2+y^2}\,dy\,dx.
+\]
+令 \(y=xt\)，得
+\[
+H=2\int_0^1x^3dx\int_0^1\sqrt{1+t^2}\,dt
+=\frac14\left[\sqrt2+\ln(1+\sqrt2)\right].
+\]
+因此
+\[
+\iint_Df=H+C.
+\]
+代回 \(C\) 的定义：
+\[
+C=2\left(\frac13+C\right)+(H+C).
+\]
+故
+\[
+-2C=\frac23+H,
+\qquad
+C=-\frac13-\frac H2.
+\]
+即
+\[
+C=-\frac13-\frac18\left[\sqrt2+\ln(1+\sqrt2)\right].
+\]
+所以
+\[
+f(x,y)=\sqrt{x^2+y^2}\max\{x,y\}
+-\frac13-\frac18\left[\sqrt2+\ln(1+\sqrt2)\right].
+\]
+\answer{\(\displaystyle f(x,y)=\sqrt{x^2+y^2}\max\{x,y\}
+-\frac13-\frac18\bigl[\sqrt2+\ln(1+\sqrt2)\bigr]\)}
+\examnote{含未知函数积分的方程，先把积分项整体设为常数，再反代求常数。}
+\end{solutionblock}

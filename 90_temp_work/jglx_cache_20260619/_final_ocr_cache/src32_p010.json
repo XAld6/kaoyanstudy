@@ -1,0 +1,7 @@
+{
+  "source": "D:\\xm\\zy\\jglx\\7.作业讲解笔记\\【第13次作业笔记】—矩阵位移法(1).pdf",
+  "page": 10,
+  "method": "rapidocr",
+  "text": "12XEx\n元素：\n13\n1kN\n1kN-m\nlo=2m\nI1m4\nM,e\n1m\n4m\n图8-51\n图8-52\n12EI\n6E1\n4EI\nk32=k62=—ks3=k65=\nk33=2k63=k66=\nk22=—k52=k55\n（浙江大\n73\n学2008)\n7 - 0. 0926\n39\n39-\n- 01667\n-6E\nIZE\n-6\n自助\n-66\n0111.0\n0. 00 1E\n8 - 14\n用矩阵位移法计算并作图8-53所示连续梁的弯矩图。各杆EI相同，为常数。\n（重庆大学2009）\n(00, 0)\n(013,3)\n10kN/m\n30kN-m\n(0,0,0)\n20kN\n10kN\n[0,0,p)\nYB\n6m\n3m\n3m\n-3\n230\nat\n12\n13\n注意：如果只要求求解杆端弯矩，单元刚度矩阵可以写成2阶的。\n31",
+  "figure": "figures/src32_p010.jpg"
+}

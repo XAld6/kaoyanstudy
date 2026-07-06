@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs>
+<marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#1F4E73"/>
+</marker>
+<marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#6C757D"/>
+</marker>
+<marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#D8892C"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1000" fill="#FFFFFF"/>
+<text x="800" y="62" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="40" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+钢结构防腐涂装层次示意图
+</text>
+<text x="800" y="108" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+基层处理、底漆、中间漆与面漆共同形成防护体系
+</text>
+<line x1="100" y1="132" x2="1500" y2="132" stroke="#CBD3DA" stroke-width="2"/>
+<rect x="250" y="250" width="1100" height="110" rx="8" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="420" y="305" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="30" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+面漆层
+</text>
+<text x="950" y="305" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+耐候、耐紫外线、提供颜色识别
+</text>
+<rect x="250" y="370" width="1100" height="110" rx="8" fill="#F7E5CC" stroke="#D8892C" stroke-width="3"/>
+<text x="420" y="425" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="30" fill="#D8892C" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+中间漆层
+</text>
+<text x="950" y="425" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+增加屏蔽厚度，提高抗渗能力
+</text>
+<rect x="250" y="490" width="1100" height="110" rx="8" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="420" y="545" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="30" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+底漆层
+</text>
+<text x="950" y="545" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+增强附着力，提供阴极/屏蔽保护
+</text>
+<rect x="250" y="610" width="1100" height="110" rx="8" fill="#EEF1F4" stroke="#6C757D" stroke-width="3"/>
+<text x="420" y="665" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="30" fill="#6C757D" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+除锈处理钢材
+</text>
+<text x="950" y="665" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+喷砂除锈、粗糙度控制、清洁干燥
+</text>
+<line x1="1380" y1="250" x2="1380" y2="720" stroke="#B65C5C" stroke-width="5" marker-end="url(#arrow-gray)"/>
+<text x="1450" y="485" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#B65C5C" text-anchor="middle" dominant-baseline="middle">
+<tspan x="1450" dy="-16.0">腐蚀介质</tspan>
+<tspan x="1450" dy="32">逐层受阻</tspan>
+</text>
+<rect x="230" y="790" width="1140" height="100" rx="14" fill="#EEF1F4" stroke="#6C757D" stroke-width="3"/>
+<text x="800" y="824" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+关键控制
+</text>
+<text x="800" y="862" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="800" dy="-13.0">表面处理质量通常决定涂装寿命，施工时应控制除锈等级、环境湿度、涂层厚度</tspan>
+<tspan x="800" dy="26">和复涂间隔。</tspan>
+</text>
+</svg>

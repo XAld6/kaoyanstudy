@@ -1,0 +1,822 @@
+\chapter{二次型}
+
+\section{逐题解析}
+
+\subsection{6.1 二次型的定义及其表示}
+
+\begin{solutionblock}
+\textbf{6.1 例 1}
+
+\question{求二次型 \(f=x_1^2+3x_2^2-x_3^2+2x_1x_2+2x_1x_3+6x_2x_3\) 的矩阵及二次型的秩。}
+
+
+
+\analysis{二次型
+\[
+f=x_1^2+3x_2^2-x_3^2+2x_1x_2+2x_1x_3+6x_2x_3
+\]
+写成 \(f=x^TAx\) 时，矩阵 \(A\) 必须为对称矩阵。平方项系数直接放在主对角线，交叉项 \(2a_{ij}x_ix_j\) 的系数等于题中交叉项系数。
+
+因此
+\[
+a_{11}=1,\quad a_{22}=3,\quad a_{33}=-1,
+\]
+\[
+2a_{12}=2,\quad 2a_{13}=2,\quad 2a_{23}=6.
+\]
+故
+\[
+A=\begin{pmatrix}
+1&1&1\\
+1&3&3\\
+1&3&-1
+\end{pmatrix}.
+\]
+矩阵的秩为
+\[
+r(A)=3.
+\]}
+\answer{\[
+A=\begin{pmatrix}
+1&1&1\\
+1&3&3\\
+1&3&-1
+\end{pmatrix},\qquad r(f)=r(A)=3.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.1 例 2}
+
+\question{设 \(f(x_1,x_2,x_3)=\displaystyle\sum_{i=1}^3\sum_{j=1}^3ijx_ix_j\)，求该二次型对应的矩阵 \(A\)。}
+
+
+
+\analysis{题中
+\[
+f(x_1,x_2,x_3)=\sum_{i=1}^3\sum_{j=1}^3 ijx_ix_j.
+\]
+所以二次型矩阵的第 \(i\) 行第 \(j\) 列元素为
+\[
+a_{ij}=ij.
+\]
+列出矩阵：
+\[
+A=\begin{pmatrix}
+1\cdot1&1\cdot2&1\cdot3\\
+2\cdot1&2\cdot2&2\cdot3\\
+3\cdot1&3\cdot2&3\cdot3
+\end{pmatrix}
+=\begin{pmatrix}
+1&2&3\\
+2&4&6\\
+3&6&9
+\end{pmatrix}.
+\]}
+\answer{\[
+A=\begin{pmatrix}
+1&2&3\\
+2&4&6\\
+3&6&9
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.1 例 3}
+
+\question{设 \(f(x_1,x_2,x_3)=x^T\begin{pmatrix}1&4&0\\0&4&0\\0&0&0\end{pmatrix}x\)，求该二次型的秩。}
+
+
+
+\analysis{给出的矩阵
+\[
+M=\begin{pmatrix}
+1&4&0\\
+0&4&0\\
+0&0&0
+\end{pmatrix}
+\]
+不是对称矩阵。二次型
+\[
+x^TMx
+\]
+只由矩阵的对称部分决定，即
+\[
+x^TMx=x^T\left(\frac{M+M^T}{2}\right)x.
+\]
+因此真正对应的二次型矩阵为
+\[
+A=\frac{M+M^T}{2}
+=\begin{pmatrix}
+1&2&0\\
+2&4&0\\
+0&0&0
+\end{pmatrix}.
+\]
+前两行成比例，且第一行非零，故
+\[
+r(A)=1.
+\]}
+\answer{\(1\)}
+\examnote{二次型矩阵默认取对称矩阵。若题面给了非对称矩阵，秩要算其对称部分的秩，而不是原矩阵的秩。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.1 例 4}
+
+\question{设 \(f=(x_1+x_2+x_3)^2+(x_2-x_3)^2+(x_1+2x_2+x_3)^2\)，求二次型矩阵 \(A\)。}
+
+
+
+\analysis{令
+\[
+l_1=x_1+x_2+x_3,\quad l_2=x_2-x_3,\quad l_3=x_1+2x_2+x_3.
+\]
+则
+\[
+f=l_1^2+l_2^2+l_3^2.
+\]
+把线性形式写成矩阵
+\[
+L=\begin{pmatrix}
+1&1&1\\
+0&1&-1\\
+1&2&1
+\end{pmatrix},
+\qquad
+\begin{pmatrix}l_1\\l_2\\l_3\end{pmatrix}=Lx.
+\]
+于是
+\[
+f=(Lx)^T(Lx)=x^T(L^TL)x,
+\]
+故二次型矩阵为
+\[
+A=L^TL
+=\begin{pmatrix}
+2&3&2\\
+3&6&2\\
+2&2&3
+\end{pmatrix}.
+\]}
+\answer{\[
+A=\begin{pmatrix}
+2&3&2\\
+3&6&2\\
+2&2&3
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\subsection{6.2 可逆线性变换与矩阵合同}
+
+\begin{solutionblock}
+\textbf{6.2 例 1}
+
+\question{设 \(\alpha_1=(1,2)^T,\alpha_2=(a,1)^T,x=(x_1,x_2)^T\)，令 \(f=\sum_{i=1}^2(\alpha_i,x)^2\)。若 \(f\) 与 \(g=y_1^2+y_2^2+2y_1y_2\) 合同，求 \(a\)。}
+
+
+
+\analysis{由
+\[
+\alpha_1=(1,2)^T,\qquad \alpha_2=(a,1)^T
+\]
+得
+\[
+f=(\alpha_1^Tx)^2+(\alpha_2^Tx)^2=x^TAx,
+\]
+其中
+\[
+A=\alpha_1\alpha_1^T+\alpha_2\alpha_2^T
+=\begin{pmatrix}
+1+a^2&2+a\\
+2+a&5
+\end{pmatrix}.
+\]
+题中 \(f\) 经可逆线性变换化为
+\[
+g=y_1^2+y_2^2+2y_1y_2,
+\]
+其矩阵为
+\[
+B=\begin{pmatrix}1&1\\1&1\end{pmatrix},
+\]
+秩为 \(1\)。合同变换保持矩阵秩，因此
+\[
+r(A)=r(B)=1.
+\]
+对 \(A\) 计算行列式：
+\[
+|A|=5(1+a^2)-(2+a)^2=(2a-1)^2.
+\]
+令 \(|A|=0\)，得
+\[
+a=\frac12.
+\]}
+\answer{\(\dfrac12\)}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.2 例 2}
+
+\question{设 \(A=\begin{pmatrix}1&2\\2&1\end{pmatrix}\)，\(B=\begin{pmatrix}1&4\\1&1\end{pmatrix}\)。判断是否存在可逆矩阵 \(C\) 使 \(C^TAC=B\)，以及是否存在正交矩阵 \(Q\) 使 \(Q^TAQ=B\)。}
+
+
+
+\analysis{给定
+\[
+A=\begin{pmatrix}1&2\\2&1\end{pmatrix},\qquad
+B=\begin{pmatrix}1&4\\1&1\end{pmatrix}.
+\]
+
+第 (1) 个说法：若存在可逆矩阵 \(C\)，使 \(C^TAC=B\)，则 \(B\) 必须是对称矩阵，因为 \(A=A^T\) 时
+\[
+(C^TAC)^T=C^TA^TC=C^TAC.
+\]
+但题中 \(B\) 不是对称矩阵，所以第 (1) 个说法错误。
+
+第 (2) 个说法：若存在正交矩阵 \(Q\)，使 \(Q^TAQ=B\)，则 \(B\) 不仅应为对称矩阵，而且与 \(A\) 正交相似，特征值也应相同。题中 \(B\) 非对称，故第 (2) 个说法也错误。}
+\answer{两个说法均错误。}
+\end{solutionblock}
+
+\subsection{6.3 二次型的标准形和规范形}
+
+\begin{solutionblock}
+\textbf{6.3 例 1}
+
+\question{用正交变换 \(x=Qy\) 化二次型 \(f=x_1^2+x_2^2+x_3^2+4x_1x_2+4x_1x_3+4x_2x_3\) 为标准形。}
+
+
+
+\analysis{二次型
+\[
+f=x_1^2+x_2^2+x_3^2+4x_1x_2+4x_1x_3+4x_2x_3
+\]
+的矩阵为
+\[
+A=\begin{pmatrix}
+1&2&2\\
+2&1&2\\
+2&2&1
+\end{pmatrix}.
+\]
+该矩阵的特征值为 \(5,-1,-1\)。对应 \(\lambda=5\) 的单位特征向量可取
+\[
+q_1=\frac1{\sqrt3}(1,1,1)^T.
+\]
+对应 \(\lambda=-1\) 的特征子空间为 \(x_1+x_2+x_3=0\)，可取一组正交单位向量
+\[
+q_2=\frac1{\sqrt2}(1,-1,0)^T,\qquad
+q_3=\frac1{\sqrt6}(1,1,-2)^T.
+\]
+令
+\[
+Q=(q_1,q_2,q_3),
+\]
+则 \(Q\) 为正交矩阵，且
+\[
+Q^TAQ=\operatorname{diag}(5,-1,-1).
+\]}
+\answer{取
+\[
+Q=\begin{pmatrix}
+\frac1{\sqrt3}&\frac1{\sqrt2}&\frac1{\sqrt6}\\
+\frac1{\sqrt3}&-\frac1{\sqrt2}&\frac1{\sqrt6}\\
+\frac1{\sqrt3}&0&-\frac2{\sqrt6}
+\end{pmatrix},
+\]
+则在正交变换 \(x=Qy\) 下，
+\[
+f=5y_1^2-y_2^2-y_3^2.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.3 例 2}
+
+\question{用配方法化二次型 \(f=2x_1^2+3x_2^2+x_3^2+4x_1x_2-4x_1x_3-8x_2x_3\) 为标准形，并写出变换 \(x=Cy\)。}
+
+
+
+\analysis{对
+\[
+f=2x_1^2+3x_2^2+x_3^2+4x_1x_2-4x_1x_3-8x_2x_3
+\]
+配方。先含 \(x_1\) 的项：
+\[
+2x_1^2+4x_1x_2-4x_1x_3
+=2(x_1+x_2-x_3)^2-2(x_2-x_3)^2.
+\]
+故
+\[
+f=2(x_1+x_2-x_3)^2+\bigl[3x_2^2+x_3^2-8x_2x_3-2(x_2-x_3)^2\bigr].
+\]
+括号内化简为
+\[
+x_2^2-4x_2x_3-x_3^2=(x_2-2x_3)^2-5x_3^2.
+\]
+令
+\[
+y_1=x_1+x_2-x_3,\qquad y_2=x_2-2x_3,\qquad y_3=x_3.
+\]
+则
+\[
+f=2y_1^2+y_2^2-5y_3^2.
+\]
+由上式反解
+\[
+x_3=y_3,\qquad x_2=y_2+2y_3,\qquad x_1=y_1-y_2-y_3.
+\]
+所以
+\[
+x=Cy,\qquad
+C=\begin{pmatrix}
+1&-1&-1\\
+0&1&2\\
+0&0&1
+\end{pmatrix}.
+\]}
+\answer{\[
+f=2y_1^2+y_2^2-5y_3^2,\qquad
+C=\begin{pmatrix}
+1&-1&-1\\
+0&1&2\\
+0&0&1
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.3 例 3}
+
+\question{用配方法化二次型 \(f=2x_1x_2+4x_1x_3\) 为标准形，并写出变换 \(x=Cy\)。}
+
+
+
+\analysis{题中
+\[
+f=2x_1x_2+4x_1x_3=2x_1(x_2+2x_3).
+\]
+令
+\[
+y_1=x_1+x_2+2x_3,\qquad
+y_2=x_1-x_2-2x_3,\qquad
+y_3=x_3.
+\]
+则
+\[
+y_1^2-y_2^2
+=(x_1+x_2+2x_3)^2-(x_1-x_2-2x_3)^2
+=4x_1(x_2+2x_3).
+\]
+因此
+\[
+f=\frac12y_1^2-\frac12y_2^2.
+\]
+反解得
+\[
+x_1=\frac12y_1+\frac12y_2,\qquad
+x_2=\frac12y_1-\frac12y_2-2y_3,\qquad
+x_3=y_3.
+\]
+所以
+\[
+x=Cy,\qquad
+C=\begin{pmatrix}
+\frac12&\frac12&0\\
+\frac12&-\frac12&-2\\
+0&0&1
+\end{pmatrix}.
+\]}
+\answer{\[
+f=\frac12y_1^2-\frac12y_2^2,\qquad
+C=\begin{pmatrix}
+\frac12&\frac12&0\\
+\frac12&-\frac12&-2\\
+0&0&1
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.3 例 4}
+
+\question{求二次型 \(f=x_1x_2+x_1x_3+2x_2x_3\) 的标准形，并给出相应可逆线性变换。}
+
+
+
+\analysis{二次型
+\[
+f=x_1x_2+x_1x_3+2x_2x_3
+\]
+的矩阵为
+\[
+A=\begin{pmatrix}
+0&\frac12&\frac12\\
+\frac12&0&1\\
+\frac12&1&0
+\end{pmatrix}.
+\]
+作可逆变换
+\[
+x=Cy,\qquad
+C=\begin{pmatrix}
+1&1&-\sqrt2\\
+1&-1&-\frac1{\sqrt2}\\
+0&0&\frac1{\sqrt2}
+\end{pmatrix}.
+\]
+直接计算得
+\[
+C^TAC=\operatorname{diag}(1,-1,-1).
+\]
+因此规范形为
+\[
+z_1^2-z_2^2-z_3^2.
+\]
+若不缩放第三个变量，也可先得到标准形
+\[
+y_1^2-y_2^2-2y_3^2.
+\]}
+\answer{规范形为
+\[
+z_1^2-z_2^2-z_3^2,
+\]
+可取上述 \(C\) 作为坐标变换矩阵。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.3 例 5}
+
+\question{求二次型 \(f=x_1^2+3x_2^2+x_3^2+2x_1x_2+2x_1x_3+2x_2x_3\) 的规范形。}
+
+
+
+\analysis{二次型
+\[
+f=x_1^2+3x_2^2+x_3^2+2x_1x_2+2x_1x_3+2x_2x_3
+\]
+对应矩阵
+\[
+A=\begin{pmatrix}
+1&1&1\\
+1&3&1\\
+1&1&1
+\end{pmatrix}.
+\]
+计算其特征值为
+\[
+4,\ 1,\ 0.
+\]
+正惯性指数等于正特征值个数，为 \(2\)；负惯性指数等于负特征值个数，为 \(0\)。}
+\answer{正惯性指数为 \(2\)，负惯性指数为 \(0\)。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.3 例 6}
+
+\question{求二次型 \(f=-2x_1x_2-2x_1x_3+6x_2x_3\) 的正惯性指数，并在选项 \(3,2,1,0\) 中作出判断。}
+
+
+
+\analysis{二次型
+\[
+f=-2x_1x_2-2x_1x_3+6x_2x_3
+\]
+对应矩阵为
+\[
+A=\begin{pmatrix}
+0&-1&-1\\
+-1&0&3\\
+-1&3&0
+\end{pmatrix}.
+\]
+其特征值为
+\[
+-3,\quad \frac{3-\sqrt{17}}2,\quad \frac{3+\sqrt{17}}2.
+\]
+其中
+\[
+-3<0,\qquad \frac{3-\sqrt{17}}2<0,\qquad \frac{3+\sqrt{17}}2>0.
+\]
+所以正惯性指数为 \(1\)。}
+\answer{选 C，正惯性指数为 \(1\)。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.3 例 7}
+
+\question{求二次型 \(f=(x_1+x_2)^2+(x_2-x_3)^2+(x_3+x_1)^2\) 的正惯性指数，并在选项 \(3,2,1,0\) 中作出判断。}
+
+
+
+\analysis{因为
+\[
+f=(x_1+x_2)^2+(x_2-x_3)^2+(x_3+x_1)^2
+\]
+是三个平方和，所以负惯性指数为 \(0\)。展开可得矩阵
+\[
+A=\begin{pmatrix}
+2&1&1\\
+1&2&-1\\
+1&-1&2
+\end{pmatrix}.
+\]
+其特征值为 \(3,3,0\)，因此正惯性指数为 \(2\)。}
+\answer{选 B，正惯性指数为 \(2\)。}
+\end{solutionblock}
+
+\subsection{6.4 正定二次型}
+
+\begin{solutionblock}
+\textbf{6.4 例 1}
+
+\question{判断二次型 \(f=2x_1^2+4x_2^2+5x_3^2-4x_1x_3\) 是否正定。}
+
+
+
+\analysis{二次型
+\[
+f=2x_1^2+4x_2^2+5x_3^2-4x_1x_3
+\]
+对应矩阵为
+\[
+A=\begin{pmatrix}
+2&0&-2\\
+0&4&0\\
+-2&0&5
+\end{pmatrix}.
+\]
+用顺序主子式判别：
+\[
+\Delta_1=2>0,
+\]
+\[
+\Delta_2=\begin{vmatrix}2&0\\0&4\end{vmatrix}=8>0,
+\]
+\[
+\Delta_3=|A|=24>0.
+\]
+三个顺序主子式全为正，故 \(A\) 正定，二次型 \(f\) 正定。}
+\answer{\(f\) 是正定二次型。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.4 例 2}
+
+\question{求使二次型 \(f=2x_1^2+x_2^2+x_3^2+2x_1x_2+tx_2x_3\) 正定的参数 \(t\) 的取值范围。}
+
+
+
+\analysis{二次型
+\[
+f=2x_1^2+x_2^2+x_3^2+2x_1x_2+tx_2x_3
+\]
+对应矩阵为
+\[
+A=\begin{pmatrix}
+2&1&0\\
+1&1&\frac t2\\
+0&\frac t2&1
+\end{pmatrix}.
+\]
+顺序主子式为
+\[
+\Delta_1=2>0,
+\]
+\[
+\Delta_2=\begin{vmatrix}2&1\\1&1\end{vmatrix}=1>0,
+\]
+\[
+\Delta_3=|A|=1-\frac{t^2}{2}.
+\]
+正定要求 \(\Delta_3>0\)，所以
+\[
+1-\frac{t^2}{2}>0
+\quad\Longleftrightarrow\quad
+t^2<2.
+\]}
+\answer{\[
+-\sqrt2<t<\sqrt2.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.4 例 3}
+
+\question{设 \(A=\begin{pmatrix}1&0&1\\0&2&0\\1&0&1\end{pmatrix}\)，\(B=(A+kE)^2\)。求使 \(B\) 正定的 \(k\) 的取值范围。}
+
+
+
+\analysis{矩阵
+\[
+A=\begin{pmatrix}
+1&0&1\\
+0&2&0\\
+1&0&1
+\end{pmatrix}
+\]
+为实对称矩阵，特征值为
+\[
+0,\ 2,\ 2.
+\]
+矩阵
+\[
+B=(A+kE)^2
+\]
+的特征值为
+\[
+(0+k)^2,\quad (2+k)^2,\quad (2+k)^2.
+\]
+\(B\) 正定的充要条件是这三个特征值均大于 \(0\)，即
+\[
+k\ne0,\qquad k\ne-2.
+\]}
+\answer{\[
+k\in\mathbb{R}\setminus\{0,-2\}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.4 例 4}
+
+\question{设 \(f=(ax_1+2x_2-3x_3)^2+(x_2-2x_3)^2+(x_1+ax_2-x_3)^2\)，判断 \(f\) 正定时 \(a\) 应满足的条件。}
+
+
+
+\analysis{题中
+\[
+f=(ax_1+2x_2-3x_3)^2+(x_2-2x_3)^2+(x_1+ax_2-x_3)^2.
+\]
+这是三个线性形式平方和。设
+\[
+R=\begin{pmatrix}
+a&2&-3\\
+0&1&-2\\
+1&a&-1
+\end{pmatrix}.
+\]
+则
+\[
+f=\|Rx\|^2=x^TR^TRx.
+\]
+该二次型正定的充要条件是 \(Rx=0\) 只有零解，即 \(R\) 可逆。计算
+\[
+|R|=(a-1)(2a+1).
+\]
+故正定要求
+\[
+(a-1)(2a+1)\ne0,
+\]
+即
+\[
+a\ne1,\qquad a\ne-\frac12.
+\]}
+\answer{选 C，\(a\ne1\) 且 \(a\ne-\dfrac12\)。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.4 例 5}
+
+\question{设 \(f=x^TAx\)，\(A^T=A\)。判断 \(f\) 正定的充要条件。}
+
+
+
+\analysis{对称矩阵 \(A\) 对应二次型 \(f=x^TAx\)。若 \(f\) 正定，则 \(A\) 正定，必可逆，因此 \(A^{-1}\) 也正定；反之若 \(A^{-1}\) 正定，则其逆矩阵 \(A\) 也正定，故 \(f\) 正定。因此 D 是充要条件。
+
+选项 A 只有 \(|A|>0\)，不足以保证所有特征值均为正。选项 B “负惯性指数为 \(0\)”只说明没有负平方项，但可能存在零平方项，属于半正定。选项 C “秩为 \(n\)”只说明非退化，也可能是不定型。}
+\answer{选 D。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.4 例 6}
+
+\question{设 \(A\) 为 \(m\times n\) 矩阵，\(E\) 为 \(n\) 阶单位矩阵，\(B=\lambda E+A^TA\)。证明当 \(\lambda>0\) 时 \(B\) 正定。}
+
+
+
+\analysis{设 \(x\ne0\)。由
+\[
+B=\lambda E+A^TA
+\]
+得
+\[
+x^TBx=\lambda x^Tx+x^TA^TAx
+=\lambda\|x\|^2+\|Ax\|^2.
+\]
+当 \(\lambda>0\) 时，
+\[
+\lambda\|x\|^2>0,\qquad \|Ax\|^2\ge0,
+\]
+所以
+\[
+x^TBx>0.
+\]
+故 \(B\) 为正定矩阵。}
+\answer{已证：当 \(\lambda>0\) 时，\(B\) 为正定矩阵。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.4 例 7}
+
+\question{设 \(A\) 为 \(n\) 阶正定矩阵，证明存在 \(n\) 阶可逆矩阵 \(D\) 使 \(A=D^TD\)，并证明存在 \(n\) 阶正定矩阵 \(B\) 使 \(A=B^2\)。}
+
+
+
+\analysis{第 (1) 问：若 \(A\) 正定，则存在正交矩阵 \(Q\)，使
+\[
+Q^TAQ=\Lambda=\operatorname{diag}(\lambda_1,\ldots,\lambda_n),
+\]
+且
+\[
+\lambda_i>0.
+\]
+令
+\[
+\Lambda^{1/2}=\operatorname{diag}(\sqrt{\lambda_1},\ldots,\sqrt{\lambda_n}),
+\qquad
+D=\Lambda^{1/2}Q^T.
+\]
+则 \(D\) 可逆，且
+\[
+D^TD=Q\Lambda^{1/2}\Lambda^{1/2}Q^T=Q\Lambda Q^T=A.
+\]
+
+第 (2) 问：令
+\[
+B=Q\Lambda^{1/2}Q^T.
+\]
+则 \(B\) 为实对称矩阵，且特征值均为 \(\sqrt{\lambda_i}>0\)，所以 \(B\) 正定。并且
+\[
+B^2=Q\Lambda^{1/2}Q^TQ\Lambda^{1/2}Q^T
+=Q\Lambda Q^T=A.
+\]}
+\answer{两个结论均成立。}
+\examnote{这是正定矩阵的平方根分解：\(A=D^TD\) 是 Cholesky 型分解，\(A=B^2\) 是对称正定平方根。}
+\end{solutionblock}
+
+\subsection{6.5 矩阵等价、相似、合同}
+
+\begin{solutionblock}
+\textbf{6.5 例 1}
+
+\question{设 \(A=\begin{pmatrix}2&-1&-1\\-1&2&-1\\-1&-1&2\end{pmatrix}\)，\(B=\begin{pmatrix}1&0&0\\0&1&0\\0&0&0\end{pmatrix}\)，判断 \(A\) 与 \(B\) 的等价、相似、合同关系。}
+
+
+
+\analysis{设
+\[
+A=\begin{pmatrix}
+2&-1&-1\\
+-1&2&-1\\
+-1&-1&2
+\end{pmatrix},\qquad
+B=\begin{pmatrix}
+1&0&0\\
+0&1&0\\
+0&0&0
+\end{pmatrix}.
+\]
+矩阵 \(A\) 的特征值为
+\[
+3,\ 3,\ 0,
+\]
+因此 \(r(A)=2\)。而 \(r(B)=2\)，所以 \(A\) 与 \(B\) 等价。
+
+相似要求特征值完全相同。\(B\) 的特征值为
+\[
+1,\ 1,\ 0,
+\]
+与 \(A\) 的特征值不同，所以二者不相似。
+
+合同分类看惯性指数。\(A\) 的正惯性指数为 \(2\)、负惯性指数为 \(0\)；\(B\) 的正惯性指数为 \(2\)、负惯性指数为 \(0\)。因此 \(A\) 与 \(B\) 合同。}
+\answer{选 B，合同但不相似。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{6.5 例 2}
+
+\question{设 \(A\) 为 \(n\) 阶实对称矩阵，将 \(A\) 的第 \(i\) 行与第 \(j\) 行交换，再将第 \(i\) 列与第 \(j\) 列交换得到 \(B\)，判断 \(A,B\) 的等价、相似、合同关系。}
+
+
+
+\analysis{交换 \(A\) 的第 \(i\) 列和第 \(j\) 列，可写成右乘一个置换矩阵 \(P\)；再交换第 \(i\) 行和第 \(j\) 行，可写成左乘同一个置换矩阵 \(P\)。因此
+\[
+B=PAP.
+\]
+置换矩阵满足
+\[
+P^T=P,\qquad P^{-1}=P.
+\]
+于是
+\[
+B=P^TAP,
+\]
+所以 \(A\) 与 \(B\) 合同；同时
+\[
+B=P^{-1}AP,
+\]
+所以 \(A\) 与 \(B\) 相似。由于初等行列变换不改变等价关系，且相似或合同都蕴含等价矩阵同秩，因此 \(A\) 与 \(B\) 也等价。}
+\answer{选 D，等价、相似、合同。}
+\end{solutionblock}

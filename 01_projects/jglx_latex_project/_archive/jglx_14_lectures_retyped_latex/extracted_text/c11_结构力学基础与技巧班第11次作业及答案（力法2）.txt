@@ -1,0 +1,249 @@
+【第 1 页，来源：pdf-text】
+叫研究生入学考试辅导丛书结构力学(第二版)
+EA
+C
+q勹B
+G§1』
+20kN
+IF
+丫G
+y
+A
+7?7?77' 玉
+j_
+2
+尸
+B
+＼
+L
+L
+6m
+6m
+l
+1
+1
+．，
+图5-149
+图5-150
+4. 弹性支承超静定结构的计算
+5-31 图5-153 (a)所示结构，取图5 - 153 (b)为力法基本体系，其力法典型方程
+为(
+)。k为弹簧刚度。(中南大学2012)
+Fp
+a
+十
+图5-151
+a
+一。
+一
+20kN
+I
+EA==
+{
+3m
+{
+l
+r
+k-
+(a)
+(b)
+图5-152
+图5-153
+5-32 求图5-154所示结构在给定基本体系下的力法方程及方程中的所有系数。(青
+岛理工大学2008)
+5-33试计算图5-155所示具有弹性支座的结构，并作弯矩图。抗转刚度系数ko =
+單(中国矿业大学2008)
+q
+q
+贮I I I
+I I I I
+贮A
+u
+j
+C
+EI
+EI
+I
+］
+ko
+M
+El嘴数
+k
+{
+lr-3El/13
+＼
+1-
+f
+I
+112
+I
+//2
+图5-154
+图5-155
+5. 支座发生位移和温度变化时超静定结构的计算
+5-34 图5-156中等EI值单跨梁两侧温度变化时，M图位千(
+)。(青岛理工大
+232
+
+【第 2 页，来源：ocr】
+Mt a Be sh Sh
+AY) rnin
+A. 低温侧       B. 高温侧       C. 不同侧       D, =
+、        mle     一                       Ou X1 十92十Ac一A
+5-35 判断题。 FLAS  157 所示结构基本体系， mA X,+0nX,-+Ae= 人中，
+Aic=0          ve                ，
+ae C  ) (福州六学 2011)
+5-36 图5-158 所示刚架除承受荷载外，支座A 下沉了4二2cm，且顺时针转动了0一
+0. 0lrad。已知 E=2.1X10'kN/cm?, [=2000cm', FAA ERICMIZER SA. 华南理工
+大学 2009)                              ，
+加       oy        g
+<              |      50KN              “
+Xx
+-                                   和
++2rC                                              A
+上一一一一才           (a)                )          上一全
+图5-156                    图5-157        ;   Py 5-158
+6. 超静定结构的位移计算
+5-37 图5-159 所示梁 BK) 支座位移产生的跨中点竖向位移为(  ). (aK
+A. lp/16        B. lp/8 - OG. Up[人4        D. lp/2
+5-38 图5-160 Mani Re HRA EWRHSHA, WC AHAMB oc=__
+__ ，五点的水平位移Anz一        。 (湖南大学 2011)
+5-39 5-161 所示一端固定、另一端定向支承的等截面粱，当 A 端发生单位转角
+0一1时，B 端的竖向位移A一           » (BRK 2010)     -
+11.98
+7.29      Fp    3.65                  ,
+El            EI  E          .
+，                            B       c     8,33    1.04
+EI      2EI         EI    ~     ot          .
+¥     EI Ph
+A | \365     D.  ” Fih\o.s2      ee         Fl
+9    EI            a     ，           “oa BS -  、 0
+x eae                             MPA(«0.01F pl)          上 -|            \QN: 2
+图5-159                 图5-160                       图5- 161        cht 二
+5- 40 图 5 - 162 所示结构，各杆抗村刚度 ET 为常数，忽略杆件的轴向变形。(1) RN
+e  ; 1 ' .
+23稍揭线上快印
+
+【第 3 页，来源：ocr】
+app RS AE RAR BRAS Aa a LEP eaASE
+据结构与荷载的特点，选用最简便的方法作刚架的弯矩简; (2) RC 点的水平位移。 (武汉
+理工大学 2011)            ，                ，
+10kN
+，               20kN-m            .
+|                C     D      E        F
+&
+’               A             Bl:                   .
+2m   2m   |   2m
+图5- 162
+>
+234                                                          fA eee FRED
+
+【第 4 页，来源：ocr】
+RAR Stil
+未久向信1981687888
+SAI. buryt OnE
+Sd.           \   |
+人              yi
+bs                    加
+et                    Ay
+i             Sue Galt (wy eet cs
+yw          |
+be aia + Oe a
+®            Ine Sl dnvetrlag|+ 这
+> of
+AN       Ine 5      = 7"
+£.
+> 3》
+外 aN  ee    和   BL - th
+aes   .    》       a      5     \
+a i dyldele Fo bt J     a ae a? - eye
+bat ya a 4
+bart SXrt 54 = 0°
+a)
+OPO
+
+【第 5 页，来源：ocr】
+HELSEAR aT
+MAiMaiosO3sTeSs
+ae
+Pr                ‘i cate
+bye 4 %   MN bale nz] 2 al          =
+se, ih - acd ,  x My 7 stn tay My   +    Ll   xF
+suit a oa  ts YN 0 ek
+vv Ye    A\
+oy, A            oe      .
+Fr,                    Fx    从
+|           -                             .
+L   人  Sun                  4=-b.
+y                 ‘ol
+a)
+ONL
+OPO
+
+【第 6 页，来源：ocr】
+HELSEAR aT
+IRB IESTSSS
+ri                         yuz 4 [ax douse 5 t x att]
+4        Tw                         ，
+4               局- 10.37 mw
+TM te aa
+wont 儿    any v| 9  s bes _pabm
+$y Xt     S5iL=     \" by
+ped.
+Bore
+er        ia |
+5-4]. B          rh ¢          \y       1
+=   tl
+Ay
+17
+(但 + f  2H vy diego  AM
+ate      yl
+|           f= tt x   人
+才 tls (4+ N48) xi]- wee Lx Gry
+|                     Ye F sein
+A
+4141.7
+we
+OPO
+
+【第 7 页，来源：ocr】
+RAR Stil
+MAiMaiosO3sTeSs
+aa |       .
+chtc2 4, Ly 14x ley 一 jx Lx 256 bt]
+bape — Mele Rl
+L                                        aL
+5-4,  -
+b= ~    * Lebe    t) =   >
+- fo、 ()
+ph             2 my       Toke
+Ad               ry          (¥
+|         7%
+L
+im                  hy> als mre t wer}
+Ww
+9            32
+*e        ie BL  + = 3h
+y                        a
+ib       yx2ax W) - _           bnXi+ shay G  j=  =z
+» |
+if  >               a     a
+M                2          is
+QUX= alts rn] =  =
+wlan.
+ONL
+OPO
+
+【第 8 页，来源：ocr】
+app RS AE RAR BRAS Aa a LEP eaASE
+据结构与荷载的特点，选用最简便的方法作刚架的弯矩简; (2) RC 点的水平位移。 (武汉
+理工大学 2011)            ，                ，
+10kN
+，               20kN-m            .
+|                C     D      E        F
+&
+’               A             Bl:                   .
+2m   2m   |   2m
+图5- 162
+>
+234                                                          fA eee FRED

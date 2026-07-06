@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs>
+<marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#1F4E73"/>
+</marker>
+<marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#6C757D"/>
+</marker>
+<marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#D8892C"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1000" fill="#FFFFFF"/>
+<text x="800" y="62" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="40" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+梁柱螺栓连接节点示意图
+</text>
+<text x="800" y="108" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+端板、高强螺栓、柱翼缘与梁腹板的连接关系
+</text>
+<line x1="100" y1="132" x2="1500" y2="132" stroke="#CBD3DA" stroke-width="2"/>
+<rect x="720" y="220" width="170" height="600" rx="4" fill="#EEF1F4" stroke="#1F4E73" stroke-width="3"/>
+<rect x="300" y="450" width="440" height="120" rx="4" fill="#DDECF7" stroke="#1F4E73" stroke-width="3"/>
+<rect x="870" y="450" width="440" height="120" rx="4" fill="#DDECF7" stroke="#1F4E73" stroke-width="3"/>
+<rect x="685" y="410" width="70" height="200" rx="4" fill="#F7E5CC" stroke="#D8892C" stroke-width="3"/>
+<rect x="855" y="410" width="70" height="200" rx="4" fill="#F7E5CC" stroke="#D8892C" stroke-width="3"/>
+<circle cx="710" cy="445" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="710" cy="490" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="710" cy="535" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="710" cy="580" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="730" cy="445" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="730" cy="490" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="730" cy="535" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="730" cy="580" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="880" cy="445" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="880" cy="490" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="880" cy="535" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="880" cy="580" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="900" cy="445" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="900" cy="490" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="900" cy="535" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<circle cx="900" cy="580" r="13" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+<text x="805" y="195" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="28" fill="#1F4E73" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+钢柱
+</text>
+<text x="520" y="610" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" fill="#1F4E73" text-anchor="middle" dominant-baseline="middle">
+H型钢梁
+</text>
+<text x="1080" y="610" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" fill="#1F4E73" text-anchor="middle" dominant-baseline="middle">
+H型钢梁
+</text>
+<line x1="980" y1="430" x2="910" y2="465" stroke="#D8892C" stroke-width="3" marker-end="url(#arrow-orange)"/>
+<text x="1110" y="420" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#D8892C" text-anchor="middle" dominant-baseline="middle">
+端板
+</text>
+<line x1="610" y1="395" x2="720" y2="445" stroke="#6C757D" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<text x="520" y="370" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+高强螺栓群
+</text>
+<line x1="790" y1="710" x2="790" y2="610" stroke="#4F8F5B" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<text x="790" y="750" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle">
+<tspan x="790" dy="-15.0">节点域</tspan>
+<tspan x="790" dy="30">受剪与局部稳定控制</tspan>
+</text>
+<rect x="230" y="780" width="1140" height="105" rx="14" fill="#EEF1F4" stroke="#6C757D" stroke-width="3"/>
+<text x="800" y="814" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+质量控制要点
+</text>
+<text x="800" y="854" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+端板贴合面、螺栓初拧与终拧、焊缝质量、节点域加劲肋及安装偏差复核。
+</text>
+</svg>

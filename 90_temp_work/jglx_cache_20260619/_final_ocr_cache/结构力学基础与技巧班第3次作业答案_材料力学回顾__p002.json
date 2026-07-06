@@ -1,0 +1,7 @@
+{
+  "source": "D:\\xm\\zy\\jglx\\6.作业&答案\\结构力学基础与技巧班第3次作业答案（材料力学回顾）.pdf",
+  "page": 2,
+  "method": "pdf-text",
+  "text": "（d）解：取整体隔离体对A点取矩，由\n10 4 0.2 10 5 0\nB\nF \\times\n--\n\\times\n\\times =，可得B点竖向\n支反力\n1.4\nB\nF\nKN\n=\n，竖向力平衡得\n0.6\nA\nF\nKN\n=\n。C处作用了集中力偶，两侧截面\n的弯矩有突变，由C左侧截开取AC隔离体，可得\n0.6 8 0.2 8 4\nL\nC\nM =\n\\times -\n\\times \\times =1.6KN m\n-\n\n（上侧受拉），由C结点力矩平衡得\n2.4\nR\nC\nM\nKN m\n=\n\n（下侧受拉）。画出弯矩图和剪力图如图（b）（c）所示。\n（e）解：取整体隔离体对A点取矩，由\n3 6 20 2 20\n0\nB\nF \\times --\n\\times -\n=\n，可得B点竖向\n支反力\n22\nB\nF\nKN\n=\n，竖向力平衡得\n2\nA\nF\nKN\n=\n。画出弯矩图和剪力图如图（b）（c）\n所示。",
+  "figure": "figures/结构力学基础与技巧班第3次作业答案_材料力学回顾__p002.jpg"
+}

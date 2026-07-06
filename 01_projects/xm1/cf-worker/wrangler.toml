@@ -1,0 +1,12 @@
+name = "campus-wall-inspection-test"
+main = "src/index.js"
+compatibility_date = "2026-05-13"
+
+[vars]
+DEFAULT_API_BASE = "http://127.0.0.1:8000"
+PROJECT_NAME = "校园建筑外墙 AI 图像识别巡检系统"
+
+# 部署到自有 Cloudflare 域名时取消注释并替换：
+# routes = [
+#   { pattern = "wall-ai.example.com/*", zone_name = "example.com" }
+# ]

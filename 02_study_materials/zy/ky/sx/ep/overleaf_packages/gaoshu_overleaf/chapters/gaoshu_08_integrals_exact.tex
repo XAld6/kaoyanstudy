@@ -1,0 +1,1357 @@
+\chapter{高等数学：不定积分与定积分}
+
+\section{可积性、原函数与变上限积分}
+
+\begin{problemblock}
+\textbf{例1.} 下列命题中正确的有：
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 若函数 \(f(x)\) 在区间 \([a,b]\) 上只有有限个间断点，则 \(f(x)\) 在 \([a,b]\) 上可积；
+\item 若函数 \(f(x)\) 在区间 \([a,b]\) 上有界，则 \(f(x)\) 在 \([a,b]\) 上可积；
+\item 若函数 \(f(x)\) 在区间 \([a,b]\) 上只有有限个间断点且均为第一类间断点，则 \(f(x)\) 在 \([a,b]\) 上可积；
+\item 设 \(f(x)\) 在区间 \([a,b]\) 上可积，则 \(\displaystyle\int_a^x f(t)\,dt\) 是 \(f(x)\) 在 \([a,b]\) 上的原函数；
+\item 设 \(F(x)\) 是 \(f(x)\) 在 \([a,b]\) 上的原函数，则
+\[
+F(x)=\int_a^x f(t)\,dt+C;
+\]
+\item 设 \(f(x)\) 在 \([a,b]\) 上有定义，若 \(f(x)\) 有第一类间断点或无穷间断点，则 \(f(x)\) 在 \([a,b]\) 上没有原函数；
+\item 设 \(f(x)\) 在 \([a,b]\) 上处处可导，则导函数 \(f'(x)\) 在 \([a,b]\) 上没有第一类间断点和无穷间断点。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{本题考查“可积、连续、有原函数、导函数性质”之间的逻辑关系。考研中最容易错的是把“有界”误当成“可积”，或把“有原函数”直接等同于 Newton-Leibniz 公式可用。}
+(1) 错。只有有限个间断点不排除无界间断，例如 \(f(x)=1/(x-c)\) 在含 \(c\) 的闭区间上无界，不能作为 Riemann 可积函数。
+
+(2) 错。有界不是可积的充分条件，Dirichlet 函数
+\[
+f(x)=\begin{cases}1,&x\in\mathbb{Q},\\0,&x\notin\mathbb{Q}\end{cases}
+\]
+处处不连续，在任意区间上不可积。
+
+(3) 对。只有有限个第一类间断点时，函数在其余点连续；第一类间断点的左右极限存在，局部有界，因而整体有界且间断点集有限，所以 Riemann 可积。
+
+(4) 错。设 \(F(x)=\int_a^x f(t)\,dt\)，只能保证 \(F\) 连续；只有当 \(f\) 在 \(x\) 处连续时才有 \(F'(x)=f(x)\)。可积函数不必处处连续。
+
+(5) 错。仅知道 \(F'=f\) 并不保证 \(f\) 的 Riemann 积分存在；Newton-Leibniz 公式还需要相应的可积性条件。若补充 \(f\) 可积，则该式成立。
+
+(6) 对。导函数具有 Darboux 性质，不能有跳跃间断等第一类间断点；若在一点附近导数趋于无穷，也会与该点差商极限有限相矛盾，因此这样的函数不可能是某个函数的导函数。
+
+(7) 对。这正是导函数的基本性质：导函数可以不连续，但不能有第一类间断点；导函数在定义点附近也不能出现真正的无穷间断。
+\answer{\((3),(6),(7)\)}
+\examnote{“可积 \(\Rightarrow\) 变上限积分连续”，但“可积 \(\nRightarrow\) 变上限积分处处以原函数形式求导”；“导函数 \(\Rightarrow\) Darboux 性质”是判断原函数存在性的高频依据。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例2.} 在区间 \([-1,2]\) 上，以下四个结论：
+\begin{enumerate}[label=\textcircled{\arabic*}, leftmargin=2.2em]
+\item \(
+f(x)=\begin{cases}
+2,&x>0,\\
+1,&x=0,\\
+-1,&x<0
+\end{cases}
+\)，有原函数，但其定积分不存在；
+\item \(
+f(x)=\begin{cases}
+2x\sin\dfrac1{x^2}-\dfrac2x\cos\dfrac1{x^2},&x\ne0,\\
+0,&x=0
+\end{cases}
+\)，有原函数，其定积分也存在；
+\item \(
+f(x)=\begin{cases}
+\dfrac1x,&x\ne0,\\
+0,&x=0
+\end{cases}
+\)，没有原函数，其定积分也不存在；
+\item \(
+f(x)=\begin{cases}
+2x\cos\dfrac1x+\sin\dfrac1x,&x\ne0,\\
+0,&x=0
+\end{cases}
+\)，有原函数，其定积分也存在。
+\end{enumerate}
+正确的有几项（\quad）
+
+A. \(1\)\qquad B. \(2\)\qquad C. \(3\)\qquad D. \(4\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{逐项判断时分开看两个问题：是否为某个函数的导函数，是否作为 Riemann 定积分存在。导函数不能有跳跃间断；Riemann 可积要求有界且间断点集足够小。}
+\textcircled{1} 中 \(f\) 在 \(0\) 处有跳跃间断，导函数不能有跳跃间断，所以无原函数；但 \(f\) 有界且只有一个间断点，定积分存在。原结论错。
+
+\textcircled{2} 中
+\[
+\left(x^2\sin\frac1{x^2}\right)'
+=2x\sin\frac1{x^2}-\frac2x\cos\frac1{x^2}\quad (x\ne0),
+\]
+且该原函数在 \(0\) 处导数为 \(0\)，所以它有原函数。但 \(f\) 在 \(0\) 附近无界，作为 Riemann 定积分不存在。原结论错。
+
+\textcircled{3} 中 \(1/x\) 在 \(0\) 附近无界，也不可能在跨过 \(0\) 的区间上有原函数；定积分不存在。原结论对。
+
+\textcircled{4} 中
+\[
+\left(x^2\cos\frac1x\right)'
+=2x\cos\frac1x+\sin\frac1x\quad (x\ne0),
+\]
+且在 \(0\) 处导数为 \(0\)，所以有原函数。该函数有界且只在 \(0\) 处不连续，故 Riemann 可积。原结论对。
+\answer{B}
+\examnote{第 \textcircled{2} 项是常见陷阱：有原函数不代表 Riemann 可积，因为导函数可以无界。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例3.} 设
+\[
+f(x)=\begin{cases}
+\sin\dfrac1x,&x\ne0,\\
+0,&x=0,
+\end{cases}
+\]
+证明 \(f(x)\) 在区间 \([-1,1]\) 上定积分存在且有原函数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(\sin(1/x)\) 在 \(0\) 处振荡但有界。定积分存在看 Riemann 可积性；原函数存在则构造变上限积分并检查 \(0\) 处导数。}
+函数 \(f\) 在 \([-1,1]\) 上有界，并且除 \(x=0\) 外处处连续，间断点只有一个，因此 \(f\) 在 \([-1,1]\) 上 Riemann 可积。
+
+定义
+\[
+F(x)=\int_0^x f(t)\,dt.
+\]
+当 \(x\ne0\) 时，\(f\) 在 \(x\) 处连续，故由变上限积分求导定理得
+\[
+F'(x)=f(x).
+\]
+下面只需验证 \(x=0\) 处。对 \(x>0\)，令 \(u=1/t\)，则
+\[
+\int_0^x \sin\frac1t\,dt
+=\int_{1/x}^{+\infty}\frac{\sin u}{u^2}\,du.
+\]
+分部积分或直接估计可得该积分为 \(O(x^2)\)，于是
+\[
+\frac{F(x)-F(0)}x
+=\frac1x\int_0^x \sin\frac1t\,dt\to0.
+\]
+对 \(x<0\) 同理也有该差商趋于 \(0\)。所以
+\[
+F'(0)=0=f(0).
+\]
+因此 \(F\) 是 \(f\) 在 \([-1,1]\) 上的一个原函数。
+\answer{定积分存在；一个原函数为 \(F(x)=\displaystyle\int_0^x f(t)\,dt\)。}
+\examnote{“振荡间断”不妨碍可积；能否有原函数要看构造出的变上限积分在间断点处是否仍可导。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例4.} 曲线
+\[
+f(x)=\int_{-1}^x\arctan t\,dt
+\]
+与 \(x\) 轴所围图形的面积为（\quad）
+
+A. \(1-\dfrac\pi2\)\qquad
+B. \(\dfrac\pi2-1\)\qquad
+C. \(\dfrac\pi2-\ln2\)\qquad
+D. \(\ln2-\dfrac\pi2\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先判断曲线与 \(x\) 轴交点及正负，再计算面积而不是直接计算代数积分。}
+因为 \(\arctan x\) 为奇函数，
+\[
+f(-1)=0,\qquad f(1)=\int_{-1}^1\arctan t\,dt=0.
+\]
+且 \(f'(x)=\arctan x\)，在 \((-1,0)\) 上为负，在 \((0,1)\) 上为正，所以 \(f(x)\le0\)，所围面积为
+\[
+S=-\int_{-1}^1 f(x)\,dx.
+\]
+交换积分次序：
+\[
+\int_{-1}^1 f(x)\,dx
+=\int_{-1}^1\int_{-1}^x\arctan t\,dt\,dx
+=\int_{-1}^1(1-t)\arctan t\,dt.
+\]
+其中 \(\int_{-1}^1\arctan t\,dt=0\)，故
+\[
+S=\int_{-1}^1 t\arctan t\,dt
+=2\int_0^1t\arctan t\,dt.
+\]
+分部积分得
+\[
+\int_0^1t\arctan t\,dt
+=\frac\pi8-\frac12\int_0^1\frac{t^2}{1+t^2}\,dt
+=\frac\pi8-\frac12\left(1-\frac\pi4\right)
+=\frac\pi4-\frac12.
+\]
+因此
+\[
+S=2\left(\frac\pi4-\frac12\right)=\frac\pi2-1.
+\]
+\answer{B}
+\examnote{面积题先判正负。若直接算 \(\int f\)，得到的是带符号面积，最后要取相反数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例5.} 设
+\[
+f(x)=\int_x^{x+\frac\pi2}|\sin t|\,dt,
+\]
+且
+\[
+F(x)=\int_0^x f(t)\,dt+ax
+\]
+是以 \(\pi\) 为周期的周期函数，则 \(a=\underline{\hspace{2cm}}\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{若 \(F\) 以 \(\pi\) 为周期，则 \(F(x+\pi)-F(x)=0\)。对可导周期函数，也就是一周期内导数积分为零。}
+由 \(|\sin t|\) 的周期为 \(\pi\)，得
+\[
+f(x+\pi)=f(x),
+\]
+所以 \(f\) 也是以 \(\pi\) 为周期的函数。又
+\[
+F'(x)=f(x)+a.
+\]
+周期函数一周期增量为零，因此
+\[
+0=F(\pi)-F(0)=\int_0^\pi f(x)\,dx+a\pi.
+\]
+计算
+\[
+\int_0^\pi f(x)\,dx
+=\int_0^\pi\int_x^{x+\frac\pi2}|\sin t|\,dt\,dx.
+\]
+令 \(t=x+u\)，则
+\[
+\int_0^\pi f(x)\,dx
+=\int_0^{\frac\pi2}\int_0^\pi|\sin(x+u)|\,dx\,du
+=\int_0^{\frac\pi2}2\,du=\pi.
+\]
+故
+\[
+\pi+a\pi=0,\qquad a=-1.
+\]
+\answer{\(-1\)}
+\examnote{含周期的变上限积分题，常用“一周期增量为零”转化为 \(\int_0^T F'(x)\,dx=0\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例6.} 设 \(f(x)\) 在 \(\left[0,\dfrac32\pi\right]\) 上连续，在 \(\left(0,\dfrac32\pi\right)\) 内是函数 \(\dfrac{\sin x}{x}\) 的一个原函数，且 \(f(0)=0\)。
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 证明 \(f\left(\dfrac32\pi\right)>0\)；
+\item 求方程
+\[
+\int_1^x\frac{\sin t}{t}\,dt=\ln x^2
+\]
+的实根个数。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{第 (1) 问是证明 \(\int_0^{3\pi/2}\sin x/x\,dx>0\)；第 (2) 问构造函数后利用单调性和端点极限数根。}
+(1) 由于 \(f'(x)=\dfrac{\sin x}{x}\)，且 \(f(0)=0\)，有
+\[
+f\left(\frac32\pi\right)
+=\int_0^{\frac32\pi}\frac{\sin x}{x}\,dx.
+\]
+将积分拆为
+\[
+\int_0^{\frac32\pi}
+=\int_0^{\frac\pi2}+\int_{\frac\pi2}^{\pi}+\int_{\pi}^{\frac32\pi}.
+\]
+对第一段和第三段作配对，令第三段中 \(x=u+\pi\)，得
+\[
+\int_0^{\frac\pi2}\frac{\sin x}{x}\,dx
+\int_{\pi}^{\frac32\pi}\frac{\sin x}{x}\,dx
+=\int_0^{\frac\pi2}\sin u\left(\frac1u-\frac1{u+\pi}\right)\,du>0.
+\]
+而
+\[
+\int_{\frac\pi2}^{\pi}\frac{\sin x}{x}\,dx>0,
+\]
+故
+\[
+f\left(\frac32\pi\right)>0.
+\]
+
+(2) 令
+\[
+H(x)=\int_1^x\frac{\sin t}{t}\,dt-\ln x^2,\qquad x\ne0.
+\]
+由于 \(\sin t/t\) 在 \(0\) 处为可去间断，跨过 \(0\) 的积分可按连续延拓理解。对 \(x\ne0\)，
+\[
+H'(x)=\frac{\sin x}{x}-\frac2x=\frac{\sin x-2}{x}.
+\]
+因 \(\sin x-2<0\)，所以 \(H\) 在 \((-\infty,0)\) 上严格递增，在 \((0,+\infty)\) 上严格递减。
+
+又
+\[
+\lim_{x\to0^\pm}H(x)=+\infty,\qquad
+\lim_{x\to+\infty}H(x)=-\infty,\qquad
+\lim_{x\to-\infty}H(x)=-\infty.
+\]
+因此 \((0,+\infty)\) 上有且仅有一个根，\((-\infty,0)\) 上也有且仅有一个根。
+\answer{(1) 已证；(2) 实根个数为 \(2\)。}
+\examnote{数根题的标准步骤：构造函数、求导判单调、算端点极限。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例7.} 设 \(f(x)\) 是以 \(T\) 为周期的连续函数，\(x\in(-\infty,+\infty)\)，则下列说法：
+\begin{enumerate}[label=\textcircled{\arabic*}, leftmargin=2.2em]
+\item 若 \(\displaystyle\int_0^T f(x)\,dx=0\)，则 \(\displaystyle\int_0^x f(t)\,dt\) 是周期函数；
+\item 若 \(f(x)\) 为奇函数，则 \(\displaystyle\int_0^x f(t)\,dt\) 是周期函数；
+\item 若 \(\displaystyle\int_0^{+\infty}f(x)\,dx=0\)，则 \(\displaystyle\int_0^x f(t)\,dt\) 是周期函数；
+\item \(\displaystyle F(x)=\int_0^x f(t)\,dt-\frac{x}{T}\int_0^T f(t)\,dt\) 是周期函数。
+\end{enumerate}
+中正确的个数为（\quad）
+
+A. \(1\)\qquad B. \(2\)\qquad C. \(3\)\qquad D. \(4\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设 \(G(x)=\int_0^x f(t)\,dt\)。它是否周期，关键看 \(G(x+T)-G(x)=\int_x^{x+T}f(t)\,dt\)。}
+因 \(f\) 周期为 \(T\)，
+\[
+G(x+T)-G(x)=\int_x^{x+T}f(t)\,dt=\int_0^T f(t)\,dt.
+\]
+所以 \textcircled{1} 正确。
+
+若 \(f\) 是奇函数且又以 \(T\) 为周期，则
+\[
+\int_0^T f(t)\,dt=\int_{-\frac T2}^{\frac T2}f(t)\,dt=0,
+\]
+因此 \textcircled{2} 正确。
+
+若周期连续函数的 \(\int_0^{+\infty}f(x)\,dx\) 收敛，则每周期积分必须为 \(0\)，否则部分积分和会按周期线性增长；题设积分为 \(0\) 更推出 \(\int_0^T f=0\)。故 \textcircled{3} 正确。
+
+对 \textcircled{4}，直接计算
+\[
+\begin{aligned}
+F(x+T)-F(x)
+&=\int_x^{x+T}f(t)\,dt-\int_0^T f(t)\,dt\\
+&=0.
+\end{aligned}
+\]
+故 \textcircled{4} 也正确。
+\answer{D}
+\examnote{周期函数的变上限积分一般不是周期函数；减去平均值对应的线性项后一定周期。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例8.} 设有界函数 \(f(x),g(x)\) 在 \(x=0\) 的某去心邻域内连续，令
+\[
+F(x)=\int_0^x f(t)g(t)\,dt,
+\]
+则下列说法中错误的是（\quad）
+\begin{enumerate}[label=\Alph*., leftmargin=2.2em]
+\item 若 \(x=0\) 是函数 \(f(x)\) 的连续点，是 \(g(x)\) 的可去间断点，则函数 \(F(x)\) 在 \(x=0\) 处可导；
+\item 若 \(x=0\) 是函数 \(f(x)\) 的连续点，是 \(g(x)\) 的跳跃间断点，则函数 \(F(x)\) 在 \(x=0\) 处可导的充要条件是 \(f(0)=0\)；
+\item 若 \(x=0\) 是函数 \(f(x)\) 和 \(g(x)\) 的可去间断点，则函数 \(F(x)\) 在 \(x=0\) 处可导；
+\item 若 \(x=0\) 是函数 \(f(x)\) 的可去间断点，是函数 \(g(x)\) 的跳跃间断点，则函数 \(F(x)\) 在 \(x=0\) 处可导的充要条件是 \(f(0)=0\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{判断 \(F'(0)\) 要看平均值极限
+\[
+\frac{F(x)-F(0)}x=\frac1x\int_0^x f(t)g(t)\,dt.
+\]
+可去间断点处真正起作用的是去心极限，不是函数在该点被赋予的值。}
+A 中，若 \(f\) 在 \(0\) 连续，\(g\) 在 \(0\) 可去，则 \(f(t)g(t)\) 在 \(0\) 的去心极限存在，所以平均值极限存在，A 正确。
+
+B 中，设 \(g(0+)\ne g(0-)\)。两侧平均值分别趋于
+\[
+f(0)g(0+),\qquad f(0)g(0-).
+\]
+二者相等的充要条件是 \(f(0)=0\)，B 正确。
+
+C 中，若二者均为可去间断，则乘积也有可去极限，平均值极限存在，C 正确。
+
+D 中，若 \(f\) 在 \(0\) 是可去间断，真正决定平均值两侧极限的是
+\[
+L=\lim_{t\to0}f(t),
+\]
+而不是 \(f(0)\)。可导的充要条件应是 \(L=0\)，不一定是 \(f(0)=0\)。D 错误。
+\answer{D}
+\examnote{积分平均值不受单点函数值影响，所以遇到可去间断时要盯住 \(\lim_{x\to0}f(x)\)，不要盯 \(f(0)\)。}
+\end{solutionblock}
+
+\section{Riemann 和、原函数选择与微分方程}
+
+\begin{problemblock}
+\textbf{例9.} 设函数 \(f(x)\) 在区间 \([0,1]\) 上连续，则
+\[
+\int_0^1 f(x)\,dx=(\quad)
+\]
+\begin{enumerate}[label=\Alph*., leftmargin=2.2em]
+\item \(\displaystyle \lim_{n\to\infty}\sum_{k=1}^n f\left(\frac{3k-1}{3n}\right)\frac1{3n}\)；
+\item \(\displaystyle \lim_{n\to\infty}\sum_{k=1}^n f\left(\frac{3k-1}{3n}\right)\frac1n\)；
+\item \(\displaystyle \lim_{n\to\infty}\sum_{k=1}^{3n} f\left(\frac{k-1}{3n}\right)\frac1n\)；
+\item \(\displaystyle \lim_{n\to\infty}\sum_{k=1}^{3n} f\left(\frac{k}{3n}\right)\frac3n\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{Riemann 和的两个要素是取样点和小区间长度。题中 \((3k-1)/(3n)\) 落在第 \(k\) 个长度为 \(1/n\) 的小区间中。}
+把 \([0,1]\) 分成 \(n\) 个小区间
+\[
+\left[\frac{k-1}{n},\frac{k}{n}\right],\qquad k=1,2,\dots,n.
+\]
+取样点
+\[
+\xi_k=\frac{3k-1}{3n}=\frac{k}{n}-\frac1{3n}
+\]
+确实位于第 \(k\) 个小区间内，小区间长度为 \(\Delta x=1/n\)。因此
+\[
+\int_0^1f(x)\,dx
+=\lim_{n\to\infty}\sum_{k=1}^n f(\xi_k)\frac1n.
+\]
+A 的权重少了 \(3\) 倍，C、D 的权重又分别多了倍数，均不对。
+\answer{B}
+\examnote{Riemann 和不能只看取样点是否密铺，还要看 \(\Delta x\) 是否对应分割长度。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例10.} 设 \(f(x)\) 在 \([0,1]\) 上可积，则
+\[
+\lim_{n\to\infty}\sum_{i=0}^{n-1}
+\ln\left[1+\frac1n f\left(\frac in\right)\right]
+=(\quad)
+\]
+\begin{enumerate}[label=\Alph*., leftmargin=2.2em]
+\item \(\displaystyle\int_0^1 \ln\left[1+\frac{f(x)}n\right]\,dx\)；
+\item \(\displaystyle\int_0^1 \ln[1+f(x)]\,dx\)；
+\item \(\displaystyle\int_0^1 f(x)\,dx\)；
+\item \(\displaystyle\int_0^1 f^2(x)\,dx\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是“对数小量展开 + Riemann 和”。因为 \(f\) 可积，所以有界；当 \(n\) 足够大时 \(\frac1n f(i/n)\) 是一致小量。}
+设 \(|f(x)|\le M\)。当 \(n>M\) 时，
+\[
+u_i=\frac1n f\left(\frac in\right)
+\]
+满足 \(|u_i|\le M/n\to0\)。由
+\[
+\ln(1+u)=u+O(u^2)
+\]
+一致成立，得
+\[
+\sum_{i=0}^{n-1}\ln(1+u_i)
+=\frac1n\sum_{i=0}^{n-1}f\left(\frac in\right)
++O\left(\sum_{i=0}^{n-1}\frac{M^2}{n^2}\right).
+\]
+余项为 \(O(1/n)\to0\)，主项是 \(f\) 在 \([0,1]\) 上的 Riemann 和，因此极限为
+\[
+\int_0^1 f(x)\,dx.
+\]
+\answer{C}
+\examnote{\(\sum\ln(1+f_i/n)\) 的主部是 \(\sum f_i/n\)，不是 \(\int\ln(1+f)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例11.} 函数
+\[
+f(x)=\begin{cases}
+\dfrac1{\sqrt{1+x^2}},&x\le0,\\
+(x+1)\cos x,&x>0
+\end{cases}
+\]
+的一个原函数为（\quad）
+\begin{enumerate}[label=\Alph*., leftmargin=2.2em]
+\item \(\displaystyle F(x)=\begin{cases}
+\ln(\sqrt{1+x^2}-x),&x\le0,\\
+(x+1)\cos x-\sin x,&x>0;
+\end{cases}\)
+\item \(\displaystyle F(x)=\begin{cases}
+\ln(\sqrt{1+x^2}-x)+1,&x\le0,\\
+(x+1)\cos x-\sin x,&x>0;
+\end{cases}\)
+\item \(\displaystyle F(x)=\begin{cases}
+\ln(\sqrt{1+x^2}+x),&x\le0,\\
+(x+1)\sin x+\cos x,&x>0;
+\end{cases}\)
+\item \(\displaystyle F(x)=\begin{cases}
+\ln(\sqrt{1+x^2}+x)+1,&x\le0,\\
+(x+1)\sin x+\cos x,&x>0.
+\end{cases}\)
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{分段原函数不仅要在各段求导正确，还要在分界点连续并可导。}
+当 \(x\le0\) 时，
+\[
+\frac{d}{dx}\ln(\sqrt{1+x^2}+x)=\frac1{\sqrt{1+x^2}},
+\]
+而
+\[
+\frac{d}{dx}\ln(\sqrt{1+x^2}-x)=-\frac1{\sqrt{1+x^2}}.
+\]
+所以 A、B 的左段求导方向错误。
+
+当 \(x>0\) 时，
+\[
+\frac{d}{dx}\bigl[(x+1)\sin x+\cos x\bigr]=(x+1)\cos x,
+\]
+故 C、D 的右段形式正确。
+
+再看 \(x=0\) 的连续性。C 的左段极限为 \(0\)，右段极限为 \(1\)，不连续，不能是原函数。D 的左段值为 \(1\)，右段极限也为 \(1\)，且两侧导数均为 \(1=f(0)\)，所以 D 正确。
+\answer{D}
+\examnote{分段原函数选择题先排“导数不对”，再查“连接点不连续”。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例12.} 已知微分方程
+\[
+y'+y=f(x),
+\]
+其中 \(f(x)\) 是 \(\mathbb{R}\) 上的连续函数。
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 若 \(f(x)=x\)，求方程的通解；
+\item 若 \(f(x)\) 是周期为 \(T\) 的函数，证明方程存在唯一以 \(T\) 为周期的解。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{一阶线性方程使用积分因子 \(e^x\)。周期解的存在唯一性由初值 \(y(0)\) 被周期条件 \(y(T)=y(0)\) 唯一确定。}
+(1) 当 \(f(x)=x\) 时，
+\[
+y'+y=x.
+\]
+乘以积分因子 \(e^x\)，得
+\[
+(e^xy)'=xe^x.
+\]
+积分：
+\[
+e^xy=\int xe^x\,dx=e^x(x-1)+C.
+\]
+所以
+\[
+y=x-1+Ce^{-x}.
+\]
+
+(2) 一般解可写为
+\[
+y(x)=e^{-x}\left(C+\int_0^x e^t f(t)\,dt\right).
+\]
+周期条件 \(y(T)=y(0)\) 给出
+\[
+e^{-T}\left(C+\int_0^T e^t f(t)\,dt\right)=C.
+\]
+于是
+\[
+C=\frac{\displaystyle\int_0^T e^t f(t)\,dt}{e^T-1},
+\]
+该常数唯一。
+
+取这个 \(C\) 后有 \(y(T)=y(0)\)。令 \(z(x)=y(x+T)\)，由于 \(f(x+T)=f(x)\)，\(z\) 与 \(y\) 满足同一个方程，且 \(z(0)=y(T)=y(0)\)。由一阶线性微分方程初值解唯一性，\(z(x)=y(x)\)，即
+\[
+y(x+T)=y(x).
+\]
+所以存在唯一的 \(T\) 周期解。
+\answer{(1) \(y=x-1+Ce^{-x}\)；(2) 周期解唯一存在。}
+\examnote{周期解问题常把“周期”转化为 \(y(T)=y(0)\)，这会唯一确定通解中的常数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例13.} 已知
+\[
+f'(x)=\arcsin\bigl((x-1)^2\bigr),\qquad f(0)=0,
+\]
+求
+\[
+\int_0^1 f(x)\,dx.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{已知导数求函数积分，可先写成变上限积分，再交换积分次序；也可用分部积分把 \(f\) 转到 \(f'\)。}
+由 \(f(0)=0\)，
+\[
+f(x)=\int_0^x \arcsin\bigl((t-1)^2\bigr)\,dt.
+\]
+于是
+\[
+\int_0^1f(x)\,dx
+=\int_0^1\int_0^x \arcsin\bigl((t-1)^2\bigr)\,dt\,dx
+=\int_0^1(1-t)\arcsin\bigl((1-t)^2\bigr)\,dt.
+\]
+令 \(u=1-t\)，得
+\[
+\int_0^1f(x)\,dx=\int_0^1u\arcsin(u^2)\,du.
+\]
+再令 \(v=u^2\)，\(u\,du=dv/2\)，则
+\[
+\int_0^1f(x)\,dx
+=\frac12\int_0^1\arcsin v\,dv.
+\]
+而
+\[
+\int\arcsin v\,dv
+=v\arcsin v+\sqrt{1-v^2}+C.
+\]
+故
+\[
+\int_0^1f(x)\,dx
+=\frac12\left[\frac\pi2-1\right]
+=\frac\pi4-\frac12.
+\]
+\method{方法二：分部积分}
+\[
+\int_0^1 f(x)\,dx=[xf(x)]_0^1-\int_0^1x f'(x)\,dx.
+\]
+再用 \(f(1)=\int_0^1 f'(t)\,dt\)，可化为
+\[
+\int_0^1(1-t)f'(t)\,dt,
+\]
+与方法一相同。
+\answer{\(\displaystyle \frac\pi4-\frac12\)}
+\examnote{“已知 \(f'\) 求 \(\int f\)”常用交换积分或分部积分，目标都是出现权重 \((1-x)f'(x)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例14.} 设 \(y=y(x)\) 满足
+\[
+x^2y'+(x^2-3)y^2=0,\qquad y(1)=1.
+\]
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 求 \(y=y(x)\) 的表达式；
+\item 计算 \(\displaystyle\int_0^3y^2(x)\,dx\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{方程含 \(y^2\)，令 \(u=1/y\) 可线性化。积分部分利用区间 \([0,3]\) 关于 \(x=3/2\) 的对称性降阶。}
+(1) 由方程得
+\[
+y'=\left(\frac3{x^2}-1\right)y^2.
+\]
+令 \(u=1/y\)，则
+\[
+u'=-\frac{y'}{y^2}=1-\frac3{x^2}.
+\]
+积分：
+\[
+u=x+\frac3x+C.
+\]
+由 \(y(1)=1\)，得 \(u(1)=1\)，故
+\[
+1=1+3+C,\qquad C=-3.
+\]
+于是
+\[
+\frac1y=x+\frac3x-3,
+\qquad
+y=\frac{x}{x^2-3x+3}.
+\]
+
+(2) 因
+\[
+y^2=\frac{x^2}{(x^2-3x+3)^2},
+\]
+记 \(q=x^2-3x+3\)。利用 \(q(3-x)=q(x)\)，
+\[
+\begin{aligned}
+I&=\int_0^3\frac{x^2}{q^2}\,dx\\
+&=\frac12\int_0^3
+\frac{x^2+(3-x)^2}{q^2}\,dx\\
+&=\int_0^3\left(\frac1q+\frac{3}{2q^2}\right)\,dx.
+\end{aligned}
+\]
+又
+\[
+q=\left(x-\frac32\right)^2+\frac34.
+\]
+令
+\[
+z=\frac{2x-3}{\sqrt3},
+\]
+则
+\[
+\int_0^3\frac{dx}{q}=\frac{4\pi}{3\sqrt3},
+\]
+并且
+\[
+\int_0^3\frac{dx}{q^2}
+=\frac23+\frac{8\pi\sqrt3}{27}.
+\]
+所以
+\[
+I=\frac{4\pi}{3\sqrt3}
++\frac32\left(\frac23+\frac{8\pi\sqrt3}{27}\right)
+=1+\frac{8\pi\sqrt3}{9}.
+\]
+\answer{(1) \(\displaystyle y=\frac{x}{x^2-3x+3}\)；(2) \(\displaystyle 1+\frac{8\pi\sqrt3}{9}\)。}
+\examnote{有理函数平方积分若直接展开会繁，先利用对称性把分子降成分母的一次组合。}
+\end{solutionblock}
+
+\section{定积分计算与区间对称}
+
+\begin{problemblock}
+\textbf{例15.} 求
+\[
+\int_0^{\frac\pi2}\ln\sin x\,dx.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是经典 Wallis 型积分。核心是利用 \(\sin x\) 与 \(\cos x\) 在 \([0,\pi/2]\) 上的对称性。}
+记
+\[
+I=\int_0^{\frac\pi2}\ln\sin x\,dx.
+\]
+令 \(x=\frac\pi2-t\)，则
+\[
+I=\int_0^{\frac\pi2}\ln\cos x\,dx.
+\]
+两式相加：
+\[
+2I=\int_0^{\frac\pi2}\ln(\sin x\cos x)\,dx
+=\int_0^{\frac\pi2}\ln\left(\frac12\sin2x\right)\,dx.
+\]
+因此
+\[
+2I=-\frac\pi2\ln2+\int_0^{\frac\pi2}\ln\sin2x\,dx.
+\]
+令 \(u=2x\)，得
+\[
+\int_0^{\frac\pi2}\ln\sin2x\,dx
+=\frac12\int_0^\pi\ln\sin u\,du
+=\frac12\cdot2I=I.
+\]
+故
+\[
+I=-\frac\pi2\ln2.
+\]
+\answer{\(\displaystyle -\frac\pi2\ln2\)}
+\examnote{记住结论 \(\int_0^{\pi/2}\ln\sin x\,dx=-\frac\pi2\ln2\)，后续很多分部积分会直接用。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例16.} 求
+\[
+\int_0^{\frac\pi2}\frac{x}{\tan x}\,dx.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(\frac1{\tan x}=\cot x\)，而 \((\ln\sin x)'=\cot x\)，故直接分部积分。}
+记
+\[
+I=\int_0^{\frac\pi2}x\cot x\,dx.
+\]
+取 \(u=x\)，\(dv=\cot x\,dx\)，则 \(du=dx\)，\(v=\ln\sin x\)。于是
+\[
+I=\left[x\ln\sin x\right]_0^{\frac\pi2}
+-\int_0^{\frac\pi2}\ln\sin x\,dx.
+\]
+边界项为 \(0\)：当 \(x\to0^+\) 时 \(x\ln\sin x\sim x\ln x\to0\)，当 \(x=\pi/2\) 时 \(\ln1=0\)。因此
+\[
+I=-\left(-\frac\pi2\ln2\right)
+=\frac\pi2\ln2.
+\]
+\answer{\(\displaystyle \frac\pi2\ln2\)}
+\examnote{看到 \(x\cot x\) 或 \(x\tan x\)，优先想分部积分，把三角函数积分成对数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例17.} 求
+\[
+\int_0^1\frac{\ln(1+x)}{1+x^2}\,dx.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{分母 \(1+x^2\) 提示令 \(x=\tan t\)。随后利用 \([0,\pi/4]\) 上 \(t\leftrightarrow \pi/4-t\) 的对称性。}
+令 \(x=\tan t\)，则 \(t\in[0,\pi/4]\)，且
+\[
+\frac{dx}{1+x^2}=dt.
+\]
+原积分
+\[
+I=\int_0^{\frac\pi4}\ln(1+\tan t)\,dt.
+\]
+而
+\[
+1+\tan t=\frac{\sin t+\cos t}{\cos t}
+=\frac{\sqrt2\cos\left(t-\frac\pi4\right)}{\cos t}.
+\]
+所以
+\[
+I=\int_0^{\frac\pi4}
+\left[\frac12\ln2+\ln\cos\left(t-\frac\pi4\right)-\ln\cos t\right]dt.
+\]
+令 \(u=\frac\pi4-t\)，有
+\[
+\int_0^{\frac\pi4}\ln\cos\left(t-\frac\pi4\right)dt
+=\int_0^{\frac\pi4}\ln\cos u\,du,
+\]
+与最后一项相消。故
+\[
+I=\frac\pi4\cdot\frac12\ln2=\frac\pi8\ln2.
+\]
+\answer{\(\displaystyle \frac\pi8\ln2\)}
+\examnote{\(1+\tan t\) 常化为 \(\sqrt2\cos(t-\pi/4)/\cos t\)，这是 \([0,\pi/4]\) 对称消去对数项的关键。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例18.} 设 \(f(x)\) 连续，\(a>0\)，证明：
+\[
+\int_1^a f\left(x+\frac{a^2}{x}\right)\frac{dx}{x}
+=
+\int_1^a f\left(x^2+\frac{a^2}{x^2}\right)\frac{dx}{x}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{两边都要化成同一个关于 \(t+1/t\) 的对称积分。核心换元分别是 \(t=x/a\) 和 \(t=x^2/a\)。}
+左边令 \(t=x/a\)，则 \(dx/x=dt/t\)，上下限由 \(1/a\) 到 \(1\)，并且
+\[
+x+\frac{a^2}{x}=a\left(t+\frac1t\right).
+\]
+故左边
+\[
+L=\int_{1/a}^{1}f\left(a\left(t+\frac1t\right)\right)\frac{dt}{t}.
+\]
+右边令 \(t=x^2/a\)，则 \(dx/x=\frac12\,dt/t\)，上下限由 \(1/a\) 到 \(a\)，并且
+\[
+x^2+\frac{a^2}{x^2}=a\left(t+\frac1t\right).
+\]
+故右边
+\[
+R=\frac12\int_{1/a}^{a}f\left(a\left(t+\frac1t\right)\right)\frac{dt}{t}.
+\]
+记
+\[
+\varphi(t)=f\left(a\left(t+\frac1t\right)\right).
+\]
+则 \(\varphi(t)=\varphi(1/t)\)。于是
+\[
+\int_1^a\varphi(t)\frac{dt}{t}
+=\int_{1/a}^{1}\varphi(u)\frac{du}{u}
+\]
+（令 \(t=1/u\) 即得）。所以
+\[
+\int_{1/a}^{a}\varphi(t)\frac{dt}{t}
+=2\int_{1/a}^{1}\varphi(t)\frac{dt}{t}.
+\]
+从而
+\[
+R=L.
+\]
+\answer{等式成立。}
+\examnote{形如 \(x+a^2/x\)、\(x^2+a^2/x^2\) 的积分，常把变量统一为 \(a(t+1/t)\)，再用倒数对称性。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例19.} 设连续函数 \(f(x)\) 满足
+\[
+f(x+2)-f(x)=x,\qquad \int_0^2 f(x)\,dx=0,
+\]
+则
+\[
+\int_1^3 f(x)\,dx=\underline{\hspace{2cm}}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把 \([1,3]\) 拆成 \([1,2]\) 和 \([2,3]\)，后一段用条件 \(f(u+2)=f(u)+u\) 拉回 \([0,1]\)。}
+\[
+\begin{aligned}
+\int_1^3 f(x)\,dx
+&=\int_1^2 f(x)\,dx+\int_2^3 f(x)\,dx\\
+&=\int_1^2 f(x)\,dx+\int_0^1 f(u+2)\,du\\
+&=\int_1^2 f(x)\,dx+\int_0^1[f(u)+u]\,du\\
+&=\int_0^2 f(x)\,dx+\int_0^1u\,du\\
+&=0+\frac12=\frac12.
+\end{aligned}
+\]
+\answer{\(\displaystyle \frac12\)}
+\examnote{函数平移关系题，先把目标积分区间平移回已知区间，再代入函数关系。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例20.} \(n\) 为正整数，计算
+\[
+\int_0^{2n}x(x-1)(x-2)\cdots(x-2n)\,dx.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{积式多项式的根关于 \(n\) 对称，考虑 \(x\mapsto 2n-x\)。}
+记
+\[
+P(x)=x(x-1)(x-2)\cdots(x-2n)=\prod_{k=0}^{2n}(x-k).
+\]
+则
+\[
+\begin{aligned}
+P(2n-x)
+&=\prod_{k=0}^{2n}(2n-x-k)\\
+&=\prod_{j=0}^{2n}(j-x)
+=(-1)^{2n+1}\prod_{j=0}^{2n}(x-j)\\
+&=-P(x).
+\end{aligned}
+\]
+所以 \(P(x)\) 关于 \(x=n\) 是奇对称函数。区间 \([0,2n]\) 关于 \(n\) 对称，因此
+\[
+\int_0^{2n}P(x)\,dx=0.
+\]
+\answer{\(0\)}
+\examnote{看到连续整数根 \(0,1,\dots,2n\)，优先检查关于中点 \(n\) 的奇偶对称。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例21.} 设 \(f(x)\) 在 \([a,b]\) 上连续，证明：
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item
+\[
+\int_a^b f(x)\,dx=\int_a^b f(a+b-x)\,dx
+=\lambda\int_a^b f(x)\,dx+\mu\int_a^b f(a+b-x)\,dx,
+\quad \lambda+\mu=1;
+\]
+\item 计算下列积分：
+\[
+\text{(1)}\quad
+\int_{\frac\pi6}^{\frac\pi3}
+\frac{\sin^2x}{x(\pi-2x)}\,dx,
+\qquad
+\text{(2)}\quad
+\int_2^4
+\frac{\sqrt{\ln(9-x)}}{\sqrt{\ln(9-x)}+\sqrt{\ln(x+3)}}\,dx.
+\]
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{第 (1) 问是定积分区间替换公式。第 (2) 问两个积分都用 \(x\mapsto a+b-x\) 与原式平均。}
+(1) 在
+\[
+\int_a^b f(a+b-x)\,dx
+\]
+中令 \(u=a+b-x\)，则 \(dx=-du\)，上下限由 \(x=a,b\) 变为 \(u=b,a\)，故
+\[
+\int_a^b f(a+b-x)\,dx
+=\int_b^a f(u)(-du)=\int_a^b f(u)\,du.
+\]
+于是两积分相等。若 \(\lambda+\mu=1\)，则
+\[
+\lambda I+\mu I=I,
+\]
+故所给等式成立。
+
+(2) (1) 记
+\[
+I=\int_{\frac\pi6}^{\frac\pi3}
+\frac{\sin^2x}{x(\pi-2x)}\,dx.
+\]
+令 \(x=\frac\pi2-u\)，则分母保持为 \(u(\pi-2u)\)，分子变为 \(\cos^2u\)，所以
+\[
+I=\int_{\frac\pi6}^{\frac\pi3}
+\frac{\cos^2x}{x(\pi-2x)}\,dx.
+\]
+两式相加：
+\[
+2I=\int_{\frac\pi6}^{\frac\pi3}\frac{dx}{x(\pi-2x)}.
+\]
+而
+\[
+\frac1{x(\pi-2x)}
+=\frac1\pi\frac1x+\frac2\pi\frac1{\pi-2x}.
+\]
+故
+\[
+2I=\frac1\pi
+\left[\ln\frac{x}{\pi-2x}\right]_{\pi/6}^{\pi/3}
+=\frac1\pi\ln4.
+\]
+于是
+\[
+I=\frac{\ln2}{\pi}.
+\]
+
+(2) 记
+\[
+J=\int_2^4
+\frac{\sqrt{\ln(9-x)}}{\sqrt{\ln(9-x)}+\sqrt{\ln(x+3)}}\,dx.
+\]
+令 \(x=6-u\)，则
+\[
+J=\int_2^4
+\frac{\sqrt{\ln(x+3)}}{\sqrt{\ln(9-x)}+\sqrt{\ln(x+3)}}\,dx.
+\]
+两式相加得
+\[
+2J=\int_2^4 1\,dx=2,
+\]
+所以
+\[
+J=1.
+\]
+\answer{(1) \(\displaystyle\frac{\ln2}{\pi}\)；(2) \(1\)。}
+\examnote{区间对称公式最常见的用法是“原式 + 变换后式”，把复杂分子加成常数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例22.} 曲线
+\[
+f(x)=\lfloor x\rfloor\sin\pi x,\qquad 0\le x\le n
+\]
+（\(\lfloor x\rfloor\) 表示取整）绕 \(x\) 轴旋转形成的旋转体的体积记作 \(V\)，求 \(V\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{绕 \(x\) 轴旋转体体积为 \(V=\pi\int y^2\,dx\)。取整函数在每个 \([k,k+1)\) 上为常数 \(k\)。}
+\[
+V=\pi\int_0^n \lfloor x\rfloor^2\sin^2\pi x\,dx.
+\]
+在区间 \([k,k+1]\) 上，\(\lfloor x\rfloor=k\)（端点单点不影响积分），且
+\[
+\int_k^{k+1}\sin^2\pi x\,dx=\frac12.
+\]
+因此
+\[
+V=\pi\sum_{k=0}^{n-1}k^2\cdot\frac12
+=\frac\pi2\sum_{k=0}^{n-1}k^2.
+\]
+利用
+\[
+\sum_{k=0}^{n-1}k^2=\frac{n(n-1)(2n-1)}6,
+\]
+得
+\[
+V=\frac{\pi n(n-1)(2n-1)}{12}.
+\]
+\answer{\(\displaystyle \frac{\pi n(n-1)(2n-1)}{12}\)}
+\examnote{含 \(\lfloor x\rfloor\) 的积分要按整数区间拆分，端点取值不影响定积分。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例23.} 设
+\[
+I_1=\int_0^1\frac{\arctan x}{x}\,dx,\qquad
+I_2=\int_0^1\frac{\arctan x^2}{x^2}\,dx,\qquad
+I_3=\int_0^1\frac{(\arctan x)^2}{x^2}\,dx,
+\]
+则（\quad）
+
+A. \(I_3<I_2<I_1\)\qquad
+B. \(I_1<I_3<I_2\)\qquad
+C. \(I_3<I_1<I_2\)\qquad
+D. \(I_1<I_2<I_3\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把三个被积函数都写成 \(\varphi(x)=\arctan x/x\) 的形式比较。}
+令
+\[
+\varphi(x)=\frac{\arctan x}{x},\qquad 0<x\le1.
+\]
+因为 \(\arctan x<x\)，所以 \(0<\varphi(x)<1\)。于是
+\[
+\frac{(\arctan x)^2}{x^2}=\varphi^2(x)<\varphi(x)=\frac{\arctan x}{x},
+\]
+从而
+\[
+I_3<I_1.
+\]
+再看 \(I_2\)：
+\[
+\frac{\arctan x^2}{x^2}=\varphi(x^2).
+\]
+函数 \(\varphi\) 单调递减，因为
+\[
+\varphi'(x)=\frac{\frac{x}{1+x^2}-\arctan x}{x^2}<0.
+\]
+当 \(0<x<1\) 时，\(x^2<x\)，故
+\[
+\varphi(x^2)>\varphi(x),
+\]
+即
+\[
+I_2>I_1.
+\]
+综上
+\[
+I_3<I_1<I_2.
+\]
+\answer{C}
+\examnote{积分大小比较常先转为逐点比较；\(\arctan x/x\) 在 \((0,+\infty)\) 上单调递减是常用结论。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例24.} 已知
+\[
+I_1=\int_0^1\frac{x}{1+e^x}\,dx,\qquad
+I_2=\int_0^1\frac{1-x}{1+e^x}\,dx,\qquad
+I_3=\int_0^1\frac{1-\cos x}{e^x}\,dx,
+\]
+则（\quad）
+
+A. \(I_1<I_2<I_3\)\qquad
+B. \(I_3<I_1<I_2\)\qquad
+C. \(I_3<I_2<I_1\)\qquad
+D. \(I_1<I_3<I_2\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先比较 \(I_1,I_2\)，再把 \(1-\cos x\) 用 \(x^2/2\) 控制来比较 \(I_3,I_1\)。}
+设
+\[
+h(x)=\frac1{1+e^x}.
+\]
+则 \(h(x)\) 在 \([0,1]\) 上单调递减。于是
+\[
+\begin{aligned}
+I_2-I_1
+&=\int_0^1(1-2x)h(x)\,dx\\
+&=\int_0^{1/2}(1-2x)\bigl[h(x)-h(1-x)\bigr]\,dx>0.
+\end{aligned}
+\]
+所以
+\[
+I_1<I_2.
+\]
+又当 \(0<x<1\) 时，
+\[
+1-\cos x<\frac{x^2}{2},
+\qquad 1+e^{-x}<2.
+\]
+因此
+\[
+\frac{1-\cos x}{e^x}
+<x\cdot\frac1{1+e^x}
+\]
+等价于
+\[
+(1-\cos x)(1+e^{-x})<x,
+\]
+而左侧小于 \(x^2<x\)，成立。故
+\[
+I_3<I_1.
+\]
+综上
+\[
+I_3<I_1<I_2.
+\]
+\answer{B}
+\examnote{比较含 \(e^x\) 的加权积分时，配对 \(x\) 与 \(1-x\) 往往比直接估计更干净。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例25.} 求
+\[
+\int_0^\pi\frac{1}{1+\cos^2x}\,dx.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(\cos^2x\) 的周期为 \(\pi\)，并且在 \([0,\pi]\) 关于 \(\pi/2\) 对称，可化到 \([0,\pi/2]\) 后用 \(t=\tan x\)。}
+\[
+I=\int_0^\pi\frac{dx}{1+\cos^2x}
+=2\int_0^{\frac\pi2}\frac{dx}{1+\cos^2x}.
+\]
+令 \(t=\tan x\)，则
+\[
+\cos^2x=\frac1{1+t^2},\qquad dx=\frac{dt}{1+t^2}.
+\]
+于是
+\[
+\int_0^{\frac\pi2}\frac{dx}{1+\cos^2x}
+=\int_0^{+\infty}\frac{dt}{t^2+2}
+=\frac1{\sqrt2}\left[\arctan\frac{t}{\sqrt2}\right]_0^{+\infty}
+=\frac{\pi}{2\sqrt2}.
+\]
+所以
+\[
+I=2\cdot\frac{\pi}{2\sqrt2}
+=\frac{\pi}{\sqrt2}.
+\]
+\answer{\(\displaystyle \frac{\pi}{\sqrt2}\)}
+\examnote{含 \(1+\cos^2x\) 的半区间积分，令 \(t=\tan x\) 后常变成有理型反常积分。}
+\end{solutionblock}
+
+\section{反常积分敛散性}
+
+\begin{problemblock}
+\textbf{例26.} 设有下列命题：
+\begin{enumerate}[label=\textcircled{\arabic*}, leftmargin=2.2em]
+\item 设 \(f(x)\) 在 \((-\infty,+\infty)\) 内连续且是奇函数，则 \(\displaystyle\int_{-\infty}^{+\infty}f(x)\,dx=0\)；
+\item 设 \(f(x)\) 在 \((-\infty,+\infty)\) 内连续，又 \(\displaystyle\lim_{R\to+\infty}\int_{-R}^{R}f(x)\,dx\) 存在，则 \(\displaystyle\int_{-\infty}^{+\infty}f(x)\,dx\) 收敛；
+\item 若 \(\displaystyle\int_0^{+\infty}f(x)\,dx\)、\(\displaystyle\int_0^{+\infty}g(x)\,dx\) 均发散，则 \(\displaystyle\int_0^{+\infty}[f(x)+g(x)]\,dx\) 可能发散，也可能收敛；
+\item 若 \(\displaystyle\int_{-\infty}^{0}f(x)\,dx\) 与 \(\displaystyle\int_{0}^{+\infty}f(x)\,dx\) 均发散，则不能确定 \(\displaystyle\int_{-\infty}^{+\infty}f(x)\,dx\) 是否收敛。
+\end{enumerate}
+则以上命题中正确的个数是（\quad）
+
+A. \(1\)\qquad B. \(2\)\qquad C. \(3\)\qquad D. \(4\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{本题区分“Cauchy 主值”和“反常积分收敛”。双无穷积分收敛要求左右两个半轴反常积分分别收敛。}
+\textcircled{1} 错。奇函数只能保证对称区间积分为 \(0\)，即 Cauchy 主值可能为 \(0\)，不保证反常积分收敛。例如 \(f(x)=x\)。
+
+\textcircled{2} 错。\(\lim_{R\to+\infty}\int_{-R}^{R}f(x)\,dx\) 是主值存在，不等于左右半轴积分分别收敛。例如 \(f(x)=x\) 的主值为 \(0\)，但反常积分不收敛。
+
+\textcircled{3} 对。若 \(f(x)=g(x)=1\)，则和的积分发散；若 \(f(x)=1,g(x)=-1\)，二者各自反常积分发散，但和为 \(0\)，积分收敛。
+
+\textcircled{4} 错。按定义，
+\[
+\int_{-\infty}^{+\infty}f(x)\,dx
+\]
+收敛当且仅当 \(\int_{-\infty}^0f\) 与 \(\int_0^{+\infty}f\) 都收敛。若二者均发散，则整体一定发散，不是“不能确定”。
+\answer{A}
+\examnote{对称极限存在只是主值存在；考研判断反常积分时必须拆成左右两边分别看。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例27.} 设 \(m,n\) 是正整数，则反常积分
+\[
+\int_0^1
+\frac{\sqrt[m]{\ln^2(1-x)}}{\sqrt[n]{x}}\,dx
+\]
+的敛散性（\quad）
+
+A. 仅与 \(m\) 的取值有关\qquad
+B. 仅与 \(n\) 的取值有关\qquad
+C. 与 \(m,n\) 的取值都有关\qquad
+D. 与 \(m,n\) 的取值都无关
+\end{problemblock}
+\begin{solutionblock}
+\analysis{只需检查两个端点：\(x=0\) 与 \(x=1\)。}
+当 \(x\to0^+\) 时，
+\[
+\ln(1-x)\sim -x,
+\]
+因此
+\[
+\frac{\sqrt[m]{\ln^2(1-x)}}{\sqrt[n]{x}}
+\sim x^{\frac2m-\frac1n}.
+\]
+由于 \(m,n\) 为正整数，
+\[
+\frac2m-\frac1n>-1,
+\]
+所以 \(x=0\) 处总收敛。
+
+当 \(x\to1^-\) 时，\(\sqrt[n]{x}\to1\)，被积函数等价于
+\[
+|\ln(1-x)|^{2/m}.
+\]
+而
+\[
+\int_0^1|\ln(1-x)|^\alpha\,dx
+\]
+对任意 \(\alpha>0\) 都收敛，所以 \(x=1\) 处也总收敛。
+\answer{D}
+\examnote{幂函数奇性看指数是否大于 \(-1\)，对数奇性 \(|\ln(1-x)|^p\) 在有限端点通常可积。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例28.} 关于反常积分
+\[
+\int_1^{+\infty}
+\frac{dx}{(\ln x)^m(1+x^n)}
+\qquad (m>0,\ n>0),
+\]
+下列命题中正确的是（\quad）
+\begin{enumerate}[label=\Alph*., leftmargin=2.2em]
+\item 若该积分发散，则必有 \(0<m<1,\ 0<n<1\)；
+\item 若该积分收敛，则必有 \(0<m<1,\ n>1\)；
+\item 若该积分发散，则必有 \(m\ge1,\ 0<n<1\)；
+\item 若该积分收敛，则必有 \(m\ge1,\ n>1\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{本题有两个奇点：下端 \(x=1\) 和无穷远。必须同时满足两处收敛。}
+当 \(x\to1^+\) 时，
+\[
+\ln x\sim x-1,\qquad 1+x^n\to2,
+\]
+故被积函数等价于
+\[
+\frac{1}{2(x-1)^m}.
+\]
+下端收敛当且仅当
+\[
+m<1.
+\]
+
+当 \(x\to+\infty\) 时，被积函数等价于
+\[
+\frac{1}{x^n(\ln x)^m}.
+\]
+无穷远处收敛条件为：\(n>1\)，或 \(n=1,m>1\)。但下端已经要求 \(m<1\)，所以总收敛只能是
+\[
+0<m<1,\qquad n>1.
+\]
+因此正确命题是 B。
+\answer{B}
+\examnote{多奇点反常积分必须每个奇点都收敛；本题下端要求 \(m<1\)，无穷远最终要求 \(n>1\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例29.} 设常数 \(m>0,n>0\)，则
+\[
+\int_0^n\sqrt{x}\left\lfloor\frac{m}{x}\right\rfloor\,dx
+\]
+的敛散性（\quad）
+
+A. 仅与 \(m\) 有关\qquad
+B. 仅与 \(n\) 有关\qquad
+C. 与 \(m,n\) 均有关\qquad
+D. 与 \(m,n\) 均无关
+\end{problemblock}
+\begin{solutionblock}
+\analysis{唯一需要检查的是 \(x=0\) 附近。取整函数满足 \(\lfloor m/x\rfloor\le m/x\)。}
+对 \(x>0\)，有
+\[
+0\le \left\lfloor\frac mx\right\rfloor\le \frac mx.
+\]
+所以
+\[
+0\le \sqrt{x}\left\lfloor\frac mx\right\rfloor
+\le m x^{-1/2}.
+\]
+而
+\[
+\int_0^\delta x^{-1/2}\,dx
+\]
+收敛。由比较判别法，原积分在 \(0\) 附近收敛；在任意 \([\delta,n]\) 上函数有界且只有有限多个跳跃点，也可积。
+
+因此无论 \(m>0,n>0\) 如何取，积分都收敛。
+\answer{D}
+\examnote{取整函数可先用上界 \(\lfloor m/x\rfloor\le m/x\) 处理敛散性。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例30.} 设 \(f(x)\) 为非负函数，给出以下四个命题：
+\begin{enumerate}[label=\textcircled{\arabic*}, leftmargin=2.2em]
+\item 若 \(f(x)\) 在 \([0,+\infty)\) 上连续且 \(\displaystyle\int_0^{+\infty}f^2(x)\,dx\) 收敛，则 \(\displaystyle\int_0^{+\infty}f(x)\,dx\) 收敛；
+\item 若 \(f(x)\) 在 \([0,+\infty)\) 上连续且存在 \(p>1\)，使得 \(\displaystyle\lim_{x\to+\infty}x^p f(x)\) 存在，则 \(\displaystyle\int_0^{+\infty}f(x)\,dx\) 收敛；
+\item 若 \(f(x)\) 在 \([0,+\infty)\) 上连续且 \(\displaystyle\int_0^{+\infty}f(x)\,dx\) 收敛，则存在 \(p>1\)，使得 \(\displaystyle\lim_{x\to+\infty}x^p f(x)\) 存在；
+\item 若 \(f(x)\) 在 \([0,1)\) 上连续且 \(\displaystyle\int_0^1f^2(x)\,dx\) 收敛，则 \(\displaystyle\int_0^1f(x)\,dx\) 收敛。
+\end{enumerate}
+其中真命题的个数为（\quad）
+
+A. \(0\)\qquad B. \(1\)\qquad C. \(2\)\qquad D. \(3\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{无限区间上 \(L^2\) 不推出 \(L^1\)，但有限区间上可由 Cauchy-Schwarz 推出。}
+\textcircled{1} 错。例如
+\[
+f(x)=\frac1{x+1}.
+\]
+则
+\[
+\int_0^{+\infty}f^2(x)\,dx=\int_0^{+\infty}\frac{dx}{(x+1)^2}
+\]
+收敛，但
+\[
+\int_0^{+\infty}\frac{dx}{x+1}
+\]
+发散。
+
+\textcircled{2} 对。若 \(\lim_{x\to+\infty}x^p f(x)=A\) 存在且有限，则存在 \(M>0\)，使得充分大的 \(x\) 上
+\[
+0\le f(x)\le \frac{M}{x^p}.
+\]
+因 \(p>1\)，\(\int^\infty x^{-p}dx\) 收敛，故 \(\int_0^{+\infty}f(x)dx\) 收敛。
+
+\textcircled{3} 错。取
+\[
+f(x)=\frac1{x(\ln x)^2}\quad (x\ge e)
+\]
+并在 \([0,e]\) 上连续非负地补全。则 \(\int_e^{+\infty}f(x)dx\) 收敛，但对任意 \(p>1\)，
+\[
+x^pf(x)=\frac{x^{p-1}}{(\ln x)^2}\to+\infty,
+\]
+不存在有限极限。
+
+\textcircled{4} 对。由 Cauchy-Schwarz 不等式，
+\[
+\int_0^1 f(x)\,dx
+\le \left(\int_0^1 f^2(x)\,dx\right)^{1/2}
+\left(\int_0^1 1^2\,dx\right)^{1/2},
+\]
+右侧有限，所以 \(\int_0^1 f(x)dx\) 收敛。
+
+真命题为 \textcircled{2}, \textcircled{4}，共 \(2\) 个。
+\answer{C}
+\examnote{无限区间和有限区间的 \(L^2\Rightarrow L^1\) 完全不同：有限区间可用 Cauchy-Schwarz，无限区间不行。}
+\end{solutionblock}

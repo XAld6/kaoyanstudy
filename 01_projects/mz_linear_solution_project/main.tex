@@ -1,0 +1,75 @@
+\documentclass[UTF8,12pt,a4paper]{ctexbook}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[most]{tcolorbox}
+\usepackage{float}
+
+\geometry{left=22mm,right=22mm,top=22mm,bottom=24mm}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black}
+\setlist{nosep,leftmargin=2em}
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{27《没咋了》线性代数通关讲义做题本解析}
+\rhead{\thepage}
+
+\newenvironment{solutionblock}{\par\medskip\noindent}{\end{analysisbox}\par\medskip}
+
+\newtcolorbox{questionbox}{
+  enhanced,
+  breakable,
+  colback=green!4,
+  colframe=green!45!black,
+  boxrule=0.55pt,
+  arc=1.2mm,
+  left=2.2mm,
+  right=2.2mm,
+  top=1.8mm,
+  bottom=1.8mm
+}
+
+\newtcolorbox{analysisbox}{
+  enhanced,
+  breakable,
+  colback=blue!3,
+  colframe=blue!45!black,
+  boxrule=0.55pt,
+  arc=1.2mm,
+  left=2.2mm,
+  right=2.2mm,
+  top=1.8mm,
+  bottom=1.8mm
+}
+
+\newcommand{\question}[1]{\begin{questionbox}\textbf{题目：}#1\end{questionbox}\par\smallskip}
+\newcommand{\answer}[1]{\par\medskip\noindent\textbf{答案：}#1\par}
+\newcommand{\analysis}[1]{\begin{analysisbox}\textbf{题目解析：}#1\par}
+\newcommand{\method}[1]{\par\medskip\noindent\textbf{#1}\par}
+\newcommand{\examnote}[1]{\par\medskip\noindent\textbf{考研提示：}#1\par}
+
+\title{27《没咋了》线性代数通关讲义做题本\\详细解析与答案整理}
+\author{整理：Codex}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter*{使用说明}
+\addcontentsline{toc}{chapter}{使用说明}
+本工程把扫描版做题本整理为 Overleaf 可编译的 LaTeX 工程。本文档采用纯文字题面整理方式，不再用整页原题图片充当题目；每道例题均单独给出题目、答案、题目解析、关键计算和考研提示。一题适合多法处理时，解析中补充方法二。
+
+\input{chapters/ch01_determinants.tex}
+\input{chapters/ch02_matrices.tex}
+\input{chapters/ch03_linear_systems_intro.tex}
+\input{chapters/ch04_vectors_systems.tex}
+\input{chapters/ch05_similarity.tex}
+\input{chapters/ch06_quadratic_forms.tex}
+
+\end{document}

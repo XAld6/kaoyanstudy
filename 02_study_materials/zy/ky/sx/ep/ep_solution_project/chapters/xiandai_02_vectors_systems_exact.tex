@@ -1,0 +1,1247 @@
+\chapter{线性代数：向量组与方程组}
+
+\section{向量组线性相关、秩与线性方程组}
+
+\begin{problemblock}
+\textbf{例 1.} 已知
+\[
+\alpha_1=(1,0,1)^T,\quad
+\alpha_2=(-1,-1,0)^T,\quad
+\alpha_3=(0,1,-1)^T,\quad
+\beta=(1,1,1)^T.
+\]
+设
+\[
+\gamma=k_1\alpha_1+k_2\alpha_2+k_3\alpha_3,
+\]
+若
+\[
+\gamma^T\alpha_i=\beta^T\alpha_i\qquad(i=1,2,3),
+\]
+求 \(k_1^2+k_2^2+k_3^2\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先看向量组本身：
+\[
+\alpha_1+\alpha_2+\alpha_3=0,
+\]
+所以 \(\alpha_1,\alpha_2,\alpha_3\) 线性相关，\(\gamma\) 的表示系数不唯一。把条件写成 Gram 方程。设 \(k=(k_1,k_2,k_3)^T\)，则
+\[
+Gk=b,
+\]
+其中
+\[
+G=(\alpha_i^T\alpha_j)=
+\begin{pmatrix}
+2&-1&-1\\
+-1&2&-1\\
+-1&-1&2
+\end{pmatrix},
+\qquad
+b=(\beta^T\alpha_i)=
+\begin{pmatrix}2\\-2\\0\end{pmatrix}.
+\]
+解得
+\[
+k_1=t+\frac23,\qquad k_2=t-\frac23,\qquad k_3=t
+\]
+其中 \(t\) 为任意常数。因此
+\[
+k_1^2+k_2^2+k_3^2
+=\left(t+\frac23\right)^2+\left(t-\frac23\right)^2+t^2
+=3t^2+\frac89.
+\]
+可见原题条件不能唯一确定 \(k_1^2+k_2^2+k_3^2\)。若额外取常见的最小范数系数，也就是取 \(k_1+k_2+k_3=0\)，则 \(t=0\)，此时
+\[
+k_1^2+k_2^2+k_3^2=\frac89.
+\]}
+\answer{按原题条件不唯一；一般为 \(\displaystyle 3t^2+\frac89\)。若取最小范数表示，则为 \(\displaystyle \frac89\)。}
+\examnote{向量组线性相关时，线性表示的系数不唯一。题目若要求系数平方和，要先检查表示是否唯一。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 2.} 已知向量组 \(I:\alpha_1,\alpha_2,\alpha_3\)，向量组 \(II:\alpha_1,\alpha_2,\alpha_3,\beta\)，向量组 \(III:\alpha_1,\alpha_2,\alpha_3,\gamma\)。向量组 \(I\) 和 \(II\) 的秩都为 \(3\)，向量组 \(III\) 的秩为 \(4\)。求向量组
+\[
+\alpha_1,\alpha_2,\alpha_3,\beta+\gamma
+\]
+的秩。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(r(I)=r(II)=3\) 说明加入 \(\beta\) 后秩不增加，因此
+\[
+\beta\in \operatorname{span}(\alpha_1,\alpha_2,\alpha_3).
+\]
+而 \(r(III)=4\) 说明
+\[
+\gamma\notin \operatorname{span}(\alpha_1,\alpha_2,\alpha_3).
+\]
+如果 \(\beta+\gamma\) 能由 \(\alpha_1,\alpha_2,\alpha_3\) 表示，则
+\[
+\gamma=(\beta+\gamma)-\beta
+\]
+也能由 \(\alpha_1,\alpha_2,\alpha_3\) 表示，矛盾。因此 \(\beta+\gamma\) 加入后秩增加 \(1\)，所求秩为 \(4\)。}
+\answer{\(4\)}
+\examnote{判断 \(\beta+\gamma\) 是否在原张成空间内，常把已知在空间内的 \(\beta\) 移到另一边。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 3.} 设 4 维向量 \(\alpha_1,\alpha_2,\alpha_3\) 线性无关，\(\beta_i\ (i=1,2,3,4)\) 均与 \(\alpha_1,\alpha_2,\alpha_3\) 相互正交，且 \(\beta_1\) 为非零向量，则
+\[
+r(\beta_1,\beta_2,\beta_3,\beta_4)=(\quad)
+\]
+\[
+\text{A. }1,\qquad \text{B. }2,\qquad \text{C. }3,\qquad \text{D. }4.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{在 4 维空间中，三个线性无关向量 \(\alpha_1,\alpha_2,\alpha_3\) 张成一个 3 维子空间。与它们都正交的向量构成其正交补，维数为
+\[
+4-3=1.
+\]
+所以所有 \(\beta_i\) 都在同一条一维直线上。又 \(\beta_1\ne0\)，因此 \(\beta_1,\beta_2,\beta_3,\beta_4\) 的秩为 \(1\)。}
+\answer{A；\(1\)}
+\examnote{正交补维数公式：\(\dim W^\perp=n-\dim W\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 4.} 设 \(\alpha_1,\alpha_2,\beta_1,\beta_2\) 均为 4 维列向量，
+\[
+A=\begin{pmatrix}\alpha_1^T\\ \alpha_2^T\end{pmatrix}.
+\]
+若 \(\beta_1,\beta_2\) 是方程组 \(Ax=0\) 的基础解系，则向量组
+\[
+\alpha_1,\alpha_2,\beta_1,\beta_2
+\]
+的秩为（\quad）
+\[
+\text{A. }2,\qquad \text{B. }3,\qquad \text{C. }4,\qquad \text{D. 不确定}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(\beta_1,\beta_2\) 是 \(Ax=0\) 的基础解系，说明零空间维数为 \(2\)。由于未知量维数为 \(4\)，由秩-零度定理得
+\[
+r(A)=4-2=2.
+\]
+因此 \(A\) 的两行 \(\alpha_1^T,\alpha_2^T\) 线性无关，即 \(\alpha_1,\alpha_2\) 线性无关。并且
+\[
+\operatorname{span}(\beta_1,\beta_2)=N(A)
+\]
+正是 \(\operatorname{span}(\alpha_1,\alpha_2)\) 的正交补。两个互补子空间维数分别为 \(2,2\)，交为零向量，所以四个向量合起来线性无关，秩为 \(4\)。}
+\answer{C；\(4\)}
+\examnote{基础解系给出零空间，系数矩阵行向量张成行空间；行空间与零空间正交互补。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 5.} 设 \(\alpha_1\) 是矩阵 \(A\) 的对应于特征值 \(\lambda\) 的特征向量，向量组 \(\alpha_2,\ldots,\alpha_n\) 满足
+\[
+(\lambda E-A)\alpha_i=\alpha_{i-1},\qquad i=2,3,\ldots,n.
+\]
+证明：向量组 \(\alpha_1,\alpha_2,\ldots,\alpha_n\) 线性无关。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{记
+\[
+N=\lambda E-A.
+\]
+由题设
+\[
+N\alpha_1=0,\qquad N\alpha_i=\alpha_{i-1}\quad(i\ge2).
+\]
+若
+\[
+c_1\alpha_1+c_2\alpha_2+\cdots+c_n\alpha_n=0,
+\]
+两边作用 \(N^{n-1}\)，则只有 \(\alpha_n\) 项能留下：
+\[
+c_n\alpha_1=0.
+\]
+因为 \(\alpha_1\) 是特征向量，非零，所以 \(c_n=0\)。再对原等式作用 \(N^{n-2}\)，得到
+\[
+c_{n-1}\alpha_1=0,
+\]
+故 \(c_{n-1}=0\)。如此逐步递推，最终得
+\[
+c_1=c_2=\cdots=c_n=0.
+\]
+因此向量组线性无关。}
+\answer{已证明 \(\alpha_1,\alpha_2,\ldots,\alpha_n\) 线性无关}
+\examnote{广义特征向量链的线性无关性，用 \((\lambda E-A)\) 的幂从链尾往前“剥离”系数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 6.} 已知 \(n\) 维列向量组 \(\alpha_1,\alpha_2,\ldots,\alpha_s\) 线性无关。下列变换后所得列向量组 \(\alpha'_1,\alpha'_2,\ldots,\alpha'_s\) 可能线性相关的是（\quad）：
+\[
+\begin{array}{l}
+\text{A. 将每个 }\alpha_i\text{ 的第 1 个分量加到第 2 个分量；}\\
+\text{B. 将每个 }\alpha_i\text{ 的第 1 个分量改为其相反数；}\\
+\text{C. 将每个 }\alpha_i\text{ 的第 1 个分量改为 }0;\\
+\text{D. 在每个 }\alpha_i\text{ 的第 }n\text{ 个分量后再增加一个分量。}
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{A 是对所有向量同时作同一个初等线性变换，该变换可逆，故保持线性无关。B 是左乘一个对角可逆矩阵，也保持线性无关。D 是把向量嵌入更高维空间，若新向量线性相关，取前 \(n\) 个分量就会推出原向量线性相关，因此也保持线性无关。C 是把第 1 个分量全部投影为 \(0\)，对应线性变换不可逆，可能把原本不同方向压到同一低维空间中，从而产生线性相关。}
+\answer{C}
+\examnote{可逆线性变换保持线性无关；不可逆投影可能降低秩。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 7.} 设 \(A\) 是 \(n\) 阶矩阵，\(\alpha_1,\alpha_2,\alpha_3\) 是 \(n\) 维非零列向量。下列说法错误的是（\quad）：
+\[
+\begin{array}{l}
+\text{A. 若 }A\alpha_1,A\alpha_2,A\alpha_3\text{ 线性无关，则 }\alpha_1,\alpha_2,\alpha_3\text{ 线性无关；}\\
+\text{B. 若 }A\text{ 的列向量线性相关，则 }A\alpha_1,A\alpha_2,A\alpha_3\text{ 线性相关；}\\
+\text{C. 若 }A^2\alpha_1\ne0,\ A^3\alpha_1=0,\text{ 则 }\alpha_1,A\alpha_1,A^2\alpha_1\text{ 线性无关；}\\
+\text{D. 若 }A\text{ 正定且 }\alpha_i^TA\alpha_j=0\ (i,j=1,2,3,\ i\ne j),\text{ 则 }\alpha_1,\alpha_2,\alpha_3\text{ 线性无关。}
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{A 正确：若 \(c_1\alpha_1+c_2\alpha_2+c_3\alpha_3=0\)，左乘 \(A\) 得
+\[
+c_1A\alpha_1+c_2A\alpha_2+c_3A\alpha_3=0,
+\]
+由像向量组线性无关知 \(c_i=0\)。
+
+B 错误。\(A\) 的列向量线性相关只说明 \(A\) 奇异，\(r(A)<n\)。当 \(n\ge4\) 时，\(r(A)\) 仍可能为 \(3\)，三个像向量仍可能线性无关。
+
+C 正确。若
+\[
+c_0\alpha_1+c_1A\alpha_1+c_2A^2\alpha_1=0,
+\]
+左乘 \(A^2\) 得 \(c_0A^2\alpha_1=0\)，故 \(c_0=0\)；再左乘 \(A\) 得 \(c_1A^2\alpha_1=0\)，故 \(c_1=0\)，最后 \(c_2=0\)。
+
+D 正确。正定矩阵定义的内积
+\[
+\langle x,y\rangle_A=x^TAy
+\]
+下，非零且两两正交的向量必线性无关。}
+\answer{B}
+\examnote{“\(A\) 奇异”不等于“任意三个像向量相关”，还要看 \(r(A)\) 与向量个数的大小。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 8.} 设 \(\alpha_1,\alpha_2,\alpha_3\) 均为 3 维向量。对任意常数 \(k,l\)，向量组
+\[
+\alpha_1+k\alpha_3,\qquad \alpha_2+l\alpha_3
+\]
+线性无关，是向量组 \(\alpha_1,\alpha_2,\alpha_3\) 线性无关的（\quad）
+\[
+\begin{array}{ll}
+\text{A. 必要非充分条件},&\text{B. 充分非必要条件},\\
+\text{C. 充分必要条件},&\text{D. 既非充分也非必要条件}.
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{若 \(\alpha_1,\alpha_2,\alpha_3\) 线性无关，则
+\[
+c(\alpha_1+k\alpha_3)+d(\alpha_2+l\alpha_3)=0
+\]
+即
+\[
+c\alpha_1+d\alpha_2+(ck+dl)\alpha_3=0.
+\]
+由三向量线性无关得 \(c=d=0\)，所以任意 \(k,l\) 下两个向量线性无关。因此该条件是必要条件。
+
+但它不是充分条件。例如 \(\alpha_3=0\)，且 \(\alpha_1,\alpha_2\) 线性无关，则对任意 \(k,l\)，\(\alpha_1+k\alpha_3=\alpha_1,\ \alpha_2+l\alpha_3=\alpha_2\) 仍线性无关，但 \(\alpha_1,\alpha_2,\alpha_3\) 显然线性相关。}
+\answer{A；必要非充分条件}
+\examnote{判断充分必要时，正向证明后要主动找反例检验反向。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 9.} 设 \(A\) 为三阶正交矩阵，且 \(A^3=E\)。若 \(\alpha,\beta\) 均为非零向量，且 \(\alpha,A\alpha\) 线性无关，\(\alpha,A\alpha,A^2\alpha\) 线性相关，又
+\[
+\beta^T\alpha=\beta^TA\alpha=0,
+\]
+则（\quad）
+\[
+\begin{array}{ll}
+\text{A. }\beta\text{ 与 }A\beta,A^2\alpha\text{ 均正交},&
+\text{B. }\beta\text{ 与 }A\beta\text{ 正交，不与 }A^2\alpha\text{ 正交},\\
+\text{C. }A\beta\text{ 与 }\alpha,A\alpha\text{ 均正交},&
+\text{D. }A\beta\text{ 与 }\alpha\text{ 正交，不与 }A\alpha\text{ 正交}.
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由 \(A^3=E\) 且 \(\alpha,A\alpha\) 线性无关、\(\alpha,A\alpha,A^2\alpha\) 线性相关可知，\(\alpha\) 在 \(A\) 下生成的最小关系为
+\[
+\alpha+A\alpha+A^2\alpha=0.
+\]
+题设 \(\beta^T\alpha=\beta^TA\alpha=0\)，于是
+\[
+\beta^TA^2\alpha=-\beta^T\alpha-\beta^TA\alpha=0.
+\]
+又 \(A\) 正交，且 \(A^{-1}=A^2\)。因此
+\[
+(A\beta)^T\alpha=\beta^TA^T\alpha=\beta^TA^2\alpha=0,
+\]
+\[
+(A\beta)^TA\alpha=\beta^TA^TA\alpha=\beta^T\alpha=0.
+\]
+所以 \(A\beta\) 与 \(\alpha,A\alpha\) 均正交。}
+\answer{C}
+\examnote{正交矩阵中 \((Au)^T(Av)=u^Tv\)。结合 \(A^3=E\) 可把 \(A^2\alpha\) 化回 \(\alpha,A\alpha\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 10.} 设向量组 \(\alpha_1,\alpha_2,\alpha_3\) 线性相关，向量组 \(\alpha_2,\alpha_3,\alpha_4\) 线性无关。问：
+\begin{enumerate}
+\item \(\alpha_1\) 能否由 \(\alpha_2,\alpha_3\) 线性表示？
+\item \(\alpha_4\) 能否由 \(\alpha_1,\alpha_2,\alpha_3\) 线性表示？
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{因为 \(\alpha_2,\alpha_3,\alpha_4\) 线性无关，所以其任意子组也线性无关，特别地
+\[
+\alpha_2,\alpha_3
+\]
+线性无关。又 \(\alpha_1,\alpha_2,\alpha_3\) 线性相关，而其中 \(\alpha_2,\alpha_3\) 已线性无关，所以相关性只能来自 \(\alpha_1\) 落在 \(\operatorname{span}(\alpha_2,\alpha_3)\) 中。因此
+\[
+\alpha_1\text{ 能由 }\alpha_2,\alpha_3\text{ 线性表示。}
+\]
+于是
+\[
+\operatorname{span}(\alpha_1,\alpha_2,\alpha_3)=\operatorname{span}(\alpha_2,\alpha_3).
+\]
+若 \(\alpha_4\) 能由 \(\alpha_1,\alpha_2,\alpha_3\) 线性表示，则也能由 \(\alpha_2,\alpha_3\) 表示，这与 \(\alpha_2,\alpha_3,\alpha_4\) 线性无关矛盾。}
+\answer{(1) 能；(2) 不能。}
+\examnote{已知某个三元组无关时，先推出它的二元子组无关；再结合另一个三元组相关定位是哪一个向量可表示。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 11.} 已知 \(\alpha_1,\alpha_2,\alpha_3,\alpha_4\) 是 3 维非零列向量。判断下列命题正确个数：
+\[
+\begin{array}{l}
+\text{(1) 若 }\alpha_4\text{ 可由 }\alpha_1,\alpha_2,\alpha_3\text{ 线性表示，则 }\alpha_1,\alpha_2,\alpha_3+\alpha_4\text{ 线性无关；}\\
+\text{(2) 若 }\alpha_4\text{ 可由 }\alpha_1,\alpha_2,\alpha_3\text{ 线性表示，则 }r(\alpha_1+\alpha_2,\alpha_2,\alpha_3)=r(\alpha_1,\alpha_2,\alpha_3,\alpha_4);\\
+\text{(3) 若 }\alpha_4\text{ 不能由 }\alpha_1,\alpha_2,\alpha_3\text{ 线性表示，则 }\alpha_1,\alpha_2,\alpha_3\text{ 线性相关；}\\
+\text{(4) 若 }\alpha_4\text{ 不能由 }\alpha_1,\alpha_2,\alpha_3\text{ 线性表示，则 }2\le r(\alpha_1,\alpha_2,\alpha_3,\alpha_4)\le3.
+\end{array}
+\]
+\[
+\text{A. }1,\qquad \text{B. }2,\qquad \text{C. }3,\qquad \text{D. }4.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{(1) 错误。即使 \(\alpha_4\) 在前三者张成空间内，也不能保证 \(\alpha_1,\alpha_2,\alpha_3+\alpha_4\) 无关。例如前三者本来就相关时可能仍相关。
+
+(2) 正确。若 \(\alpha_4\) 可由前三者表示，则
+\[
+r(\alpha_1,\alpha_2,\alpha_3,\alpha_4)=r(\alpha_1,\alpha_2,\alpha_3).
+\]
+而 \(\alpha_1+\alpha_2,\alpha_2,\alpha_3\) 是由 \(\alpha_1,\alpha_2,\alpha_3\) 作可逆列变换得到，秩不变。
+
+(3) 正确。在 3 维空间中，若 \(\alpha_1,\alpha_2,\alpha_3\) 线性无关，则它们构成一组基，任意 3 维向量都可由它们表示，矛盾。因此前三者必相关。
+
+(4) 正确。由于 \(\alpha_4\) 不在前三者张成空间内，加入 \(\alpha_4\) 后秩至少增加到 \(2\)；又四个向量都在 3 维空间中，秩至多为 \(3\)。}
+\answer{C；正确命题个数为 \(3\)}
+\examnote{三维空间中“三个无关向量就是一组基”，这是判断 (3) 的关键。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 12.} \(n\) 维向量组
+\[
+(I):\alpha_1,\alpha_2,\ldots,\alpha_s,\qquad
+(II):\beta_1,\beta_2,\ldots,\beta_t
+\]
+等价的充分必要条件是（\quad）
+\[
+\begin{array}{l}
+\text{A. }r(I)=r(II),\text{ 并且 }s=t;\\
+\text{B. }r(I)=r(II)=n;\\
+\text{C. }r(I)=r(II),\text{ 并且 }(I)\text{ 可以由 }(II)\text{ 线性表示；}\\
+\text{D. }(I)\text{ 和 }(II)\text{ 都线性无关，并且 }s=t.
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{向量组等价的本质是二者张成的线性空间相同。若 (I) 可以由 (II) 线性表示，则
+\[
+\operatorname{span}(I)\subseteq \operatorname{span}(II).
+\]
+再加上
+\[
+r(I)=r(II),
+\]
+两个子空间维数相同，于是包含关系只能是相等：
+\[
+\operatorname{span}(I)=\operatorname{span}(II).
+\]
+所以 C 充分。反过来，若两向量组等价，则当然可相互线性表示，且秩相等，因此 C 也必要。}
+\answer{C}
+\examnote{等价向量组不要求向量个数相同，也不要求各自线性无关，只要求张成空间相同。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 13.} 已知向量组
+\[
+I:\ \alpha_1=(1,1,4)^T,\quad \alpha_2=(1,0,4)^T,\quad \alpha_3=(1,2,a^2+3)^T,
+\]
+\[
+II:\ \beta_1=(1,1,a+3)^T,\quad \beta_2=(0,2,1-a)^T,\quad \beta_3=(1,3,a^2+3)^T.
+\]
+若向量组 \(I\) 与向量组 \(II\) 等价，求 \(a\) 的取值，并将 \(\beta_3\) 用 \(\alpha_1,\alpha_2,\alpha_3\) 线性表示。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把三向量分别作列组成矩阵
+\[
+P=(\alpha_1,\alpha_2,\alpha_3),\qquad Q=(\beta_1,\beta_2,\beta_3).
+\]
+计算行列式：
+\[
+|P|=-(a-1)(a+1),\qquad |Q|=2(a-1)(a+1).
+\]
+当 \(a\ne\pm1\) 时，两组都为 \(R^3\) 的基，必等价。
+
+当 \(a=1\) 时，两组秩都为 \(2\)，且可直接验证张成空间相同，仍等价；当 \(a=-1\) 时，两组虽然秩都为 \(2\)，但合并后的秩为 \(3\)，张成空间不同，所以不等价。因此
+\[
+a\ne -1.
+\]
+再表示 \(\beta_3\)。直接计算：
+\[
+\alpha_1-\alpha_2+\alpha_3
+=(1,1,4)^T-(1,0,4)^T+(1,2,a^2+3)^T
+=(1,3,a^2+3)^T
+=\beta_3.
+\]}
+\answer{\(a\ne -1\)，且 \(\beta_3=\alpha_1-\alpha_2+\alpha_3\)。}
+\examnote{三维中若两组都是基则必等价；参数使秩下降时，还要检查合并秩是否仍等于公共秩。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 14.} 已知
+\[
+A=\begin{pmatrix}
+1&1&1&1\\
+1&1&1&1\\
+2&1&0&-1\\
+-1&0&1&2
+\end{pmatrix},\qquad
+B=\begin{pmatrix}
+1&1\\
+1&1\\
+0&1\\
+1&0
+\end{pmatrix},
+\]
+且 \(A=BC\)。
+\begin{enumerate}
+\item 求矩阵 \(C\)；
+\item 计算 \(A^{10}\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设 \(C\) 为 \(2\times4\) 矩阵。逐列解 \(Bc_j=A_j\)，得
+\[
+C=\begin{pmatrix}
+-1&0&1&2\\
+2&1&0&-1
+\end{pmatrix}.
+\]
+验证 \(BC=A\)。为了计算 \(A^{10}\)，利用
+\[
+A=BC,\qquad A^m=B(CB)^{m-1}C\quad(m\ge1).
+\]
+先算
+\[
+CB=
+\begin{pmatrix}
+1&0\\
+2&3
+\end{pmatrix}.
+\]
+易归纳得
+\[
+(CB)^m=
+\begin{pmatrix}
+1&0\\
+3^m-1&3^m
+\end{pmatrix}.
+\]
+因此
+\[
+A^{10}=B(CB)^9C.
+\]
+因为 \(3^9=19683\)，代入得到
+\[
+A^{10}=
+\begin{pmatrix}
+19683&19683&19683&19683\\
+19683&19683&19683&19683\\
+19684&19683&19682&19681\\
+-1&0&1&2
+\end{pmatrix}.
+\]}
+\answer{\[
+C=\begin{pmatrix}
+-1&0&1&2\\
+2&1&0&-1
+\end{pmatrix},
+\quad
+A^{10}=
+\begin{pmatrix}
+19683&19683&19683&19683\\
+19683&19683&19683&19683\\
+19684&19683&19682&19681\\
+-1&0&1&2
+\end{pmatrix}.
+\]}
+\examnote{若 \(A=BC\) 且 \(B,C\) 是瘦胖矩阵，算 \(A^n\) 时转为低阶矩阵 \(CB\) 的幂。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 15.} 设
+\[
+A=\begin{pmatrix}1&-2&3\\0&1&-1\\1&2&0\end{pmatrix},\quad
+\beta=(-4,1,-3)^T,\quad
+B=\begin{pmatrix}-2&1&3\\1&0&-1\\2&1&0\end{pmatrix},
+\]
+且
+\[
+(A,\beta)=BC.
+\]
+\begin{enumerate}
+\item 求 \(Ax=\beta\) 的解，并求 \(C\)；
+\item 求满足 \((A,\beta)Y=E\) 的所有 \(Y\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先解
+\[
+Ax=\beta.
+\]
+由于 \(|A|=1\)，方程有唯一解，计算得
+\[
+x=(1,-2,-3)^T.
+\]
+又 \(|B|=-1\)，所以
+\[
+C=B^{-1}(A,\beta)
+=\begin{pmatrix}
+0&1&0&-2\\
+1&0&0&1\\
+0&0&1&-3
+\end{pmatrix}.
+\]
+记
+\[
+M=(A,\beta)=
+\begin{pmatrix}
+1&-2&3&-4\\
+0&1&-1&1\\
+1&2&0&-3
+\end{pmatrix}.
+\]
+要求 \(MY=E\)，即 \(Y\) 的三列分别是 \(My=e_i\) 的解。将 \(M\) 行化简得
+\[
+M\sim
+\begin{pmatrix}
+1&0&0&1\\
+0&1&0&-2\\
+0&0&1&-3
+\end{pmatrix},
+\]
+所以 \(M\) 的零空间由
+\[
+\eta=(-1,2,3,1)^T
+\]
+张成。取一个右逆
+\[
+Y_0=
+\begin{pmatrix}
+2&6&-1\\
+-1&-3&1\\
+-1&-4&1\\
+0&0&0
+\end{pmatrix},
+\]
+则所有右逆为
+\[
+Y=Y_0+\eta(t_1,t_2,t_3),
+\]
+即
+\[
+Y=
+\begin{pmatrix}
+2-t_1&6-t_2&-1-t_3\\
+2t_1-1&2t_2-3&2t_3+1\\
+3t_1-1&3t_2-4&3t_3+1\\
+t_1&t_2&t_3
+\end{pmatrix},
+\quad t_1,t_2,t_3\in\mathbb R.
+\]}
+\answer{\[
+x=(1,-2,-3)^T,\quad
+C=\begin{pmatrix}
+0&1&0&-2\\
+1&0&0&1\\
+0&0&1&-3
+\end{pmatrix},
+\]
+\[
+Y=
+\begin{pmatrix}
+2-t_1&6-t_2&-1-t_3\\
+2t_1-1&2t_2-3&2t_3+1\\
+3t_1-1&3t_2-4&3t_3+1\\
+t_1&t_2&t_3
+\end{pmatrix}.
+\]}
+\examnote{求所有右逆时，先找一个特解右逆，再加上零空间向量乘任意行向量。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 16.} 已知 \(a\) 是常数，且矩阵
+\[
+A=\begin{pmatrix}
+1&2&a\\
+1&3&0\\
+2&7&-a
+\end{pmatrix}
+\]
+可经初等列变换化为
+\[
+B=\begin{pmatrix}
+1&a&2\\
+0&1&1\\
+-1&1&1
+\end{pmatrix}.
+\]
+\begin{enumerate}
+\item 求 \(a\)；
+\item 求满足 \(AP=B\) 的可逆矩阵 \(P\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{初等列变换等价于存在可逆矩阵 \(P\)，使
+\[
+AP=B.
+\]
+因此 \(A\) 与 \(B\) 列等价，列空间相同，秩相同。计算
+\[
+|A|=0,\qquad |B|=2-a.
+\]
+所以必须有 \(2-a=0\)，即
+\[
+a=2.
+\]
+此时
+\[
+A=\begin{pmatrix}1&2&2\\1&3&0\\2&7&-2\end{pmatrix},\quad
+B=\begin{pmatrix}1&2&2\\0&1&1\\-1&1&1\end{pmatrix},
+\]
+解 \(AP=B\)。设
+\[
+P=\begin{pmatrix}
+3-6p&4-6q&4-6r\\
+2p-1&2q-1&2r-1\\
+p&q&r
+\end{pmatrix},
+\]
+则可直接验证 \(AP=B\)。其行列式为
+\[
+|P|=r-q.
+\]
+故所有满足条件的可逆矩阵为上式中
+\[
+r\ne q.
+\]}
+\answer{\[
+a=2,\qquad
+P=
+\begin{pmatrix}
+3-6p&4-6q&4-6r\\
+2p-1&2q-1&2r-1\\
+p&q&r
+\end{pmatrix},\quad r\ne q.
+\]}
+\examnote{列变换就是右乘可逆矩阵。若 \(A\) 奇异，不能写 \(P=A^{-1}B\)，要直接解 \(AP=B\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 17.} 设
+\[
+A=\begin{pmatrix}
+0&-1&2\\
+-1&0&2\\
+-1&-1&a
+\end{pmatrix},
+\]
+已知 \(1\) 是 \(A\) 的特征多项式的重根。
+\begin{enumerate}
+\item 求 \(a\)；
+\item 求所有满足
+\[
+A\alpha=\alpha+\beta,\qquad A^2\alpha=\alpha+2\beta
+\]
+的非零列向量 \(\alpha,\beta\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{计算特征多项式：
+\[
+|\lambda E-A|=-(\lambda-1)(a\lambda+a-\lambda^2-\lambda-4).
+\]
+因为 \(1\) 是重根，还需导数在 \(\lambda=1\) 处为零，得
+\[
+a=3.
+\]
+此时
+\[
+N=A-E=
+\begin{pmatrix}
+-1&-1&2\\
+-1&-1&2\\
+-1&-1&2
+\end{pmatrix},
+\qquad N^2=O.
+\]
+由
+\[
+A\alpha=\alpha+\beta
+\]
+得
+\[
+\beta=(A-E)\alpha=N\alpha.
+\]
+第二个条件
+\[
+A^2\alpha=\alpha+2\beta
+\]
+等价于
+\[
+(A-E)^2\alpha=0,
+\]
+而 \(N^2=O\)，所以对任意 \(\alpha\) 都成立。只需保证 \(\beta\ne0\)。设
+\[
+\alpha=(x,y,z)^T,
+\]
+则
+\[
+\beta=N\alpha=(-x-y+2z)(1,1,1)^T.
+\]
+因此所有解为
+\[
+\alpha=(x,y,z)^T,\qquad -x-y+2z\ne0,
+\]
+\[
+\beta=(-x-y+2z)(1,1,1)^T.
+\]}
+\answer{\[
+a=3;\qquad
+\alpha=(x,y,z)^T,\ -x-y+2z\ne0,\quad
+\beta=(-x-y+2z)(1,1,1)^T.
+\]}
+\examnote{条件 \(A\alpha=\alpha+\beta,\ A^2\alpha=\alpha+2\beta\) 本质是 \((A-E)^2\alpha=0\) 且 \((A-E)\alpha\ne0\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 18.} 设 \(A\) 为 \(n\) 阶矩阵，\(\alpha\) 是 \(n\) 维列向量。若
+\[
+r\begin{pmatrix}A&\alpha\\\alpha^T&0\end{pmatrix}=r(A),
+\]
+则下列说法正确的有几项？
+\[
+\begin{array}{l}
+\text{(1) }Ax=\alpha\text{ 必有解};\\
+\text{(2) }Ax=\alpha\text{ 仅有唯一解};\\
+\text{(3) }\begin{pmatrix}A&\alpha\\\alpha^T&0\end{pmatrix}
+\begin{pmatrix}x\\y\end{pmatrix}=0\text{ 有非零解}.
+\end{array}
+\]
+\[
+\text{A. }0,\qquad \text{B. }1,\qquad \text{C. }2,\qquad \text{D. }3.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{分块矩阵的秩与 \(A\) 相同，说明在 \(A\) 右侧加列 \(\alpha\) 后秩不增加：
+\[
+r(A,\alpha)=r(A).
+\]
+因此 \(\alpha\) 是 \(A\) 的列向量组的线性组合，故 \(Ax=\alpha\) 必有解，(1) 正确。
+
+是否唯一取决于 \(A\) 是否可逆。题设并未保证 \(r(A)=n\)，所以 (2) 不一定正确。
+
+分块矩阵是 \((n+1)\) 阶矩阵，其秩为 \(r(A)\le n\)，因此零空间维数至少为
+\[
+(n+1)-n=1,
+\]
+所以齐次方程必有非零解，(3) 正确。}
+\answer{C；正确项有 \(2\) 项}
+\examnote{“秩不增加”表示新增列或行可由原来部分线性表示；唯一解还必须有满秩。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 19.} 设 \(\alpha_1,\alpha_2,\alpha_3\) 是 \(Ax=0\) 的基础解系，则（\quad）也为 \(Ax=0\) 的基础解系。
+\[
+\begin{array}{l}
+\text{A. 与 }\alpha_1,\alpha_2,\alpha_3\text{ 等价的向量组；}\\
+\text{B. 可以被 }\alpha_1,\alpha_2,\alpha_3\text{ 线性表示的向量组；}\\
+\text{C. 与 }\alpha_1,\alpha_2,\alpha_3\text{ 等秩的向量组；}\\
+\text{D. 可以表示 }\alpha_1,\alpha_2,\alpha_3\text{ 的向量组 }\beta_1,\beta_2,\beta_3.
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{基础解系必须满足两个条件：一是本身线性无关；二是张成整个解空间。与 \(\alpha_1,\alpha_2,\alpha_3\) 等价的向量组，张成空间相同；按本选择题的常规理解，候选向量组仍由三个向量组成，则其秩同为 \(3\)，故仍是基础解系。若完全不限制向量个数，“等价”本身还不足以保证线性无关，这是题目表述的默认条件。B 只说明新向量组在解空间内，不保证能张成整个解空间；C 只说明秩相同，不保证这些向量是方程组的解；D 只说明其张成空间包含原基础解系，不保证每个 \(\beta_i\) 都是解。}
+\answer{A}
+\examnote{基础解系不是“任意解向量组”，而是解空间的一组基。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 20.} 设
+\[
+A=(\alpha_1,\alpha_2,\alpha_3,\alpha_4),
+\]
+\(\alpha_1,\alpha_2,\alpha_3,\alpha_4,\beta\) 均为四维列向量，
+\[
+B=(\alpha_1,\alpha_2,\alpha_3).
+\]
+已知 \(Ax=\beta\) 的通解为
+\[
+x=k_1(1,2,-1,2)^T+k_2(0,1,2,-1)^T+(1,2,1,1)^T,
+\]
+其中 \(k_1,k_2\) 为任意常数。求 \(Bx=\beta\) 的通解。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(Bx=\beta\) 等价于在 \(Ax=\beta\) 的解中取第四个未知量为 \(0\)。设 \(Ax=\beta\) 的通解分量为
+\[
+\begin{aligned}
+x_1&=k_1+1,\\
+x_2&=2k_1+k_2+2,\\
+x_3&=-k_1+2k_2+1,\\
+x_4&=2k_1-k_2+1.
+\end{aligned}
+\]
+令 \(x_4=0\)，得
+\[
+k_2=2k_1+1.
+\]
+代回前三个分量：
+\[
+(x_1,x_2,x_3)^T
+=(1,3,3)^T+k_1(1,4,3)^T.
+\]
+令 \(t=k_1\)，即为 \(Bx=\beta\) 的通解。}
+\answer{\[
+x=(1,3,3)^T+t(1,4,3)^T,\qquad t\in\mathbb R.
+\]}
+\examnote{\(B\) 比 \(A\) 少一列，本质就是在 \(A\) 的方程中令对应未知量为 \(0\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 21.} 设 \(\beta_1,\beta_2\) 为 \(Ax=b\ (b\ne0)\) 的两个不同解，\(\alpha_1,\alpha_2\) 为 \(Ax=0\) 的基础解系，\(k_1,k_2\) 为任意常数，则 \(Ax=b\) 的通解为（\quad）
+\[
+\begin{array}{ll}
+\text{A. }k_1\alpha_1+k_2(\alpha_1+\alpha_2)+\dfrac{\beta_1-\beta_2}{2},&
+\text{B. }k_1\alpha_1+k_2(\alpha_1-\alpha_2)+\dfrac{\beta_1+\beta_2}{2},\\[6pt]
+\text{C. }k_1\alpha_1+k_2(\beta_1+\beta_2)+\dfrac{\beta_1-\beta_2}{2},&
+\text{D. }k_1\alpha_1+k_2(\beta_1-\beta_2)+\dfrac{\beta_1+\beta_2}{2}.
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{两个非齐次解的平均
+\[
+\frac{\beta_1+\beta_2}{2}
+\]
+仍是 \(Ax=b\) 的一个特解；差
+\[
+\beta_1-\beta_2
+\]
+是齐次方程 \(Ax=0\) 的解。通解必须等于“一个特解 + 齐次通解”。由于 \(\alpha_1,\alpha_2\) 是基础解系，\(\alpha_1,\alpha_1-\alpha_2\) 也是齐次解空间的一组基。因此
+\[
+x=k_1\alpha_1+k_2(\alpha_1-\alpha_2)+\frac{\beta_1+\beta_2}{2}
+\]
+是通解。}
+\answer{B}
+\examnote{非齐次方程通解 = 特解 + 齐次方程通解。两个特解的平均仍是特解，两个特解的差是齐次解。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 22.} 已知齐次方程组 \(Ax=0\) 为
+\[
+\begin{cases}
+x_1+a_2x_2+a_3x_3+a_4x_4=0,\\
+a_1x_1+4x_2+a_2x_3+a_3x_4=0,\\
+2x_1+7x_2+5x_3+3x_4=0.
+\end{cases}
+\]
+又矩阵 \(B\) 是 \(2\times4\) 矩阵，\(Bx=0\) 的基础解系为
+\[
+\alpha_1=(1,-2,3,-1)^T,\qquad \alpha_2=(0,1,-2,1)^T.
+\]
+\begin{enumerate}
+\item 求矩阵 \(B\)；
+\item 若 \(Ax=0\) 与 \(Bx=0\) 同解，求 \(a_1,a_2,a_3,a_4\)；
+\item 在 (2) 条件下，求 \(Ax=0\) 满足 \(x_3=-x_4\) 的所有解。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{(1) \(B\) 的行向量应与 \(\alpha_1,\alpha_2\) 都正交。设行向量为 \((u_1,u_2,u_3,u_4)\)，则
+\[
+u_1-2u_2+3u_3-u_4=0,\qquad u_2-2u_3+u_4=0.
+\]
+取一组基可得
+\[
+(1,2,1,0),\qquad (-1,-1,0,1).
+\]
+所以可取
+\[
+B=\begin{pmatrix}
+1&2&1&0\\
+-1&-1&0&1
+\end{pmatrix}.
+\]
+
+(2) 若 \(Ax=0\) 与 \(Bx=0\) 同解，则 \(A\) 的每一行都应属于上述行空间，等价于前两行也与 \(\alpha_1,\alpha_2\) 正交。第三行 \((2,7,5,3)\) 已满足正交条件。代入前两行：
+\[
+(1,a_2,a_3,a_4)\cdot\alpha_1=0,\quad
+(1,a_2,a_3,a_4)\cdot\alpha_2=0,
+\]
+\[
+(a_1,4,a_2,a_3)\cdot\alpha_1=0,\quad
+(a_1,4,a_2,a_3)\cdot\alpha_2=0.
+\]
+解得
+\[
+a_1=1,\qquad a_2=3,\qquad a_3=2,\qquad a_4=1.
+\]
+
+(3) 同解时通解为
+\[
+x=s\alpha_1+t\alpha_2.
+\]
+于是
+\[
+x_3=3s-2t,\qquad x_4=-s+t.
+\]
+条件 \(x_3=-x_4\) 给出
+\[
+3s-2t=s-t\quad\Longleftrightarrow\quad t=2s.
+\]
+故
+\[
+x=s(\alpha_1+2\alpha_2)=s(1,0,-1,1)^T.
+\]}
+\answer{\[
+B=\begin{pmatrix}1&2&1&0\\-1&-1&0&1\end{pmatrix};
+\quad
+a_1=1,\ a_2=3,\ a_3=2,\ a_4=1;
+\quad
+x=s(1,0,-1,1)^T.
+\]}
+\examnote{由基础解系反求方程组，求的是解空间的正交补，也就是系数矩阵行空间。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 23.} 设三阶矩阵 \(A,B\) 满足
+\[
+r(AB)=r(BA)+1.
+\]
+则（\quad）
+\[
+\begin{array}{l}
+\text{A. 方程组 }(A+B)X=0\text{ 只有零解；}\\
+\text{B. 方程组 }AX=0\text{ 与 }BX=0\text{ 均只有零解；}\\
+\text{C. 方程组 }AX=0\text{ 与 }BX=0\text{ 没有公共非零解；}\\
+\text{D. 方程组 }ABAX=0\text{ 与 }BABX=0\text{ 有公共非零解。}
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{因为 \(A,B\) 是三阶矩阵，若 \(r(AB)=3\)，则 \(A,B\) 都可逆，从而 \(BA\) 也可逆，\(r(BA)=3\)，与题设矛盾。因此
+\[
+r(AB)\le2,\qquad r(BA)\le1.
+\]
+于是
+\[
+r(ABA)\le r(BA)\le1,\qquad r(BAB)\le r(BA)\le1.
+\]
+在三维空间中，\(ABAX=0\) 的解空间维数至少为 \(2\)，\(BABX=0\) 的解空间维数也至少为 \(2\)。两个二维子空间在三维空间中必有非零交向量，所以两个方程组有公共非零解。}
+\answer{D}
+\examnote{两个子空间维数和超过总维数时，交空间必非零。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 24.} 若矩阵 \(A\) 可经初等行变换化为 \(B\)，则（\quad）
+\[
+\begin{array}{l}
+\text{A. 方程组 }Ax=0\text{ 与 }BB^Tx=0\text{ 同解；}\\
+\text{B. 方程组 }Bx=0\text{ 与 }AA^Tx=0\text{ 同解；}\\
+\text{C. 方程组 }A^TAx=0\text{ 与 }B^TBx=0\text{ 同解；}\\
+\text{D. 方程组 }AA^Tx=0\text{ 与 }BB^Tx=0\text{ 同解。}
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{初等行变换不改变齐次方程组的解集，所以
+\[
+Ax=0\quad\Longleftrightarrow\quad Bx=0.
+\]
+又对实矩阵有
+\[
+A^TAx=0\quad\Longleftrightarrow\quad x^TA^TAx=0
+\quad\Longleftrightarrow\quad \|Ax\|^2=0
+\quad\Longleftrightarrow\quad Ax=0.
+\]
+同理
+\[
+B^TBx=0\quad\Longleftrightarrow\quad Bx=0.
+\]
+因此 \(A^TAx=0\) 与 \(B^TBx=0\) 同解。}
+\answer{C}
+\examnote{实矩阵中 \(A^TAx=0\) 与 \(Ax=0\) 同解，这是常用等价。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 25.} 设 \(A,B\) 是 \(n\) 阶矩阵，\(\beta\) 为 \(n\) 维列向量，且 \(A\) 的列向量组可由 \(B\) 的列向量组线性表示，则（\quad）
+\[
+\begin{array}{l}
+\text{A. 若 }Ax=\beta\text{ 有解，则 }Bx=\beta\text{ 一定有解；}\\
+\text{B. 若 }A^Tx=\beta\text{ 有解，则 }B^Tx=\beta\text{ 一定有解；}\\
+\text{C. 若 }Bx=\beta\text{ 有解，则 }Ax=\beta\text{ 一定有解；}\\
+\text{D. 若 }B^Tx=\beta\text{ 有解，则 }A^Tx=\beta\text{ 一定有解。}
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(A\) 的列向量组可由 \(B\) 的列向量组线性表示，等价于
+\[
+\operatorname{Col}(A)\subseteq \operatorname{Col}(B).
+\]
+若 \(Ax=\beta\) 有解，则
+\[
+\beta\in\operatorname{Col}(A).
+\]
+由包含关系得
+\[
+\beta\in\operatorname{Col}(B),
+\]
+所以 \(Bx=\beta\) 一定有解。其余选项涉及转置后的列空间，也就是原矩阵的行空间，题设并未给出相应包含关系。}
+\answer{A}
+\examnote{线性方程组 \(Ax=\beta\) 有解的充要条件是 \(\beta\) 属于 \(A\) 的列空间。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 26.} 设 \(A,B\) 均为 \(n\) 阶矩阵，若方程组 \(Ax=0\) 与 \(Bx=0\) 同解，则（\quad）
+\[
+\begin{array}{l}
+\text{A. 方程组 }\begin{pmatrix}A&O\\E&B\end{pmatrix}y=0\text{ 只有零解；}\\[4pt]
+\text{B. 方程组 }\begin{pmatrix}E&A\\O&AB\end{pmatrix}y=0\text{ 只有零解；}\\[4pt]
+\text{C. 方程组 }\begin{pmatrix}A&B\\O&B\end{pmatrix}y=0\text{ 与 }\begin{pmatrix}B&A\\O&A\end{pmatrix}y=0\text{ 同解；}\\[4pt]
+\text{D. 方程组 }\begin{pmatrix}AB&B\\O&A\end{pmatrix}y=0\text{ 与 }\begin{pmatrix}BA&A\\O&B\end{pmatrix}y=0\text{ 同解。}
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设 \(y=(u,v)^T\)。因为 \(Ax=0\) 与 \(Bx=0\) 同解，记公共零空间为 \(K\)。
+
+对选项 C，左边方程组为
+\[
+Au+Bv=0,\qquad Bv=0.
+\]
+由 \(Bv=0\) 得 \(v\in K\)，从而 \(Av=0\)。第一式变为 \(Au=0\)，即 \(u\in K\)。所以左边解集为
+\[
+K\times K.
+\]
+右边方程组为
+\[
+Bu+Av=0,\qquad Av=0.
+\]
+同理 \(v\in K\)，第一式化为 \(Bu=0\)，故 \(u\in K\)。右边解集同样为 \(K\times K\)。故 C 正确。A、B 中“只有零解”需要公共零空间为零空间，题设不保证；D 中含 \(AB,BA\)，一般不能由同解条件推出同解。}
+\answer{C}
+\examnote{分块齐次方程组先把 \(y\) 拆成 \((u,v)\)，再逐行翻译成关于 \(u,v\) 的条件。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 27.} 设 \(A,B\) 为 \(n\) 阶矩阵，若 \(Ax=0\) 的解均是 \(Bx=0\) 的解，则（\quad）
+\[
+\begin{array}{l}
+\text{A. }A^Tx=0\text{ 的解均是 }B^Tx=0\text{ 的解；}\\
+\text{B. }B^Tx=0\text{ 的解均是 }A^Tx=0\text{ 的解；}\\
+\text{C. 方程组 }\begin{pmatrix}AB&B\\O&A\end{pmatrix}x=0\text{ 与 }\begin{pmatrix}BA&B\\O&A\end{pmatrix}x=0\text{ 同解；}\\[4pt]
+\text{D. 方程组 }\begin{pmatrix}A&AB\\O&A\end{pmatrix}x=0\text{ 与 }\begin{pmatrix}A&BA\\O&A\end{pmatrix}x=0\text{ 同解。}
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{题设表示
+\[
+N(A)\subseteq N(B).
+\]
+设分块未知量为 \(x=(u,v)^T\)。对 D 的第一个方程组：
+\[
+Au+ABv=0,\qquad Av=0.
+\]
+由 \(Av=0\) 和题设得 \(Bv=0\)，于是 \(ABv=A(Bv)=0\)，第一式化为 \(Au=0\)。所以解集为
+\[
+u\in N(A),\quad v\in N(A).
+\]
+对 D 的第二个方程组：
+\[
+Au+BAv=0,\qquad Av=0.
+\]
+由 \(Av=0\)，得 \(BAv=B0=0\)，第一式同样化为 \(Au=0\)。解集仍为
+\[
+N(A)\times N(A).
+\]
+故 D 正确。A、B 涉及转置方程，题设只给出零空间包含关系，不足以推出转置后的结论；C 中第一式含 \(ABu\) 与 \(BAu\)，不能同样化简。}
+\answer{D}
+\examnote{“\(Ax=0\) 的解都是 \(Bx=0\) 的解”就是 \(N(A)\subseteq N(B)\)。代入分块方程时要优先利用这一包含关系。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 28.} （仅数一）设 \(R^3\) 中的基
+\[
+(I):\ \beta_1=(1,0,0)^T,\quad \beta_2=(1,1,0)^T,\quad \beta_3=(1,1,1)^T
+\]
+到基
+\[
+(II):\ \alpha_1=(1,a,0)^T,\quad \alpha_2=(0,1,b)^T,\quad \alpha_3=(1,0,1)^T
+\]
+的过渡矩阵为
+\[
+P=\begin{pmatrix}
+0&-1&1\\
+1&0&-1\\
+0&1&1
+\end{pmatrix}.
+\]
+\begin{enumerate}
+\item 求 \(a,b\)；
+\item 已知 \(\xi\) 在基 \((I)\) 下的坐标为 \((1,0,2)^T\)，求 \(\xi\) 在基 \((II)\) 下的坐标。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{按教材常用约定，“从基 \(I\) 到基 \(II\) 的过渡矩阵”满足
+\[
+(\alpha_1,\alpha_2,\alpha_3)=(\beta_1,\beta_2,\beta_3)P.
+\]
+计算右端：
+\[
+(\beta_1,\beta_2,\beta_3)P
+=
+\begin{pmatrix}
+1&1&1\\
+0&1&1\\
+0&0&1
+\end{pmatrix}
+\begin{pmatrix}
+0&-1&1\\
+1&0&-1\\
+0&1&1
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&0&1\\
+1&1&0\\
+0&1&1
+\end{pmatrix}.
+\]
+与
+\[
+(\alpha_1,\alpha_2,\alpha_3)=
+\begin{pmatrix}
+1&0&1\\
+a&1&0\\
+0&b&1
+\end{pmatrix}
+\]
+比较得
+\[
+a=1,\qquad b=1.
+\]
+坐标变换满足
+\[
+[\xi]_{I}=P[\xi]_{II}.
+\]
+因此
+\[
+[\xi]_{II}=P^{-1}(1,0,2)^T
+=\left(\frac32,\frac12,\frac32\right)^T.
+\]}
+\answer{\[
+a=1,\quad b=1,\qquad [\xi]_{II}=\left(\frac32,\frac12,\frac32\right)^T.
+\]}
+\examnote{基变换题先写清楚 \((\text{新基})=(\text{旧基})P\)，坐标变换方向与基向量矩阵方向相反。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 29.} （仅数一）如图所示，有 3 张平面两两相交，交线相互平行。它们的方程为
+\[
+a_{i1}x+a_{i2}y+a_{i3}z=d_i,\qquad i=1,2,3.
+\]
+组成的线性方程组的系数矩阵和增广矩阵分别记为 \(A,\overline A\)，则（\quad）
+\[
+\begin{array}{ll}
+\text{A. }r(A)=2,\ r(\overline A)=3,&
+\text{B. }r(A)=2,\ r(\overline A)=2,\\
+\text{C. }r(A)=1,\ r(\overline A)=2,&
+\text{D. }r(A)=1,\ r(\overline A)=1.
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{三张平面两两相交，说明任意两张平面的法向量不成比例；但三条交线互相平行，说明三组法向量都在同一个二维法向平面内，故系数矩阵的秩为
+\[
+r(A)=2.
+\]
+图形中三条交线互相平行而不重合，三平面没有公共交点，因此方程组无解。无解意味着
+\[
+r(\overline A)>r(A).
+\]
+增广矩阵最多有 3 行，所以
+\[
+r(\overline A)=3.
+\]}
+\answer{A；\(r(A)=2,\ r(\overline A)=3\)}
+\examnote{三元一次方程组的几何判断：系数矩阵秩看法向量，增广矩阵秩看是否有公共交点。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 30.} （仅数一）设 \(\alpha_1,\alpha_2,\alpha_3,\alpha_4\) 是 \(n\) 维列向量，\(\alpha_1,\alpha_2\) 线性无关，\(\alpha_1,\alpha_2,\alpha_3\) 线性相关，且
+\[
+\alpha_1+\alpha_2+\alpha_4=0.
+\]
+在空间直角坐标系 \(O-xyz\) 中，关于 \(x,y,z\) 的方程组
+\[
+x\alpha_1+y\alpha_2+z\alpha_3=\alpha_4
+\]
+的几何图形是（\quad）
+\[
+\begin{array}{ll}
+\text{A. 过原点的一个平面},& \text{B. 过原点的一条直线},\\
+\text{C. 不过原点的一个平面},& \text{D. 不过原点的一条直线}.
+\end{array}
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{因为 \(\alpha_1,\alpha_2\) 线性无关，而 \(\alpha_1,\alpha_2,\alpha_3\) 线性相关，所以
+\[
+\alpha_3\in \operatorname{span}(\alpha_1,\alpha_2),
+\]
+且
+\[
+r(\alpha_1,\alpha_2,\alpha_3)=2.
+\]
+又
+\[
+\alpha_4=-(\alpha_1+\alpha_2)\in\operatorname{span}(\alpha_1,\alpha_2),
+\]
+所以增广秩也为 \(2\)。因此关于三个未知数 \(x,y,z\) 的解集维数为
+\[
+3-2=1,
+\]
+几何图形是一条直线。
+
+再判断是否过原点。若 \((x,y,z)=(0,0,0)\) 是解，则需
+\[
+0=\alpha_4.
+\]
+但 \(\alpha_4=-(\alpha_1+\alpha_2)\)，而 \(\alpha_1,\alpha_2\) 线性无关，故 \(\alpha_1+\alpha_2\ne0\)，即 \(\alpha_4\ne0\)。所以该直线不过原点。}
+\answer{D；不过原点的一条直线}
+\examnote{解集维数 = 未知数个数 \(-\) 系数矩阵秩；是否过原点看零向量是否满足非齐次方程。}
+\end{solutionblock}

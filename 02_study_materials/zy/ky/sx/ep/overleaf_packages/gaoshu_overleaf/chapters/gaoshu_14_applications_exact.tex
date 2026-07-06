@@ -1,0 +1,1310 @@
+\chapter{高等数学：微积分应用}
+
+\section{相关变化率与物理微分方程}
+
+\begin{problemblock}
+\textbf{例1.} 有一圆柱体底面半径与高随时间变化的速率分别为
+\[
+2\mathrm{cm}/\mathrm{s},\qquad -3\mathrm{cm}/\mathrm{s}.
+\]
+当底面半径为 \(10\mathrm{cm}\)，高为 \(5\mathrm{cm}\) 时，圆柱体的体积和表面积随时间的变化率分别为（\quad）
+
+A. \(125\pi\mathrm{cm}^3/\mathrm{s},\ 40\pi\mathrm{cm}^2/\mathrm{s}\)
+
+B. \(125\pi\mathrm{cm}^3/\mathrm{s},\ -40\pi\mathrm{cm}^2/\mathrm{s}\)
+
+C. \(-100\pi\mathrm{cm}^3/\mathrm{s},\ 40\pi\mathrm{cm}^2/\mathrm{s}\)
+
+D. \(-100\pi\mathrm{cm}^3/\mathrm{s},\ -40\pi\mathrm{cm}^2/\mathrm{s}\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{相关变化率题先写出几何量公式，再对时间 \(t\) 求导。这里表面积指圆柱总表面积。}
+设半径为 \(r\)，高为 \(h\)，则
+\[
+\frac{dr}{dt}=2,\qquad \frac{dh}{dt}=-3.
+\]
+体积
+\[
+V=\pi r^2h,
+\]
+故
+\[
+\frac{dV}{dt}
+=\pi\left(2rh\frac{dr}{dt}+r^2\frac{dh}{dt}\right).
+\]
+代入 \(r=10,h=5\)，得
+\[
+\frac{dV}{dt}
+=\pi(2\cdot10\cdot5\cdot2+10^2\cdot(-3))
+=-100\pi.
+\]
+圆柱总表面积
+\[
+S=2\pi r^2+2\pi rh.
+\]
+因此
+\[
+\frac{dS}{dt}
+=4\pi r\frac{dr}{dt}
++2\pi\left(h\frac{dr}{dt}+r\frac{dh}{dt}\right).
+\]
+代入得
+\[
+\frac{dS}{dt}
+=4\pi\cdot10\cdot2+2\pi(5\cdot2+10\cdot(-3))
+=40\pi.
+\]
+\answer{C}
+\examnote{体积减少不代表表面积也减少；两个量必须分别求导。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例2.} 一质量为 \(m\) 的子弹进入沙箱速度为 \(v_0\)，所受的阻力与子弹速度成正比，比例系数 \(k>0\)。则子弹打进的深度是（\quad）
+
+A. \(\displaystyle \frac{2m}{k}v_0\)
+\quad B. \(\displaystyle \frac{2k}{m}v_0\)
+\quad C. \(\displaystyle \frac{m}{k}v_0\)
+\quad D. \(\displaystyle \frac{k}{m}v_0\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{阻力与速度成正比，若直接用时间，速度指数衰减；若要求深度，用 \(a=v\,dv/dx\) 更快。}
+取运动方向为正方向，阻力为
+\[
+F=-kv.
+\]
+由牛顿第二定律
+\[
+m\frac{dv}{dt}=-kv.
+\]
+又
+\[
+\frac{dv}{dt}=\frac{dv}{dx}\frac{dx}{dt}=v\frac{dv}{dx},
+\]
+所以
+\[
+mv\frac{dv}{dx}=-kv.
+\]
+当 \(v>0\) 时约去 \(v\)，得
+\[
+m\frac{dv}{dx}=-k.
+\]
+从 \(v=v_0\) 到 \(v=0\)，位移从 \(0\) 到深度 \(s\)，故
+\[
+\int_{v_0}^{0}m\,dv=\int_0^s -k\,dx.
+\]
+于是
+\[
+-mv_0=-ks,
+\qquad
+s=\frac{m}{k}v_0.
+\]
+\answer{C}
+\examnote{阻力题求位移时常把 \(dv/dt\) 改成 \(v\,dv/dx\)，可以避开时间参数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例3.} 飞机以匀速 \(v\) 沿 \(y\) 轴正向飞行，当飞机行至 \(O\) 时被发现，随即从 \(x\) 轴上 \((x_0,0)\) 处发射一枚导弹向飞机飞去 \((x_0>0)\)。若导弹方向始终指向飞机，且速度大小为 \(2v\)。
+
+\begin{enumerate}[label=(\arabic*)]
+\item 求导弹轨迹满足的微分方程及初始条件；
+\item 求导弹运行方程。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设导弹位置为 \((x,y)\)。导弹速度方向沿轨迹切线，同时指向飞机 \((0,vt)\)。用斜率关系和弧长关系消去时间。}
+设导弹轨迹为 \(y=y(x)\)。导弹指向飞机，故轨迹切线斜率为
+\[
+y'=\frac{vt-y}{0-x}=\frac{y-vt}{x}.
+\]
+于是
+\[
+vt=y-xy'. \tag{1}
+\]
+导弹速率为 \(2v\)，从发射到时刻 \(t\) 走过的弧长为 \(2vt\)。当导弹从 \((x_0,0)\) 运动到 \((x,y)\) 时，
+\[
+2vt=\int_x^{x_0}\sqrt{1+(y')^2}\,dx.
+\]
+结合 (1)，有
+\[
+y-xy'=\frac12\int_x^{x_0}\sqrt{1+(y')^2}\,dx.
+\]
+对 \(x\) 求导：
+\[
+-xy''=-\frac12\sqrt{1+(y')^2},
+\]
+即
+\[
+xy''=\frac12\sqrt{1+(y')^2}.
+\]
+初始条件为
+\[
+y(x_0)=0,\qquad y'(x_0)=0.
+\]
+
+令 \(p=y'\)，则
+\[
+x\frac{dp}{dx}=\frac12\sqrt{1+p^2}.
+\]
+分离变量：
+\[
+\frac{dp}{\sqrt{1+p^2}}=\frac{dx}{2x}.
+\]
+由 \(p(x_0)=0\)，得
+\[
+\operatorname{arsinh}p=\frac12\ln\frac{x}{x_0}.
+\]
+因此
+\[
+y'=\frac12\left(\sqrt{\frac{x}{x_0}}-\sqrt{\frac{x_0}{x}}\right).
+\]
+积分并用 \(y(x_0)=0\)，得轨迹方程
+\[
+y=\frac{x^{3/2}}{3\sqrt{x_0}}-\sqrt{x_0x}+\frac{2x_0}{3}.
+\]
+若令
+\[
+u=\sqrt{\frac{x}{x_0}}\qquad (1\ge u\ge0),
+\]
+则运行方程可写为参数式
+\[
+x=x_0u^2,
+\]
+\[
+y=x_0\left(\frac{u^3}{3}-u+\frac23\right),
+\]
+\[
+t=\frac{x_0}{v}\left(\frac23-\frac u2-\frac{u^3}{6}\right).
+\]
+\answer{\(\displaystyle xy''=\frac12\sqrt{1+(y')^2},\ y(x_0)=y'(x_0)=0;\quad
+y=\frac{x^{3/2}}{3\sqrt{x_0}}-\sqrt{x_0x}+\frac{2x_0}{3}\)}
+\examnote{追踪曲线题的两个关系：切线指向目标给斜率，速度大小给弧长与时间的关系。}
+\end{solutionblock}
+
+\section{质心、水压力、引力与功}
+
+\begin{problemblock}
+\textbf{例4.} 求星形线
+\[
+\begin{cases}
+x=a\cos^3t,\\
+y=a\sin^3t
+\end{cases}
+\qquad \left(0\le t\le\frac{\pi}{2}\right)
+\]
+的质心，其中 \(a>0\) 为常数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是均匀细线的质心。由对称性可知 \(\bar x=\bar y\)，但仍需算一个坐标。}
+有
+\[
+\frac{dx}{dt}=-3a\cos^2t\sin t,\qquad
+\frac{dy}{dt}=3a\sin^2t\cos t.
+\]
+因此
+\[
+ds=\sqrt{\left(\frac{dx}{dt}\right)^2+\left(\frac{dy}{dt}\right)^2}\,dt
+=3a\sin t\cos t\,dt.
+\]
+弧长
+\[
+L=\int_0^{\pi/2}3a\sin t\cos t\,dt=\frac{3a}{2}.
+\]
+于是
+\[
+\bar x=\frac1L\int_L x\,ds
+=\frac{1}{L}\int_0^{\pi/2}a\cos^3t\cdot3a\sin t\cos t\,dt.
+\]
+即
+\[
+\bar x=\frac{3a^2}{L}\int_0^{\pi/2}\sin t\cos^4t\,dt
+=\frac{3a^2}{L}\cdot\frac15
+=\frac{2a}{5}.
+\]
+同理
+\[
+\bar y=\frac{2a}{5}.
+\]
+\answer{\(\displaystyle \left(\frac{2a}{5},\frac{2a}{5}\right)\)}
+\examnote{曲线质心要用 \(ds\) 加权；平面区域质心才用 \(dA\) 加权。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例5.} 有一斜边长为 \(2a\) 的等腰直角三角形平板，竖直浸没在水中，斜边与水面齐平。求平板一侧所受到的水压力。水密度为 \(\rho\)，重力加速度为 \(g\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{水压力等于 \(\rho g\cdot\) 深度 \(\cdot\) 面积元。按深度取水平薄条。}
+设 \(x\) 为水面向下的深度。由图形相似关系，深度为 \(x\) 处的水平宽度为
+\[
+2(a-x),\qquad 0\le x\le a.
+\]
+该薄条面积
+\[
+dA=2(a-x)\,dx.
+\]
+该处压强为
+\[
+p=\rho gx.
+\]
+故微元压力
+\[
+dF=\rho gx\cdot2(a-x)\,dx.
+\]
+总压力
+\[
+F=2\rho g\int_0^a x(a-x)\,dx
+=2\rho g\left(\frac{a^3}{2}-\frac{a^3}{3}\right)
+=\frac{\rho ga^3}{3}.
+\]
+\answer{\(\displaystyle F=\frac{\rho ga^3}{3}\)}
+\examnote{水压力题的关键是“压强随深度线性变化”，不能直接用面积乘平均高度而不说明理由。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例6.} 有一个椭圆形直板，长半轴为 \(a\)，短半轴为 \(b\)，薄板垂直于水中且短轴与水面齐平，求水对薄板的侧压力。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{短轴在水面上，水中部分是下半个椭圆。仍按深度取水平薄条。}
+取水面为 \(x=0\)，向下为正，椭圆下半部分满足
+\[
+\frac{x^2}{a^2}+\frac{y^2}{b^2}=1,\qquad 0\le x\le a.
+\]
+深度为 \(x\) 处薄条宽度为
+\[
+2b\sqrt{1-\frac{x^2}{a^2}}.
+\]
+于是
+\[
+dF=\rho gx\cdot2b\sqrt{1-\frac{x^2}{a^2}}\,dx.
+\]
+总压力
+\[
+F=2\rho gb\int_0^a x\sqrt{1-\frac{x^2}{a^2}}\,dx.
+\]
+令 \(u=1-x^2/a^2\)，可得
+\[
+\int_0^a x\sqrt{1-\frac{x^2}{a^2}}\,dx=\frac{a^2}{3}.
+\]
+故
+\[
+F=\frac{2}{3}\rho ga^2b.
+\]
+\answer{\(\displaystyle F=\frac{2}{3}\rho ga^2b\)}
+\examnote{椭圆板压力题通常先把宽度表示成深度的函数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例7.} 如图所示，\(x\) 轴上有一线密度为常数 \(\mu\)、长度为 \(l\) 的细杆，有一质量为 \(m\) 的质点 \(M\) 到杆右端的距离为 \(a\)，已知引力系数为 \(k\)，则质点和细杆之间引力的大小为（\quad）
+
+A. \(\displaystyle \int_{-l}^{0}\frac{km\mu}{(a-x)^2}\,dx\)
+\quad
+B. \(\displaystyle \int_0^l\frac{km\mu}{(a-x)^2}\,dx\)
+
+C. \(\displaystyle 2\int_{-l/2}^{0}\frac{km\mu}{(a+x)^2}\,dx\)
+\quad
+D. \(\displaystyle 2\int_0^{l/2}\frac{km\mu}{(a+x)^2}\,dx\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把细杆放在 \([-l,0]\)，质点在 \((a,0)\)。杆上一小段质量为 \(\mu\,dx\)，距离质点为 \(a-x\)。}
+取杆上一点坐标为 \(x\in[-l,0]\)，微元质量
+\[
+dm=\mu\,dx.
+\]
+它对质点的引力大小为
+\[
+dF=\frac{k m\,dm}{(a-x)^2}
+=\frac{km\mu}{(a-x)^2}\,dx.
+\]
+所有微元引力方向相同，沿 \(x\) 轴方向叠加，所以
+\[
+F=\int_{-l}^{0}\frac{km\mu}{(a-x)^2}\,dx.
+\]
+\answer{A}
+\examnote{引力积分先定坐标。距离写错，选项就会错。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例8.} 设单位质点 \(P,Q\) 分别位于点 \((0,0)\) 和 \((0,1)\) 处，\(P\) 从 \((0,0)\) 出发沿 \(x\) 轴正向移动，记 \(G\) 为引力常量。则当质点 \(P\) 移动到点 \((l,0)\) 时，克服质点 \(Q\) 的引力所做的功为（\quad）
+
+A. \(\displaystyle \int_0^l\frac{G}{x^2+1}\,dx\)
+\quad
+B. \(\displaystyle \int_0^l\frac{Gx}{(x^2+1)^{3/2}}\,dx\)
+
+C. \(\displaystyle \int_0^l\frac{G}{(x^2+1)^{3/2}}\,dx\)
+\quad
+D. \(\displaystyle \int_0^l\frac{G(x+1)}{(x^2+1)^{3/2}}\,dx\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{质点沿 \(x\) 轴移动，只需要引力在 \(x\) 方向上的分量。克服引力做功取相反方向的正功。}
+当 \(P\) 位于 \((x,0)\) 时，
+\[
+PQ=\sqrt{x^2+1}.
+\]
+引力大小为
+\[
+\frac{G}{x^2+1}.
+\]
+该力指向 \(Q(0,1)\)，其 \(x\) 分量为负，大小为
+\[
+\frac{G}{x^2+1}\cdot\frac{x}{\sqrt{x^2+1}}
+=\frac{Gx}{(x^2+1)^{3/2}}.
+\]
+因此克服引力从 \(0\) 到 \(l\) 所做的功为
+\[
+W=\int_0^l\frac{Gx}{(x^2+1)^{3/2}}\,dx.
+\]
+\answer{B}
+\examnote{做功只取沿位移方向的力分量，不能把引力大小直接积分。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例9.} 设真空中有一线密度为 \(\rho\) 的无限长细直棒，距离细直棒单位距离处有一单位质点 \(A\)，\(G\) 为引力常量，则该细直棒对该质点的引力大小为（\quad）
+
+A. \(0\)
+\quad
+B. \(\displaystyle 2\int_0^{+\infty}\frac{G\rho\,dy}{(1+y^2)^{3/2}}\)
+
+C. \(\displaystyle \int_{-\infty}^{+\infty}\frac{G\rho y}{(1+y^2)^{3/2}}\,dy\)
+\quad
+D. \(\displaystyle 2\int_0^{+\infty}\frac{G\rho y}{(1+y^2)^{3/2}}\,dy\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{无限长细棒的竖直分量对称抵消，水平分量相加。}
+设细棒为 \(y\) 轴，质点在 \((1,0)\)。取棒上一小段 \((0,y)\)，质量为
+\[
+dm=\rho\,dy.
+\]
+它到质点的距离为
+\[
+\sqrt{1+y^2}.
+\]
+引力大小为
+\[
+\frac{G\rho\,dy}{1+y^2}.
+\]
+其水平分量大小为
+\[
+\frac{G\rho\,dy}{1+y^2}\cdot\frac{1}{\sqrt{1+y^2}}
+=\frac{G\rho\,dy}{(1+y^2)^{3/2}}.
+\]
+上下对称，竖直分量抵消，水平分量加倍：
+\[
+F=2\int_0^{+\infty}\frac{G\rho\,dy}{(1+y^2)^{3/2}}.
+\]
+\answer{B}
+\examnote{无限对称分布的引力题，先判断哪些分量抵消，剩下的分量再积分。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例10.} 设线密度为 \(1\) 的圆弧形细杆，其半径为 \(1\)，圆心角为 \(\theta_0\)，摆放位置如图所示，\(G\) 为引力常数。则该细杆对圆心处质量为 \(m\) 的质点 \(M\) 的水平引力大小为（\quad）
+
+A. \(\displaystyle 2Gm\sin\frac{\theta_0}{2}\)
+\quad
+B. \(\displaystyle \sqrt2Gm\sin\frac{\theta_0}{2}\)
+
+C. \(\displaystyle 2Gm\cos\frac{\theta_0}{2}\)
+\quad
+D. \(\displaystyle \sqrt2Gm\cos\frac{\theta_0}{2}\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{圆弧关于水平轴对称，竖直分量抵消，只积水平分量。半径和线密度均为 \(1\)，所以弧元质量就是 \(d\theta\)。}
+取圆心为原点，水平轴为对称轴。弧元对应角为 \(\theta\)，其中
+\[
+-\frac{\theta_0}{2}\le \theta\le\frac{\theta_0}{2}.
+\]
+半径为 \(1\)，线密度为 \(1\)，故
+\[
+dm=d\theta.
+\]
+该弧元对圆心处质点的引力大小为
+\[
+dF=Gm\,d\theta.
+\]
+水平分量为
+\[
+dF_x=Gm\cos\theta\,d\theta.
+\]
+于是
+\[
+F_x=Gm\int_{-\theta_0/2}^{\theta_0/2}\cos\theta\,d\theta
+=2Gm\sin\frac{\theta_0}{2}.
+\]
+\answer{A}
+\examnote{圆弧引力题通常先利用对称性消掉一个方向的分量。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例11.} 一物体沿直线运动，位移随时间的变化关系为
+\[
+x=ct^3.
+\]
+该物体所受到的阻力与速度的平方成正比，比例系数为 \(k\)。求物体从 \(x=0\) 运动到 \(x=c\) 过程中克服阻力所做的功。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{克服阻力做功为 \(\int k v^2\,dx\)。由 \(x=ct^3\) 可直接用 \(t\) 作参数。}
+由
+\[
+x=ct^3
+\]
+得速度
+\[
+v=\frac{dx}{dt}=3ct^2.
+\]
+当 \(x=0\) 时 \(t=0\)，当 \(x=c\) 时 \(t=1\)。阻力大小
+\[
+F=kv^2=9kc^2t^4.
+\]
+又
+\[
+dx=3ct^2\,dt.
+\]
+所以克服阻力所做的功为
+\[
+W=\int_0^1 9kc^2t^4\cdot3ct^2\,dt
+=27kc^3\int_0^1t^6\,dt
+=\frac{27}{7}kc^3.
+\]
+\answer{\(\displaystyle W=\frac{27}{7}kc^3\)}
+\examnote{做功积分可以用 \(x\) 作变量，也可以用时间参数；参数已知时常更简洁。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例12.} 有一倒圆锥形容器，高为 \(a\)，上底半径为 \(b\)，装满水。设水的密度为 \(\rho\)，重力加速度为 \(g\)，求将容器中的水全部从容器顶部抽出所做的功。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把水分成水平薄层。每层的体积由相似三角形给出，提升距离为该层到顶部的距离。}
+以圆锥顶点为 \(z=0\)，顶部为 \(z=a\)。高度 \(z\) 处水层半径为
+\[
+r=\frac{b}{a}z.
+\]
+薄层体积
+\[
+dV=\pi r^2\,dz=\pi\frac{b^2}{a^2}z^2\,dz.
+\]
+该薄层需提升距离
+\[
+a-z.
+\]
+故微元功
+\[
+dW=\rho g\,dV\,(a-z)
+=\rho g\pi\frac{b^2}{a^2}z^2(a-z)\,dz.
+\]
+总功
+\[
+W=\rho g\pi\frac{b^2}{a^2}\int_0^a z^2(a-z)\,dz.
+\]
+计算
+\[
+\int_0^a z^2(a-z)\,dz
+=\frac{a^4}{12}.
+\]
+因此
+\[
+W=\frac{\pi\rho g a^2b^2}{12}.
+\]
+\answer{\(\displaystyle W=\frac{\pi\rho g a^2b^2}{12}\)}
+\examnote{抽水做功题一定要写清“体积元重量”和“提升距离”。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例13.} （仅数一）设曲面 \(\Sigma\) 为锥面
+\[
+z=\sqrt{x^2+y^2}
+\]
+被柱面
+\[
+x^2+y^2=2ax\qquad (a>0)
+\]
+所截得的部分，其面密度
+\[
+\mu=xy+yz+zx.
+\]
+求该曲面的质量。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{锥面用柱坐标最自然：\(z=r\)，柱面给出 \(r=2a\cos\theta\)。}
+取
+\[
+x=r\cos\theta,\qquad y=r\sin\theta,\qquad z=r.
+\]
+柱面
+\[
+x^2+y^2=2ax
+\]
+化为
+\[
+r^2=2ar\cos\theta,
+\]
+即
+\[
+0\le r\le2a\cos\theta,\qquad -\frac{\pi}{2}\le\theta\le\frac{\pi}{2}.
+\]
+锥面 \(z=r\) 的面积元为
+\[
+dS=\sqrt2\,r\,dr\,d\theta.
+\]
+面密度
+\[
+\mu=xy+yz+zx
+=r^2(\cos\theta\sin\theta+\sin\theta+\cos\theta).
+\]
+所以质量
+\[
+M=\iint_\Sigma \mu\,dS
+=\sqrt2\int_{-\pi/2}^{\pi/2}\int_0^{2a\cos\theta}
+r^3(\cos\theta\sin\theta+\sin\theta+\cos\theta)\,dr\,d\theta.
+\]
+先积 \(r\)，得
+\[
+M=4\sqrt2a^4\int_{-\pi/2}^{\pi/2}
+\cos^4\theta(\cos\theta\sin\theta+\sin\theta+\cos\theta)\,d\theta.
+\]
+含 \(\sin\theta\) 的两项为奇函数，积分为 \(0\)，故
+\[
+M=4\sqrt2a^4\int_{-\pi/2}^{\pi/2}\cos^5\theta\,d\theta.
+\]
+又
+\[
+\int_{-\pi/2}^{\pi/2}\cos^5\theta\,d\theta=\frac{16}{15}.
+\]
+因此
+\[
+M=\frac{64\sqrt2}{15}a^4.
+\]
+\answer{\(\displaystyle M=\frac{64\sqrt2}{15}a^4\)}
+\examnote{锥面 \(z=r\) 的面积元是 \(\sqrt2\,r\,dr\,d\theta\)，这是本题最容易漏掉的系数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例14.} （仅数一）设悬链线
+\[
+y=\frac a2\left(e^{x/a}+e^{-x/a}\right)
+\]
+上每一点的密度与该点的纵坐标成反比，且在点 \((0,a)\) 处的密度等于 \(\delta\)。求曲线在横坐标 \(x_1=0\) 及 \(x_2=a\) 之间一段 \(L\) 的质量。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{悬链线 \(y=a\cosh(x/a)\) 的弧长因子正好是 \(\cosh(x/a)\)，会与密度中的 \(1/y\) 抵消。}
+因为
+\[
+y=a\cosh\frac{x}{a},
+\]
+且密度与 \(y\) 成反比，设线密度
+\[
+\lambda=\frac{C}{y}.
+\]
+在 \((0,a)\) 处，\(y=a\)，且密度为 \(\delta\)，所以
+\[
+\delta=\frac Ca,
+\qquad C=a\delta.
+\]
+因此
+\[
+\lambda=\frac{a\delta}{y}.
+\]
+又
+\[
+y'=\sinh\frac{x}{a},
+\]
+故
+\[
+ds=\sqrt{1+(y')^2}\,dx
+=\cosh\frac{x}{a}\,dx
+=\frac{y}{a}\,dx.
+\]
+质量
+\[
+m=\int_L\lambda\,ds
+=\int_0^a\frac{a\delta}{y}\cdot\frac{y}{a}\,dx
+=\int_0^a\delta\,dx
+=a\delta.
+\]
+\answer{\(\displaystyle m=a\delta\)}
+\examnote{悬链线应用题常利用恒等式 \(1+\sinh^2u=\cosh^2u\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例15.} （仅数一）求曲线
+\[
+\begin{cases}
+x^2+y^2=z,\\
+y=x\tan z
+\end{cases}
+\]
+从点 \((0,0,0)\) 到第一象限中的点 \((a,b,c)\) 的弧长。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{令 \(x=r\cos\theta,y=r\sin\theta\)。由 \(x^2+y^2=z\) 得 \(r=\sqrt z\)，由 \(y=x\tan z\) 得 \(\theta=z\)。}
+在第一象限中，可取参数 \(z\in[0,c]\)，令
+\[
+r=\sqrt z,\qquad \theta=z.
+\]
+于是
+\[
+x=\sqrt z\cos z,\qquad y=\sqrt z\sin z.
+\]
+在柱坐标中
+\[
+dx^2+dy^2=dr^2+r^2d\theta^2.
+\]
+因此
+\[
+ds^2=dr^2+r^2d\theta^2+dz^2.
+\]
+由
+\[
+\frac{dr}{dz}=\frac1{2\sqrt z},\qquad \frac{d\theta}{dz}=1,
+\]
+得
+\[
+\left(\frac{ds}{dz}\right)^2
+=\frac1{4z}+z+1
+=\frac{(2z+1)^2}{4z}.
+\]
+所以
+\[
+\frac{ds}{dz}=\sqrt z+\frac1{2\sqrt z}.
+\]
+弧长
+\[
+s=\int_0^c\left(\sqrt z+\frac1{2\sqrt z}\right)\,dz
+=\frac23c^{3/2}+\sqrt c.
+\]
+\answer{\(\displaystyle s=\sqrt c+\frac23c^{3/2}\)}
+\examnote{空间曲线若含 \(x^2+y^2\) 和 \(\tan z\)，优先用柱坐标把角度和半径分离。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例16.} （仅数一）设 \(\Omega\) 是由锥面
+\[
+x^2+(y-z)^2=(1-z)^2\qquad (0\le z\le1)
+\]
+与平面 \(z=0\) 围成的锥体，求 \(\Omega\) 的形心坐标。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{固定 \(z\) 看截面。截面是 \(xy\) 平面内以 \((0,z)\) 为圆心、\(1-z\) 为半径的圆盘。}
+当 \(z\) 固定时，截面为
+\[
+x^2+(y-z)^2\le(1-z)^2.
+\]
+这是圆心 \((0,z)\)、半径 \(1-z\) 的圆盘，面积为
+\[
+A(z)=\pi(1-z)^2.
+\]
+由对称性
+\[
+\bar x=0.
+\]
+体积
+\[
+V=\int_0^1\pi(1-z)^2\,dz=\frac{\pi}{3}.
+\]
+对 \(z\) 的一阶矩为
+\[
+\int_0^1 z\pi(1-z)^2\,dz=\frac{\pi}{12}.
+\]
+所以
+\[
+\bar z=\frac{\pi/12}{\pi/3}=\frac14.
+\]
+每个水平截面的圆心 \(y\) 坐标为 \(z\)，故对 \(y\) 的一阶矩同样为
+\[
+\int_0^1 z\pi(1-z)^2\,dz=\frac{\pi}{12}.
+\]
+因此
+\[
+\bar y=\frac14.
+\]
+\answer{\(\displaystyle (0,\frac14,\frac14)\)}
+\examnote{求空间形心时，若水平截面形状简单，优先用截面面积和截面形心做一重积分。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例17.} （仅数一）证明：由 \(x=a,x=b,y=f(x)\) 及 \(x\) 轴所围平面图形绕 \(x\) 轴旋转一周所成的旋转体对 \(x\) 轴的转动惯量为
+\[
+I_x=\frac{\pi}{2}\int_a^b[f(x)]^4\,dx,
+\]
+其中 \(f(x)\) 是连续的正值函数，假设旋转体的密度 \(\rho=1\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{固定 \(x\) 后，截面是半径 \(f(x)\) 的圆盘。圆盘对其中心轴的面积二次矩为 \(\pi R^4/2\)。}
+取厚度为 \(dx\) 的薄片。该薄片是半径
+\[
+R=f(x)
+\]
+的圆盘柱，密度为 \(1\)。其对 \(x\) 轴的微元转动惯量为
+\[
+dI_x=\left(\iint_{u^2+v^2\le R^2}(u^2+v^2)\,dA\right)dx.
+\]
+在截面上用极坐标，
+\[
+\iint_{u^2+v^2\le R^2}(u^2+v^2)\,dA
+=\int_0^{2\pi}\int_0^R r^2\cdot r\,dr\,d\theta
+=2\pi\cdot\frac{R^4}{4}
+=\frac{\pi R^4}{2}.
+\]
+因此
+\[
+dI_x=\frac{\pi}{2}[f(x)]^4\,dx.
+\]
+从 \(a\) 到 \(b\) 积分：
+\[
+I_x=\frac{\pi}{2}\int_a^b[f(x)]^4\,dx.
+\]
+\answer{已证 \(\displaystyle I_x=\frac{\pi}{2}\int_a^b[f(x)]^4\,dx\)}
+\examnote{旋转体转动惯量题可用“截面二次矩”一维化。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例18.} （仅数一）质点 \(P\) 沿着以 \(AB\) 为直径的半圆周，从点
+\[
+A(1,2)
+\]
+运动到点
+\[
+B(3,4)
+\]
+的过程中受力 \(F\) 作用。\(F\) 的大小等于点 \(P\) 与原点 \(O\) 之间的距离，其方向垂直于线段 \(OP\)，且与 \(y\) 轴正向的夹角小于 \(\pi/2\)。求变力 \(F\) 对质点 \(P\) 所做的功。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{点 \(P=(x,y)\) 时，长度为 \(|OP|\) 且垂直于 \(OP\)、并与 \(y\) 轴正向夹角小于 \(\pi/2\) 的力可写为 \(\mathbf F=(-y,x)\)。}
+因为
+\[
+|(-y,x)|=\sqrt{x^2+y^2}=|OP|,
+\]
+且
+\[
+(-y,x)\cdot(0,1)=x>0
+\]
+在图示半圆弧上成立，所以
+\[
+\mathbf F=(-y,x).
+\]
+所求功为
+\[
+W=\int_C -y\,dx+x\,dy.
+\]
+圆的直径端点为 \(A(1,2),B(3,4)\)，圆心
+\[
+C_0=(2,3),
+\]
+半径
+\[
+R=\sqrt2.
+\]
+按图示半圆弧参数化：
+\[
+x=2+\sqrt2\cos\varphi,\qquad
+y=3+\sqrt2\sin\varphi,
+\]
+\[
+\frac{5\pi}{4}\le\varphi\le\frac{9\pi}{4}.
+\]
+于是
+\[
+dx=-\sqrt2\sin\varphi\,d\varphi,\qquad
+dy=\sqrt2\cos\varphi\,d\varphi.
+\]
+代入：
+\[
+-y\,dx+x\,dy
+=\sqrt2(3\sin\varphi+2\cos\varphi)\,d\varphi+2\,d\varphi.
+\]
+因此
+\[
+W=\int_{5\pi/4}^{9\pi/4}
+\left[\sqrt2(3\sin\varphi+2\cos\varphi)+2\right]d\varphi.
+\]
+计算得
+\[
+W=2\pi-2.
+\]
+\answer{\(\displaystyle W=2\pi-2\)}
+\examnote{平面变力做功先写力场，再写线积分。方向条件用于确定是 \((-y,x)\) 还是 \((y,-x)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例19.} （仅数一）在变力
+\[
+\mathbf F=yz\,\mathbf i+xz\,\mathbf j+xy\,\mathbf k
+\]
+的作用下，质点由原点沿直线运动到椭球面
+\[
+\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1
+\]
+上第一卦限点 \(M(\xi,\eta,\zeta)\)。问当 \(\xi,\eta,\zeta\) 取何值时，力 \(\mathbf F\) 所做的功 \(W\) 最大？并求 \(W\) 的最大值。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{力场是势场，因为 \(\mathbf F=\nabla(xyz)\)。所以做功与路径无关，等于终点处的 \(\xi\eta\zeta\)。}
+注意
+\[
+\nabla(xyz)=(yz,xz,xy)=\mathbf F.
+\]
+故从原点到 \(M(\xi,\eta,\zeta)\) 的功为
+\[
+W=\xi\eta\zeta-0=\xi\eta\zeta.
+\]
+约束条件为
+\[
+\frac{\xi^2}{a^2}+\frac{\eta^2}{b^2}+\frac{\zeta^2}{c^2}=1,
+\qquad \xi,\eta,\zeta>0.
+\]
+令
+\[
+u=\frac{\xi}{a},\qquad v=\frac{\eta}{b},\qquad w=\frac{\zeta}{c}.
+\]
+则
+\[
+u^2+v^2+w^2=1,
+\]
+并且
+\[
+W=abc\,uvw.
+\]
+由均值不等式或 Lagrange 乘数法，正数 \(u,v,w\) 在平方和固定时乘积最大当且仅当
+\[
+u=v=w=\frac1{\sqrt3}.
+\]
+所以
+\[
+\xi=\frac a{\sqrt3},\qquad
+\eta=\frac b{\sqrt3},\qquad
+\zeta=\frac c{\sqrt3}.
+\]
+最大功为
+\[
+W_{\max}=abc\left(\frac1{\sqrt3}\right)^3
+=\frac{abc}{3\sqrt3}.
+\]
+\answer{\(\displaystyle \xi=\frac a{\sqrt3},\ \eta=\frac b{\sqrt3},\ \zeta=\frac c{\sqrt3};\quad W_{\max}=\frac{abc}{3\sqrt3}\)}
+\examnote{若力场是梯度场，先用势函数把线积分转为端点函数值，再做约束最值。}
+\end{solutionblock}
+
+\section{曲面积分、旋转体体积与表面积}
+
+\begin{problemblock}
+\textbf{例20.} （仅数一）设曲面 \(S\) 为球面
+\[
+x^2+y^2+z^2=4z
+\]
+与锥面
+\[
+z=\frac{\sqrt{x^2+y^2}}{\sqrt3}
+\]
+所围，且位于锥面上方部分的立体表面。流速场为
+\[
+\mathbf A(x,y,z)=
+\left(
+\frac13x^3+x^2y+x^2z,\ 
+\frac13y^3+y^2z,\ 
+\frac13z^3
+\right).
+\]
+求 \(\mathbf A(x,y,z)\) 从曲面 \(S\) 内部流向外部的流量 \(\Phi\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是封闭曲面的外向流量，直接用 Gauss 公式，把曲面积分化为散度的三重积分。}
+先求散度：
+\[
+\nabla\cdot\mathbf A
+=x^2+2xy+2xz+y^2+2yz+z^2
+=(x+y+z)^2.
+\]
+用球坐标
+\[
+x=\rho\sin\varphi\cos\theta,\quad
+y=\rho\sin\varphi\sin\theta,\quad
+z=\rho\cos\varphi.
+\]
+球面
+\[
+x^2+y^2+z^2=4z
+\]
+化为
+\[
+\rho=4\cos\varphi.
+\]
+锥面
+\[
+z=\frac{\sqrt{x^2+y^2}}{\sqrt3}
+\]
+化为
+\[
+\tan\varphi=\sqrt3,
+\]
+即
+\[
+\varphi=\frac{\pi}{3}.
+\]
+位于锥面上方，所以
+\[
+0\le\varphi\le\frac{\pi}{3},\qquad
+0\le\theta\le2\pi,\qquad
+0\le\rho\le4\cos\varphi.
+\]
+由 Gauss 公式
+\[
+\Phi=\iiint_\Omega (x+y+z)^2\,dV.
+\]
+在球坐标中，
+\[
+x+y+z=\rho(\sin\varphi\cos\theta+\sin\varphi\sin\theta+\cos\varphi).
+\]
+对 \(\theta\) 积分时交叉项为 \(0\)，且
+\[
+\int_0^{2\pi}
+(\sin\varphi\cos\theta+\sin\varphi\sin\theta+\cos\varphi)^2\,d\theta
+=2\pi.
+\]
+故
+\[
+\Phi=\int_0^{\pi/3}\int_0^{4\cos\varphi}2\pi\rho^4\sin\varphi\,d\rho\,d\varphi.
+\]
+计算得
+\[
+\Phi=\frac{2048\pi}{5}\int_0^{\pi/3}\sin\varphi\cos^5\varphi\,d\varphi
+=\frac{336\pi}{5}.
+\]
+\answer{\(\displaystyle \Phi=\frac{336\pi}{5}\)}
+\examnote{封闭曲面外向流量优先考虑 Gauss 公式；本题角向积分能大幅简化。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例21.} 设区域 \(D\) 是由
+\[
+y=3-|x^2-1|
+\]
+与 \(x\) 轴围成的封闭图形，求 \(D\) 绕 \(y=3\) 旋转所得的旋转体体积 \(V\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{区域在 \(y=3\) 下方，绕 \(y=3\) 旋转，用垫片法最直接。}
+由
+\[
+3-|x^2-1|\ge0
+\]
+得
+\[
+-2\le x\le2.
+\]
+对固定 \(x\)，区域从 \(y=0\) 到
+\[
+y=3-|x^2-1|.
+\]
+绕 \(y=3\) 旋转时，外半径为
+\[
+R=3,
+\]
+内半径为
+\[
+r=3-\bigl(3-|x^2-1|\bigr)=|x^2-1|.
+\]
+故
+\[
+V=\pi\int_{-2}^{2}\left[9-(x^2-1)^2\right]\,dx.
+\]
+被积函数为偶函数，所以
+\[
+V=2\pi\int_0^2(8+2x^2-x^4)\,dx.
+\]
+计算：
+\[
+V=2\pi\left(16+\frac{16}{3}-\frac{32}{5}\right)
+=\frac{448\pi}{15}.
+\]
+\answer{\(\displaystyle V=\frac{448\pi}{15}\)}
+\examnote{绕水平直线旋转时，先画出外半径和内半径，避免把 \(y\) 本身误当半径。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例22.} 求摆线
+\[
+L:\quad x=a(t-\sin t),\qquad y=a(1-\cos t)\qquad (0\le t\le2\pi)
+\]
+与 \(x\) 轴所围成的图形绕 \(y\) 轴的旋转体体积。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{可用 Pappus 定理，也可用柱壳法。摆线一拱与 \(x\) 轴所围面积为 \(3\pi a^2\)，其形心横坐标由对称性为 \(\pi a\)。}
+摆线一拱关于直线
+\[
+x=\pi a
+\]
+对称，因此所围图形的形心横坐标为
+\[
+\bar x=\pi a.
+\]
+摆线一拱面积为
+\[
+A=3\pi a^2.
+\]
+绕 \(y\) 轴旋转时，形心走过的距离为
+\[
+2\pi\bar x=2\pi^2a.
+\]
+由 Pappus 定理，
+\[
+V=A\cdot2\pi\bar x
+=3\pi a^2\cdot2\pi^2a
+=6\pi^3a^3.
+\]
+\method{方法二：柱壳法}
+也可写为
+\[
+V=2\pi\int x\,y\,dx.
+\]
+代入参数
+\[
+x=a(t-\sin t),\quad y=a(1-\cos t),\quad dx=a(1-\cos t)\,dt,
+\]
+即可得到同样结果。
+\answer{\(\displaystyle V=6\pi^3a^3\)}
+\examnote{摆线一拱面积 \(3\pi a^2\)、形心横坐标 \(\pi a\) 是常用结论；不熟时可用参数积分验证。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例23.} 设直线
+\[
+l:\ x+y=1,
+\]
+曲线
+\[
+S:\ \sqrt{x}+\sqrt{y}=1.
+\]
+求由 \(l\) 与 \(S\) 所围的平面图形绕 \(l\) 的旋转体体积 \(V\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{绕斜直线旋转，可用微元 Pappus 思想：体积微元为 \(2\pi\cdot\) 到轴距离 \(\cdot dA\)。}
+区域位于直线
+\[
+x+y=1
+\]
+下方、曲线
+\[
+y=(1-\sqrt{x})^2
+\]
+上方，其中
+\[
+0\le x\le1.
+\]
+点 \((x,y)\) 到直线 \(x+y=1\) 的距离为
+\[
+d=\frac{1-x-y}{\sqrt2}.
+\]
+因此
+\[
+V=2\pi\iint_D d\,dA
+=\sqrt2\pi\iint_D(1-x-y)\,dA.
+\]
+于是
+\[
+\iint_D(1-x-y)\,dA
+=\int_0^1\int_{(1-\sqrt{x})^2}^{1-x}(1-x-y)\,dy\,dx.
+\]
+内层积分为
+\[
+\frac12\left[1-x-(1-\sqrt{x})^2\right]^2
+=\frac12(2\sqrt{x}-2x)^2.
+\]
+所以
+\[
+\iint_D(1-x-y)\,dA
+=\int_0^1 2(\sqrt{x}-x)^2\,dx
+=\frac1{15}.
+\]
+故
+\[
+V=\frac{\sqrt2\pi}{15}.
+\]
+\answer{\(\displaystyle V=\frac{\sqrt2\pi}{15}\)}
+\examnote{绕斜轴旋转时，半径是点到直线的距离，不是到 \(x\) 轴或 \(y\) 轴的距离。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例24.} （仅数一、二）求心形线
+\[
+r=a(1+\cos\theta)
+\]
+的全长，其中 \(a>0\) 为常数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{极坐标曲线弧长公式为 \(ds=\sqrt{r^2+(dr/d\theta)^2}\,d\theta\)。注意全长中绝对值不可漏。}
+有
+\[
+r=a(1+\cos\theta),\qquad
+\frac{dr}{d\theta}=-a\sin\theta.
+\]
+因此
+\[
+r^2+\left(\frac{dr}{d\theta}\right)^2
+=a^2\bigl[(1+\cos\theta)^2+\sin^2\theta\bigr]
+=2a^2(1+\cos\theta).
+\]
+又
+\[
+1+\cos\theta=2\cos^2\frac{\theta}{2},
+\]
+故
+\[
+ds=2a\left|\cos\frac{\theta}{2}\right|\,d\theta.
+\]
+全长
+\[
+L=\int_0^{2\pi}2a\left|\cos\frac{\theta}{2}\right|\,d\theta.
+\]
+令 \(u=\theta/2\)，得
+\[
+L=4a\int_0^\pi|\cos u|\,du=4a\cdot2=8a.
+\]
+\answer{\(\displaystyle L=8a\)}
+\examnote{极坐标全长跨过尖点时，要保留绝对值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例25.} 将
+\[
+(x-R)^2+y^2=r^2\qquad (r<R)
+\]
+绕 \(y\) 轴旋转所得旋转体的表面积 \(S\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是标准环面。可用 Pappus 表面积定理：旋转曲面面积等于母线长度乘以母线形心走过的距离。}
+母线是半径为 \(r\) 的圆，长度为
+\[
+2\pi r.
+\]
+该圆的形心为圆心 \((R,0)\)，绕 \(y\) 轴旋转一周走过的距离为
+\[
+2\pi R.
+\]
+由 Pappus 定理，旋转曲面表面积
+\[
+S=(2\pi r)(2\pi R)=4\pi^2Rr.
+\]
+\answer{\(\displaystyle S=4\pi^2Rr\)}
+\examnote{环面表面积公式 \(4\pi^2Rr\) 可看作“管圆周长 \(\times\) 中心圆周长”。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例26.} （仅数一、二）设区域 \(D\) 由曲线
+\[
+y=\sqrt{a^2-x^2}\qquad (0\le x\le a)
+\]
+与
+\[
+\begin{cases}
+x=a\cos^3t,\\
+y=a\sin^3t
+\end{cases}
+\qquad \left(0\le t\le\frac{\pi}{2}\right)
+\]
+所围成。则 \(D\) 绕 \(x\) 轴旋转一周所得旋转体的表面积为多少？
+\end{problemblock}
+\begin{solutionblock}
+\analysis{区域边界由外侧四分之一圆弧和内侧星形线弧组成。绕 \(x\) 轴旋转后，两段边界都生成曲面，表面积应相加。}
+外侧四分之一圆弧可写为
+\[
+x=a\cos\theta,\qquad y=a\sin\theta,\qquad 0\le\theta\le\frac{\pi}{2}.
+\]
+其弧元
+\[
+ds=a\,d\theta.
+\]
+绕 \(x\) 轴旋转所得面积
+\[
+S_1=2\pi\int_0^{\pi/2}y\,ds
+=2\pi\int_0^{\pi/2}a\sin\theta\cdot a\,d\theta
+=2\pi a^2.
+\]
+
+内侧星形线弧有
+\[
+ds=3a\sin t\cos t\,dt.
+\]
+因此
+\[
+S_2=2\pi\int_0^{\pi/2}a\sin^3t\cdot3a\sin t\cos t\,dt
+=6\pi a^2\int_0^{\pi/2}\sin^4t\cos t\,dt.
+\]
+计算
+\[
+\int_0^{\pi/2}\sin^4t\cos t\,dt=\frac15,
+\]
+故
+\[
+S_2=\frac65\pi a^2.
+\]
+总表面积
+\[
+S=S_1+S_2
+=2\pi a^2+\frac65\pi a^2
+=\frac{16}{5}\pi a^2.
+\]
+\answer{\(\displaystyle S=\frac{16}{5}\pi a^2\)}
+\examnote{由两条曲线围成的区域旋转，表面积通常包括两条边界分别生成的曲面。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例27.} （仅数一、二）求曲线
+\[
+L_1:\ y=\frac13x^3+2x\qquad (0\le x\le1)
+\]
+绕直线
+\[
+L_2:\ 4x-3y=0
+\]
+旋转一周生成的旋转曲面的面积 \(S\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{曲线绕任意直线旋转，面积微元为 \(dS=2\pi\cdot\) 点到旋转轴距离 \(\cdot ds\)。}
+曲线 \(L_1\) 上
+\[
+y=\frac13x^3+2x.
+\]
+点 \((x,y)\) 到直线 \(4x-3y=0\) 的距离为
+\[
+d=\frac{|4x-3y|}{5}.
+\]
+代入 \(y\)：
+\[
+4x-3y=4x-x^3-6x=-(x^3+2x).
+\]
+在 \(0\le x\le1\) 上，
+\[
+d=\frac{x^3+2x}{5}.
+\]
+又
+\[
+y'=x^2+2,
+\]
+所以
+\[
+ds=\sqrt{1+(x^2+2)^2}\,dx
+=\sqrt{x^4+4x^2+5}\,dx.
+\]
+旋转曲面面积
+\[
+S=2\pi\int_0^1 d\,ds
+=\frac{2\pi}{5}\int_0^1 (x^3+2x)\sqrt{x^4+4x^2+5}\,dx.
+\]
+注意
+\[
+x^3+2x=x(x^2+2),
+\]
+令
+\[
+u=x^4+4x^2+5,
+\]
+则
+\[
+du=4x(x^2+2)\,dx.
+\]
+因此
+\[
+S=\frac{2\pi}{5}\cdot\frac14\int_{5}^{10}u^{1/2}\,du
+=\frac{\pi}{15}\left(10^{3/2}-5^{3/2}\right).
+\]
+即
+\[
+S=\frac{\pi}{15}(10\sqrt{10}-5\sqrt5).
+\]
+\answer{\(\displaystyle S=\frac{\pi}{15}(10\sqrt{10}-5\sqrt5)\)}
+\examnote{绕斜直线旋转的表面积，半径是点到直线距离，这是最核心的一步。}
+\end{solutionblock}

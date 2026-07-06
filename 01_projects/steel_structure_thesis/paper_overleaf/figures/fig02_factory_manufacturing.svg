@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs>
+<marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#1F4E73"/>
+</marker>
+<marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#6C757D"/>
+</marker>
+<marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#D8892C"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1000" fill="#FFFFFF"/>
+<text x="800" y="62" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="40" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+钢构件工厂制造流程图
+</text>
+<text x="800" y="108" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+以质量检验为控制节点的构件生产流程
+</text>
+<line x1="100" y1="132" x2="1500" y2="132" stroke="#CBD3DA" stroke-width="2"/>
+<rect x="130" y="360" width="200" height="110" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="230" y="394" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+设计深化
+</text>
+<text x="230" y="437" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="230" dy="-13.0">构件编号</tspan>
+<tspan x="230" dy="26">加工详图</tspan>
+</text>
+<line x1="340" y1="415" x2="360" y2="415" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="370" y="360" width="200" height="110" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="470" y="394" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+钢材复验
+</text>
+<text x="470" y="437" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="470" dy="-13.0">材质证明</tspan>
+<tspan x="470" dy="26">外观尺寸</tspan>
+</text>
+<line x1="580" y1="415" x2="600" y2="415" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="610" y="360" width="200" height="110" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="710" y="394" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+数控下料
+</text>
+<text x="710" y="437" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="710" dy="-13.0">切割开孔</tspan>
+<tspan x="710" dy="26">坡口加工</tspan>
+</text>
+<line x1="820" y1="415" x2="840" y2="415" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="850" y="360" width="200" height="110" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="950" y="394" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+组立焊接
+</text>
+<text x="950" y="437" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="950" dy="-13.0">胎架定位</tspan>
+<tspan x="950" dy="26">焊缝控制</tspan>
+</text>
+<line x1="1060" y1="415" x2="1080" y2="415" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="1090" y="360" width="200" height="110" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="1190" y="394" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+矫正检测
+</text>
+<text x="1190" y="437" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="1190" dy="-13.0">尺寸偏差</tspan>
+<tspan x="1190" dy="26">无损检测</tspan>
+</text>
+<line x1="1300" y1="415" x2="1320" y2="415" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="1330" y="360" width="200" height="110" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="1430" y="394" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+涂装发运
+</text>
+<text x="1430" y="437" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="1430" dy="-13.0">除锈喷涂</tspan>
+<tspan x="1430" dy="26">成品保护</tspan>
+</text>
+<polygon points="800,585 920,650 800,715 680,650" fill="#F7E5CC" stroke="#D8892C" stroke-width="3"/>
+<text x="800" y="650" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#D8892C" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+<tspan x="800" dy="-16.0">质量检验</tspan>
+<tspan x="800" dy="32">不合格返修</tspan>
+</text>
+<polyline points="800,530 800,585" fill="none" stroke="#D8892C" stroke-width="4" marker-end="url(#arrow-orange)"/>
+<polyline points="680,650 500,650 500,480" fill="none" stroke="#D8892C" stroke-width="4" marker-end="url(#arrow-orange)"/>
+<text x="500" y="700" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" fill="#D8892C" text-anchor="middle" dominant-baseline="middle">
+返修闭环
+</text>
+<rect x="160" y="720" width="1280" height="120" rx="14" fill="#EEF1F4" stroke="#6C757D" stroke-width="3"/>
+<text x="800" y="754" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+工厂化制造的核心意义
+</text>
+<text x="800" y="802" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="800" dy="-13.0">将大量高精度、高风险作业前移至可控工厂环境，减少现场湿作业和返工，提高构件一致性</tspan>
+<tspan x="800" dy="26">。</tspan>
+</text>
+</svg>

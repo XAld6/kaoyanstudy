@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs>
+<marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#1F4E73"/>
+</marker>
+<marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#6C757D"/>
+</marker>
+<marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#D8892C"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1000" fill="#FFFFFF"/>
+<text x="800" y="62" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="40" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+传统现浇建筑与装配式钢结构施工流程对比图
+</text>
+<text x="800" y="108" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+概念性流程对比：装配式钢结构强调工厂与现场并行
+</text>
+<line x1="100" y1="132" x2="1500" y2="132" stroke="#CBD3DA" stroke-width="2"/>
+<text x="180" y="210" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="30" fill="#6C757D" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+传统现浇建筑
+</text>
+<text x="180" y="545" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="30" fill="#1F4E73" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+装配式钢结构
+</text>
+<rect x="330" y="170" width="200" height="110" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="430" y="204" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+支模
+</text>
+<line x1="540" y1="225" x2="550" y2="225" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="560" y="170" width="200" height="110" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="660" y="204" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+绑筋
+</text>
+<line x1="770" y1="225" x2="780" y2="225" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="790" y="170" width="200" height="110" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="890" y="204" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+浇筑
+</text>
+<line x1="1000" y1="225" x2="1010" y2="225" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="1020" y="170" width="200" height="110" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="1120" y="204" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+养护
+</text>
+<line x1="1230" y1="225" x2="1240" y2="225" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="1250" y="170" width="200" height="110" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="1350" y="204" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+拆模
+</text>
+<rect x="300" y="505" width="200" height="110" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="400" y="539" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+工厂制造
+</text>
+<text x="400" y="582" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+构件加工
+</text>
+<line x1="510" y1="560" x2="550" y2="560" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="560" y="505" width="200" height="110" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="660" y="539" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+运输进场
+</text>
+<text x="660" y="582" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+编号堆放
+</text>
+<line x1="770" y1="560" x2="810" y2="560" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="820" y="505" width="200" height="110" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="920" y="539" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+吊装定位
+</text>
+<text x="920" y="582" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+临时固定
+</text>
+<line x1="1030" y1="560" x2="1070" y2="560" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="1080" y="505" width="200" height="110" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="1180" y="539" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+节点连接
+</text>
+<text x="1180" y="582" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+终拧焊接
+</text>
+<line x1="1290" y1="560" x2="1330" y2="560" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="1340" y="505" width="200" height="110" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="1440" y="539" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+验收交付
+</text>
+<text x="1440" y="582" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+检测记录
+</text>
+<rect x="300" y="720" width="430" height="95" rx="18" fill="#F7E5CC" stroke="#D8892C" stroke-width="3"/>
+<text x="515" y="768" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#D8892C" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+设计深化与构件生产可提前并行
+</text>
+<line x1="515" y1="720" x2="515" y2="625" stroke="#D8892C" stroke-width="4" marker-end="url(#arrow-orange)"/>
+<rect x="870" y="720" width="430" height="95" rx="18" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="1085" y="768" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+现场湿作业减少，施工组织更紧凑
+</text>
+<line x1="1085" y1="720" x2="1085" y2="625" stroke="#4F8F5B" stroke-width="4" marker-end="url(#arrow-gray)"/>
+</svg>

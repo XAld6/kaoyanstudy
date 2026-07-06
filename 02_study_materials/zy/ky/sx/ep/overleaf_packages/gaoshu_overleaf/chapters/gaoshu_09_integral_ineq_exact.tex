@@ -1,0 +1,796 @@
+\chapter{高等数学：积分不等式}
+
+\section{积分不等式的基本工具}
+
+\begin{problemblock}
+\textbf{例1.} 设 \(f(x)\) 在 \([0,1]\) 上可导，当 \(0\le x\le1\) 时，
+\[
+f'(x)+f^2(x)\ge0,\qquad f(0)>0,
+\]
+则（\quad）
+
+A. \(\displaystyle\int_0^1f(x)\,dx\le\ln\frac{f(1)}{f(0)}\)
+
+B. \(\displaystyle\int_0^1f(x)\,dx\ge\ln\frac{f(0)}{f(1)}\)
+
+C. \(\displaystyle\int_0^1f(x)\,dx\le\ln f(1)\)
+
+D. \(\displaystyle\int_0^1f(x)\,dx\ge\ln f(0)\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{题设中出现 \(f'\) 与 \(f^2\)，应想到除以 \(f\) 或 \(f^2\)。先要证明 \(f\) 在 \([0,1]\) 上不变号，否则对数无意义。}
+因为 \(f(0)>0\)。若 \(f\) 在 \([0,1]\) 上第一次取到 \(0\) 的点为 \(c>0\)，则在 \([0,c)\) 上 \(f>0\)。由
+\[
+f'(x)+f^2(x)\ge0
+\]
+得
+\[
+\left(\frac1{f(x)}\right)'=-\frac{f'(x)}{f^2(x)}\le1.
+\]
+积分可知 \(1/f(x)\) 在 \(x\to c^-\) 时不可能趋于 \(+\infty\)，矛盾。因此
+\[
+f(x)>0,\qquad 0\le x\le1.
+\]
+在正值条件下，将原不等式除以 \(f(x)\)，得
+\[
+\frac{f'(x)}{f(x)}+f(x)\ge0,
+\]
+即
+\[
+f(x)\ge-\frac{f'(x)}{f(x)}.
+\]
+两边在 \([0,1]\) 上积分：
+\[
+\int_0^1 f(x)\,dx
+\ge-\int_0^1\frac{f'(x)}{f(x)}\,dx
+=-\ln f(x)\bigg|_0^1
+=\ln\frac{f(0)}{f(1)}.
+\]
+\answer{B}
+\examnote{遇到 \(f'+f^2\ge0\) 且 \(f(0)>0\)，先证明 \(f>0\)，再用 \((\ln f)'=f'/f\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例2.} 设函数 \(f(x)\) 有一阶连续导数，且
+\[
+0<f'(x)\le1,\qquad f(0)=0.
+\]
+证明：
+\[
+\left[\int_0^1f(x)\,dx\right]^2
+\ge
+\int_0^1[f(x)]^3\,dx.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{关键是由 \(f'\le1\) 推出 \(f^2(x)\le2\int_0^x f(t)\,dt\)，再构造“上限函数”证明单调。}
+因 \(f'(x)>0\) 且 \(f(0)=0\)，所以
+\[
+f(x)>0\quad (x>0).
+\]
+记
+\[
+F(x)=\int_0^x f(t)\,dt.
+\]
+由 \(0<f'\le1\)，有
+\[
+f^2(x)=2\int_0^x f(t)f'(t)\,dt
+\le2\int_0^x f(t)\,dt=2F(x).
+\]
+再令
+\[
+H(x)=F^2(x)-\int_0^x f^3(t)\,dt.
+\]
+则
+\[
+H'(x)=2F(x)f(x)-f^3(x)
+=f(x)\bigl[2F(x)-f^2(x)\bigr]\ge0.
+\]
+又 \(H(0)=0\)，故 \(H(1)\ge0\)，即
+\[
+\left[\int_0^1f(x)\,dx\right]^2
+\ge
+\int_0^1f^3(x)\,dx.
+\]
+\answer{不等式成立。}
+\examnote{证明积分不等式时，常把目标差写成 \(H(1)-H(0)\)，再证明 \(H'(x)\ge0\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例3.} 设 \(f(x)\) 是 \([0,1]\) 上单调增加的连续函数，则（\quad）
+
+A. \(\displaystyle \int_0^{\int_0^1e^{-t^2}\,dt}f(x)\,dx
+\ge\int_0^1f(x)e^{-x^2}\,dx\)
+
+B. \(\displaystyle \int_0^{\int_0^1e^{-t^2}\,dt}f(x)\,dx
+\le\int_0^1f(x)e^{-x^2}\,dx\)
+
+C. \(\displaystyle \int_0^{\int_0^1e^{-t^2}\,dt}f(x)\,dx
+\ge\int_0^1f(x)\,dx\)
+
+D. \(\displaystyle \int_0^{\int_0^1e^{-t^2}\,dt}f(x)\,dx
+\le\int_0^1f(x)\,dx\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{权函数 \(e^{-x^2}\) 单调递减，且它的总质量等于左边积分区间长度。对递增函数，质量越偏左，积分越小。}
+记
+\[
+\alpha=\int_0^1e^{-t^2}\,dt,\qquad 0<\alpha<1.
+\]
+需要比较
+\[
+L=\int_0^\alpha f(x)\,dx,\qquad
+R=\int_0^1f(x)e^{-x^2}\,dx.
+\]
+有
+\[
+R-L
+=\int_0^\alpha f(x)(e^{-x^2}-1)\,dx
++\int_\alpha^1 f(x)e^{-x^2}\,dx.
+\]
+又
+\[
+\int_0^\alpha(1-e^{-x^2})\,dx
+=\int_\alpha^1e^{-x^2}\,dx
+\]
+由 \(\alpha=\int_0^1e^{-x^2}dx\) 得到。由于 \(f\) 单调增加，
+\[
+f(x)\le f(\alpha)\quad(0\le x\le\alpha),
+\qquad
+f(x)\ge f(\alpha)\quad(\alpha\le x\le1).
+\]
+因此
+\[
+R-L
+\ge -f(\alpha)\int_0^\alpha(1-e^{-x^2})\,dx
++f(\alpha)\int_\alpha^1e^{-x^2}\,dx=0.
+\]
+所以 \(L\le R\)。
+\answer{B}
+\examnote{这是“等质量重排”思想：递增函数配递减权时，权重向右分散会使积分变大。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例4.} 设
+\[
+I_n=\int_0^{\frac\pi4}\tan^n x\,dx,\qquad n\in\mathbb{N}^+,\ n\ge2.
+\]
+证明：
+\[
+\frac1{2(n+1)}<I_n<\frac1{2(n-1)}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{令 \(t=\tan x\) 后，积分区间变成 \([0,1]\)，被积函数变为 \(t^n/(1+t^2)\)，再用简单夹逼。}
+令 \(t=\tan x\)，则 \(x\in[0,\pi/4]\) 对应 \(t\in[0,1]\)，且
+\[
+dx=\frac{dt}{1+t^2}.
+\]
+于是
+\[
+I_n=\int_0^1\frac{t^n}{1+t^2}\,dt.
+\]
+当 \(0<t<1\) 时，
+\[
+\frac12<\frac1{1+t^2}<\frac1{2t^2}.
+\]
+乘以 \(t^n\) 得
+\[
+\frac12t^n<\frac{t^n}{1+t^2}<\frac12t^{n-2}.
+\]
+两边积分：
+\[
+\frac12\int_0^1t^n\,dt<I_n<\frac12\int_0^1t^{n-2}\,dt.
+\]
+因此
+\[
+\frac1{2(n+1)}<I_n<\frac1{2(n-1)}.
+\]
+\answer{不等式成立。}
+\examnote{\(\tan x\) 在 \(0\) 到 \(\pi/4\) 上常令 \(t=\tan x\)，把三角积分转成 \([0,1]\) 上的有理积分。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例5.} （切比雪夫不等式）设 \(f(x),g(x)\) 在 \([a,b]\) 上连续，且 \(f(x),g(x)\) 在 \([a,b]\) 上单调性相同；\(p(x)\ge0\) 且在 \([a,b]\) 上连续。证明：
+\[
+\int_a^bp(x)f(x)\,dx\int_a^bp(x)g(x)\,dx
+\le
+\int_a^bp(x)\,dx\int_a^bp(x)f(x)g(x)\,dx.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{切比雪夫不等式的核心是同单调函数满足 \((f(x)-f(y))(g(x)-g(y))\ge0\)。用双重积分最直接。}
+若 \(p\equiv0\)，结论显然。下设 \(p\) 不恒为零。考虑
+\[
+\Delta=
+\int_a^bp(x)\,dx\int_a^bp(x)f(x)g(x)\,dx
+-\int_a^bp(x)f(x)\,dx\int_a^bp(x)g(x)\,dx.
+\]
+把乘积写成二重积分：
+\[
+\begin{aligned}
+2\Delta
+&=\int_a^b\int_a^b p(x)p(y)
+\bigl[f(x)-f(y)\bigr]\bigl[g(x)-g(y)\bigr]\,dx\,dy.
+\end{aligned}
+\]
+因为 \(p(x)p(y)\ge0\)，且 \(f,g\) 单调性相同，所以
+\[
+\bigl[f(x)-f(y)\bigr]\bigl[g(x)-g(y)\bigr]\ge0.
+\]
+故 \(2\Delta\ge0\)，即 \(\Delta\ge0\)，所证不等式成立。
+\answer{不等式成立。}
+\examnote{同单调用切比雪夫，反单调用反向切比雪夫；二重积分恒等式是最稳的证明模板。}
+\end{solutionblock}
+
+\section{比较法与导数约束}
+
+\begin{problemblock}
+\textbf{例6.} 证明：
+\[
+\int_0^{\frac\pi2}\frac{\cos x}{1+\ln(1+x)}\,dx
+\ge
+\int_0^{\frac\pi2}\frac{\sin x}{1+\ln(1+x)}\,dx.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把两边相减后，利用 \(x\) 与 \(\pi/2-x\) 配对；分母对应的权函数是递减的。}
+令
+\[
+h(x)=\frac1{1+\ln(1+x)}.
+\]
+则 \(h(x)\) 在 \([0,\pi/2]\) 上单调递减。两边差为
+\[
+D=\int_0^{\frac\pi2}(\cos x-\sin x)h(x)\,dx.
+\]
+配对 \(x\) 与 \(\frac\pi2-x\)，得
+\[
+D=\int_0^{\frac\pi4}
+(\cos x-\sin x)\left[h(x)-h\left(\frac\pi2-x\right)\right]dx.
+\]
+在 \(0\le x\le\pi/4\) 上，
+\[
+\cos x-\sin x\ge0,
+\qquad
+x\le\frac\pi2-x.
+\]
+又 \(h\) 单调递减，所以
+\[
+h(x)-h\left(\frac\pi2-x\right)\ge0.
+\]
+于是 \(D\ge0\)，原不等式成立。
+\answer{不等式成立。}
+\examnote{三角积分比较题常把 \(\sin x\) 与 \(\cos x\) 通过 \(x\mapsto\pi/2-x\) 配对。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例7.} 已知
+\[
+I_1=\int_0^{\frac\pi2}\frac{\sin x}{1+x^2}\,dx,\qquad
+I_2=\int_0^{\frac\pi2}\frac{\cos x}{1+x^2}\,dx,
+\]
+\[
+J_1=\int_0^1 e^x\sqrt{1-x}\,dx,\qquad
+J_2=\int_0^1 e^x\frac{x}{2\sqrt{1-x}}\,dx,
+\]
+则（\quad）
+
+A. \(I_1>I_2,\ J_1>J_2\)\qquad
+B. \(I_1>I_2,\ J_1<J_2\)
+
+C. \(I_1<I_2,\ J_1>J_2\)\qquad
+D. \(I_1<I_2,\ J_1<J_2\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{前一组用 \(\sin,\cos\) 配对；后一组用分部积分找出 \(J_1,J_2\) 的关系。}
+先比较 \(I_1,I_2\)。令 \(h(x)=1/(1+x^2)\)，它在 \([0,\pi/2]\) 上递减。于是
+\[
+I_2-I_1
+=\int_0^{\frac\pi2}(\cos x-\sin x)h(x)\,dx
+\]
+配对后为
+\[
+\int_0^{\frac\pi4}(\cos x-\sin x)
+\left[h(x)-h\left(\frac\pi2-x\right)\right]dx>0.
+\]
+故
+\[
+I_1<I_2.
+\]
+
+再比较 \(J_1,J_2\)。记
+\[
+K=\int_0^1\frac{e^x}{2\sqrt{1-x}}\,dx.
+\]
+对 \(J_1\) 分部积分，取 \(u=\sqrt{1-x}\)，\(dv=e^x\,dx\)，得
+\[
+J_1=\left[e^x\sqrt{1-x}\right]_0^1+K=-1+K,
+\]
+所以 \(K=J_1+1\)。又
+\[
+K-J_2=\int_0^1 e^x\frac{1-x}{2\sqrt{1-x}}\,dx
+=\frac12J_1.
+\]
+因此
+\[
+J_2=K-\frac12J_1=1+\frac12J_1.
+\]
+由于
+\[
+J_1<\int_0^1 e^x\,dx=e-1<2,
+\]
+所以
+\[
+J_2=1+\frac12J_1>J_1.
+\]
+故 \(J_1<J_2\)。
+\answer{D}
+\examnote{比较两个看似相近的积分，若直接点态比较困难，分部积分常能制造出线性关系。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例8.} 设函数 \(f(x)\) 在 \([a,b]\) 上不恒为零，且
+\[
+f(a)=f(b)=0,\qquad f'(x)\ \text{在}\ [a,b]\ \text{上连续}.
+\]
+试证：至少存在一点 \(\xi\in[a,b]\)，使得
+\[
+|f'(\xi)|\ge
+\frac1{(b-a)^2}\int_a^b f(x)\,dx.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{可以证明更强的不等式。令 \(M=\max|f'|\)，利用端点为零估计 \(|f(x)|\) 的高度。}
+由 \(f'\) 连续，存在
+\[
+M=\max_{x\in[a,b]}|f'(x)|.
+\]
+对任意 \(x\in[a,b]\)，由 \(f(a)=0\) 得
+\[
+|f(x)|\le M(x-a),
+\]
+由 \(f(b)=0\) 得
+\[
+|f(x)|\le M(b-x).
+\]
+因此
+\[
+|f(x)|\le M\min\{x-a,b-x\}.
+\]
+积分得
+\[
+\left|\int_a^b f(x)\,dx\right|
+\le\int_a^b|f(x)|\,dx
+\le M\int_a^b\min\{x-a,b-x\}\,dx.
+\]
+而
+\[
+\int_a^b\min\{x-a,b-x\}\,dx=\frac{(b-a)^2}{4}.
+\]
+所以
+\[
+M\ge\frac{4}{(b-a)^2}\left|\int_a^b f(x)\,dx\right|.
+\]
+取 \(\xi\) 使 \(|f'(\xi)|=M\)，便有
+\[
+|f'(\xi)|\ge
+\frac{4}{(b-a)^2}\left|\int_a^b f(x)\,dx\right|
+\ge
+\frac1{(b-a)^2}\int_a^b f(x)\,dx.
+\]
+原命题成立。
+\answer{结论成立，且可证明更强的绝对值估计。}
+\examnote{端点为零的函数可用 \(\max|f'|\) 控制高度：\(|f(x)|\le M\min(x-a,b-x)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例9.} 设函数 \(f(x)\) 有连续的二阶导数，
+\[
+f(1)=f(0)=1,\qquad
+M=\max_{x\in[0,1]}|f''(x)|.
+\]
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 证明：当 \(x\in[0,1]\) 时有 \(|f'(x)|\le\dfrac12M\)；
+\item 证明：
+\[
+\left|\int_0^1f(x)\,dx\right|\le1+\frac{M}{8}.
+\]
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{利用 \(f(1)=f(0)\) 得 \(\int_0^1f'(t)dt=0\)。第 (2) 问对 \(g=f-1\) 使用端点为零的高度估计。}
+(1) 因
+\[
+\int_0^1f'(t)\,dt=f(1)-f(0)=0,
+\]
+所以
+\[
+f'(x)=\int_0^1\bigl[f'(x)-f'(t)\bigr]\,dt.
+\]
+又 \(|f''|\le M\)，由 Lagrange 中值定理得
+\[
+|f'(x)-f'(t)|\le M|x-t|.
+\]
+于是
+\[
+|f'(x)|
+\le M\int_0^1|x-t|\,dt
+=\frac{M}{2}\bigl[x^2+(1-x)^2\bigr]
+\le\frac M2.
+\]
+
+(2) 令
+\[
+g(x)=f(x)-1.
+\]
+则 \(g(0)=g(1)=0\)，且由 (1)
+\[
+\max_{[0,1]}|g'(x)|=\max_{[0,1]}|f'(x)|\le\frac M2.
+\]
+因此
+\[
+|g(x)|\le\frac M2\min\{x,1-x\}.
+\]
+积分：
+\[
+\left|\int_0^1g(x)\,dx\right|
+\le\frac M2\int_0^1\min\{x,1-x\}\,dx
+=\frac M2\cdot\frac14=\frac M8.
+\]
+于是
+\[
+\left|\int_0^1f(x)\,dx\right|
+=\left|1+\int_0^1g(x)\,dx\right|
+\le1+\frac M8.
+\]
+\answer{两式均成立。}
+\examnote{端点函数值相等时，\(f'\) 的平均值为零；再配合 \(|f''|\le M\) 可控制 \(f'\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例10.} 设 \(f\) 在 \([0,1]\) 有一阶导数且
+\[
+|f'(x)-f'(y)|\le |x-y|.
+\]
+证明：
+\[
+\left|\int_0^1f(x)\,dx-\frac{f(0)+f(1)}2\right|
+\le \frac1{12}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是梯形公式误差估计。把误差写成 \(f'\) 与核函数的积分，再利用 \(f'\) 的 Lipschitz 条件。}
+分部积分得
+\[
+\int_0^1 f(x)\,dx-\frac{f(0)+f(1)}2
+=\int_0^1\left(\frac12-x\right)f'(x)\,dx.
+\]
+因为
+\[
+\int_0^1\left(\frac12-x\right)dx=0,
+\]
+所以可减去常数 \(f'(1/2)\)：
+\[
+\int_0^1\left(\frac12-x\right)f'(x)\,dx
+=\int_0^1\left(\frac12-x\right)\left[f'(x)-f'\left(\frac12\right)\right]dx.
+\]
+由题设
+\[
+\left|f'(x)-f'\left(\frac12\right)\right|
+\le\left|x-\frac12\right|.
+\]
+于是
+\[
+\begin{aligned}
+\left|\int_0^1f(x)\,dx-\frac{f(0)+f(1)}2\right|
+&\le
+\int_0^1\left|x-\frac12\right|^2dx\\
+&=\frac1{12}.
+\end{aligned}
+\]
+\answer{不等式成立。}
+\examnote{梯形误差核是 \(\frac12-x\)，其积分为零，所以可以减去任意常数，常取 \(f'(1/2)\)。}
+\end{solutionblock}
+
+\section{凸函数与 Lyapunov 型不等式}
+
+\begin{problemblock}
+\textbf{例11.} 设 \(f(x)\) 在 \([0,1]\) 上二阶可导，且满足
+\[
+f''(x)>0,\qquad \int_0^1f(x^2)\,dx=0,
+\]
+则（\quad）
+
+A. \(f\left(\dfrac13\right)<0,\ 2f(0)+f(1)>0\)
+
+B. \(f\left(\dfrac13\right)<0,\ f(0)+2f(1)>0\)
+
+C. \(f\left(\dfrac13\right)<0,\ 2f(0)+f(1)>0\)
+
+D. \(f\left(\dfrac13\right)<0,\ f(0)+2f(1)>0\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{条件 \(f''>0\) 表示严格凸。第一个结论用 Jensen 不等式；第二个结论用凸函数位于端点弦下方。}
+令 \(X\) 在 \([0,1]\) 上均匀分布，则
+\[
+\int_0^1 f(x^2)\,dx=E[f(X^2)]=0,
+\qquad E[X^2]=\frac13.
+\]
+由于 \(f''>0\)，\(f\) 严格凸，由 Jensen 不等式
+\[
+f\left(\frac13\right)=f(E[X^2])<E[f(X^2)]=0.
+\]
+所以
+\[
+f\left(\frac13\right)<0.
+\]
+
+再由严格凸函数在端点弦下方，
+\[
+f(t)<(1-t)f(0)+tf(1)\qquad(0<t<1).
+\]
+取 \(t=x^2\) 并积分：
+\[
+0=\int_0^1f(x^2)\,dx
+<
+\int_0^1\bigl[(1-x^2)f(0)+x^2f(1)\bigr]dx.
+\]
+右边等于
+\[
+\frac23f(0)+\frac13f(1),
+\]
+故
+\[
+2f(0)+f(1)>0.
+\]
+\answer{A；题面中 C 与 A 为同一结论时也表示同一正确项。}
+\examnote{严格凸时 Jensen 与弦不等式都取严格号，这是本题两个“大于/小于”严格成立的来源。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例12.} \(f(x)\) 在 \([0,1]\) 上具有二阶连续导数，且
+\[
+f(0)=f(1)=0,
+\]
+在 \((0,1)\) 内 \(f(x)\ne0\)。证明：
+\[
+\int_0^1\left|\frac{f''(x)}{f(x)}\right|\,dx\ge4.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是二阶方程的 Lyapunov 型不等式。把 \(q(x)=-f''(x)/f(x)\)，用 Green 函数表示端点为零的函数。}
+若积分为 \(+\infty\)，结论显然。下设该积分有限。
+
+由于 \(f\) 在 \((0,1)\) 内不为零且连续，\(f\) 在 \((0,1)\) 内同号。令
+\[
+q(x)=-\frac{f''(x)}{f(x)}.
+\]
+则
+\[
+-f''(x)=q(x)f(x),\qquad f(0)=f(1)=0.
+\]
+端点为零的 Green 函数为
+\[
+G(x,t)=
+\begin{cases}
+t(1-x),&0\le t\le x\le1,\\
+x(1-t),&0\le x\le t\le1.
+\end{cases}
+\]
+于是
+\[
+f(x)=\int_0^1G(x,t)q(t)f(t)\,dt.
+\]
+取 \(x_0\in[0,1]\)，使
+\[
+|f(x_0)|=\max_{[0,1]}|f(x)|=:M_0>0.
+\]
+则
+\[
+M_0
+\le\int_0^1G(x_0,t)|q(t)|\,|f(t)|\,dt
+\le M_0\int_0^1G(x_0,t)|q(t)|\,dt.
+\]
+而对任意 \(x,t\in[0,1]\)，都有
+\[
+0\le G(x,t)\le\frac14.
+\]
+故
+\[
+1\le\frac14\int_0^1|q(t)|\,dt
+=\frac14\int_0^1\left|\frac{f''(t)}{f(t)}\right|\,dt.
+\]
+即
+\[
+\int_0^1\left|\frac{f''(x)}{f(x)}\right|\,dx\ge4.
+\]
+\answer{不等式成立。}
+\examnote{看到 \(f(0)=f(1)=0\) 且要估 \(\int|f''/f|\)，可联想到二阶边值问题的 Lyapunov 不等式。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例13.} \(f(x)\) 在 \((-\infty,+\infty)\) 上有二阶连续导数。证明：\(f''(x)\ge0\) 的充要条件是，对不同的实数 \(a,b\)，
+\[
+f\left(\frac{a+b}{2}\right)
+\le
+\frac1{b-a}\int_a^b f(x)\,dx.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{必要性是凸函数的 Hermite-Hadamard 中点不等式；充分性对小区间作 Taylor 展开。}
+先证必要性。若 \(f''(x)\ge0\)，则 \(f\) 为凸函数。记
+\[
+m=\frac{a+b}{2},\qquad h=\frac{b-a}{2}.
+\]
+对任意 \(t\in[0,h]\)，由凸性
+\[
+f(m)\le\frac{f(m-t)+f(m+t)}2.
+\]
+对 \(t\in[0,h]\) 积分：
+\[
+h f(m)\le\frac12\int_0^h[f(m-t)+f(m+t)]\,dt
+=\frac12\int_{m-h}^{m+h}f(x)\,dx.
+\]
+由于 \(2h=b-a\)，得
+\[
+f\left(\frac{a+b}{2}\right)
+\le
+\frac1{b-a}\int_a^b f(x)\,dx.
+\]
+
+再证充分性。任取 \(x_0\in\mathbb{R}\)，对任意小 \(h>0\)，由题设
+\[
+f(x_0)\le \frac1{2h}\int_{x_0-h}^{x_0+h}f(x)\,dx.
+\]
+对 \(f\) 在 \(x_0\) 处作 Taylor 展开：
+\[
+f(x_0+u)=f(x_0)+f'(x_0)u+\frac12f''(x_0)u^2+o(u^2).
+\]
+在 \([-h,h]\) 上取平均，奇次项积分为零，得
+\[
+\frac1{2h}\int_{x_0-h}^{x_0+h}f(x)\,dx
+=f(x_0)+\frac{f''(x_0)}6h^2+o(h^2).
+\]
+代入题设：
+\[
+0\le \frac{f''(x_0)}6h^2+o(h^2).
+\]
+令 \(h\to0^+\)，得
+\[
+f''(x_0)\ge0.
+\]
+因 \(x_0\) 任意，故 \(f''(x)\ge0\)。
+\answer{充要条件成立。}
+\examnote{“中点值不超过积分平均值”是凸函数的典型刻画；反向证明常用小区间 Taylor 平均。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例14.} 设当 \(x>-1\) 时，可微函数 \(f(x)\) 满足
+\[
+f'(x)+f(x)-\frac1{1+x}\int_0^x f(t)\,dt=0,
+\qquad f(0)=1.
+\]
+试证明：当 \(x\ge0\) 时，有
+\[
+e^{-x}\le f(x)\le1.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设 \(F(x)=\int_0^x f(t)dt\)，把原方程中 \(f,F\) 的组合整理成一阶方程。}
+令
+\[
+F(x)=\int_0^x f(t)\,dt.
+\]
+原方程等价于
+\[
+(1+x)f'(x)+(1+x)f(x)-F(x)=0.
+\]
+设
+\[
+H(x)=(1+x)f(x)-F(x).
+\]
+则
+\[
+H'(x)=f(x)+(1+x)f'(x)-F'(x)=(1+x)f'(x).
+\]
+由原方程又有
+\[
+(1+x)f'(x)=F(x)-(1+x)f(x)=-H(x).
+\]
+所以
+\[
+H'(x)=-H(x),\qquad H(0)=f(0)=1.
+\]
+于是
+\[
+H(x)=e^{-x}.
+\]
+即
+\[
+(1+x)f(x)-F(x)=e^{-x}.
+\]
+再由原方程
+\[
+f'(x)=\frac{F(x)}{1+x}-f(x)
+=-\frac{e^{-x}}{1+x}<0\qquad(x\ge0).
+\]
+故 \(f\) 在 \([0,+\infty)\) 上单调递减，且 \(f(0)=1\)，所以
+\[
+f(x)\le1.
+\]
+另一方面，
+\[
+\bigl[f(x)-e^{-x}\bigr]'
+=-\frac{e^{-x}}{1+x}+e^{-x}
+=\frac{x e^{-x}}{1+x}\ge0.
+\]
+又 \(f(0)-e^0=0\)，因此
+\[
+f(x)-e^{-x}\ge0,\qquad x\ge0.
+\]
+即
+\[
+e^{-x}\le f(x)\le1.
+\]
+\answer{不等式成立。}
+\examnote{含 \(\int_0^x f\) 的微分方程，常设 \(F=\int_0^x f\)，再寻找 \((1+x)f-F\) 这类可闭合的组合。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例15.} 设 \(f(x)\) 是 \([0,1]\) 上的可导函数，
+\[
+f(0)=f(1)=1,\qquad \max_{[0,1]}|f'(x)|=1,
+\]
+则（\quad）
+
+A. \(\displaystyle \frac14<\int_0^1 f(x)\,dx<\frac12\)
+
+B. \(\displaystyle \frac12<\int_0^1 f(x)\,dx<\frac34\)
+
+C. \(\displaystyle \frac34<\int_0^1 f(x)\,dx<\frac54\)
+
+D. \(\displaystyle \frac54<\int_0^1 f(x)\,dx<\frac74\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(|f'|\le1\) 表示函数图像斜率受限。由两个端点同时控制，可得到上下包络。}
+由 \(|f'|\le1\) 和 \(f(0)=1\)，得
+\[
+f(x)\ge1-x,\qquad f(x)\le1+x.
+\]
+由 \(|f'|\le1\) 和 \(f(1)=1\)，得
+\[
+f(x)\ge x,\qquad f(x)\le2-x.
+\]
+因此
+\[
+f(x)\ge\max\{1-x,x\},
+\qquad
+f(x)\le\min\{1+x,2-x\}.
+\]
+积分得
+\[
+\int_0^1\max\{1-x,x\}\,dx=\frac34,
+\]
+以及
+\[
+\int_0^1\min\{1+x,2-x\}\,dx=\frac54.
+\]
+所以
+\[
+\frac34\le\int_0^1f(x)\,dx\le\frac54.
+\]
+若左端等号成立，则必须
+\[
+f(x)=\max\{1-x,x\},
+\]
+该函数在 \(x=1/2\) 处不可导，与题设矛盾。右端等号同理要求
+\[
+f(x)=\min\{1+x,2-x\},
+\]
+也在 \(x=1/2\) 处不可导。因此两端均为严格不等式：
+\[
+\frac34<\int_0^1f(x)\,dx<\frac54.
+\]
+\answer{C}
+\examnote{斜率受限题可从端点画“锥形上下包络”；等号常因包络在交点不可导而取不到。}
+\end{solutionblock}

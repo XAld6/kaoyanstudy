@@ -1,0 +1,715 @@
+\chapter{高等数学：泰勒公式}
+
+\section{泰勒公式}
+
+\begin{problemblock}
+\textbf{例1.}
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 求
+\[
+f(x)=\frac1{2x-x^2}
+\]
+在 \(x_0=1\) 处带 Peano 余项的 Taylor 公式；
+\item 将
+\[
+f(x)=e^{\sin^2x}
+\]
+展开成带 Peano 余项的 4 阶 Maclaurin 公式。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{第一小题把 \(x-1\) 看成小量，分母可化成 \(1-(x-1)^2\)；第二小题只要展开到 \(x^4\)，先求 \(\sin^2x\) 的四阶主部。}
+(1) 令 \(h=x-1\)，则
+\[
+2x-x^2=2(1+h)-(1+h)^2=1-h^2.
+\]
+因此
+\[
+\frac1{2x-x^2}=\frac1{1-h^2}.
+\]
+在 \(h\to0\) 时，
+\[
+\frac1{1-h^2}=1+h^2+h^4+\cdots+h^{2m}+o(h^{2m}).
+\]
+也就是说
+\[
+\frac1{2x-x^2}
+=1+(x-1)^2+(x-1)^4+\cdots+(x-1)^{2m}
+ +o\bigl((x-1)^{2m}\bigr).
+\]
+若写到 \(n\) 阶，则保留所有不超过 \(n\) 次的偶次幂：
+\[
+\frac1{2x-x^2}
+=\sum_{k=0}^{\lfloor n/2\rfloor}(x-1)^{2k}+o\bigl((x-1)^n\bigr).
+\]
+
+(2) 先展开
+\[
+\sin x=x-\frac{x^3}{6}+o(x^3),
+\]
+所以
+\[
+\sin^2x=x^2-\frac{x^4}{3}+o(x^4).
+\]
+令 \(u=\sin^2x=x^2-\frac{x^4}{3}+o(x^4)\)。则
+\[
+e^u=1+u+\frac{u^2}{2}+o(u^2).
+\]
+由于 \(u^2=x^4+o(x^4)\)，故
+\[
+e^{\sin^2x}
+=1+\left(x^2-\frac{x^4}{3}\right)+\frac{x^4}{2}+o(x^4)
+=1+x^2+\frac{x^4}{6}+o(x^4).
+\]
+\answer{(1) \(\displaystyle \frac1{2x-x^2}=\sum_{k=0}^{\lfloor n/2\rfloor}(x-1)^{2k}+o((x-1)^n)\)；(2) \(\displaystyle e^{\sin^2x}=1+x^2+\frac{x^4}{6}+o(x^4)\)。}
+\examnote{复合函数展开时，先判断需要保留到几阶；本题 \(u=\sin^2x\) 是二阶小量，所以 \(e^u\) 只需写到 \(u^2/2\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例2.} 证明不等式
+\[
+\left|
+\frac{\sin x-\sin y}{x-y}-\cos y
+\right|
+\le\frac12|x-y|,
+\qquad x,y\in\mathbb R.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{左端是 \(\sin x\) 在 \(y\) 点的一阶 Taylor 差商误差，直接用带 Lagrange 余项的一阶 Taylor 公式。}
+严格地说，原式中的差商要求 \(x\ne y\)。若原题把 \(x=y\) 也写入，则应按连续延拓理解；此时左端为 \(0\)，不等式成立。下面设 \(x\ne y\)。
+
+对函数 \(\sin t\) 在点 \(y\) 处作一阶 Taylor 展开，有某个 \(\xi\) 介于 \(x,y\) 之间，使
+\[
+\sin x=\sin y+\cos y(x-y)-\frac12\sin\xi\,(x-y)^2.
+\]
+于是
+\[
+\frac{\sin x-\sin y}{x-y}-\cos y
+=-\frac12\sin\xi\,(x-y).
+\]
+取绝对值得
+\[
+\left|
+\frac{\sin x-\sin y}{x-y}-\cos y
+\right|
+=\frac12|\sin\xi|\,|x-y|
+\le\frac12|x-y|.
+\]
+\answer{不等式成立。}
+\examnote{差商减导数值，本质就是 Taylor 公式中的余项除以 \(x-y\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例3.} 设 \(f(x)\) 在 \([0,1]\) 上二阶可导，
+\[
+|f''(x)|\le M,\qquad x\in[0,1],\qquad M>0,
+\]
+且 \(f(0)=f(1)=0\)。证明：
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item \(|f'(x)|\le\frac M2,\ x\in[0,1]\)；
+\item 若 \(f\left(\frac12\right)=0\)，则 \(|f'(x)|<\frac M2,\ x\in[0,1]\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由 \(f(0)=f(1)=0\) 可得 \(\int_0^1 f'(t)dt=0\)。把 \(f'(x)\) 写成“与平均值之差”的积分，再用 \(|f''|\le M\) 控制。}
+因为
+\[
+\int_0^1 f'(t)\,dt=f(1)-f(0)=0,
+\]
+所以对任意 \(x\in[0,1]\)，
+\[
+f'(x)=\int_0^1\bigl(f'(x)-f'(t)\bigr)\,dt.
+\]
+由中值定理，
+\[
+|f'(x)-f'(t)|\le M|x-t|.
+\]
+因此
+\[
+|f'(x)|
+\le M\int_0^1 |x-t|\,dt
+=M\left(\frac{x^2}{2}+\frac{(1-x)^2}{2}\right)
+\le\frac M2.
+\]
+第一问成立。
+
+若 \(f\left(\frac12\right)=0\)，则在 \([0,\frac12]\) 上
+\[
+\int_0^{1/2} f'(t)\,dt=0,
+\]
+同理对 \(x\in[0,\frac12]\)，
+\[
+f'(x)=\frac{1}{1/2}\int_0^{1/2}\bigl(f'(x)-f'(t)\bigr)\,dt,
+\]
+从而
+\[
+|f'(x)|
+\le 2M\int_0^{1/2}|x-t|\,dt
+\le 2M\cdot\frac{(1/2)^2}{2}
+=\frac M4<\frac M2.
+\]
+在 \([\frac12,1]\) 上同理也有
+\[
+|f'(x)|\le\frac M4<\frac M2.
+\]
+故第二问成立。
+\answer{两问均成立；第二问实际上可加强为 \(|f'(x)|\le M/4\)。}
+\examnote{边值为零时，常把导函数平均值为零作为切入点。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例4.} 设 \(f(x)\) 二阶可导，\(f'(0)=f'(1)\)，\(|f''(x)|\le1\)。证明：
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 当 \(x\in(0,1)\) 时，
+\[
+\left|f(x)-f(0)(1-x)-f(1)x\right|
+\le\frac{x(1-x)}2;
+\]
+\item
+\[
+\left|\int_0^1 f(x)\,dx-\frac{f(0)+f(1)}2\right|
+\le\frac1{12}.
+\]
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{第一问是线性插值误差估计；第二问对第一问积分即可。}
+令
+\[
+L(x)=f(0)(1-x)+f(1)x
+\]
+为连接 \((0,f(0))\)、\((1,f(1))\) 的线性函数。设
+\[
+R(x)=f(x)-L(x).
+\]
+则
+\[
+R(0)=R(1)=0,\qquad R''(x)=f''(x).
+\]
+对固定 \(x\in(0,1)\)，线性插值余项公式给出
+\[
+R(x)=\frac12 f''(\xi)\,x(x-1)
+\]
+其中 \(\xi\in(0,1)\)。于是
+\[
+|R(x)|\le\frac12|x(x-1)|=\frac{x(1-x)}2.
+\]
+即第一问成立。
+
+第二问中，
+\[
+\int_0^1 L(x)\,dx=\frac{f(0)+f(1)}2.
+\]
+所以
+\[
+\left|\int_0^1 f(x)\,dx-\frac{f(0)+f(1)}2\right|
+=\left|\int_0^1 R(x)\,dx\right|
+\le\int_0^1 |R(x)|\,dx.
+\]
+由第一问，
+\[
+\int_0^1 |R(x)|\,dx
+\le \frac12\int_0^1 x(1-x)\,dx
+=\frac1{12}.
+\]
+\answer{两问均成立。}
+\examnote{插值误差公式是 Taylor 公式的常用变形：一次插值误差由二阶导数控制。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例5.} 设 \(f\) 具有二阶导数且
+\[
+f''(x)>0,\qquad x\in(-\infty,+\infty),
+\]
+函数 \(g(x)\) 在区间 \([0,a]\) 上连续，\(a>0\)。证明：
+\[
+\frac1a\int_0^a f(g(t))\,dt
+\ge
+f\left(\frac1a\int_0^a g(t)\,dt\right).
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(f''>0\) 表示 \(f\) 为凸函数。凸函数在任一点处都位于该点切线之上，对 \(g(t)\) 积分即可得到 Jensen 不等式。}
+记
+\[
+\bar g=\frac1a\int_0^a g(t)\,dt.
+\]
+由于 \(f''>0\)，\(f\) 为凸函数，故对任意 \(u\in\mathbb R\)，有切线不等式
+\[
+f(u)\ge f(\bar g)+f'(\bar g)(u-\bar g).
+\]
+令 \(u=g(t)\)，得
+\[
+f(g(t))\ge f(\bar g)+f'(\bar g)(g(t)-\bar g).
+\]
+在 \([0,a]\) 上积分：
+\[
+\int_0^a f(g(t))\,dt
+\ge af(\bar g)+f'(\bar g)\left(\int_0^a g(t)\,dt-a\bar g\right).
+\]
+括号内为 \(0\)，因此
+\[
+\int_0^a f(g(t))\,dt\ge af(\bar g).
+\]
+两边除以 \(a\)，即得
+\[
+\frac1a\int_0^a f(g(t))\,dt
+\ge
+f\left(\frac1a\int_0^a g(t)\,dt\right).
+\]
+\answer{命题成立。}
+\method{方法二（离散逼近）}
+先把积分平均看成分割后的有限平均，对凸函数使用
+\[
+\frac1n\sum_{i=1}^n f(u_i)\ge f\left(\frac1n\sum_{i=1}^n u_i\right),
+\]
+再令分割加细，也可得到同一结论。
+\examnote{这是连续型 Jensen 不等式，考研中常用“切线在下方”一行证明。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例6.} 设函数 \(f(x)\) 在 \([-1,1]\) 上三阶可导，\(f(x)\) 在 \(x=-\frac12\) 处取得最大值。证明：存在 \(\xi\in(-1,1)\)，使得
+\[
+-3f(0)+2f\left(\frac12\right)+f(1)
+=\frac74 f''(\xi).
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把最大点平移到原点。由于 \(f'(-1/2)=0\)，函数值差可写成 \(f''\) 的加权积分；权重非负，最后用积分中值定理。}
+令
+\[
+F(t)=f\left(t-\frac12\right),\qquad 0\le t\le\frac32.
+\]
+由于 \(f\) 在 \(-\frac12\) 处取得最大值，且可导，
+\[
+F'(0)=f'\left(-\frac12\right)=0.
+\]
+题中左端变为
+\[
+-3F\left(\frac12\right)+2F(1)+F\left(\frac32\right).
+\]
+对 \(F\) 使用积分型 Taylor 公式：
+\[
+F(t)=F(0)+tF'(0)+\int_0^t (t-s)F''(s)\,ds
+=F(0)+\int_0^t (t-s)F''(s)\,ds.
+\]
+代入上式，常数项抵消，得到
+\[
+-3F\left(\frac12\right)+2F(1)+F\left(\frac32\right)
+=\int_0^{3/2}K(s)F''(s)\,ds,
+\]
+其中
+\[
+K(s)=
+\begin{cases}
+2, & 0\le s\le \frac12,\\
+\frac72-3s, & \frac12\le s\le1,\\
+\frac32-s, & 1\le s\le\frac32.
+\end{cases}
+\]
+显然 \(K(s)\ge0\)，且
+\[
+\int_0^{3/2}K(s)\,ds=\frac74.
+\]
+由于 \(F''\) 连续，由积分中值定理，存在 \(\eta\in(0,\frac32)\)，使
+\[
+\int_0^{3/2}K(s)F''(s)\,ds
+=F''(\eta)\int_0^{3/2}K(s)\,ds
+=\frac74 F''(\eta).
+\]
+令
+\[
+\xi=\eta-\frac12\in\left(-\frac12,1\right)\subset(-1,1),
+\]
+则 \(F''(\eta)=f''(\xi)\)，故
+\[
+-3f(0)+2f\left(\frac12\right)+f(1)=\frac74 f''(\xi).
+\]
+\answer{命题成立。}
+\examnote{多个点的线性组合常可转化为积分型余项；权重非负时即可用积分中值定理压成某一点的导数值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例7.} 设 \(f(x)\) 在 \([a,b]\) 上有连续的二阶导数，且
+\[
+M=\max_{x\in[a,b]}|f''(x)|.
+\]
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 证明：
+\[
+\left|\int_a^b f(x)\,dx-(b-a)f\left(\frac{a+b}{2}\right)\right|
+\le \frac{(b-a)^3}{24}M;
+\]
+\item 证明：存在 \(\xi\in(a,b)\)，使
+\[
+\int_a^b f(x)\,dx
+=(b-a)f\left(\frac{a+b}{2}\right)
++\frac{(b-a)^3}{24}f''(\xi).
+\]
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是中点求积公式的误差估计。把区间中心平移到 \(0\)，利用对称差 \(f(m+u)+f(m-u)-2f(m)\)。}
+记
+\[
+m=\frac{a+b}{2},\qquad h=\frac{b-a}{2}.
+\]
+则
+\[
+\int_a^b f(x)\,dx-(b-a)f(m)
+=\int_{-h}^{h}\bigl[f(m+u)-f(m)\bigr]\,du.
+\]
+将对称项合并：
+\[
+\int_{-h}^{h}\bigl[f(m+u)-f(m)\bigr]\,du
+=\int_0^h\bigl[f(m+u)+f(m-u)-2f(m)\bigr]\,du.
+\]
+对固定 \(u\in(0,h)\)，二阶对称差公式给出存在 \(\eta_u\in(m-u,m+u)\)，使
+\[
+f(m+u)+f(m-u)-2f(m)=u^2 f''(\eta_u).
+\]
+于是
+\[
+\left|\int_a^b f(x)\,dx-(b-a)f(m)\right|
+\le \int_0^h u^2 M\,du
+=\frac{Mh^3}{3}
+=\frac{(b-a)^3}{24}M.
+\]
+第一问成立。
+
+为了严谨得到第二问的“某一点”形式，也可不用选择随 \(u\) 变化的 \(\eta_u\)，而把对称差写成积分型余项。令 \(\varphi(v)=f(m+v)\)，则
+\[
+\varphi(u)+\varphi(-u)-2\varphi(0)
+=\int_{-u}^{u}(u-|v|)\varphi''(v)\,dv
+=\int_{-u}^{u}(u-|v|)f''(m+v)\,dv .
+\]
+因此
+\[
+\int_a^b f(x)\,dx-(b-a)f(m)
+=\int_0^h\int_{-u}^{u}(u-|v|)f''(m+v)\,dv\,du .
+\]
+交换积分次序得
+\[
+\int_a^b f(x)\,dx-(b-a)f(m)
+=\frac12\int_{-h}^{h}(h-|v|)^2 f''(m+v)\,dv .
+\]
+权重
+\[
+w(v)=\frac12(h-|v|)^2
+\]
+在 \([-h,h]\) 上非负且不恒为零，由积分中值定理，存在 \(\xi\in(a,b)\)，使
+\[
+\frac12\int_{-h}^{h}(h-|v|)^2 f''(m+v)\,dv
+=f''(\xi)\cdot \frac12\int_{-h}^{h}(h-|v|)^2\,dv.
+\]
+而
+\[
+\frac12\int_{-h}^{h}(h-|v|)^2\,dv
+=\int_0^h (h-v)^2\,dv
+=\frac{h^3}{3}.
+\]
+因此
+\[
+\int_a^b f(x)\,dx-(b-a)f(m)
+=\frac{h^3}{3}f''(\xi)
+=\frac{(b-a)^3}{24}f''(\xi).
+\]
+\answer{两问均成立。}
+\examnote{中点公式误差系数 \(\frac1{24}\) 来自 \(\int_0^{(b-a)/2}u^2du\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例8.} 已知 \(f(x)\) 在闭区间 \([1,3]\) 上具有三阶导数，且
+\[
+\int_1^2 f(x)\,dx=\int_1^2 f(x+1)\,dx,\qquad f'(2)=0.
+\]
+证明：存在 \(\xi\in(1,3)\)，使得
+\[
+f'''(\xi)=0.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把中心点 \(2\) 平移到 \(0\)。积分条件等价于奇对称差的积分为 \(0\)，而 \(f'(2)=0\) 使该奇对称差在 0 点的一阶项消失。}
+令
+\[
+F(t)=f(2+t),\qquad -1\le t\le1.
+\]
+题设积分条件变为
+\[
+\int_0^1 F(-t)\,dt=\int_0^1 F(t)\,dt,
+\]
+即
+\[
+\int_0^1\bigl[F(t)-F(-t)\bigr]\,dt=0.
+\]
+又
+\[
+F'(0)=f'(2)=0.
+\]
+设
+\[
+\Phi(t)=F(t)-F(-t),\qquad 0\le t\le1.
+\]
+则
+\[
+\Phi(0)=0,\qquad \Phi'(0)=2F'(0)=0.
+\]
+
+反设 \(f'''(x)\) 在 \((1,3)\) 内没有零点。由于导数具有介值性，\(f'''\) 在 \((1,3)\) 内恒正或恒负。
+
+若 \(f'''>0\)，则 \(F''\) 严格递增。对 \(t>0\)，有
+\[
+F''(t)>F''(-t),
+\]
+即
+\[
+\Phi''(t)=F''(t)-F''(-t)>0.
+\]
+结合 \(\Phi(0)=\Phi'(0)=0\)，得 \(\Phi(t)>0\) 对 \(t\in(0,1]\) 成立，从而
+\[
+\int_0^1\Phi(t)\,dt>0,
+\]
+与题设矛盾。
+
+若 \(f'''<0\)，同理可得 \(\Phi(t)<0\)，也与
+\[
+\int_0^1\Phi(t)\,dt=0
+\]
+矛盾。
+
+故必存在 \(\xi\in(1,3)\)，使
+\[
+f'''(\xi)=0.
+\]
+\answer{命题成立。}
+\examnote{积分等式常可转化为“某个连续函数积分为 0”；若再假设导数符号固定，往往能推出积分严格同号而矛盾。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例9.} 若 \(f(x)\) 在 \([-a,a]\,(a>0)\) 上有二阶连续导数，证明：在 \([-a,a]\) 上存在一点 \(\xi\)，使
+\[
+\int_0^a f(x)\,dx
+=\frac a2\bigl(3f(0)-f(-a)\bigr)
++\frac5{12}f''(\xi)a^3.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是用 \(-a,0\) 两点作一次插值，然后在 \([0,a]\) 上积分。余项含 \((x+a)x\)，积分后得到系数 \(5/12\)。}
+令
+\[
+L(x)
+\]
+为通过 \((-a,f(-a))\) 与 \((0,f(0))\) 的一次插值多项式。则
+\[
+L(x)=f(0)+\frac{f(0)-f(-a)}{a}x.
+\]
+因此
+\[
+\int_0^a L(x)\,dx
+=af(0)+\frac{f(0)-f(-a)}{a}\cdot\frac{a^2}{2}
+=\frac a2\bigl(3f(0)-f(-a)\bigr).
+\]
+对每个 \(x\in[0,a]\)，插值余项公式给出
+\[
+f(x)-L(x)=\frac12 f''(\eta_x)x(x+a),
+\]
+其中 \(\eta_x\in[-a,a]\)。于是
+\[
+\int_0^a f(x)\,dx-\int_0^a L(x)\,dx
+=\frac12\int_0^a f''(\eta_x)x(x+a)\,dx.
+\]
+因为 \(x(x+a)\ge0\)，且 \(f''\) 连续，由积分中值定理，存在 \(\xi\in[-a,a]\)，使
+\[
+\frac12\int_0^a f''(\eta_x)x(x+a)\,dx
+=\frac12 f''(\xi)\int_0^a x(x+a)\,dx.
+\]
+而
+\[
+\int_0^a x(x+a)\,dx=\int_0^a(x^2+ax)\,dx
+=\frac{a^3}{3}+\frac{a^3}{2}
+=\frac56a^3.
+\]
+所以余项为
+\[
+\frac12\cdot\frac56a^3 f''(\xi)=\frac5{12}a^3f''(\xi).
+\]
+即
+\[
+\int_0^a f(x)\,dx
+=\frac a2(3f(0)-f(-a))+\frac5{12}f''(\xi)a^3.
+\]
+\answer{命题成立。}
+\examnote{求积公式的系数通常可由“插值余项积分”直接算出。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例10.} 设 \(f(x)\) 在 \((x_0-\delta,x_0+\delta)\) 内有 \(n\) 阶连续导数，且
+\[
+f^{(k)}(x_0)=0\quad(k=2,3,\cdots,n-1),\qquad f^{(n)}(x_0)\ne0.
+\]
+当 \(0<|h|<\delta\) 时，
+\[
+f(x_0+h)-f(x_0)=h f'(x_0+\theta h),\qquad 0<\theta<1.
+\]
+证明：
+\[
+\lim_{h\to0}\theta=\frac1{\sqrt[n-1]{n}}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把等式两边都按 \(h\) 展开。由于二阶到 \(n-1\) 阶导数在 \(x_0\) 处为零，第一项差异出现在 \(h^n\) 阶。}
+由 Taylor 公式，
+\[
+f(x_0+h)-f(x_0)
+=h f'(x_0)+\frac{f^{(n)}(x_0)}{n!}h^n+o(h^n).
+\]
+另一方面，
+\[
+f'(x_0+\theta h)
+=f'(x_0)+\frac{f^{(n)}(x_0)}{(n-1)!}(\theta h)^{n-1}
++o(h^{n-1}),
+\]
+所以
+\[
+h f'(x_0+\theta h)
+=h f'(x_0)+\frac{f^{(n)}(x_0)}{(n-1)!}\theta^{n-1}h^n
++o(h^n).
+\]
+由题设两者相等，消去 \(h f'(x_0)\)，并除以 \(h^n f^{(n)}(x_0)\ne0\)，得
+\[
+\frac1{n!}
+=\frac{\theta^{n-1}}{(n-1)!}+o(1).
+\]
+令 \(h\to0\)，得到
+\[
+\theta^{n-1}\to\frac1n.
+\]
+由于 \(0<\theta<1\)，故
+\[
+\lim_{h\to0}\theta=\frac1{\sqrt[n-1]{n}}.
+\]
+\answer{\(\displaystyle \lim_{h\to0}\theta=\frac1{\sqrt[n-1]{n}}\)。}
+\examnote{带 \(\theta\) 的中值点极限题，几乎总是比较 Taylor 展开中首次不抵消的项。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例11.} 设函数 \(f(x)\) 在 \([-l,l]\) 上连续，在 \(x=0\) 处可导，且 \(f'(0)\ne0\)。
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 证明：对任意 \(x\in(0,l)\)，至少存在 \(\theta\in(0,1)\)，使得
+\[
+\int_0^x f(t)\,dt+\int_0^{-x} f(t)\,dt
+=x\bigl[f(\theta x)-f(-\theta x)\bigr];
+\]
+\item 求极限 \(\displaystyle\lim_{x\to0^+}\theta\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先把第二个积分换元，左端变成 \(\int_0^x[f(t)-f(-t)]dt\)。第一问用积分中值定理；第二问用 \(f\) 在 0 处可导的主部。}
+先换元：
+\[
+\int_0^{-x} f(t)\,dt=-\int_{-x}^0 f(t)\,dt
+=-\int_0^x f(-u)\,du.
+\]
+所以
+\[
+\int_0^x f(t)\,dt+\int_0^{-x} f(t)\,dt
+=\int_0^x\bigl[f(t)-f(-t)\bigr]\,dt.
+\]
+函数
+\[
+\varphi(t)=f(t)-f(-t)
+\]
+在 \([0,x]\) 上连续。由积分中值定理，存在 \(c\in(0,x)\)，使
+\[
+\int_0^x\varphi(t)\,dt=x\varphi(c).
+\]
+令 \(c=\theta x\)，则 \(\theta\in(0,1)\)，并得到第一问等式。
+
+由于 \(f\) 在 \(0\) 处可导，
+\[
+f(t)=f(0)+f'(0)t+o(t),
+\qquad
+f(-t)=f(0)-f'(0)t+o(t).
+\]
+因此
+\[
+f(t)-f(-t)=2f'(0)t+o(t).
+\]
+左端为
+\[
+\int_0^x[2f'(0)t+o(t)]\,dt
+=f'(0)x^2+o(x^2).
+\]
+右端为
+\[
+x\bigl[f(\theta x)-f(-\theta x)\bigr]
+=x\bigl[2f'(0)\theta x+o(x)\bigr]
+=2\theta f'(0)x^2+o(x^2).
+\]
+因为 \(f'(0)\ne0\)，比较两边 \(x^2\) 主部，得
+\[
+1=2\lim_{x\to0^+}\theta.
+\]
+所以
+\[
+\lim_{x\to0^+}\theta=\frac12.
+\]
+\answer{(1) 命题成立；(2) \(\displaystyle \lim_{x\to0^+}\theta=\frac12\)。}
+\examnote{积分中值点的极限，先用中值定理确定存在，再用局部展开比较主部。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例12.} 设函数 \(f(x)=\arctan x\)。若
+\[
+f(x)=x f'(\xi),
+\]
+则
+\[
+\lim_{x\to0}\frac{\xi^2}{x^2}=(\quad)
+\]
+
+A. \(1\)\qquad B. \(\frac23\)\qquad C. \(\frac12\)\qquad D. \(\frac13\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由 \(f'(t)=1/(1+t^2)\) 可把 \(\xi^2\) 直接表示成 \(x/\arctan x-1\)，再展开 \(\arctan x\)。}
+因为
+\[
+f'(\xi)=\frac1{1+\xi^2},
+\]
+题设
+\[
+\arctan x=x f'(\xi)
+\]
+等价于
+\[
+\arctan x=\frac{x}{1+\xi^2}.
+\]
+于是
+\[
+1+\xi^2=\frac{x}{\arctan x},
+\qquad
+\xi^2=\frac{x}{\arctan x}-1.
+\]
+由
+\[
+\arctan x=x-\frac{x^3}{3}+O(x^5)
+=x\left(1-\frac{x^2}{3}+O(x^4)\right),
+\]
+得
+\[
+\frac{x}{\arctan x}
+=\frac1{1-\frac{x^2}{3}+O(x^4)}
+=1+\frac{x^2}{3}+O(x^4).
+\]
+因此
+\[
+\xi^2=\frac{x^2}{3}+O(x^4),
+\]
+从而
+\[
+\lim_{x\to0}\frac{\xi^2}{x^2}=\frac13.
+\]
+\answer{D}
+\examnote{\(\arctan x\) 的三阶项是 \(-x^3/3\)，本题的 \(\xi^2\) 正是由这一项决定。}
+\end{solutionblock}

@@ -1,0 +1,1621 @@
+\chapter{线性代数：相似理论}
+
+\section{特征值、特征向量与相似对角化}
+
+\begin{problemblock}
+\textbf{例 1.} 已知 \(A\) 为 \(3\) 阶方阵，\(1,1,2\) 是 \(A\) 的 \(3\) 个特征值，
+\(\alpha_1,\alpha_2,\alpha_3\) 为这 \(3\) 个特征值对应的特征向量，则（\quad）
+
+\begin{enumerate}[label=\Alph*.]
+\item \(\alpha_1,\alpha_2,\alpha_3\) 必为矩阵 \(2E-A^2\) 的特征向量。
+\item \(\alpha_1-\alpha_2\) 必为矩阵 \(2E-A^2\) 的特征向量。
+\item \(\alpha_1+\alpha_3\) 必为矩阵 \(2E-A^2\) 的特征向量。
+\item \(\alpha_1,\alpha_2\) 不是矩阵 \(2E-A^2\) 的特征向量，\(\alpha_3\) 必为矩阵 \(2E-A^2\) 的特征向量。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{本题考查多项式矩阵的特征向量。若 \(A\alpha=\lambda\alpha\)，则
+\[
+(2E-A^2)\alpha=(2-\lambda^2)\alpha.
+\]
+因此 \(A\) 的任一特征向量仍是 \(2E-A^2\) 的特征向量。对 \(\lambda=1\)，新特征值为 \(2-1=1\)；对 \(\lambda=2\)，新特征值为 \(2-4=-2\)。所以 \(\alpha_1,\alpha_2,\alpha_3\) 都满足条件。
+
+需要注意，\(\alpha_1-\alpha_2\) 虽然在非零时也是新矩阵的特征向量，但题目说“必为”，而 \(\alpha_1,\alpha_2\) 可能相等，此时差向量为零，不能称为特征向量。}
+\answer{A}
+\examnote{看到 \(f(A)\) 与 \(A\) 的特征向量关系，直接用 \(f(A)\alpha=f(\lambda)\alpha\)。选择题中还要特别检查“零向量不能作特征向量”。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 2.} 设 \(A\) 为 \(n\) 阶矩阵，\(n\ge2\)。\(\alpha\) 是 \(A\) 关于特征值 \(2\) 的特征向量，\(\beta\) 是 \(A^T\) 关于特征值 \(1\) 的特征向量。证明：\(\alpha\) 与 \(\beta\) 相互正交。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由题意
+\[
+A\alpha=2\alpha,\qquad A^T\beta=\beta.
+\]
+把第一个等式左乘 \(\beta^T\)，得
+\[
+\beta^TA\alpha=2\beta^T\alpha.
+\]
+另一方面
+\[
+\beta^TA\alpha=(A^T\beta)^T\alpha=\beta^T\alpha.
+\]
+两式相减得
+\[
+\beta^T\alpha=0.
+\]
+这正是 \(\alpha\) 与 \(\beta\) 正交。}
+\answer{\(\alpha^T\beta=0\)，即 \(\alpha\perp\beta\)。}
+\examnote{\(A\) 与 \(A^T\) 的不同特征值对应的左右特征向量正交，是考研常用结论：若 \(A\alpha=\lambda\alpha\)，\(A^T\beta=\mu\beta\)，且 \(\lambda\ne\mu\)，则 \(\beta^T\alpha=0\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 3.} 设 \(A\) 为 \(3\) 阶矩阵，\(A^*\) 为 \(A\) 的伴随矩阵。若
+\[
+r(2E-A)=1,\qquad r(A+E)=2,
+\]
+则 \(|A^*|=\underline{\hspace{3em}}\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由 \(r(2E-A)=1\) 可知
+\[
+\dim\ker(2E-A)=3-1=2,
+\]
+所以 \(2\) 是 \(A\) 的特征值，且几何重数为 \(2\)，代数重数至少为 \(2\)。又由
+\[
+r(A+E)=2
+\]
+可知 \(\dim\ker(A+E)=1\)，所以 \(-1\) 是 \(A\) 的特征值。三阶矩阵共有三个特征值，故 \(A\) 的特征值为
+\[
+2,\quad 2,\quad -1.
+\]
+于是
+\[
+|A|=2\cdot2\cdot(-1)=-4.
+\]
+对 \(3\) 阶矩阵，有
+\[
+|A^*|=|A|^{3-1}=|A|^2=16.
+\]}
+\answer{\(16\)}
+\examnote{由 \(r(\lambda E-A)\) 先判断特征子空间维数，再结合阶数锁定全部特征值；伴随矩阵行列式公式为 \(|A^*|=|A|^{n-1}\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 4.} 设
+\[
+A=\begin{pmatrix}
+-1&1&1&1\\
+1&-1&1&1\\
+1&1&-1&1\\
+1&1&1&-1
+\end{pmatrix},\qquad
+B=P^{-1}A^*P,
+\]
+其中 \(A^*\) 为 \(A\) 的伴随矩阵，\(E\) 为 \(4\) 阶单位矩阵。求
+\[
+\operatorname{tr}(B+2026E).
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{矩阵 \(A\) 可写成
+\[
+A=J-2E,
+\]
+其中 \(J\) 是全 \(1\) 矩阵。\(J\) 的特征值为 \(4,0,0,0\)，所以 \(A\) 的特征值为
+\[
+2,-2,-2,-2.
+\]
+因此
+\[
+|A|=2(-2)^3=-16.
+\]
+当 \(A\) 可逆时
+\[
+A^*=|A|A^{-1},
+\]
+所以 \(A^*\) 的特征值为
+\[
+\frac{-16}{2}=-8,\qquad \frac{-16}{-2}=8,8,8.
+\]
+于是
+\[
+\operatorname{tr}(A^*)=-8+8+8+8=16.
+\]
+相似矩阵有相同迹，故 \(\operatorname{tr}B=\operatorname{tr}A^*=16\)。最后
+\[
+\operatorname{tr}(B+2026E)=16+4\cdot2026=8120.
+\]}
+\method{也可直接用特征值求迹。因为 \(B\sim A^*\)，所以 \(B+2026E\) 的特征值为
+\[
+-8+2026,\quad 8+2026,\quad 8+2026,\quad 8+2026,
+\]
+它们的和仍为 \(8120\)。}
+\answer{\(8120\)}
+\examnote{全 \(1\) 矩阵 \(J\) 是高频结构：\(n\) 阶 \(J\) 的特征值为 \(n,0,\ldots,0\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 5.} 设 \(A\) 是 \(n\) 阶矩阵，下列命题中正确的是（\quad）
+\begin{enumerate}[label=\Alph*.]
+\item 若 \(\alpha\) 是 \(A^T\) 的特征向量，那么 \(\alpha\) 是 \(A\) 的特征向量。
+\item 若 \(\alpha\) 是 \(A^*\) 的特征向量，那么 \(\alpha\) 是 \(A\) 的特征向量。
+\item 若 \(\alpha\) 是 \(A^2\) 的特征向量，那么 \(\alpha\) 是 \(A\) 的特征向量。
+\item 若 \(\alpha\) 是 \(2A\) 的特征向量，那么 \(\alpha\) 是 \(A\) 的特征向量。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{逐项判断。若 \(2A\alpha=\mu\alpha\)，且 \(\alpha\ne0\)，则
+\[
+A\alpha=\frac{\mu}{2}\alpha,
+\]
+所以 \(\alpha\) 一定是 \(A\) 的特征向量，D 正确。
+
+A 不正确，因为 \(A\) 与 \(A^T\) 只有特征值相同，特征向量一般不同。B 不正确，因为伴随矩阵的特征向量与 \(A\) 的特征向量并非在所有奇异情形下都能互推。C 不正确，例如
+\[
+A=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad A^2=E,
+\]
+任意非零向量都是 \(A^2\) 的特征向量，但并非任意非零向量都是 \(A\) 的特征向量。}
+\answer{D}
+\examnote{标量倍矩阵 \(cA\) 与 \(A\) 有相同特征向量；但转置、平方、伴随都不能随意反推。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 6.} 已知 \(3\) 阶矩阵
+\[
+A=\begin{pmatrix}
+1&2&3\\
+2&4&6\\
+3&6&9
+\end{pmatrix},
+\]
+求 \(A\) 的特征值和特征向量。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{令
+\[
+v=(1,2,3)^T,
+\]
+则
+\[
+A=vv^T.
+\]
+因此
+\[
+Av=v(v^Tv)=14v,
+\]
+所以 \(14\) 是特征值，对应特征向量为 \(k(1,2,3)^T\)，其中 \(k\ne0\)。
+
+若 \(x\perp v\)，即
+\[
+x_1+2x_2+3x_3=0,
+\]
+则
+\[
+Ax=v(v^Tx)=0.
+\]
+故 \(0\) 是特征值，对应特征子空间为
+\[
+x_1+2x_2+3x_3=0.
+\]
+可取一组基础解
+\[
+(-2,1,0)^T,\qquad (-3,0,1)^T.
+\]}
+\answer{特征值为 \(14,0,0\)。\(\lambda=14\) 的特征向量为 \(k(1,2,3)^T\)，\(k\ne0\)；\(\lambda=0\) 的特征向量为
+\[
+s(-2,1,0)^T+t(-3,0,1)^T,\qquad (s,t)\ne(0,0).
+\]}
+\examnote{形如 \(vv^T\) 的矩阵秩为 \(1\)，非零特征值为 \(v^Tv\)，其余特征值为 \(0\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 7.} 设 \(A\) 是 \(3\) 阶矩阵，\(b=(3,3,3)^T\)，方程组 \(Ax=b\) 有通解
+\[
+x=k_1(-1,2,1)^T+k_2(0,-1,1)^T+(1,1,1)^T,
+\]
+其中 \(k_1,k_2\) 是任意常数，则 \(A\) 的特征值为 \(\underline{\hspace{5em}}\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{非齐次方程组通解中的自由方向正是齐次方程组 \(Ax=0\) 的解。因此
+\[
+(-1,2,1)^T,\qquad (0,-1,1)^T
+\]
+是 \(A\) 关于特征值 \(0\) 的两个线性无关特征向量。故 \(0\) 至少有两个线性无关特征向量。
+
+又特解为
+\[
+x_0=(1,1,1)^T.
+\]
+由于
+\[
+Ax_0=b=(3,3,3)^T=3x_0,
+\]
+所以 \(x_0\) 是 \(A\) 关于特征值 \(3\) 的特征向量。三个向量
+\[
+(-1,2,1)^T,\quad (0,-1,1)^T,\quad (1,1,1)^T
+\]
+线性无关，故 \(A\) 的三个特征值为
+\[
+0,0,3.
+\]}
+\method{也可从秩看。通解含两个自由参数，故 \(\dim\ker A=2\)，从而 \(r(A)=1\)。再由 \(A(1,1,1)^T=3(1,1,1)^T\) 得非零特征值为 \(3\)，所以另两个特征值只能是 \(0,0\)。}
+\answer{\(0,0,3\)}
+\examnote{非齐次线性方程组的“自由方向”就是对应齐次方程的解空间，常可直接转化为零特征值的特征向量。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 8.} 设 \(A,B,C\) 均是 \(3\) 阶矩阵，满足
+\[
+AB=-2B,\qquad CA^T=2C,
+\]
+其中
+\[
+B=\begin{pmatrix}
+1&2&3\\
+-1&1&0\\
+2&-1&1
+\end{pmatrix},\qquad
+C=\begin{pmatrix}
+1&-2&1\\
+-2&4&-2\\
+-1&2&-1
+\end{pmatrix}.
+\]
+求矩阵 \(A\) 的特征值与特征向量。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由 \(AB=-2B\) 可知，\(B\) 的每个非零列向量都是 \(A\) 关于特征值 \(-2\) 的特征向量。矩阵 \(B\) 的秩为 \(2\)，故 \(\lambda=-2\) 的特征子空间至少二维。可取
+\[
+\xi_1=(1,-1,2)^T,\qquad \xi_2=(2,1,-1)^T.
+\]
+
+由 \(CA^T=2C\)，两边转置得
+\[
+AC^T=2C^T.
+\]
+因此 \(C^T\) 的非零列向量是 \(A\) 关于特征值 \(2\) 的特征向量。矩阵 \(C^T\) 的秩为 \(1\)，可取
+\[
+\xi_3=(1,-2,1)^T.
+\]
+不同特征值对应的特征向量线性无关，因此 \(A\) 的三个特征值为
+\[
+-2,-2,2.
+\]}
+\answer{\(\lambda=-2\) 的特征向量可写为
+\[
+s(1,-1,2)^T+t(2,1,-1)^T,\qquad (s,t)\ne(0,0);
+\]
+\(\lambda=2\) 的特征向量为
+\[
+k(1,-2,1)^T,\qquad k\ne0.
+\]}
+\examnote{\(AB=\lambda B\) 时看 \(B\) 的列；\(CA^T=\lambda C\) 时转置为 \(AC^T=\lambda C^T\)，看 \(C^T\) 的列。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 9.} 设 \(A\) 是 \(3\) 阶实对称矩阵，\(A\) 的列向量 \(\alpha_1,\alpha_2,\alpha_3\) 线性相关，已知
+\[
+\alpha_1+\alpha_2=(3,3,0)^T,\qquad
+\alpha_1+\alpha_3=(3,0,3)^T.
+\]
+求 \(A\) 的特征值与特征向量。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设 \(\alpha_1=(t,u,v)^T\)。由题意
+\[
+\alpha_2=(3-t,3-u,-v)^T,\qquad
+\alpha_3=(3-t,-u,3-v)^T.
+\]
+因为 \(A\) 对称，所以
+\[
+u=3-t,\qquad v=3-t,\qquad u=v.
+\]
+于是
+\[
+A=\begin{pmatrix}
+t&3-t&3-t\\
+3-t&t&t-3\\
+3-t&t-3&t
+\end{pmatrix}.
+\]
+计算特征值可得
+\[
+3,\quad 3,\quad 3t-6.
+\]
+又 \(A\) 的列向量线性相关，即 \(|A|=0\)，故必有
+\[
+3t-6=0,\qquad t=2.
+\]
+所以
+\[
+A=\begin{pmatrix}
+2&1&1\\
+1&2&-1\\
+1&-1&2
+\end{pmatrix}.
+\]
+解 \((A-0E)x=0\)，得
+\[
+\lambda=0:\quad x=k(-1,1,1)^T,\quad k\ne0.
+\]
+解 \((A-3E)x=0\)，即 \(-x_1+x_2+x_3=0\)，得
+\[
+\lambda=3:\quad x=s(1,1,0)^T+t(1,0,1)^T,\quad (s,t)\ne(0,0).
+\]}
+\answer{特征值为 \(0,3,3\)。对应特征向量分别为
+\[
+\lambda=0:\ k(-1,1,1)^T;
+\qquad
+\lambda=3:\ s(1,1,0)^T+t(1,0,1)^T.
+\]}
+\examnote{实对称矩阵给出“列向量条件”时，先用对称性补全矩阵，再用列相关转化为行列式为零。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 10.} 设 \(A\) 为三阶矩阵，且
+\[
+A^2-A-2E=O,\qquad |A|=2.
+\]
+求
+\[
+|A^*+3E|.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由
+\[
+A^2-A-2E=O
+\]
+可知 \(A\) 的特征值只能满足
+\[
+\lambda^2-\lambda-2=0,
+\]
+即
+\[
+\lambda=2\quad\text{或}\quad \lambda=-1.
+\]
+三阶矩阵的三个特征值的乘积为 \(|A|=2\)。只有
+\[
+2,\ -1,\ -1
+\]
+的乘积为 \(2\)。因此 \(A\) 的特征值为 \(2,-1,-1\)。
+
+由于 \(|A|=2\ne0\)，有
+\[
+A^*=|A|A^{-1}.
+\]
+所以 \(A^*\) 的特征值为
+\[
+\frac{2}{2}=1,\qquad \frac{2}{-1}=-2,\qquad \frac{2}{-1}=-2.
+\]
+于是 \(A^*+3E\) 的特征值为
+\[
+4,1,1,
+\]
+故
+\[
+|A^*+3E|=4\cdot1\cdot1=4.
+\]}
+\method{也可先由 \(A^2-A-2E=O\) 得 \(A\) 可逆且
+\[
+A(A-E)=2E,\qquad A^{-1}=\frac12(A-E).
+\]
+于是
+\[
+A^*=2A^{-1}=A-E,\qquad A^*+3E=A+2E.
+\]
+再用 \(A\) 的特征值 \(2,-1,-1\)，得 \(A+2E\) 的特征值为 \(4,1,1\)，行列式仍为 \(4\)。}
+\answer{\(4\)}
+\examnote{矩阵多项式方程通常先转成特征值方程；伴随矩阵与逆矩阵的关系是 \(A^*=|A|A^{-1}\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 11.} \(3\) 阶实对称矩阵 \(A\) 满足
+\[
+A^2+2A=O,
+\]
+且 \(\alpha=(0,1,1)^T\) 是齐次方程组 \(Ax=0\) 的基础解系。求 \(A\) 的特征值与特征向量。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由
+\[
+A^2+2A=A(A+2E)=O
+\]
+可知 \(A\) 的特征值只能是 \(0\) 或 \(-2\)。题目说明 \(Ax=0\) 的基础解系只有一个向量 \((0,1,1)^T\)，所以
+\[
+\lambda=0
+\]
+的特征子空间为
+\[
+k(0,1,1)^T,\qquad k\ne0.
+\]
+
+因为 \(A\) 是实对称矩阵，必可正交对角化，所以特征子空间维数之和为 \(3\)。因此 \(\lambda=-2\) 的特征子空间为二维，并且与 \(\lambda=0\) 的特征子空间正交。于是
+\[
+(0,1,1)^Tx=0\quad\Longleftrightarrow\quad x_2+x_3=0.
+\]
+可取基础解系
+\[
+(1,0,0)^T,\qquad (0,1,-1)^T.
+\]}
+\answer{\(\lambda=0\) 的特征向量为 \(k(0,1,1)^T\)；\(\lambda=-2\) 的特征向量为
+\[
+s(1,0,0)^T+t(0,1,-1)^T,\qquad (s,t)\ne(0,0).
+\]}
+\examnote{实对称矩阵的不同特征值对应特征子空间正交，且一定可对角化，这是本章最常用的结构。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 12.} 设 \(A\) 为 \(3\) 阶实对称矩阵，\(r(A)=1\)，\(\lambda_1=9\) 是 \(A\) 的一个特征值，对应的一个特征向量为
+\[
+\xi_1=(1,-2,2)^T.
+\]
+求矩阵 \(A\) 的特征值与特征向量。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{因为 \(r(A)=1\)，所以 \(A\) 只有一个非零特征值。题目给出非零特征值 \(9\)，故 \(A\) 的特征值为
+\[
+9,0,0.
+\]
+实对称矩阵不同特征值的特征向量正交。因此 \(\lambda=0\) 的特征子空间是 \(\xi_1\) 的正交补：
+\[
+(1,-2,2)x=0,\qquad x_1-2x_2+2x_3=0.
+\]
+可取一组基础解
+\[
+(2,1,0)^T,\qquad (-2,0,1)^T.
+\]}
+\answer{\(\lambda=9\) 的特征向量为 \(k(1,-2,2)^T\)，\(k\ne0\)；\(\lambda=0\) 的特征向量为
+\[
+s(2,1,0)^T+t(-2,0,1)^T,\qquad (s,t)\ne(0,0).
+\]}
+\examnote{对称矩阵加秩条件时，非零特征值个数等于秩；零特征空间可由非零特征向量的正交补求出。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 13.} 设 \(\alpha,\beta\) 是 \(3\) 维单位列向量，
+\[
+A=\alpha\beta^T+\beta\alpha^T,\qquad \alpha^T\beta=\frac13.
+\]
+证明：
+\begin{enumerate}[label=(\arabic*)]
+\item \(0\) 是 \(A\) 的特征值；
+\item \(\alpha+\beta,\alpha-\beta\) 是 \(A\) 的特征向量；
+\item \(A\) 可以相似对角化。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{因为
+\[
+A=\alpha\beta^T+\beta\alpha^T,
+\]
+所以 \(A\) 的列空间包含在 \(\operatorname{span}\{\alpha,\beta\}\) 中，故
+\[
+r(A)\le2.
+\]
+于是 \(3\) 阶矩阵 \(A\) 必有零特征值。
+
+再计算
+\[
+\begin{aligned}
+A(\alpha+\beta)
+&=\alpha(\beta^T\alpha+\beta^T\beta)+\beta(\alpha^T\alpha+\alpha^T\beta)\\
+&=\alpha\left(\frac13+1\right)+\beta\left(1+\frac13\right)
+=\frac43(\alpha+\beta),
+\end{aligned}
+\]
+所以 \(\alpha+\beta\) 是特征值 \(\frac43\) 对应的特征向量。同理
+\[
+\begin{aligned}
+A(\alpha-\beta)
+&=\alpha(\beta^T\alpha-\beta^T\beta)+\beta(\alpha^T\alpha-\alpha^T\beta)\\
+&=\alpha\left(\frac13-1\right)+\beta\left(1-\frac13\right)
+=-\frac23(\alpha-\beta).
+\end{aligned}
+\]
+因此 \(\alpha-\beta\) 是特征值 \(-\frac23\) 对应的特征向量。
+
+矩阵 \(A\) 已有三个互不相同的特征值
+\[
+\frac43,\quad -\frac23,\quad 0,
+\]
+故必有三个线性无关特征向量，可以相似对角化。}
+\answer{三个结论均成立，且 \(A\) 的特征值为 \(\frac43,-\frac23,0\)。}
+\examnote{遇到 \(\alpha\beta^T\) 型矩阵，应优先研究它在 \(\operatorname{span}\{\alpha,\beta\}\) 上的作用，并用秩判断零特征值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 14.} 设 \(\alpha,\beta\) 是 \(3\) 维单位正交列向量组，
+\[
+A=\alpha\beta^T+\beta\alpha^T,\qquad
+B=\alpha\alpha^T+\beta\beta^T,
+\]
+则（\quad）
+\begin{enumerate}[label=\Alph*.]
+\item \(A+E\) 可逆，\(B+E\) 可逆。
+\item \(A+E\) 可逆，\(B+E\) 不可逆。
+\item \(A+E\) 不可逆，\(B+E\) 可逆。
+\item \(A+E\) 不可逆，\(B+E\) 不可逆。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先看 \(A\) 在 \(\operatorname{span}\{\alpha,\beta\}\) 上的作用：
+\[
+A\alpha=\beta,\qquad A\beta=\alpha.
+\]
+所以
+\[
+A(\alpha+\beta)=\alpha+\beta,\qquad
+A(\alpha-\beta)=-(\alpha-\beta).
+\]
+若 \(x\perp\alpha,\beta\)，则 \(Ax=0\)。因此 \(A\) 的特征值为
+\[
+1,-1,0.
+\]
+于是 \(A+E\) 的特征值为 \(2,0,1\)，不可逆。
+
+再看 \(B\)。它是到 \(\operatorname{span}\{\alpha,\beta\}\) 上的正交投影：
+\[
+B\alpha=\alpha,\qquad B\beta=\beta,\qquad Bx=0\quad(x\perp\alpha,\beta).
+\]
+故 \(B\) 的特征值为 \(1,1,0\)，\(B+E\) 的特征值为
+\[
+2,2,1,
+\]
+全部非零，所以 \(B+E\) 可逆。}
+\answer{C}
+\examnote{\(\alpha\beta^T+\beta\alpha^T\) 表示交换 \(\alpha,\beta\) 方向；\(\alpha\alpha^T+\beta\beta^T\) 表示投影到这两个方向。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 15.} 设 \(\alpha,\beta\) 是 \(2\) 阶实矩阵 \(A\) 的两个实特征向量，且
+\[
+\|\alpha+\beta\|=\|\alpha-\beta\|.
+\]
+则矩阵 \(A\) 必为（\quad）
+\begin{enumerate}[label=\Alph*.]
+\item 正定矩阵
+\item 正交矩阵
+\item 对称矩阵
+\item 单位矩阵
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由
+\[
+\|\alpha+\beta\|^2=\|\alpha-\beta\|^2
+\]
+得
+\[
+(\alpha+\beta)^T(\alpha+\beta)=(\alpha-\beta)^T(\alpha-\beta).
+\]
+展开后得到
+\[
+\alpha^T\alpha+2\alpha^T\beta+\beta^T\beta
+=\alpha^T\alpha-2\alpha^T\beta+\beta^T\beta,
+\]
+故
+\[
+\alpha^T\beta=0.
+\]
+也就是说，\(\alpha,\beta\) 是两个正交的非零特征向量，因而线性无关，构成 \(\mathbb R^2\) 的一组正交基。矩阵 \(A\) 在这组正交基下可对角化，即
+\[
+A=Q\Lambda Q^T,
+\]
+其中 \(Q\) 为正交矩阵，\(\Lambda\) 为实对角矩阵。于是
+\[
+A^T=(Q\Lambda Q^T)^T=Q\Lambda Q^T=A.
+\]
+故 \(A\) 必为对称矩阵。}
+\answer{C}
+\examnote{实矩阵若有一组正交特征向量基，则可正交对角化，必为实对称矩阵。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 16.} 设矩阵
+\[
+A=\begin{pmatrix}
+a&1&0\\
+1&a&-1\\
+0&1&a
+\end{pmatrix},
+\qquad A^3=O.
+\]
+求 \(a\) 的值。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先求特征多项式。直接计算
+\[
+|\lambda E-A|=(\lambda-a)^3.
+\]
+若 \(A^3=O\)，则 \(A\) 是幂零矩阵，所有特征值都必须为 \(0\)。因此
+\[
+a=0.
+\]
+当 \(a=0\) 时
+\[
+A=\begin{pmatrix}
+0&1&0\\
+1&0&-1\\
+0&1&0
+\end{pmatrix}.
+\]
+记此矩阵为 \(N\)，可直接验证 \(N^3=O\)，所以 \(a=0\) 确实满足题意。}
+\answer{\(a=0\)}
+\examnote{幂零矩阵的全部特征值为 \(0\)。参数题常先用特征多项式给出必要条件，再代回验证充分性。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 17.} 下列矩阵中，\(A\) 和 \(B\) 相似的是（\quad）
+\begin{enumerate}[label=\Alph*.]
+\item \(A=\begin{pmatrix}1&1\\0&2\end{pmatrix},\quad B=\begin{pmatrix}1&1\\2&2\end{pmatrix}\).
+\item \(A=\begin{pmatrix}1&0\\1&2\end{pmatrix},\quad B=\begin{pmatrix}1&1\\0&2\end{pmatrix}\).
+\item \(A=\begin{pmatrix}1&0\\1&3\end{pmatrix},\quad B=\begin{pmatrix}1&0\\1&2\end{pmatrix}\).
+\item \(A=\begin{pmatrix}3&0\\0&3\end{pmatrix},\quad B=\begin{pmatrix}3&0\\1&3\end{pmatrix}\).
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{相似矩阵必须有相同特征多项式、迹、行列式，并且 Jordan 结构相同。
+
+A 项中，第一个矩阵行列式为 \(2\)，第二个矩阵行列式为 \(0\)，不相似。B 项中两个矩阵都是三角矩阵，特征值均为 \(1,2\)，且两个特征值不同，所以都可对角化并相似于
+\[
+\begin{pmatrix}1&0\\0&2\end{pmatrix}.
+\]
+因此 B 项相似。
+
+C 项两个矩阵迹分别为 \(4\) 与 \(3\)，不相似。D 项中第一个矩阵是 \(3E\)，若它与 \(B\) 相似，则 \(B\) 也必须等于 \(3E\)，但题中 \(B\ne3E\)，故不相似。}
+\answer{B}
+\examnote{\(2\) 阶选择题先查迹与行列式；若特征值不同，则同特征值就足以判断都相似于同一对角矩阵。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 18.} 设
+\[
+A=\begin{pmatrix}1&1&2\\0&1&1\\0&0&2\end{pmatrix},\quad
+B=\begin{pmatrix}1&1&1\\0&1&1\\0&0&2\end{pmatrix},\quad
+C=\begin{pmatrix}1&0&0\\0&3&1\\0&-2&0\end{pmatrix}.
+\]
+则（\quad）
+\begin{enumerate}[label=\Alph*.]
+\item \(A\) 与 \(B,C\) 都相似。
+\item \(A\) 与 \(B,C\) 都不相似。
+\item \(A\) 与 \(B\) 相似，\(A\) 与 \(C\) 不相似。
+\item \(A\) 与 \(B\) 不相似，\(A\) 与 \(C\) 相似。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{三个矩阵的特征多项式均为
+\[
+(\lambda-1)^2(\lambda-2).
+\]
+但仅有特征多项式相同还不够，还要比较 \(\lambda=1\) 的特征子空间维数。
+
+对 \(A\)，
+\[
+r(A-E)=2,\qquad \dim\ker(A-E)=1.
+\]
+对 \(B\)，
+\[
+r(B-E)=2,\qquad \dim\ker(B-E)=1.
+\]
+因此 \(A,B\) 在特征值 \(1\) 处都有一个 \(2\) 阶 Jordan 块，再加上特征值 \(2\) 的一阶块，所以 \(A\sim B\)。
+
+对 \(C\)，
+\[
+r(C-E)=1,\qquad \dim\ker(C-E)=2.
+\]
+这说明 \(C\) 在 \(\lambda=1\) 处有两个线性无关特征向量，Jordan 结构与 \(A\) 不同，因此 \(A\) 与 \(C\) 不相似。}
+\answer{C}
+\examnote{重特征值题不能只看特征多项式，必须比较 \(r(A-\lambda E)\) 或特征子空间维数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 19.} \(A\) 为 \(n\) 阶矩阵，\(a\ne b\)。证明：
+\[
+A\text{ 可相似对角化，且特征值 }\lambda\text{ 满足 }(\lambda-a)(\lambda-b)=0
+\]
+\[
+\Longleftrightarrow\quad
+(A-aE)(A-bE)=O
+\quad\Longleftrightarrow\quad
+r(A-aE)+r(A-bE)=n.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先证第一个结论推出矩阵多项式为零。若 \(A\) 可相似对角化，且特征值只可能是 \(a,b\)，则存在可逆矩阵 \(P\)，使
+\[
+P^{-1}AP=\operatorname{diag}(\underbrace{a,\ldots,a}_{s\text{ 个}},\underbrace{b,\ldots,b}_{n-s\text{ 个}}).
+\]
+于是对每一个对角元都有 \((\lambda-a)(\lambda-b)=0\)，从而
+\[
+(A-aE)(A-bE)=O.
+\]
+
+若 \(A\) 有上述对角形，则
+\[
+r(A-aE)=n-s,\qquad r(A-bE)=s,
+\]
+所以
+\[
+r(A-aE)+r(A-bE)=n.
+\]
+
+反过来，若
+\[
+r(A-aE)+r(A-bE)=n,
+\]
+则由秩零度定理
+\[
+\dim\ker(A-aE)+\dim\ker(A-bE)
+=2n-r(A-aE)-r(A-bE)=n.
+\]
+由于 \(a\ne b\)，两个不同特征值对应的特征子空间交为零，所以这两个特征子空间的直和维数为 \(n\)。因此 \(A\) 有 \(n\) 个线性无关特征向量，且这些特征向量对应的特征值只可能是 \(a,b\)，故 \(A\) 可相似对角化并满足题设特征值条件。
+
+最后，若
+\[
+(A-aE)(A-bE)=O,
+\]
+则 \(\operatorname{Im}(A-bE)\subseteq\ker(A-aE)\)。结合 \(a\ne b\) 与一次因子互素，可知 \(A\) 的最小多项式整除 \((x-a)(x-b)\)，没有重因子，故 \(A\) 可相似对角化且特征值只可能为 \(a,b\)，再由前面已证部分得到秩等式。}
+\answer{三者等价。}
+\examnote{“最小多项式无重根 \(\Rightarrow\) 可对角化”是证明矩阵多项式与相似对角化等价的快捷工具。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 20.} 设 \(A,B\) 为 \(2\) 阶矩阵，且
+\[
+AB=BA.
+\]
+则“\(A\) 有两个不相等的特征值”是“\(B\) 可对角化”的（\quad）
+\begin{enumerate}[label=\Alph*.]
+\item 充分必要条件
+\item 充分不必要条件
+\item 必要不充分条件
+\item 既不充分也不必要条件
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{若 \(A\) 有两个不同特征值，则 \(A\) 可对角化。取 \(A\) 的特征向量为基，则
+\[
+A\sim \begin{pmatrix}\lambda_1&0\\0&\lambda_2\end{pmatrix},\qquad \lambda_1\ne\lambda_2.
+\]
+在这组基下，与 \(A\) 可交换的矩阵必须为对角矩阵。理由是若
+\[
+C=\begin{pmatrix}c_{11}&c_{12}\\c_{21}&c_{22}\end{pmatrix}
+\]
+与 \(\operatorname{diag}(\lambda_1,\lambda_2)\) 可交换，则
+\[
+(\lambda_1-\lambda_2)c_{12}=0,\qquad
+(\lambda_2-\lambda_1)c_{21}=0,
+\]
+所以 \(c_{12}=c_{21}=0\)。因此 \(B\) 可对角化。
+
+但这不是必要条件。例如 \(A=E\) 时，\(A\) 没有两个不相等的特征值，而只要取 \(B\) 为任意可对角化矩阵，仍有 \(AB=BA\)。}
+\answer{B}
+\examnote{有两个不同特征值的矩阵，其可交换矩阵在特征向量基下也呈块对角；二维且特征值全异时就是对角。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 21.} 已知二次型
+\[
+f(x_1,x_2,x_3)=x^TAx
+\]
+在正交变换 \(x=Qy\) 下的标准形为
+\[
+y_1^2+y_2^2,
+\]
+且 \(Q\) 的第 \(3\) 列为
+\[
+\left(\frac{\sqrt2}{2},0,\frac{\sqrt2}{2}\right)^T.
+\]
+求矩阵 \(A\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{标准形为 \(y_1^2+y_2^2+0\cdot y_3^2\)，所以
+\[
+Q^TAQ=\operatorname{diag}(1,1,0).
+\]
+记 \(q_3=\left(\frac{\sqrt2}{2},0,\frac{\sqrt2}{2}\right)^T\)。由于 \(Q\) 为正交矩阵，前两列张成 \(q_3^\perp\)，因此
+\[
+A=Q\operatorname{diag}(1,1,0)Q^T
+=q_1q_1^T+q_2q_2^T
+=E-q_3q_3^T.
+\]
+计算得
+\[
+q_3q_3^T
+=\begin{pmatrix}
+\frac12&0&\frac12\\
+0&0&0\\
+\frac12&0&\frac12
+\end{pmatrix},
+\]
+于是
+\[
+A=\begin{pmatrix}
+\frac12&0&-\frac12\\
+0&1&0\\
+-\frac12&0&\frac12
+\end{pmatrix}.
+\]}
+\answer{\[
+A=\begin{pmatrix}
+\frac12&0&-\frac12\\
+0&1&0\\
+-\frac12&0&\frac12
+\end{pmatrix}.
+\]}
+\examnote{标准形缺少 \(y_3^2\) 时，矩阵就是投影到 \(Q\) 前两列张成的平面上，即 \(E-q_3q_3^T\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 22.} 设 \(A\) 为 \(3\) 阶实对称矩阵，已知
+\[
+|A|=-12,
+\]
+\(A\) 的 \(3\) 个特征值之和为 \(1\)，又
+\[
+\alpha=(1,0,-2)^T
+\]
+是齐次线性方程组
+\[
+(A^*-4E)x=0
+\]
+的一个解向量。求矩阵 \(A\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由 \((A^*-4E)\alpha=0\) 得
+\[
+A^*\alpha=4\alpha.
+\]
+因为 \(|A|=-12\ne0\)，所以 \(A^*=|A|A^{-1}\)。若 \(\alpha\) 是 \(A^*\) 关于特征值 \(4\) 的特征向量，则 \(\alpha\) 是 \(A\) 的特征向量，且对应特征值为
+\[
+\frac{|A|}{4}=\frac{-12}{4}=-3.
+\]
+设 \(A\) 的其余两个特征值为 \(\lambda_2,\lambda_3\)。由迹与行列式条件
+\[
+-3+\lambda_2+\lambda_3=1,\qquad
+(-3)\lambda_2\lambda_3=-12.
+\]
+所以
+\[
+\lambda_2+\lambda_3=4,\qquad \lambda_2\lambda_3=4,
+\]
+即
+\[
+\lambda_2=\lambda_3=2.
+\]
+
+由于 \(A\) 是实对称矩阵，\(\lambda=2\) 的特征子空间是 \(\alpha\) 的正交补。令
+\[
+u=\frac{\alpha}{\|\alpha\|}=\frac1{\sqrt5}(1,0,-2)^T.
+\]
+矩阵 \(A\) 在 \(u\) 方向上的特征值为 \(-3\)，在正交补上的特征值为 \(2\)，故
+\[
+A=2E-5uu^T.
+\]
+代入 \(u\) 得
+\[
+A=2E-\frac55
+\begin{pmatrix}
+1&0&-2\\
+0&0&0\\
+-2&0&4
+\end{pmatrix}
+=\begin{pmatrix}
+1&0&2\\
+0&2&0\\
+2&0&-2
+\end{pmatrix}.
+\]}
+\method{也可先取 \(\lambda=-3\) 的单位特征向量 \(u\)，再把 \(A\) 看成谱分解
+\[
+A=(-3)uu^T+2(E-uu^T)=2E-5uu^T,
+\]
+这样不必具体求出正交补的一组基。}
+\answer{\[
+A=\begin{pmatrix}
+1&0&2\\
+0&2&0\\
+2&0&-2
+\end{pmatrix}.
+\]}
+\examnote{实对称矩阵可用谱投影直接构造：一个方向的特征值已知，其余正交补特征值相同，就能写成 \(\lambda_2E+(\lambda_1-\lambda_2)uu^T\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 23.} 设 \(A\) 为 \(3\) 阶实对称矩阵，若存在正交矩阵
+\[
+Q=(e_1,e_2,e_3)
+\]
+使得
+\[
+Q^{-1}AQ=
+\begin{pmatrix}
+1&0&0\\
+0&1&0\\
+0&0&3
+\end{pmatrix},
+\]
+令
+\[
+P=(e_1+e_2,e_2,e_3),
+\]
+则 \(P^TAP=(\quad)\)。
+
+\begin{enumerate}[label=\Alph*.]
+\item \(\begin{pmatrix}1&0&0\\0&1&0\\0&0&3\end{pmatrix}\)
+\item \(\begin{pmatrix}2&1&0\\1&1&0\\0&0&3\end{pmatrix}\)
+\item \(\begin{pmatrix}1&0&0\\1&1&0\\0&0&1\end{pmatrix}\)
+\item \(\begin{pmatrix}1&1&0\\0&1&0\\0&0&3\end{pmatrix}\)
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{因为 \(Q\) 为正交矩阵，所以 \(Q^{-1}=Q^T\)。记
+\[
+D=\operatorname{diag}(1,1,3).
+\]
+由 \(P=(e_1+e_2,e_2,e_3)\) 可写成
+\[
+P=QS,\qquad
+S=\begin{pmatrix}
+1&0&0\\
+1&1&0\\
+0&0&1
+\end{pmatrix}.
+\]
+于是
+\[
+P^TAP=S^TQ^TAQS=S^TDS.
+\]
+直接计算
+\[
+S^TDS
+=\begin{pmatrix}
+2&1&0\\
+1&1&0\\
+0&0&3
+\end{pmatrix}.
+\]}
+\answer{B}
+\examnote{正交对角化后，若新列向量是原正交基的线性组合，应写成 \(P=QS\)，再算 \(P^TAP=S^TDS\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 24.} 设
+\[
+A=\begin{pmatrix}
+2&1&0\\
+1&2&0\\
+a&1&b
+\end{pmatrix}
+\]
+恰有 \(2\) 个不同的特征值且可相似对角化，\(a>0\)，并且
+\[
+(A+E)(E-B)=E.
+\]
+求：
+\begin{enumerate}[label=(\arabic*)]
+\item \(a,b\) 的值；
+\item 可以使 \(A,B\) 同时相似对角化的可逆矩阵 \(P\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先求 \(A\) 的特征多项式：
+\[
+|\lambda E-A|=(\lambda-3)(\lambda-1)(\lambda-b).
+\]
+题目要求恰有两个不同特征值，因此 \(b=1\) 或 \(b=3\)。
+
+若 \(b=1\)，则 \(\lambda=1\) 为二重特征值。要可对角化，必须
+\[
+\dim\ker(A-E)=2.
+\]
+此时
+\[
+A-E=\begin{pmatrix}
+1&1&0\\
+1&1&0\\
+a&1&0
+\end{pmatrix}.
+\]
+它的秩要为 \(1\)，需 \(a=1\)。这满足 \(a>0\)。
+
+若 \(b=3\)，则 \(\lambda=3\) 为二重特征值。要使 \(\dim\ker(A-3E)=2\)，需 \(a=-1\)，与 \(a>0\) 矛盾。因此
+\[
+a=1,\qquad b=1.
+\]
+
+此时
+\[
+A=\begin{pmatrix}
+2&1&0\\
+1&2&0\\
+1&1&1
+\end{pmatrix}.
+\]
+\(\lambda=3\) 的特征向量可取 \((1,1,1)^T\)，\(\lambda=1\) 的特征子空间满足 \(x_1+x_2=0\)，可取
+\[
+(-1,1,0)^T,\qquad (0,0,1)^T.
+\]
+令
+\[
+P=\begin{pmatrix}
+1&-1&0\\
+1&1&0\\
+1&0&1
+\end{pmatrix}.
+\]
+则
+\[
+P^{-1}AP=\operatorname{diag}(3,1,1).
+\]
+由 \((A+E)(E-B)=E\) 得
+\[
+B=E-(A+E)^{-1}.
+\]
+所以 \(B\) 是 \(A\) 的函数，与 \(A\) 有相同特征向量。若 \(A\) 的特征值为 \(\lambda\)，则 \(B\) 的对应特征值为
+\[
+1-\frac1{\lambda+1}.
+\]
+故
+\[
+P^{-1}BP=\operatorname{diag}\left(\frac34,\frac12,\frac12\right).
+\]}
+\answer{\[
+a=1,\qquad b=1,\qquad
+P=\begin{pmatrix}
+1&-1&0\\
+1&1&0\\
+1&0&1
+\end{pmatrix}
+\]
+可使 \(A,B\) 同时相似对角化。}
+\examnote{由 \(B=E-(A+E)^{-1}\) 可知 \(B\) 是 \(A\) 的函数；只要 \(A\) 可对角化，\(A,B\) 就可用同一组特征向量同时对角化。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 25.} 设矩阵
+\[
+A=\begin{pmatrix}
+a&1&-1\\
+1&a&-1\\
+-1&-1&a
+\end{pmatrix}.
+\]
+\begin{enumerate}[label=(\arabic*)]
+\item 求正交矩阵 \(P\)，使得 \(P^TAP\) 为对角矩阵；
+\item 求正定矩阵 \(C\)，使
+\[
+C^2=(a+3)E-A,
+\]
+其中 \(E\) 为 \(3\) 阶单位矩阵。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{矩阵 \(A\) 是实对称矩阵，必可正交对角化。求特征值得
+\[
+\lambda_1=\lambda_2=a-1,\qquad \lambda_3=a+2.
+\]
+对应特征向量可取
+\[
+(1,-1,0)^T,\qquad (1,1,2)^T,\qquad (-1,-1,1)^T.
+\]
+把它们单位化，令
+\[
+u_1=\frac1{\sqrt2}(1,-1,0)^T,\quad
+u_2=\frac1{\sqrt6}(1,1,2)^T,\quad
+u_3=\frac1{\sqrt3}(-1,-1,1)^T.
+\]
+则
+\[
+P=(u_1,u_2,u_3)
+=\begin{pmatrix}
+\frac1{\sqrt2}&\frac1{\sqrt6}&-\frac1{\sqrt3}\\
+-\frac1{\sqrt2}&\frac1{\sqrt6}&-\frac1{\sqrt3}\\
+0&\frac2{\sqrt6}&\frac1{\sqrt3}
+\end{pmatrix}
+\]
+为正交矩阵，并且
+\[
+P^TAP=\operatorname{diag}(a-1,a-1,a+2).
+\]
+
+于是
+\[
+P^T\bigl((a+3)E-A\bigr)P
+=\operatorname{diag}(4,4,1).
+\]
+正定平方根在该正交基下应为
+\[
+\operatorname{diag}(2,2,1).
+\]
+因此
+\[
+C=P\operatorname{diag}(2,2,1)P^T.
+\]
+因为 \(u_3\) 方向对应特征值 \(1\)，其正交补对应特征值 \(2\)，所以
+\[
+C=2E-u_3u_3^T
+=\begin{pmatrix}
+\frac53&-\frac13&\frac13\\
+-\frac13&\frac53&\frac13\\
+\frac13&\frac13&\frac53
+\end{pmatrix}.
+\]}
+\method{求 \(C\) 时不必展开 \(P\operatorname{diag}(2,2,1)P^T\)。因为 \(C\) 在 \(u_3^\perp\) 上是 \(2\) 倍，在 \(u_3\) 上是 \(1\) 倍，所以直接写
+\[
+C=2(E-u_3u_3^T)+1\cdot u_3u_3^T=2E-u_3u_3^T.
+\]}
+\answer{\[
+P=\begin{pmatrix}
+\frac1{\sqrt2}&\frac1{\sqrt6}&-\frac1{\sqrt3}\\
+-\frac1{\sqrt2}&\frac1{\sqrt6}&-\frac1{\sqrt3}\\
+0&\frac2{\sqrt6}&\frac1{\sqrt3}
+\end{pmatrix},
+\quad
+C=\begin{pmatrix}
+\frac53&-\frac13&\frac13\\
+-\frac13&\frac53&\frac13\\
+\frac13&\frac13&\frac53
+\end{pmatrix}.
+\]}
+\examnote{正定平方根要取特征值的正平方根。实对称矩阵题中，先正交对角化再对对角元开方最稳。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 26.} 已知矩阵
+\[
+A=\begin{pmatrix}
+-2&-2&1\\
+2&x&-2\\
+0&0&-2
+\end{pmatrix}
+\quad\text{与}\quad
+B=\begin{pmatrix}
+2&1&0\\
+0&-1&0\\
+0&0&y
+\end{pmatrix}
+\]
+相似。
+\begin{enumerate}[label=(\arabic*)]
+\item 求 \(x,y\)；
+\item 求可逆矩阵 \(P\)，使 \(P^{-1}AP=B\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{相似矩阵特征多项式相同。计算
+\[
+|\lambda E-A|=-(\lambda+2)(-\lambda^2+x\lambda-2\lambda+2x-4),
+\]
+\[
+|\lambda E-B|=-(y-\lambda)(\lambda-2)(\lambda+1).
+\]
+比较系数，得
+\[
+x=3,\qquad y=-2.
+\]
+于是
+\[
+A=\begin{pmatrix}
+-2&-2&1\\
+2&3&-2\\
+0&0&-2
+\end{pmatrix},\qquad
+B=\begin{pmatrix}
+2&1&0\\
+0&-1&0\\
+0&0&-2
+\end{pmatrix}.
+\]
+要求 \(P^{-1}AP=B\)，等价于
+\[
+AP=PB.
+\]
+设 \(P=(p_1,p_2,p_3)\)，由 \(B\) 的列结构可得
+\[
+Ap_1=2p_1,\qquad
+Ap_2=p_1-p_2,\qquad
+Ap_3=-2p_3.
+\]
+取
+\[
+p_1=(-2,4,0)^T,\qquad
+p_2=(0,1,0)^T,\qquad
+p_3=(-1,2,4)^T,
+\]
+则三式均成立，且三个向量线性无关。因此
+\[
+P=\begin{pmatrix}
+-2&0&-1\\
+4&1&2\\
+0&0&4
+\end{pmatrix}
+\]
+满足要求。}
+\answer{\[
+x=3,\qquad y=-2,\qquad
+P=\begin{pmatrix}
+-2&0&-1\\
+4&1&2\\
+0&0&4
+\end{pmatrix}.
+\]}
+\examnote{求 \(P^{-1}AP=B\) 时，不要只把 \(B\) 当对角矩阵看；应使用 \(AP=PB\)，按 \(B\) 的每一列写出 \(p_i\) 应满足的方程。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 27.} 设
+\[
+A=\begin{pmatrix}
+-4&2&10\\
+-4&3&a\\
+-3&1&7
+\end{pmatrix},
+\]
+且 \(A\) 的所有特征向量中只有一个线性无关的特征向量，
+\[
+B=\begin{pmatrix}
+2&1&0\\
+0&2&1\\
+0&0&2
+\end{pmatrix}.
+\]
+\begin{enumerate}[label=(\arabic*)]
+\item 求 \(a\) 的值；
+\item 是否存在可逆矩阵 \(P\)，使 \(P^{-1}AP=B\)。若存在，求出矩阵 \(P\)；若不存在，说明理由。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{若 \(A\) 与题中 \(B\) 相似，则特征多项式应为
+\[
+(\lambda-2)^3.
+\]
+先求 \(A\) 的特征多项式：
+\[
+|\lambda E-A|=-(\lambda-2)(a-\lambda^2+4\lambda-11).
+\]
+令它等于 \((\lambda-2)^3\)，比较系数得
+\[
+a=7.
+\]
+当 \(a=7\) 时，
+\[
+A-2E=
+\begin{pmatrix}
+-6&2&10\\
+-4&1&7\\
+-3&1&5
+\end{pmatrix}.
+\]
+计算得
+\[
+r(A-2E)=2,\qquad r\bigl((A-2E)^2\bigr)=1.
+\]
+所以 \(A\) 关于特征值 \(2\) 只有一个线性无关特征向量，且 Jordan 型正是一个 \(3\) 阶 Jordan 块，与 \(B\) 相似。
+
+构造 Jordan 链。解
+\[
+(A-2E)p_1=0
+\]
+可取
+\[
+p_1=(2,1,1)^T.
+\]
+再取
+\[
+(A-2E)p_2=p_1,
+\]
+可选
+\[
+p_2=(0,1,0)^T.
+\]
+最后取
+\[
+(A-2E)p_3=p_2,
+\]
+可选
+\[
+p_3=(-1,-3,0)^T.
+\]
+令
+\[
+P=(p_1,p_2,p_3)=
+\begin{pmatrix}
+2&0&-1\\
+1&1&-3\\
+1&0&0
+\end{pmatrix}.
+\]
+则 \(|P|=1\ne0\)，且
+\[
+P^{-1}AP=
+\begin{pmatrix}
+2&1&0\\
+0&2&1\\
+0&0&2
+\end{pmatrix}=B.
+\]}
+\answer{\[
+a=7,\qquad
+P=\begin{pmatrix}
+2&0&-1\\
+1&1&-3\\
+1&0&0
+\end{pmatrix}.
+\]
+存在这样的可逆矩阵 \(P\)。}
+\examnote{单个线性无关特征向量且三重特征值时，对应一个三阶 Jordan 块。求相似矩阵 \(P\) 的列，就是求 Jordan 链。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 28.} 已知数列 \(\{x_n\},\{y_n\},\{z_n\}\) 满足
+\[
+x_0=-1,\qquad y_0=0,\qquad z_0=2,
+\]
+且
+\[
+\begin{cases}
+x_n=-2x_{n-1}+2z_{n-1},\\
+y_n=-2y_{n-1}-2z_{n-1},\\
+z_n=-6x_{n-1}-3y_{n-1}+3z_{n-1}.
+\end{cases}
+\]
+记
+\[
+\alpha_n=\begin{pmatrix}x_n\\y_n\\z_n\end{pmatrix}.
+\]
+写出满足 \(\alpha_n=A\alpha_{n-1}\) 的矩阵 \(A\)，并求 \(A^n\) 及 \(x_n,y_n,z_n\)（\(n=1,2,\cdots\)）。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由递推式直接读出
+\[
+A=\begin{pmatrix}
+-2&0&2\\
+0&-2&-2\\
+-6&-3&3
+\end{pmatrix}.
+\]
+求特征值与特征向量，可取
+\[
+P=\begin{pmatrix}
+-1&1&2\\
+2&-1&-2\\
+0&1&3
+\end{pmatrix},\qquad
+D=\operatorname{diag}(-2,0,1),
+\]
+使得
+\[
+A=PDP^{-1}.
+\]
+因此当 \(n\ge1\) 时，
+\[
+A^n=PD^nP^{-1}
+=P\operatorname{diag}\bigl((-2)^n,0,1\bigr)P^{-1}.
+\]
+化简得
+\[
+A^n=
+\begin{pmatrix}
+-(-2)^n-4&-(-2)^n-2&2\\
+2(-2)^n+4&2(-2)^n+2&-2\\
+-6&-3&3
+\end{pmatrix},\qquad n\ge1.
+\]
+初始向量为
+\[
+\alpha_0=(-1,0,2)^T.
+\]
+所以
+\[
+\alpha_n=A^n\alpha_0
+=\begin{pmatrix}
+(-2)^n+8\\
+-2(-2)^n-8\\
+12
+\end{pmatrix},\qquad n\ge1.
+\]}
+\method{也可以先把初始向量分解到特征向量基下：
+\[
+P^{-1}\alpha_0=(-1,-10,4)^T.
+\]
+于是
+\[
+\alpha_n
+=-(-2)^n p_1-10\cdot0^n p_2+4p_3.
+\]
+当 \(n\ge1\) 时，中间项消失，直接得到同样的闭式。}
+\answer{\[
+A=\begin{pmatrix}
+-2&0&2\\
+0&-2&-2\\
+-6&-3&3
+\end{pmatrix},
+\quad
+A^n=
+\begin{pmatrix}
+-(-2)^n-4&-(-2)^n-2&2\\
+2(-2)^n+4&2(-2)^n+2&-2\\
+-6&-3&3
+\end{pmatrix}\ (n\ge1),
+\]
+\[
+x_n=(-2)^n+8,\qquad
+y_n=-2(-2)^n-8,\qquad
+z_n=12\qquad(n\ge1).
+\]}
+\examnote{线性递推组要先写成矩阵递推，再用对角化求 \(A^n\)。若出现零特征值，注意 \(n=0\) 与 \(n\ge1\) 要分开。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 29.} 设三阶矩阵 \(A\) 的特征值为
+\[
+\lambda_1=1,\qquad \lambda_2=2,\qquad \lambda_3=3,
+\]
+对应的特征向量依次为
+\[
+\xi_1=\begin{pmatrix}1\\1\\1\end{pmatrix},\qquad
+\xi_2=\begin{pmatrix}1\\2\\4\end{pmatrix},\qquad
+\xi_3=\begin{pmatrix}1\\3\\9\end{pmatrix},
+\]
+又向量
+\[
+\beta=\begin{pmatrix}1\\1\\3\end{pmatrix}.
+\]
+求：
+\begin{enumerate}[label=(\arabic*)]
+\item 将 \(\beta\) 用 \(\xi_1,\xi_2,\xi_3\) 线性表示；
+\item \(A^n\beta\)，其中 \(n\) 为自然数。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设
+\[
+\beta=c_1\xi_1+c_2\xi_2+c_3\xi_3.
+\]
+即
+\[
+\begin{pmatrix}1\\1\\3\end{pmatrix}
+=c_1\begin{pmatrix}1\\1\\1\end{pmatrix}
++c_2\begin{pmatrix}1\\2\\4\end{pmatrix}
++c_3\begin{pmatrix}1\\3\\9\end{pmatrix}.
+\]
+比较分量或解线性方程组，得
+\[
+c_1=2,\qquad c_2=-2,\qquad c_3=1.
+\]
+因此
+\[
+\beta=2\xi_1-2\xi_2+\xi_3.
+\]
+
+由于 \(A^n\xi_i=\lambda_i^n\xi_i\)，所以
+\[
+A^n\beta
+=2\cdot1^n\xi_1-2\cdot2^n\xi_2+3^n\xi_3.
+\]
+写成列向量为
+\[
+A^n\beta=
+\begin{pmatrix}
+2-2^{n+1}+3^n\\
+2-2^{n+2}+3^{n+1}\\
+2-2^{n+3}+3^{n+2}
+\end{pmatrix}.
+\]}
+\method{也可令 \(P=(\xi_1,\xi_2,\xi_3)\)，则
+\[
+P^{-1}\beta=(2,-2,1)^T,
+\quad
+A^n\beta=P\operatorname{diag}(1^n,2^n,3^n)P^{-1}\beta.
+\]
+这就是特征向量展开法的矩阵写法。}
+\answer{\[
+\beta=2\xi_1-2\xi_2+\xi_3,
+\qquad
+A^n\beta=2\xi_1-2\cdot2^n\xi_2+3^n\xi_3.
+\]
+等价地，
+\[
+A^n\beta=
+\begin{pmatrix}
+2-2^{n+1}+3^n\\
+2-2^{n+2}+3^{n+1}\\
+2-2^{n+3}+3^{n+2}
+\end{pmatrix}.
+\]}
+\examnote{若题目给出一组特征向量和目标向量，核心就是先把目标向量分解到特征向量基下。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 30.} 设 \(4\) 阶实矩阵 \(A\) 与 \(4\) 维列向量 \(\alpha,\beta\) 满足
+\[
+A(\alpha+\beta)=4\alpha+3\beta,\qquad
+A(\alpha-\beta)=2\alpha-3\beta,
+\]
+且 \(\alpha,\beta\) 线性无关。方程组 \(Ax=0\) 有两个线性无关的解向量 \(\eta_1,\eta_2\)。
+\begin{enumerate}[label=(\arabic*)]
+\item 证明 \(\alpha,\beta,\eta_1,\eta_2\) 线性无关；
+\item 判断矩阵 \(A\) 与
+\[
+\begin{pmatrix}
+3&1&0&0\\
+0&3&0&0\\
+0&0&0&0\\
+0&0&0&0
+\end{pmatrix}
+\]
+是否相似，并说明理由。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由题中两式相加，得
+\[
+2A\alpha=6\alpha,\qquad A\alpha=3\alpha.
+\]
+两式相减，得
+\[
+2A\beta=2\alpha+6\beta,\qquad A\beta=\alpha+3\beta.
+\]
+因此在 \(\operatorname{span}\{\alpha,\beta\}\) 上，\(A\) 的作用为
+\[
+A\alpha=3\alpha,\qquad A\beta=\alpha+3\beta.
+\]
+
+先证明线性无关。若
+\[
+c_1\alpha+c_2\beta\in\ker A,
+\]
+则
+\[
+A(c_1\alpha+c_2\beta)
+=c_1(3\alpha)+c_2(\alpha+3\beta)
+=(3c_1+c_2)\alpha+3c_2\beta=0.
+\]
+由于 \(\alpha,\beta\) 线性无关，得
+\[
+3c_2=0,\qquad 3c_1+c_2=0,
+\]
+所以 \(c_1=c_2=0\)。故
+\[
+\operatorname{span}\{\alpha,\beta\}\cap\ker A=\{0\}.
+\]
+又 \(\eta_1,\eta_2\) 是 \(\ker A\) 中两个线性无关向量，所以 \(\alpha,\beta,\eta_1,\eta_2\) 线性无关。
+
+令
+\[
+P=(\alpha,\beta,\eta_1,\eta_2).
+\]
+由上面结论，\(P\) 可逆。并且
+\[
+A\alpha=3\alpha,\qquad
+A\beta=\alpha+3\beta,\qquad
+A\eta_1=0,\qquad A\eta_2=0.
+\]
+按 \(P\) 的列向量表示 \(A\) 的作用，得到
+\[
+AP=P
+\begin{pmatrix}
+3&1&0&0\\
+0&3&0&0\\
+0&0&0&0\\
+0&0&0&0
+\end{pmatrix}.
+\]
+因此
+\[
+P^{-1}AP=
+\begin{pmatrix}
+3&1&0&0\\
+0&3&0&0\\
+0&0&0&0\\
+0&0&0&0
+\end{pmatrix}.
+\]
+所以 \(A\) 与题给矩阵相似。}
+\answer{\(\alpha,\beta,\eta_1,\eta_2\) 线性无关；且 \(A\) 与题给矩阵相似。}
+\examnote{这类题的关键是把 \(A\) 对基向量的作用写成“列坐标”。矩阵 \(P^{-1}AP\) 的第 \(j\) 列，就是 \(A\) 作用于第 \(j\) 个基向量后在该基下的坐标。}
+\end{solutionblock}

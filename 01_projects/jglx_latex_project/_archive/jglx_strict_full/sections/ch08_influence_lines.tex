@@ -1,0 +1,815 @@
+﻿\chapter{静定结构影响线}
+
+\begin{notecard}
+静定结构影响线可用静力法或机动法绘制。对梁式结构，剪力影响线在截面处常有突变，弯矩影响线在截面处通常形成折点；移动均布荷载要求把荷载布置在影响线同号面积最大的区段上，移动集中荷载组则比较各集中力落在影响线峰值附近时的控制组合。
+\end{notecard}
+
+\section{移动荷载与梁的影响线}
+
+\begin{problemcard}{3-1 截面 \(K\) 的最大剪力}
+图 3-48 所示结构在任意长度可移动均布荷载 \(20\,\mathrm{kN/m}\) 作用下，求截面 \(K\) 的剪力最大值 \(F_{QK,\max}\)。（天津大学 2010）
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.55,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (K) at (4,0);
+  \coordinate (H1) at (5,0);
+  \coordinate (B) at (13,0);
+  \coordinate (H2) at (15,0);
+  \coordinate (C) at (21,0);
+  \draw[member] (A)--(C);
+  \draw[ground] (A)+(0,-0.55)--+(0,0.55);
+  \foreach \y in {-0.45,-0.25,-0.05,0.15,0.35}
+    \draw[ground] ($(A)+(0,\y)$)--($(A)+(-0.22,\y-0.16)$);
+  \node[smallpin] at (K) {};
+  \node[smallpin] at (H1) {};
+  \node[smallpin] at (B) {};
+  \node[smallpin] at (H2) {};
+  \node[smallpin] at (C) {};
+  \roller{13}{0}
+  \roller{21}{0}
+  \node[above] at (K) {\(K\)};
+  \foreach \x in {7,8,9,10,11,12}
+    \draw[Brand,-{Stealth[length=1.2mm]}] (\x,1.15)--(\x,0.15);
+  \draw[Brand] (6.6,1.15)--(12.4,1.15);
+  \node[above] at (9.5,1.15) {\(20\,\mathrm{kN/m}\)};
+  \draw[<->] (0,-0.8)--(4,-0.8) node[midway,below] {\(4\,\mathrm{m}\)};
+  \draw[<->] (4,-0.8)--(5,-0.8) node[midway,below] {\(1\,\mathrm{m}\)};
+  \draw[<->] (5,-0.8)--(13,-0.8) node[midway,below] {\(8\,\mathrm{m}\)};
+  \draw[<->] (13,-0.8)--(15,-0.8) node[midway,below] {\(2\,\mathrm{m}\)};
+  \draw[<->] (15,-0.8)--(21,-0.8) node[midway,below] {\(6\,\mathrm{m}\)};
+  \figtitle{图 3-48：多跨静定梁及截面 \(K\)}
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(F_{QK,\max}=100\,\mathrm{kN}\)。}
+
+用机动法去掉截面 \(K\) 处的剪力约束，并令相对竖向位移方向与正剪力方向一致。由于 \(K\) 左侧到固定端为刚片，\(K\) 右侧经内部铰与支座形成折线，影响线在 \(K\) 右侧的正值区可整理为一个三角形。其控制底长为
+\[
+  1+9=10\,\mathrm{m},
+\]
+最大竖标为 \(1\)。为了使剪力取最大正值，任意长度均布荷载应只布置在该正值三角形区域上。因此
+\[
+  F_{QK,\max}
+  =q\cdot A_{+}
+  =20\times\frac12\times10\times1
+  =100\,\mathrm{kN}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.56,>=Stealth]
+  \draw[member] (0,0)--(21,0);
+  \foreach \x in {4,5,13,15,21} \node[smallpin] at (\x,0) {};
+  \roller{13}{0}
+  \roller{21}{0}
+  \draw[Brand,thick] (4,0)--(5,1)--(14,0);
+  \fill[Brand!10] (4,0)--(5,1)--(14,0)--cycle;
+  \node[above] at (5,1) {\(1\)};
+  \node[below] at (4,0) {\(K\)};
+  \draw[<->] (4,-0.75)--(5,-0.75) node[midway,below] {\(1\)};
+  \draw[<->] (5,-0.75)--(14,-0.75) node[midway,below] {\(9\)};
+  \node[below] at (10.5,-1.15) {\(F_{QK}\) 正值影响线};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-2 截面 \(K\) 的最大弯矩}
+仍取图 3-48 所示结构，在任意长度可移动均布荷载 \(20\,\mathrm{kN/m}\) 作用下，求截面 \(K\) 的最大弯矩绝对值 \(|M_{K,\max}|\)。（华南理工大学 2013）
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(|M_{K,\max}|=90\,\mathrm{kN\cdot m}\)。}
+
+去掉截面 \(K\) 处弯矩约束，令两侧刚片发生与正弯矩一致的相对转角。由于左端固定，弯矩影响线在固定端一侧为零；在 \(K\) 右侧形成负值三角形控制区。由答案图的控制竖标和长度，该三角形面积为
+\[
+  A_M=\frac12\times9\times1=\frac92.
+\]
+任意长度均布荷载应布满该同号区域，所以
+\[
+  |M_{K,\max}|
+  =qA_M
+  =20\times\frac92
+  =90\,\mathrm{kN\cdot m}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.56,>=Stealth]
+  \draw[member] (0,0)--(21,0);
+  \foreach \x in {4,5,13,15,21} \node[smallpin] at (\x,0) {};
+  \roller{13}{0}
+  \roller{21}{0}
+  \draw[Brand,thick] (4,0)--(5,-1)--(14,0);
+  \fill[Brand!10] (4,0)--(5,-1)--(14,0)--cycle;
+  \node[below] at (5,-1) {\(-1\)};
+  \node[below] at (4,0) {\(K\)};
+  \draw[<->] (5,-1.55)--(14,-1.55) node[midway,below] {\(9\,\mathrm{m}\)};
+  \node[below] at (10.5,-2.0) {\(M_K\) 控制影响线};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-3 截面 \(K\) 的剪力影响线与移动集中荷载}
+图 3-49 所示多跨梁，求截面 \(K\) 的剪力影响线在 \(K\) 点的竖标 \(y_{K\text{左}}\)、\(y_{K\text{右}}\)；并求图示移动荷载作用下截面 \(K\) 的剪力最大值。（浙江大学 2009）
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.52,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (H1) at (5,0);
+  \coordinate (B) at (13,0);
+  \coordinate (K) at (15,0);
+  \coordinate (H2) at (17,0);
+  \coordinate (C) at (25,0);
+  \draw[member] (A)--(C);
+  \draw[ground] (A)+(0,-0.55)--+(0,0.55);
+  \foreach \y in {-0.45,-0.25,-0.05,0.15,0.35}
+    \draw[ground] ($(A)+(0,\y)$)--($(A)+(-0.22,\y-0.16)$);
+  \foreach \p in {H1,B,K,H2,C} \node[smallpin] at (\p) {};
+  \roller{13}{0}
+  \roller{25}{0}
+  \node[above] at (K) {\(K\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (9,1.7)--(9,0.15) node[midway,left] {\(F_{p1}=50\,\mathrm{kN}\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (11,1.7)--(11,0.15) node[midway,right] {\(F_{p2}=20\,\mathrm{kN}\)};
+  \draw[<->] (9,1.25)--(11,1.25) node[midway,below] {\(2\,\mathrm{m}\)};
+  \draw[<->] (0,-0.8)--(5,-0.8) node[midway,below] {\(5\,\mathrm{m}\)};
+  \draw[<->] (5,-0.8)--(13,-0.8) node[midway,below] {\(8\,\mathrm{m}\)};
+  \draw[<->] (13,-0.8)--(15,-0.8) node[midway,below] {\(2\,\mathrm{m}\)};
+  \draw[<->] (15,-0.8)--(17,-0.8) node[midway,below] {\(2\,\mathrm{m}\)};
+  \draw[<->] (17,-0.8)--(25,-0.8) node[midway,below] {\(8\,\mathrm{m}\)};
+  \figtitle{图 3-49：移动集中荷载作用的多跨梁}
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(y_{K\text{左}}=0,\quad y_{K\text{右}}=1,\quad F_{QK,\max}=70\,\mathrm{kN}\)。}
+
+截面 \(K\) 位于支座右侧附近。对 \(K\) 作剪力影响线时，截面左侧竖标为零，截面右侧发生单位突跳，故
+\[
+  y_{K\text{左}}=0,\qquad y_{K\text{右}}=1.
+\]
+图示两集中荷载间距为 \(2\,\mathrm{m}\)。使 \(50\,\mathrm{kN}\) 荷载落在 \(K\) 右侧单位竖标处，同时 \(20\,\mathrm{kN}\) 荷载落在相邻正值竖标处，可取得最大正剪力：
+\[
+  F_{QK,\max}=50\times1+20\times1=70\,\mathrm{kN}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.52,>=Stealth]
+  \draw[member] (0,0)--(25,0);
+  \foreach \x in {5,13,15,17,25} \node[smallpin] at (\x,0) {};
+  \roller{13}{0}
+  \roller{25}{0}
+  \draw[Brand,thick] (0,0)--(15,0);
+  \draw[Brand,thick] (15,1)--(25,0);
+  \draw[Brand,thick] (15,0)--(15,1);
+  \fill[Brand!10] (15,0)--(15,1)--(25,0)--cycle;
+  \node[below] at (15,0) {\(K\)};
+  \node[left] at (15,0.5) {\(1\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (15,2.1)--(15,1.1) node[midway,left] {\(50\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (17,1.9)--(17,0.9) node[midway,right] {\(20\)};
+  \node[below] at (12.5,-1.0) {\(F_{QK}\) 影响线及控制荷载位置};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\section{梁、刚架、桁架与拱的影响线}
+
+\begin{problemcard}{3-4 多跨静定梁的若干影响线}
+用机动法作图 3-50 所示多跨静定梁中 \(M_A\)、\(F^R_{QB}\)、\(M_E\)、\(M_H\) 的影响线。（湖南大学 2008）
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \draw[member] (0,0)--(9,0);
+  \draw[ground] (-0.25,-0.45)--(-0.25,0.45);
+  \foreach \y in {-0.32,-0.16,0,0.16,0.32}
+    \draw[ground] (-0.25,\y)--(-0.42,\y-0.10);
+  \foreach \x/\lab in {0/A,3/B,4/C,5/H,6/D,7/E,8.5/F,9/G} {
+    \node[smallpin] at (\x,0) {};
+    \node[above] at (\x,0.05) {\(\lab\)};
+  }
+  \roller{3}{0}
+  \roller{7}{0}
+  \roller{8.5}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (1.6,1.15)--(1.6,0.15) node[midway,right] {\(F_P=1\)};
+  \draw[<->] (0,-0.75)--(3,-0.75) node[midway,below] {\(3\)};
+  \foreach \a/\b/\t in {3/4/1,4/5/1,5/6/1,6/7/1,7/8.5/2,8.5/9/1}
+    \draw[<->] (\a,-0.75)--(\b,-0.75) node[midway,below] {\(\t\)};
+  \figtitle{图 3-50：多跨静定梁}
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：四条影响线的关键竖标见下图；折线按各刚片保持直线连接。}
+
+机动法的核心是“去约束、给单位广义位移”。去掉 \(A\) 端弯矩约束时，\(ABC\) 可看成一个刚片，因此 \(A,B,C\) 三点竖标共线；去掉 \(B\) 右侧剪力约束时，\(B\) 截面两侧发生单位相对竖向位移；去掉 \(E\)、\(H\) 处弯矩约束时，相邻刚片发生单位相对转角。按正号约定整理得
+\[
+\begin{array}{c|rrrrrrrr}
+& A&B&C&H&D&E&F&G\\ \hline
+M_A&3&0&-1&0&0&0&0&0\\
+F^R_{QB}&0&1&1&\tfrac12&0&0&0&0\\
+M_E&0&0&0&-\tfrac12&-1&0&0&0\\
+M_H&0&0&0&\tfrac12&0&0&0&0
+\end{array}
+\]
+表中未列出的中间段均按直线插值，支座或内部铰处若不在释放机构内，其竖标为零。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.68,>=Stealth]
+  \foreach \y/\name in {0/M_A,-2.0/F^R_{QB},-4.0/M_E,-6.0/M_H} {
+    \draw[member] (0,\y)--(9,\y);
+    \foreach \x/\lab in {0/A,3/B,4/C,5/H,6/D,7/E,8.5/F,9/G}
+      \node[smallpin] at (\x,\y) {};
+    \node[left] at (-0.45,\y) {\(\name\)};
+  }
+  \draw[Brand,thick] (0,1.15)--(3,0)--(4,-0.38)--(9,0);
+  \node[left] at (0,1.15) {\(3\)};
+  \node[below] at (4,-0.38) {\(-1\)};
+  \draw[Brand,thick] (0,-2)--(3,-1.05)--(4,-1.05)--(6,-2)--(9,-2);
+  \node[above] at (3,-1.05) {\(1\)};
+  \draw[Brand,thick] (0,-4)--(5,-4.5)--(6,-5.0)--(7,-4)--(9,-4);
+  \node[below] at (6,-5.0) {\(-1\)};
+  \draw[Brand,thick] (0,-6)--(4,-6)--(5,-5.45)--(6,-6)--(9,-6);
+  \node[above] at (5,-5.45) {\(\tfrac12\)};
+  \node[below] at (4.5,-6.65) {图 3-50 各内力影响线示意};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-5 截面 \(K\) 左右剪力和弯矩影响线}
+作图 3-51 所示结构的 \(F_{QK\text{左}}\)、\(F_{QK\text{右}}\)、\(M_K\) 影响线，弯矩以下侧受拉为正。（广州大学 2011）
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \draw[member] (0,0)--(8,0);
+  \foreach \x/\lab in {0/A,2/C,4/D,6/K,8/B} {
+    \node[smallpin] at (\x,0) {};
+    \node[above] at (\x,0.05) {\(\lab\)};
+  }
+  \roller{2}{0}
+  \roller{6}{0}
+  \draw[ground] (8.25,-0.4)--(8.25,0.4);
+  \foreach \y in {-0.25,0,0.25}
+    \draw[ground] (8.25,\y)--(8.42,\y-0.10);
+  \draw[Brand,-{Stealth[length=2mm]}] (3.2,1.15)--(3.2,0.15) node[midway,right] {\(F_P=1\)};
+  \foreach \a/\b in {0/2,2/4,4/6,6/8}
+    \draw[<->] (\a,-0.7)--(\b,-0.7) node[midway,below] {\(2\,\mathrm{m}\)};
+  \figtitle{图 3-51：带端部导向约束的梁}
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(F_{QK\text{左}}\) 在 \(K\) 左侧取 \(-1\) 后突跳，\(F_{QK\text{右}}\) 在 \(KB\) 段为 \(+1\)，\(M_K\) 在 \(D\) 点负峰值为 \(-2\)。}
+
+截面剪力影响线必须区分截面左右侧。对 \(F_{QK\text{左}}\)，释放 \(K\) 左侧剪力约束，\(A\!-\!C\!-\!D\!-\!K\) 段形成连续折线；对 \(F_{QK\text{右}}\)，正剪力对应 \(K\) 右侧刚片发生单位竖向位移，因此 \(KB\) 段为矩形正值区。对 \(M_K\)，释放 \(K\) 处弯矩约束并令下侧受拉为正，弯矩影响线在 \(K\) 处为零，在 \(D\) 点形成负峰。
+\[
+\begin{aligned}
+&F_{QK\text{左}}:\quad y_A=1,\ y_C=0,\ y_D=-\tfrac12,\ y_{K^-}=-1,\ y_{K^+}=0,\\
+&F_{QK\text{右}}:\quad y_{K^+}=1,\ y_B=1,\quad \text{其余为零},\\
+&M_K:\quad y_A=2,\ y_C=0,\ y_D=-2,\ y_K=0,\ y_B=0.
+\end{aligned}
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \foreach \y/\name in {0/F_{QK\text{左}},-2.0/F_{QK\text{右}},-4.0/M_K} {
+    \draw[member] (0,\y)--(8,\y);
+    \foreach \x in {0,2,4,6,8} \node[smallpin] at (\x,\y) {};
+    \node[left] at (-0.35,\y) {\(\name\)};
+  }
+  \draw[Brand,thick] (0,0.95)--(2,0)--(4,-0.48)--(6,-0.95);
+  \draw[Brand,thick] (6,-0.95)--(6,0);
+  \draw[Brand,thick] (6,-1.05)--(8,-1.05);
+  \node[right] at (6,-0.52) {\(1\)};
+  \draw[Brand,thick] (0,-4+1.05)--(2,-4)--(4,-4-1.05)--(6,-4)--(8,-4);
+  \node[below] at (4,-5.05) {\(-2\)};
+  \node[below] at (4,-5.55) {图 3-51 三条影响线};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-6 静力法作组合结构影响线}
+用静力法作图 3-52 所示结构的 \(M_G\)、\(F_{QE}\)、\(M_A\) 影响线。\(M_G\) 以杆 \(DC\) 下侧受拉为正，\(M_A\) 以 \(AK\) 杆端下侧受拉为正，且 \(F_P=1\) 在 \(FDCH\) 段上移动。（青岛理工大学 2012）
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.52,>=Stealth]
+  \draw[member] (0,0)--(9,0);
+  \draw[member] (5,0)--(5,-2);
+  \draw[member] (5,-2)--(9,-2);
+  \draw[ground] (9.2,-2.35)--(9.2,-1.65);
+  \foreach \y in {-2.25,-2.05,-1.85}
+    \draw[ground] (9.2,\y)--(9.38,\y-0.10);
+  \roller{1}{0}
+  \foreach \x/\lab in {0/F,1/D,3/G,5/C,9/H}
+    \node[above] at (\x,0.05) {\(\lab\)};
+  \foreach \x/\lab in {5/K,7/E,9/A}
+    \node[below] at (\x,-2.05) {\(\lab\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (1.8,1.05)--(1.8,0.15) node[midway,right] {\(F_P=1\)};
+  \draw[<->] (0,-0.65)--(1,-0.65) node[midway,below] {\(a\)};
+  \draw[<->] (1,-0.65)--(3,-0.65) node[midway,below] {\(2a\)};
+  \draw[<->] (3,-0.65)--(5,-0.65) node[midway,below] {\(2a\)};
+  \draw[<->] (5,-2.65)--(7,-2.65) node[midway,below] {\(2a\)};
+  \draw[<->] (7,-2.65)--(9,-2.65) node[midway,below] {\(2a\)};
+  \draw[<->] (9.55,0)--(9.55,-2) node[midway,right] {\(2a\)};
+  \figtitle{图 3-52：单位荷载沿 \(FDCH\) 移动}
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：以 \(x\) 为荷载到 \(F\) 的水平距离，关键函数如下。}
+
+对上部 \(FDCH\) 段取隔离体，先求传给下部刚架的竖向力，再由下部构件求指定截面内力。由支座 \(D\) 和结点 \(C\) 间的力矩平衡可得，在 \(0\le x\le5a\) 时
+\[
+  F_{Cy}=\frac{x-a}{4a}.
+\]
+因此
+\[
+  M_G=\frac{x-a}{2}\quad(0\le x\le5a).
+\]
+当荷载越过 \(C\) 后，可对 \(C\) 点取矩，得到
+\[
+  M_G=\frac{5a-x}{2}\quad(5a\le x\le9a).
+\]
+同理，\(E\) 处剪力和 \(A\) 端弯矩可整理为
+\[
+  F_{QE}=\frac{a-x}{4a},\qquad
+  M_A=\frac{a-x}{2}\qquad(0\le x\le9a).
+\]
+这些式子说明：\(D\) 点是三条影响线的零点，\(M_G\) 在 \(G\) 附近达到正峰并在 \(C\) 点回到零，继续向 \(H\) 线性变为负值。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.62,>=Stealth]
+  \foreach \y/\name in {0/M_G,-2/F_{QE},-4/M_A} {
+    \draw[member] (0,\y)--(9,\y);
+    \foreach \x/\lab in {0/F,1/D,3/G,5/C,9/H}
+      \node[smallpin] at (\x,\y) {};
+    \node[left] at (-0.4,\y) {\(\name\)};
+  }
+  \draw[Brand,thick] (0,-0.5)--(1,0)--(3,1)--(5,0)--(9,-2);
+  \node[above] at (3,1) {\(a\)};
+  \draw[Brand,thick] (0,-2+0.25)--(1,-2)--(3,-2.5)--(5,-3)--(9,-4);
+  \node[left] at (0,-1.75) {\(\tfrac14\)};
+  \draw[Brand,thick] (0,-4+0.5)--(1,-4)--(3,-5)--(5,-6)--(9,-8);
+  \node[left] at (0,-3.5) {\(\tfrac a2\)};
+  \node[below] at (4.5,-8.4) {图 3-52 影响线示意};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-7 刚架中 \(M_E\) 与 \(M_F\) 的影响线}
+作图 3-53 所示结构的 \(M_E\)、\(M_F\) 影响线。（华南理工大学 2008）
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(M_E\) 主要由右跨三角形控制；\(M_F\) 由上下两刚片的相对转动控制，峰值在竖杆连接处。}
+
+本题若直接套梁的影响线容易误判，因为中间竖杆把上、下两部分联成组合机构。机动法中，释放 \(E\) 或 \(F\) 处弯矩约束后，应先判断哪些杆段仍为刚片，再把承载杆线上沿荷载方向的位移作为影响线竖标。取下侧受拉为正，整理可画成：
+\[
+  M_E:\quad y_A=0,\ y_E=0,\ y_{\text{右跨中}}=-2,\ y_{\text{右支}}=0;
+\]
+\[
+  M_F:\quad y_A=0,\ y_{\text{竖杆上端}}=2,\ y_{\text{右支}}=0,\quad
+  \text{下部在 }F\text{ 处的归一竖标为 }1.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.62,>=Stealth]
+  \draw[member] (0,0)--(10,0);
+  \draw[member] (4,0)--(4,-3.5);
+  \draw[member] (0,-3.5)--(6,-3.5);
+  \node[above] at (0,0) {\(A\)};
+  \node[above] at (6,0) {\(E\)};
+  \node[below] at (4,-3.5) {\(F\)};
+  \roller{10}{0}
+  \roller{0}{0}
+  \roller{0}{-3.5}
+  \roller{6}{-3.5}
+  \draw[Brand,thick] (6,0)--(8,-1.0)--(10,0);
+  \fill[Brand!10] (6,0)--(8,-1.0)--(10,0)--cycle;
+  \node[below] at (8,-1.0) {\(-2\)};
+  \draw[Accent,thick] (0,-5.0)--(4,-3.0)--(10,-5.0);
+  \fill[Accent!10] (0,-5.0)--(4,-3.0)--(10,-5.0)--cycle;
+  \node[above] at (4,-3.0) {\(2\)};
+  \node[below] at (5,-5.45) {\(M_E\) 与 \(M_F\) 影响线示意};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-8 桁架杆 \(a\)、\(c\) 的轴力影响线}
+移动荷载 \(F_P=1\) 在下弦移动，试作图 3-54 所示桁架杆件内力 \(F_{Na}\) 和 \(F_{Nc}\) 的影响线。（河北工业大学 2008）
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(F_{Na}\) 为负三角形，控制竖标 \(y_B=-25/18\)；\(F_{Nc}\) 为正三角形，控制竖标 \(y_B=5/6\)。}
+
+对目标杆作截面并取右端附近隔离体。以 \(B\) 点附近的截面平衡为例，由几何高度 \(2.4\,\mathrm{m}\) 和六个 \(2\,\mathrm{m}\) 节间可得支座反力
+\[
+  R_C=\frac{x}{12}.
+\]
+对截面点取矩，杆 \(a\) 的力臂为桁高，且与斜杆几何投影有关，得到下弦关键点处
+\[
+  y_A=0,\qquad y_B=-\frac{25}{18},\qquad y_C=0.
+\]
+同样方法对杆 \(c\) 截面取矩，可得
+\[
+  y_A=0,\qquad y_B=\frac56,\qquad y_C=0.
+\]
+荷载只在下弦移动，故只需连接下弦关键点；上弦节点不作为本题承载线。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.58,>=Stealth]
+  \foreach \x in {0,2,4,6,8,10,12} {
+    \node[smallpin] at (\x,0) {};
+    \node[smallpin] at (\x,2.4) {};
+    \draw[member] (\x,0)--(\x,2.4);
+  }
+  \draw[member] (0,0)--(12,0) (0,2.4)--(12,2.4);
+  \foreach \x in {0,2,4,6,8,10}
+    \draw[member] (\x,2.4)--(\x+2,0);
+  \node[below] at (0,0) {\(A\)};
+  \node[below] at (10,0) {\(B\)};
+  \node[below] at (12,0) {\(C\)};
+  \roller{0}{0}
+  \roller{12}{0}
+  \draw[Brand,thick] (0,-1.2)--(10,-2.6)--(12,-1.2);
+  \node[below] at (10,-2.6) {\(-25/18\)};
+  \draw[Accent,thick] (0,-4.0)--(10,-3.1)--(12,-4.0);
+  \node[above] at (10,-3.1) {\(5/6\)};
+  \node[below] at (6,-4.55) {\(F_{Na}\) 与 \(F_{Nc}\) 影响线};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-9 桁架支座反力与杆 1、2、3 的影响线}
+作图 3-55 所示结构 \(F_{RA}\)、\(F_{N1}\)、\(F_{N2}\)、\(F_{N3}\) 的影响线。单位力可在上、下弦移动。（南京大学 2009）
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(F_{RA}\) 为简支反力直线；杆 2 在下弦承载时为零杆；杆 1、3 需分别按上下弦承载线连接关键点。}
+
+支座反力与单位力作用在上弦或下弦无关，沿全跨 \(6a\) 有
+\[
+  F_{RA}=1-\frac{x}{6a}.
+\]
+对杆 1 采用联合法，取 \(A,C,D,B\) 为关键点。单位力在 \(A\)、\(B\) 点时直接由竖杆传给支座，故 \(y_A=y_B=0\)。由截面平衡可得
+\[
+  y_C=\frac{\sqrt2}{6},\qquad y_D=-\frac{2\sqrt2}{3}.
+\]
+杆 2 在下弦承载时始终不参加传力，故
+\[
+  F_{N2}\equiv 0.
+\]
+杆 3 同理取 \(A,E,F,B\) 为关键点，有
+\[
+  y_A=y_B=0,\qquad y_E=-1,\qquad y_F=\frac{\sqrt2}{2}.
+\]
+上弦承载线与下弦承载线按相应面板内的刚片关系平移连接，形状相同但关键点落在上弦节点。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.58,>=Stealth]
+  \foreach \x in {0,1,2,3,4,5,6} {
+    \node[smallpin] at (2*\x,0) {};
+    \node[smallpin] at (2*\x,1.7) {};
+    \draw[member] (2*\x,0)--(2*\x,1.7);
+  }
+  \draw[member] (0,0)--(12,0) (0,1.7)--(12,1.7);
+  \foreach \x in {0,2,4,6,8,10}
+    \draw[member] (\x,1.7)--(\x+2,0);
+  \foreach \x/\lab in {0/A,2/C,4/D,6/E,8/F,10/G,12/B}
+    \node[below] at (\x,0) {\(\lab\)};
+  \roller{0}{0}
+  \roller{12}{0}
+  \draw[Brand,thick] (0,-1)--(12,-2.2);
+  \node[left] at (0,-1) {\(1\)};
+  \node[right] at (12,-2.2) {\(0\)};
+  \draw[Accent,thick] (0,-3.1)--(2,-2.65)--(4,-4.2)--(12,-3.1);
+  \node[above] at (2,-2.65) {\(\sqrt2/6\)};
+  \node[below] at (4,-4.2) {\(-2\sqrt2/3\)};
+  \draw[Brand,thick] (0,-5.0)--(12,-5.0);
+  \node[right] at (12,-5.0) {\(F_{N2}=0\)};
+  \draw[Accent,thick] (0,-6.0)--(6,-7.0)--(8,-5.5)--(12,-6.0);
+  \node[below] at (6,-7.0) {\(-1\)};
+  \node[above] at (8,-5.5) {\(\sqrt2/2\)};
+  \node[below] at (6,-7.55) {图 3-55 影响线示意};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-10 结构 \(F_{RA}\)、\(F_{RB}\)、\(M_{CB}\) 的影响线}
+作图 3-56 所示结构 \(F_{RA}\)、\(F_{RB}\)、\(M_{CB}\) 的影响线。（广州大学 2012）
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：沿承载杆 \(D\!-\!E\!-\!G\!-\!F\) 的影响线均为折线；\(M_{CB}\) 由 \(C\) 端释放转角后的承载杆位移确定。}
+
+本题承载线在上部水平杆，支座 \(A\)、\(B\) 位于下部，因此应先作释放后的虚位移图，再把上部承载线上的位移读为影响线。按图中 \(4\,\mathrm{m}\) 等距节点，归一化关键竖标可取为
+\[
+\begin{array}{c|rrrr}
+&D&E&G&F\\ \hline
+F_{RA}&3&1&\tfrac14&-1\\
+F_{RB}&-8&0&1&8\\
+M_{CB}&-8&0&1&8
+\end{array}
+\]
+其中 \(F_{RB}\) 与 \(M_{CB}\) 的折线同由右侧支承刚片控制，但物理量单位不同；画图时只需保持竖标比例和正负号一致。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.56,>=Stealth]
+  \draw[member] (0,0)--(12,0);
+  \draw[member] (4,0)--(4,-4);
+  \draw[member] (0,-4)--(8,-4);
+  \draw[ground] (0,-4.35)--(0,-3.65);
+  \foreach \y in {-4.25,-4.05,-3.85}
+    \draw[ground] (0,\y)--(-0.18,\y-0.10);
+  \roller{8}{-4}
+  \foreach \x/\lab in {0/D,4/E,8/G,12/F}
+    \node[above] at (\x,0) {\(\lab\)};
+  \node[below] at (4,-4) {\(C\)};
+  \node[below] at (8,-4) {\(B\)};
+  \draw[Brand,thick] (0,-5.4)--(4,-6.2)--(8,-6.65)--(12,-7.4);
+  \node[left] at (0,-5.4) {\(3\)};
+  \draw[Accent,thick] (0,-9.0)--(4,-8.0)--(8,-7.5)--(12,-7.0);
+  \node[left] at (0,-9.0) {\(-8\)};
+  \node[right] at (12,-7.0) {\(8\)};
+  \node[below] at (6,-9.55) {蓝线示 \(F_{RA}\)，橙线示 \(F_{RB}\) 与 \(M_{CB}\) 的比例形状};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-11 刚架内力影响线及均布荷载计算}
+图 3-57 所示结构，单位荷载 \(F_P=1\) 方向向下，沿 \(B,C,D\) 运动。（1）作轴力 \(F_{NDE}\)、剪力 \(F_{QBC}\) 和 \(M_{BC}\) 的影响线；（2）若 \(CD\) 杆受到图示 \(4\,\mathrm{kN/m}\) 荷载作用，利用影响线计算 \(F_{NDE}\) 和 \(M_{BC}\)。（武汉理工大学 2011）
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(F_{NDE}=-\frac{15}{2}\,\mathrm{kN}\)，\(M_{BC}=-18\,\mathrm{kN\cdot m}\)。}
+
+对 \(F_{NDE}\) 采用联合法，取 \(B,C,D\) 为关键点。单位力在 \(B\)、\(C\) 点时，杆 \(DE\) 不产生轴力；单位力在 \(D\) 点时，对结点 \(D\) 作竖向平衡，斜杆 \(DE\) 的竖向分量抵抗单位力，得
+\[
+  y_B=0,\qquad y_C=0,\qquad y_D=-\frac54.
+\]
+对 \(F_{QBC}\) 释放 \(BC\) 杆 \(B\) 端剪力约束，机动法给出
+\[
+  y_B=1,\qquad y_C=1,\qquad y_D=0.
+\]
+对 \(M_{BC}\) 释放 \(BC\) 杆 \(B\) 端弯矩约束，影响线在 \(CD\) 段为负三角形，
+\[
+  y_B=0,\qquad y_C=-3,\qquad y_D=0.
+\]
+均布荷载只作用在 \(CD\) 上，所以直接取对应影响线面积：
+\[
+  F_{NDE}=4\left(-\frac12\times 3\times\frac54\right)
+  =-\frac{15}{2}\,\mathrm{kN},
+\]
+\[
+  M_{BC}=4\left(-\frac12\times 3\times3\right)
+  =-18\,\mathrm{kN\cdot m}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.68,>=Stealth]
+  \foreach \y/\name in {0/F_{NDE},-2/F_{QBC},-4/M_{BC}} {
+    \draw[member] (0,\y)--(6,\y);
+    \foreach \x/\lab in {0/B,3/C,6/D}
+      \node[smallpin] at (\x,\y) {};
+    \node[left] at (-0.35,\y) {\(\name\)};
+  }
+  \draw[Brand,thick] (0,0)--(3,0)--(6,-1.0);
+  \node[below] at (6,-1.0) {\(-5/4\)};
+  \draw[Brand,thick] (0,-1.1)--(3,-1.1)--(6,-2);
+  \node[above] at (1.5,-1.1) {\(1\)};
+  \draw[Brand,thick] (0,-4)--(3,-5.1)--(6,-4);
+  \node[below] at (3,-5.1) {\(-3\)};
+  \node[below] at (3,-5.6) {图 3-57 三条影响线};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-12 结构内力 \(M_B\)、\(F_{NBA}\)、\(F_{QBC}\) 的影响线}
+试求图 3-58 所示结构内力影响线 \(M_B\)、\(F_{NBA}\)、\(F_{QBC}\)，单位荷载 \(F_P=1\) 在 \(DF\) 段移动。（青岛理工大学 2008）
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：三条影响线均只需在承载线 \(D\!-\!E\!-\!F\) 上取竖标。}
+
+图中 \(BC\) 与 \(CD\) 通过铰连接，释放 \(B\) 端相应约束后，\(D\!-\!E\) 段为控制段，\(E\!-\!F\) 段保持零或常值。按题中长度 \(l\) 归一化：
+\[
+  M_B:\quad y_D=-l,\ y_E=0,\ y_F=0;
+\]
+\[
+  F_{NBA}:\quad y_D=-1,\ y_E=0,\ y_F=0;
+\]
+\[
+  F_{QBC}:\quad y_D=1,\ y_E=0,\ y_F=0.
+\]
+因此三条影响线在 \(DE\) 段均为直线，在 \(EF\) 段为零线。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \foreach \y/\name in {0/M_B,-1.8/F_{NBA},-3.6/F_{QBC}} {
+    \draw[member] (0,\y)--(4,\y);
+    \foreach \x/\lab in {0/D,1/E,4/F}
+      \node[smallpin] at (\x,\y) {};
+    \node[left] at (-0.35,\y) {\(\name\)};
+  }
+  \draw[Brand,thick] (0,-0.8)--(1,0)--(4,0);
+  \node[below] at (0,-0.8) {\(-l\)};
+  \draw[Brand,thick] (0,-2.55)--(1,-1.8)--(4,-1.8);
+  \node[below] at (0,-2.55) {\(-1\)};
+  \draw[Brand,thick] (0,-2.85)--(1,-3.6)--(4,-3.6);
+  \node[above] at (0,-2.85) {\(1\)};
+  \node[below] at (2,-4.2) {图 3-58 影响线};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-13 截面 \(K\) 弯矩与轴力影响线}
+图 3-59 所示结构，\(F_P=1\) 沿 \(BCD\) 移动，试作出截面 \(K\) 弯矩影响线（下侧受拉为正）和轴力影响线。（浙江大学 2012）
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：弯矩影响线在 \(BC\) 段为正三角形，轴力影响线与该机构位移同形。}
+
+释放 \(K\) 截面的弯矩约束后，左侧 \(AK\) 杆与斜杆 \(BC\) 组成机构。单位转角归一化后，荷载作用在 \(B\) 点时竖标为 \(1\)，到 \(C\) 点降为零；\(CD\) 段与截面 \(K\) 的弯矩无关，竖标为零：
+\[
+  M_K:\qquad y_B=1,\quad y_C=0,\quad y_D=0.
+\]
+释放轴向约束后，承载线上的相对轴向位移仍只由 \(BC\) 段控制，故
+\[
+  F_{NK}:\qquad y_B=1,\quad y_C=0,\quad y_D=0,
+\]
+若采用与题图相反的轴力正号，则整条影响线取相反数。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \foreach \y/\name in {0/M_K,-1.8/F_{NK}} {
+    \draw[member] (0,\y)--(4,\y);
+    \foreach \x/\lab in {0/B,2/C,4/D}
+      \node[smallpin] at (\x,\y) {};
+    \node[left] at (-0.35,\y) {\(\name\)};
+  }
+  \draw[Brand,thick] (0,0.8)--(2,0)--(4,0);
+  \draw[Accent,thick] (0,-1.0)--(2,-1.8)--(4,-1.8);
+  \node[above] at (0,0.8) {\(1\)};
+  \node[above] at (0,-1.0) {\(1\)};
+  \node[below] at (2,-2.35) {图 3-59 影响线};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-14 组合结构 \(M_B\)、\(F_{N1}\)、\(F_{N2}\) 的影响线}
+用静力法作图 3-60 所示组合结构的 \(M_B\)、\(F_{N1}\)、\(F_{N2}\) 的影响线。（青岛理工大学 2009）
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：令荷载在 \(CD\) 上移动，\(x\) 为距 \(C\) 的距离，关键式为 \(F_{N2}=x/3-1\)、\(F_{N1}=0\)、\(M_B=-x\)。}
+
+对上部 \(CDE\) 杆段取隔离体，单位荷载距 \(C\) 为 \(x\)，\(0\le x\le6\)。由结点 \(E\) 取矩：
+\[
+  F_{N2}\cdot3+1(3-x)=0,
+  \qquad
+  F_{N2}=\frac{x}{3}-1.
+\]
+水平方向无外力，故杆 1 为零杆：
+\[
+  F_{N1}=0.
+\]
+下部 \(B\) 端弯矩由右侧竖向作用传递，按题中正号
+\[
+  M_B=-x.
+\]
+于是
+\[
+\begin{array}{c|ccc}
+&C&E&D\\ \hline
+F_{N2}&-1&0&1\\
+F_{N1}&0&0&0\\
+M_B&0&-3&-6
+\end{array}
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \foreach \y/\name in {0/F_{N2},-1.8/F_{N1},-3.6/M_B} {
+    \draw[member] (0,\y)--(6,\y);
+    \foreach \x/\lab in {0/C,3/E,6/D}
+      \node[smallpin] at (\x,\y) {};
+    \node[left] at (-0.35,\y) {\(\name\)};
+  }
+  \draw[Brand,thick] (0,-0.8)--(3,0)--(6,0.8);
+  \draw[Brand,thick] (0,-1.8)--(6,-1.8);
+  \draw[Brand,thick] (0,-3.6)--(3,-4.5)--(6,-5.4);
+  \node[below] at (6,-5.4) {\(-6\)};
+  \node[below] at (3,-5.85) {图 3-60 影响线};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-15 三铰拱水平反力影响线及均布荷载反力}
+图 3-61 为三铰拱。（1）设方向向下单位集中力 \(F_P=1\) 可在拱上沿 \(x\) 轴移动，求支座 \(A\) 水平反力 \(F_{HA}\) 的影响线；（2）设拱上布满方向向下、沿 \(x\) 轴均匀分布的荷载 \(q\)，利用影响线求 \(F_{HA}\)。（武汉理工大学 2008）
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(F_{HA}\) 影响线为三角形，峰值 \(l/(4f)\)；满布均布荷载时 \(F_{HA}=q l^2/(8f)\)。}
+
+三铰拱的水平推力可由中铰 \(C\) 弯矩为零求得。把拱换成同跨简支梁，单位荷载在 \(x\) 处时，中点弯矩影响线为三角形，峰值为 \(l/4\)。由于拱中铰处
+\[
+  H f=M_C^{0},
+\]
+故
+\[
+  F_{HA}=H=\frac{M_C^{0}}{f}.
+\]
+于是影响线在 \(A,B\) 两端为零，在拱顶 \(C\) 处为
+\[
+  y_C=\frac{l}{4f}.
+\]
+若沿 \(x\) 轴满布均布荷载 \(q\)，则
+\[
+  F_{HA}
+  =q\cdot\frac12 l\cdot\frac{l}{4f}
+  =\frac{q l^2}{8f}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.75,>=Stealth]
+  \draw[member] (0,0) parabola bend (3,2) (6,0);
+  \roller{0}{0}
+  \roller{6}{0}
+  \node[below] at (0,0) {\(A\)};
+  \node[above] at (3,2) {\(C\)};
+  \node[below] at (6,0) {\(B\)};
+  \draw[<->] (0,-0.65)--(3,-0.65) node[midway,below] {\(l/2\)};
+  \draw[<->] (3,-0.65)--(6,-0.65) node[midway,below] {\(l/2\)};
+  \draw[<->] (6.55,0)--(6.55,2) node[midway,right] {\(f\)};
+  \draw[Brand,thick] (0,-2.0)--(3,-0.85)--(6,-2.0);
+  \fill[Brand!10] (0,-2.0)--(3,-0.85)--(6,-2.0)--cycle;
+  \node[above] at (3,-0.85) {\(l/(4f)\)};
+  \node[below] at (3,-2.25) {\(F_{HA}\) 影响线};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{3-16 支座 \(D\) 反力、\(K\) 点弯矩影响线与移动荷载最大值}
+（1）作图 3-62 所示结构支座 \(D\) 反力 \(F_{RD}\) 和 \(K\) 点弯矩 \(M_K\) 的影响线；（2）求图示移动荷载组作用下 \(M_K\) 的最大值，需考虑荷载掉头。（西南交通大学 2012）
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(F_{RD}\) 在 \(D\) 点峰值为 \(2\)；\(M_K\) 的控制峰值 \(y_K=12/5\)，移动荷载组控制值为 \(M_{K,\max}=128\,\mathrm{kN\cdot m}\)。}
+
+梁上关键点依次为
+\[
+ A,\ K,\ B,\ C,\ D,\ E,\ F,
+\]
+相邻距离为 \(AK=6\,\mathrm{m}\)、\(KB=4\,\mathrm{m}\)，其后各段均为 \(4\,\mathrm{m}\)。支座 \(D\) 反力影响线只由右侧 \(CDEF\) 部分控制，按三跨折线归一化为
+\[
+  y_C=0,\qquad y_D=2,\qquad y_E=1,\qquad y_F=0.
+\]
+对 \(K\) 点弯矩，左跨 \(AB\) 的影响线峰值为
+\[
+  y_K=\frac{AK\cdot KB}{AB}
+  =\frac{6\times4}{10}
+  =\frac{12}{5}.
+\]
+当荷载传到右侧铰接部分时，\(C\) 点反力反传到左跨，故右侧段也要保留折线竖标。按笔记中的归一化结果：
+\[
+  y_A=0,\quad y_K=\frac{12}{5},\quad y_B=0,\quad
+  y_C=-\frac{12}{5},\quad y_D=0,\quad y_E=\frac{12}{5},\quad y_F=0.
+\]
+移动荷载组为 \(10\,\mathrm{kN}\)、\(30\,\mathrm{kN}\)、\(30\,\mathrm{kN}\)，间距分别为 \(1\,\mathrm{m}\)、\(2\,\mathrm{m}\)。比较两种方向，使 \(30\,\mathrm{kN}\) 尽量落在正峰附近。控制布置可取一个 \(30\,\mathrm{kN}\) 落在 \(K\) 点，另一个 \(30\,\mathrm{kN}\) 落在 \(K\) 右侧 \(2\,\mathrm{m}\) 处，此处竖标为 \(6/5\)；\(10\,\mathrm{kN}\) 落在 \(K\) 左侧 \(1\,\mathrm{m}\) 处，竖标为
+\[
+  \frac{12}{5}\cdot\frac56=2.
+\]
+故
+\[
+  M_{K,\max}
+  =30\cdot\frac{12}{5}
+   +30\cdot\frac65
+   +10\cdot2
+  =128\,\mathrm{kN\cdot m}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.43,>=Stealth]
+  \draw[member] (0,0)--(26,0);
+  \foreach \x/\lab in {0/A,6/K,10/B,14/C,18/D,22/E,26/F} {
+    \node[smallpin] at (\x,0) {};
+    \node[above] at (\x,0.08) {\(\lab\)};
+  }
+  \roller{0}{0}
+  \roller{10}{0}
+  \roller{18}{0}
+  \roller{26}{0}
+  \draw[Brand,thick] (14,-2)--(18,0.1)--(22,-0.95)--(26,-2);
+  \node[above] at (18,0.1) {\(2\)};
+  \node[above] at (22,-0.95) {\(1\)};
+  \draw[Accent,thick] (0,-5)--(6,-2.6)--(10,-5)--(14,-7.4)--(18,-5)--(22,-2.6)--(26,-5);
+  \node[above] at (6,-2.6) {\(12/5\)};
+  \node[below] at (14,-7.4) {\(-12/5\)};
+  \node[above] at (22,-2.6) {\(12/5\)};
+  \node[below] at (13,-8.2) {上：\(F_{RD}\)；下：\(M_K\) 影响线};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}

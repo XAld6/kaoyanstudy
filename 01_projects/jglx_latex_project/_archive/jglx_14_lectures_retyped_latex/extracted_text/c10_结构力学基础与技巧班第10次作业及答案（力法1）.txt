@@ -1,0 +1,545 @@
+【第 1 页，来源：ocr】
+af REAPS REE BAA a 全 LDPECANCOA
+1. 基本概念
+S-1 判断题。力法方程，实际上是力的平衡方程。( ) (福州大学 2012) ，
+5-2 判断题。图 5- 125 (a) 所示柏架结构可选用图 5 - 125 (b) 所示的体系作为力
+法基本体系。( (西南交通大学 2008)
+5-3 图5-126 (b) 所示结构可作为图 5 - 126 (a) 所示结构的基本体系。(  )
+(烟台大学 2013)
+Fp               Fp             |                x
+本               |                              s         ‘e                 .
+Fp      .     Foo    二一 ”|
+(a).              , &)              (a)               (b)
+.         Fl 5 - 125                          Fl 5 - 126
+5-4 对比图5-127 (a), (b) 两个刚架的关系是 〈， )。(中南大学 2010)
+A. 内力相同，变形也相同         B. 内力相同， 变形不同
+C. 内力不同，变形相同          D. 内力不同，变形也不同
+5-5 图5-128所示结构的超静定次数为〈 ). CPR K 2009)
+A. 7          B. 8     Ce          D. 10”
+q               q       :
+2EI    4EI                       .      .
+El   .   EI       2EI      2EI  i  本
+，                          图5-127 -                  ， 5-128
+5-6 图5-129 (b) 为图 5 129 (a) 所示结构的力法基本体系，各杆 EIS WR, b
+为弹簧刚度，则其力法方程的系数、自由项和右端项分别为: 9 一，Ap=_ ，
+A=___. (HIEK 2009)                         .                     、、41;/
+5 -7 判断题。图 5 - 130 所示结构中，梁 AB 的截面 ET 为常数，各链和的 EA 相同XGN 人
+当 ELAR, MURR D 弯矩代数值Mp 增大。( . ) (中国矿业大学 2011)      7 Lot
+5-8 图5-131 所示两结构中，荷载 Fe (FATE A, Bab, m. m 均为比例常数:2     int
+.      ¢          pee               ,            ”ZKA NAP ~
+WH m>m 时，跨中弯矩〈( 。 )。(浙江大学 2010)                          O78
+228     |                                                   萌锡线上快印
+
+【第 2 页，来源：ocr】
+LOD门人二CC的下 una lip
+Fp                     Fp                           .
+、       _                      Fp     Fp
+k                                    I       y     “x
+|   2a |   2a    |                 x  .
+@                     )
+图5-129                          图5- 130
+S-9  结构上没有荷载就没有内力， 这个结论在什么情况下适用? 在什么情况下不适
+FA? 〈四川大学 2009)
+5-10 判断题。图 5 - 132 所示两匀拱，已知支座 也处下沉了As一0.01A，此时的水平
+反力为零，尼[一常数。( ) (天津大学 2011)                    本
+5-11 图5-133 所示结构，为了减小基础所受弯矩，可 (   )。 (西南交通大学
+2012)                        .
+A. piv) I,       B. HK I,       C. 增大 I,      D. Ly 1, WR) 1 fF
+.   Fp   ss      ,   Fp    ,
+A      ,        B                                    q
+EI              EI
+;                        “|           C                h
+nEl    mEl  we    ‘mE    mEI   se
+w
+A              B    h      h
+图5-131                  图5-132           图5-133
+2荷载作用下的计算      本
+5-12 用力法计算并作图 5 - 134 所示结构的 MA. EI=#%M, EA=6EI/2, (北京
+工业大学 2011)
+5-13 用力法计算图 5 - 135 所示结构，并作其弯矩图，设各杆 BT 相同。 (湖南大学
+2012) .    .
+5- 14 用力法作图 5 - 136 所示结构 M 图。(华南理工大学 2012)
+5-15 用力法计算图 5 - 137 所示结构，并作 M图。各杆 EI= BR. WALA 2010,
+烟台大学 2013)     Cette
+5-16 用力法求图 5 - 138 所示梅架支座 B 的反力。各杆 EA 相同。 (山东建筑大学 ONLI
+2008)                      4                                   TL 从 Som
+5-17 图5-139 (a) 所示结构，力法计算时采用如图5- 139 (b) 4 ao
+° 3 fe. un  只
+作其 M图。(中国矿业大学 2010)                                    oF [VO
+22戎和锡线上快印
+
+【第 3 页，来源：ocr】
+“il FRENESRREAR 结构力学〈第二版)             > AG mANCNar IOC
+2kN/m         3kN
+EA} ~
+Fp      .                10kN     8         ;        i
+qr4kNim          °
+EI                                      al.     F    .
+EI       ~
+&
+|u|   1   |  4m  | 2m | 2m |        |    6m    |. 2m   :
+图5-134             图5-135              图5-136
+Mo                                   10kN
+EI
+8    D     E
+:   g   EI     Ey} &
+g
+3m   3m  im           °
+a     _—          @             四
+图5-137          图5-138                图5-139
+3. 对称性的利用
+5-18 图5- 140 所示结构中各杆 已一常数，在给定荷载作用下，RFa = >» Va=__».
+Mam=_ 。(浙江大学 2009)
+5-19 图5-141 aie Pee Pu =    > Fr=    。 《西南交通大学
+2010)
+5-20 已知图5- 142 所示对称结构中AD杆A 端的弯矩 Map = G2? /36 (AMA,
+轴力 Fra =—5ql/12, Wi) Me=- 。(下侧受拉为正) (浙江大学 2010)
+Fp
+C             9
+一         10kN   PTT TTT Ty
+D        人      2    |           A  B       Cc
+a                                &
+;                                                           D          E          F     AN LZ
+tale oly                       TFTHTTTI SN
+4   Yy         多                                     q          ~.      Car
+Va  !   u     | "2m    2m  |    a ‘e =二:-
+图 5- 140             图5-141               图5-142    “Cine
+230                                                   fA 228 FRED
+
+【第 4 页，来源：ocr】
+LDL  人
+5-21 判断题。图 5 - 143 所示对称结构 已IT一常数，中点截面 C 及AB 杆内力应满足
+M=0, Fo40, Fy=0, Fras=0. ( ) (西南交通大学 2010)
+5-22 用力法求图 5 - 144 Prax Bitap CD 杆的轴力 ，并作受弯杆件的弯矩图。设受弯
+各杆 了IT一常数，而 CD 杆的EA王co。(北京交通大学 2011) -~
+5-23 用力法计算图 5 - 145 maw, HAMA. BH EA=EI/16, El=¥R.
+(合肥工业大学 2008)
+2 二|                    人
+E      G     F
+& .
+| |              mm            PC             DI                :                            §
+到              |                               &|
+me      EA                                 |       ，
+my          Bl | q         R4        可      aan      7
+J       -     Tam | am |     [tm “| am | am 2m
+图 5- 143              图5-144                    图5-145
+5-24 图5-146 ima, EI~#R, FAKE MA (利用对称性) 。 (河海大学
+2011)                              .
+5-25 用力法作图 5 - 147 所示结构 MAL, SAF ET 相同。(河海大学 2009)
+5-26 用力法计算图 5 - 148 所示结构并作弯矩图。(西安建筑科技大学 2010)
+4                           10kN/m         EEN
+A        G      B
+8              5             a        56KN B          D        F
+B                BO             EI          EI       ;
+c        F      Dd                                             EI              2EI    El     f=}
+EI               s                            §                                      °
+E                  A        D       F                   A           C        E
+|     a     |      a    |             |    4m   |    4m    | 3m     |     3m         .
+图5-146                图5-147                  图5-148
+5-27 用力法计算图 5 - 149 所示结构，并作 M 图。各杆 有IT一常数，EA=ETI/2。(广-
+州大学 2007)
+5-28 利用结构的对称性作图 5 - 150 所示结构的弯失图。已知 已T一常数，链杆EA为 | AN 1 '
+无穷大。(中国矿业大学 2009)                                                                   ONLI
+5-29 用力法作图 5 - 151 所示结构的弯矩图。ET一常数。(了哈尔滨工业大学 2013) Te!  Lo.
+5-30 用力法分析图 5 - 152 RRM, AMA, RSSBH ET 值相同。  (清华大学      cao
+2                                          .                            ts. Ay  .
+23戎和锡线上快印
+
+【第 5 页，来源：pdf-text】
+叫研究生入学考试辅导丛书结构力学(第二版)
+EA
+C
+q勹B
+G§1』
+20kN
+IF
+丫G
+y
+A
+7?7?77' 玉
+j_
+2
+尸
+B
+＼
+L
+L
+6m
+6m
+l
+1
+1
+．，
+图5-149
+图5-150
+4. 弹性支承超静定结构的计算
+
+【第 6 页，来源：ocr】
+EBA R Stil
+RO TUBTODIGHVSSS
+52. V
+5-3, X           C
+8
+» A      age #5, 014 Bs
+A             aw AG  pr”
+be
+sx.
+Spe
+
+【第 7 页，来源：ocr】
+EEL SBAR STN
+ISM OB IGBUSSS
+5-5,
+和
+Hy    fils Ate,
+,       |             bn= Fen opel =
+yA in nl >
+4:             be
+5, CA, A RAY pRB adi,
+ny N\p K )  x
+3s bots, fae     » Mae Me,
+45197    i
+My _ we
+A RAAT RO po A
+Ne 中 bb & Her SF).
+on
+op        CL yi        %.
+‘yt         an      Lad ae BT
+CN)
+
+【第 8 页，来源：ocr】
+HELSEAR aT
+MCAvin aN O31O37666
+tll, Lo af AMSy 博大II , Red,
+ph a it
+b-42,
+L         -|    ig            ‘            =   +L |
+a
+ips — el Lx *).-  fa          :           和
+duit — 4  S  4 xi * De a | 本
+a  ft
+ff       4
+%
+T
+was
+SO
+
+【第 9 页，来源：ocr】
+HE SEAR Sis
+ISM OB IGBUSSS
+ik
+orn
+\ |    ?      8               本
+h    m1          we? fur
+bic if  Ne xy ]+ Erp ~~ 本
+~      1站
+be Lt Blt Qe =
+- By [gare Bt 497]
+bipe - 218
+5
+bu UF ep   47 3
+thy
+ve
+13.06    |
+re] 2  |
+m mp            ,
+4141.7
+we
+SND)
+第175页, $359                                         meade ERED
+
+【第 10 页，来源：ocr】
+RAR Stil
+MAiMaiosO3sTeSs
+Say,               本
+ay
+ih           :      、 El
+6        ‘          il     Eu      Lad “F
+1
+ae |                    =
+;          a CE
+Pipe A" 如     - Fy ¥ 9% br (bor) ¥ =  y
+Suxit Spo    eye 346
+abAY¥
+b
+yb   7.16
+:
+sy, ® %          as
+of
+ar,               Mp
+diz AE Astin 4] =  a
+Sipe 414% 及站 学 一 th A+ + ms村| 二一 oe
+a)
+ONL
+OPO
+
+【第 11 页，来源：ocr】
+EAR Sis
+ROGUE OD IGBIBSS
+pivot 21p29  a 为= ae . Ls _ =
+Ano   AN
+¥                | J Mo
+Me
++
+tab,                 adi
+|< bet          >               ,
+54    seat
+ra   L oR F
+x71  山               Th
+mi              Np
+kar]  dnt 24
+bys th [ay y+ Sry DAF 7| ioe:    _
+Ape 此     va -和At ~ Sox Deas fF ]2 - We
+> wl -h
+Gy) hE - », is
+win QE %  p, bstfp  Ls
+54],                   4
+4"
+irs       ne
+mM            mp fos.
+v         =
+四
++ abit wed] 页
+11 .7/
+we
+OPO
+第177页, F£359                                         asad ERED
+
+【第 12 页，来源：ocr】
+后博美技公众强大]
+未久微信19818587888
+4     >   ‘
++          a 徊> 学
+Le        |
+区
+iv   ei      |
+7 4 国7                  站
+a+  + We Bde +) -Fel ‘
+Ape Al -      - tp- as] = sss =
+4 Lpe be tee P24 Sess (34 94)
+7 aby 4x 147 + Px bes 二|
+”   o        4s+ as|= =
+ye el At ‘ot           区
+本
+AL二 下[ly ax lt 444) _trby “ ,*
+VSP ty4)] =
+acl x    2   ogee 中
+Ls 六                Yaz — 4s.
+3
+if WW
+Ye
+a
+y            |
+pa °G
+11.7
+AND
+
+【第 13 页，来源：ocr】
+SEAR StS
+TRAE OS IOSESS
+bai, aad fh
+bi. fT      NU =
+fay x Le Re 2)
+sys Xf
+"ete 5      Hac - fr     Vz tr
+544.        le          44.
+5 yt  +H
+MAO
+4 Kk     Ayxze SHe Ss pies
+o' ¢            1
+1-1 1h 4
+Sw ;     ia Mya Maw v4 Yxe 42
+a. Meg,
+ye Vii, BAY wy         |
+ya ee
+i
+"    ¥     5
+bie + + Ws -
+we
+bal, V
+NO
+
+【第 14 页，来源：ocr】
+HELSEAR aT
+MCAvin aN O31O37666
+ty
+wv,              %
+Hy
+IK I<       4)         "
+;                                       |
+Y,           人
+”»                wy     she  +
+SiPie 2
+和PP>= aly   et lo al
+Wy            Sipe  所 |
+Bays
+如 出 ls    MT ayo  & Y=  ~ *k
+a7
+a       y
+y), A 4  ak
+Xr
+s                 be
+wlan.
+ONL
+GRAND)
+
+【第 15 页，来源：ocr】
+HEL RAR aii
+TRAN SILO OSTOCS
+—_—                               ，
+2
++I
+ott
+1                    Wo
+;                 i
+L                  pm
+hie i.   aw le re 4 |
+1    by     3
+we GL ee al> 抽
+L          Lo +]       pe
+bye 1h [ s* wor2*F Yt    a7 ma
+a OA
+bipe al +" 2HF wit |- x
+bye -hl $x noe | =一  总
+32        ib       _ 虹            44
+a)     bg      "   " aA
+-    Yt     Z   tL              9
+个            ¥¥
+ww Baws
+1h             | 由
+AN    ab
+11 .7
+NO
+
+【第 16 页，来源：ocr】
+EAR Sis
+ROGUE OD IGBIBSS
+fof,                     _            _
+Akhiok      相生 各           党
+Ale
+a>        i
+basse          \
+2”      x4                       2
+den           x                  oe
+BD                            a            4M,
+be Blt ay 44让- SE
+lex 442< bo boom              1                 .              ;
+¥ 4° 0 kun  bya alte hx MInZ+ ty qu了]
+r—4,          [下
+se                 i=    s61           a
+i     .           t + USxwe »    _4  :
+= 4
+?人
+owe GL ae bebe dey - Fe MHD I GL ee — OO). Se
+wlan.
+SND)
+
+【第 17 页，来源：ocr】
+EBA R Stil
+未久向信1981387888
+Ad
+BS, is we x,  - A      |
+et          wel          17 0
+| tn  fae OP
+AN        am
+5-H,
+| i=  ii      ;
+y 于           we         It
+Sey          its
+|                                   ba ，
+.               6, ceox BRE get BBY >
+.                                           -经 Eady $441-
+|            *                    SuXi4 220  2X7)
+a
+,         i
+有           Iz         人
+a”
+4                     up
+| hl [pew
+wlan.
+ONE fo
+GRAND)
+Bite ASK
+
+【第 18 页，来源：ocr】
+EAR Sis
+MAiMaiosO3sTeSs
+FU). VA hiv +49
+2 a     i. a
+M4      i     L       L
+>  -       a
+|          .             Se 5 x Es Bee ot.
+Me Gert Me ae
+r     ,
+_ Soc一下[二dk中:- a
+Ap Gy (tale req] ae 7
+ons
+y       L         中
++. SSL       六 00/3
+》       Y
+= Xi +  i)   0        Xr= 9-1)
+chew 3 条 io w
+\  0.4   fw
+“
+wlan.
+ONL
+OPO
+
+【第 19 页，来源：ocr】
+HEL RAR aii
+TRAMs Os IO3TSCS
+Sm. Rath vy        |
+HA hf. Mo
+ga{ At , Aver, 4h   be
+>             > mm      一       fx
+RE               ht    to
+b         |
+和
+Np,
+|           My                     jh         +       7
+|     ane Hf de babebeg t Peel) = G5 [n+ Mile a
+本
+|     bu xf 6° P=0    > 为  Es                   日
+a                                                    |
+“7 ly /
+Pi            i)
+11 .7
+we
+CO
+
+【第 20 页，来源：ocr】
+HELSEAR aT
+未久向信1981687888
+SA. jetted The 41K
+k-          并
+了 |        |  ll
+w= -4       7
+2
+wy
+ta.
+tt iow tt le iow        人们mw
+ei            i
+“~% y P.-.                 =
+UF
+uke
+=F                                 IX
+ee ao il
+re         1S     7
+i      Zo.
+mt
+ES           :           ur
+bee - by [ Liye lS plOKy + 8 24204 tk]2- A
+byt Spay eh
+4141.7
+RN
+
+【第 21 页，来源：ocr】
+ESA Rail
+RORY OBIGSTB88
+b    . b
+6
+b                      ‘
+\v ie
+¥   Me   _
+RN
+Bit:RE ize

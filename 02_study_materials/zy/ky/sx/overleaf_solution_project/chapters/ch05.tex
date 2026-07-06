@@ -1,0 +1,2252 @@
+\chapter{多元函数微分学}
+
+\section{原题页索引}
+本章原题对应做题本第 \(76\)--\(95\) 页。本节先完成第 \(1\)--\(15\) 题详细解析。
+
+\begin{center}
+\includegraphics[width=.92\textwidth]{figures/original_pages/page_076.png}
+\end{center}
+
+\section{详细解析}
+
+\begin{problemblock}
+\textbf{1.} 已知
+\[
+f(x,y)=e^{-\sqrt{x^2+y^4}},
+\]
+判断 \(f'_x(0,0),f'_y(0,0)\) 是否存在。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{按偏导定义沿坐标轴分别考察。}
+\[
+f'_x(0,0)=\lim_{h\to0}\frac{e^{-|h|}-1}{h}.
+\]
+当 \(h\to0^+\) 时极限为 \(-1\)，当 \(h\to0^-\) 时极限为 \(1\)，故 \(f'_x(0,0)\) 不存在。
+
+而
+\[
+f'_y(0,0)=\lim_{h\to0}\frac{e^{-h^2}-1}{h}=0.
+\]
+所以
+\[
+\boxed{f'_x(0,0)\text{ 不存在},\quad f'_y(0,0)\text{ 存在}}.
+\]
+\[
+\boxed{\text{B}}
+\]
+\examnote{偏导只沿坐标轴取极限，含 \(|x|\) 时左右导数常不一致。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{2.} 设函数 \(z=f(x,y)\) 在点 \((x_0,y_0)\) 处有
+\[
+f'_x(x_0,y_0)=a,\qquad f'_y(x_0,y_0)=b.
+\]
+判断下列结论哪一个正确。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{偏导存在只能保证沿对应坐标方向的一元函数在该点连续，不能推出二元连续或可微。}
+偏导 \(f'_x(x_0,y_0)\) 存在，说明一元函数 \(x\mapsto f(x,y_0)\) 在 \(x_0\) 处可导，因而
+\[
+\lim_{x\to x_0}f(x,y_0)=f(x_0,y_0).
+\]
+同理
+\[
+\lim_{y\to y_0}f(x_0,y)=f(x_0,y_0).
+\]
+所以这两个沿坐标轴的极限都存在且相等。
+
+但偏导存在不能推出二元极限存在、连续或可微。
+\[
+\boxed{\text{D}}
+\]
+\examnote{“偏导存在 \(\nRightarrow\) 连续 \(\nRightarrow\) 可微”，这是多元微分学第一类易错点。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{3.} 设
+\[
+f(x,y)=
+\begin{cases}
+\dfrac{xy}{\sqrt{x^2+y^2}},&(x,y)\ne(0,0),\\
+0,&(x,y)=(0,0).
+\end{cases}
+\]
+判断 \(f(x,y)\) 在 \((0,0)\) 处的性质。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先看偏导，再看可微性。}
+沿 \(x\) 轴与 \(y\) 轴，
+\[
+f(h,0)=0,\qquad f(0,h)=0,
+\]
+故
+\[
+f'_x(0,0)=f'_y(0,0)=0.
+\]
+又
+\[
+|f(x,y)|=\frac{|xy|}{\sqrt{x^2+y^2}}\le \frac{x^2+y^2}{2\sqrt{x^2+y^2}}\to0,
+\]
+所以函数连续。
+
+若可微，则应有
+\[
+\frac{f(x,y)-0}{\sqrt{x^2+y^2}}\to0.
+\]
+但沿 \(y=x\)，
+\[
+\frac{f(x,x)}{\sqrt{2x^2}}
+=\frac{|x|/\sqrt2}{\sqrt2|x|}
+=\frac12.
+\]
+故不可微。
+\[
+\boxed{\text{B}}
+\]
+\examnote{可微要检查余项除以 \(\rho=\sqrt{x^2+y^2}\) 是否趋零。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{4.} 设
+\[
+f(x,y)=
+\begin{cases}
+(x^2+y^2)\sin\dfrac1{x^2+y^2},&(x,y)\ne(0,0),\\
+0,&(x,y)=(0,0).
+\end{cases}
+\]
+判断 \(f(x,y)\) 在 \((0,0)\) 处的性质。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{函数量级为 \(r^2\)，所以可微；但偏导表达式含 \(1/r\) 型振荡项，不连续。}
+有
+\[
+|f(x,y)|\le x^2+y^2.
+\]
+因此
+\[
+\frac{|f(x,y)-0|}{\sqrt{x^2+y^2}}\le \sqrt{x^2+y^2}\to0,
+\]
+故 \(f\) 在原点可微，且
+\[
+f'_x(0,0)=f'_y(0,0)=0.
+\]
+但在 \((x,y)\ne(0,0)\) 时，偏导中会出现
+\[
+-\frac{2x}{x^2+y^2}\cos\frac1{x^2+y^2}
+\]
+这类项，沿不同路径振荡且无界，所以偏导数在原点不连续。
+\[
+\boxed{\text{D}}
+\]
+\examnote{\(r^2\sin(1/r^2)\) 型函数可微，但偏导通常不连续。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{5.} 设函数 \(f(x,y)\) 可微，且对任意 \(x,y\) 都有
+\[
+\frac{\partial f}{\partial x}>0,\qquad \frac{\partial f}{\partial y}<0.
+\]
+使不等式
+\[
+f(x_1,y_1)<f(x_2,y_2)
+\]
+成立的一个充分条件是什么？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{\(x\) 增大时 \(f\) 增大，\(y\) 增大时 \(f\) 减小。}
+若
+\[
+x_1<x_2,\qquad y_1>y_2,
+\]
+则先固定 \(y_1\)，由 \(f_x>0\) 得
+\[
+f(x_1,y_1)<f(x_2,y_1).
+\]
+再固定 \(x_2\)，由于 \(y_1>y_2\) 且 \(f_y<0\)，得
+\[
+f(x_2,y_1)<f(x_2,y_2).
+\]
+所以
+\[
+f(x_1,y_1)<f(x_2,y_2).
+\]
+\[
+\boxed{\text{D}}
+\]
+\examnote{偏导符号题可分两步走：先变 \(x\)，再变 \(y\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{6.} 设可微函数 \(f(x,y)\) 满足
+\[
+\frac{\partial f}{\partial x}>1,\qquad \frac{\partial f}{\partial y}<-1,\qquad f(0,0)=0.
+\]
+判断下列结论正确的是哪一个。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{用路径积分估计函数增量。}
+从 \((0,0)\) 到 \((1,-1)\)，先沿 \(x\) 方向：
+\[
+f(1,0)-f(0,0)=\int_0^1 f_x(x,0)\,dx>1.
+\]
+再沿 \(y\) 方向从 \(0\) 到 \(-1\)：
+\[
+f(1,-1)-f(1,0)=\int_0^{-1} f_y(1,y)\,dy.
+\]
+因为 \(f_y<-1\)，而积分上限小于下限，故
+\[
+\int_0^{-1} f_y(1,y)\,dy>1.
+\]
+所以
+\[
+f(1,-1)>2.
+\]
+\[
+\boxed{\text{D}}
+\]
+\examnote{当积分方向反向时，不等号方向容易误判；这里 \(dy<0\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{7.} 设函数 \(f(x,y)\) 满足
+\[
+\frac{\partial f}{\partial x}<0,\qquad \frac{\partial f}{\partial y}>1.
+\]
+判断下列结论正确的是哪一个。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{从 \((0,0)\) 到 \((-1,1)\) 分段积分。}
+先沿 \(x\) 方向从 \(0\) 到 \(-1\)。由于 \(f_x<0\)，反向积分使函数增加：
+\[
+f(-1,0)-f(0,0)=\int_0^{-1}f_x(x,0)\,dx>0.
+\]
+再沿 \(y\) 方向从 \(0\) 到 \(1\)：
+\[
+f(-1,1)-f(-1,0)=\int_0^1f_y(-1,y)\,dy>1.
+\]
+故
+\[
+f(-1,1)>f(0,0)+1.
+\]
+\[
+\boxed{\text{C}}
+\]
+\examnote{偏导不等式可以沿折线路径积分，得到函数值比较。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{8.} 设函数 \(f(x,y)\) 在点 \((0,0)\) 的某邻域内有定义，且
+\[
+\lim_{(x,y)\to(0,0)}
+\frac{f(x,y)-(x^2+y^2)}{\sqrt{x^2+y^2}}=1.
+\]
+判断 \(f(x,y)\) 在 \((0,0)\) 处的性质。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{该条件表明 \(f(x,y)=x^2+y^2+\sqrt{x^2+y^2}+o(r)\)，主部含 \(r\)，沿坐标轴有尖点。}
+由题设
+\[
+f(x,y)=x^2+y^2+\sqrt{x^2+y^2}+o\left(\sqrt{x^2+y^2}\right).
+\]
+沿 \(x\) 轴，
+\[
+f(x,0)=x^2+|x|+o(|x|).
+\]
+若取 \(f(0,0)=0\)，则
+\[
+\frac{f(x,0)-f(0,0)}{x}
+=x+\frac{|x|}{x}+o(1),
+\]
+右极限为 \(1\)，左极限为 \(-1\)，故 \(f'_x(0,0)\) 不存在。类似地 \(f'_y(0,0)\) 也不存在。
+\[
+\boxed{\text{B}}
+\]
+\examnote{出现 \(\sqrt{x^2+y^2}\) 主部时，沿正负坐标轴通常产生左右导数不一致。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{9.} 已知 \(f(x,y)\) 在 \((0,0)\) 点连续，且
+\[
+\lim_{(x,y)\to(0,0)}
+\frac{f(x,y)+2x-y+x^2+y^2}{\sqrt{x^2+y^2}^{\,2}}=0.
+\]
+判断下列结论不正确的是哪一个。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{分母就是 \(x^2+y^2\)。条件给出了 \(f\) 的二阶展开。}
+由题设
+\[
+f(x,y)=-2x+y-x^2-y^2+o(x^2+y^2).
+\]
+因此 \(f\) 在原点可微，且
+\[
+f'_x(0,0)=-2,\qquad f'_y(0,0)=1.
+\]
+所以“\(f'_x(0,0)\) 和 \(f'_y(0,0)\) 都不一定存在”这一说法不正确。
+\[
+\boxed{\text{D}}
+\]
+\examnote{若能写出一次线性主部，就能直接读出偏导数并判断可微。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{10.} 设 \(z=f(x,y)\) 满足
+\[
+\frac{\partial^2 z}{\partial y^2}=2,\qquad f(x,0)=1,\qquad f'_y(x,0)=x.
+\]
+求 \(f(x,y)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{对 \(y\) 连续积分两次，积分“常数”可以是 \(x\) 的函数。}
+由
+\[
+f_{yy}=2
+\]
+对 \(y\) 积分得
+\[
+f_y=2y+A(x).
+\]
+由
+\[
+f_y(x,0)=x
+\]
+得
+\[
+A(x)=x.
+\]
+再对 \(y\) 积分：
+\[
+f=y^2+xy+B(x).
+\]
+由
+\[
+f(x,0)=1
+\]
+得
+\[
+B(x)=1.
+\]
+所以
+\[
+\boxed{f(x,y)=1+xy+y^2}.
+\]
+\[
+\boxed{\text{B}}
+\]
+\examnote{对某个变量积分时，积分常数要写成另一个变量的函数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{11.} 已知函数 \(f(x,y)\) 在 \((0,0)\) 的某邻域内连续，且
+\[
+\lim_{(x,y)\to(0,0)}
+\frac{f(x,y)-(x^2+y^2)}{\sqrt{x^2+y^2}}=a>0.
+\]
+判断 \((0,0)\) 是何种点。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{连续性给出 \(f(0,0)=0\)。邻近点上 \(f\) 的主部为 \(a r\)，且 \(a>0\)。}
+由连续性和极限条件，
+\[
+f(0,0)=0.
+\]
+当 \((x,y)\ne(0,0)\) 且充分接近原点时，
+\[
+f(x,y)=x^2+y^2+a\sqrt{x^2+y^2}+o(\sqrt{x^2+y^2})>0.
+\]
+所以 \((0,0)\) 是极小值点。
+
+但由于主部含 \(\sqrt{x^2+y^2}\)，偏导数在原点一般不存在，因此它不是驻点。
+\[
+\boxed{\text{C}}
+\]
+\examnote{极值点不一定是驻点；费马定理要求偏导存在。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{12.} 设函数 \(z=f(x,y)\) 的全微分为
+\[
+dz=x\,dx+y\,dy.
+\]
+判断点 \((0,0)\) 的性质。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{由全微分读出 \(f_x=x,\ f_y=y\)，再积分或看 Hessian。}
+由
+\[
+dz=f_xdx+f_ydy=x\,dx+y\,dy
+\]
+得
+\[
+f_x=x,\qquad f_y=y.
+\]
+因此
+\[
+f(x,y)=\frac12x^2+\frac12y^2+C.
+\]
+显然 \((0,0)\) 是极小值点。
+\[
+\boxed{\text{D}}
+\]
+\examnote{全微分给出的就是梯度；本题本质是正定二次型。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{13.} 设函数 \(f(x)\) 具有二阶连续导数，且 \(f(x)>0,\ f'(0)=0\)。函数
+\[
+z=f(x)\ln f(y)
+\]
+在点 \((0,0)\) 处取得极小值的一个充分条件是什么？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{计算二阶偏导。由于 \(f'(0)=0\)，混合项为零。}
+设 \(c=f(0)>0\)。在 \((0,0)\) 处，
+\[
+z_{xx}=f''(0)\ln c,
+\]
+\[
+z_{yy}=f(0)\cdot \frac{f''(0)f(0)-[f'(0)]^2}{f^2(0)}
+=f''(0),
+\]
+且
+\[
+z_{xy}=0.
+\]
+要使 Hessian 正定，需
+\[
+z_{xx}>0,\qquad z_{yy}>0.
+\]
+即
+\[
+f''(0)>0,\qquad \ln f(0)>0.
+\]
+因此
+\[
+f(0)>1,\qquad f''(0)>0.
+\]
+\[
+\boxed{\text{A}}
+\]
+\examnote{二元极值充分条件看 Hessian；混合项为零时只需两个二阶偏导同为正。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{14.} 设函数 \(f(x),g(x)\) 均有二阶连续导数，满足
+\[
+f(0)>0,\qquad g(0)<0,\qquad f'(0)=g'(0)=0.
+\]
+函数
+\[
+z=f(x)g(y)
+\]
+在点 \((0,0)\) 处取得极小值的一个充分条件是什么？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{二阶偏导为 \(z_{xx}=f''(0)g(0)\)，\(z_{yy}=f(0)g''(0)\)，混合项为零。}
+在 \((0,0)\) 处，
+\[
+z_{xx}=f''(0)g(0),\qquad
+z_{yy}=f(0)g''(0),\qquad
+z_{xy}=f'(0)g'(0)=0.
+\]
+要取得极小值，Hessian 正定，故需要
+\[
+f''(0)g(0)>0,\qquad f(0)g''(0)>0.
+\]
+由于
+\[
+g(0)<0,\qquad f(0)>0,
+\]
+得到
+\[
+f''(0)<0,\qquad g''(0)>0.
+\]
+\[
+\boxed{\text{A}}
+\]
+\examnote{乘积型函数先看各因子的符号，再判断二阶项正负。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{15.} 设 \(F(x,y)\) 具有二阶连续偏导数，且
+\[
+F(x_0,y_0)=0,\qquad F'_x(x_0,y_0)=0,\qquad F'_y(x_0,y_0)>0.
+\]
+若一元函数 \(y=y(x)\) 是由方程 \(F(x,y)=0\) 所确定的在点 \((x_0,y_0)\) 附近的隐函数，求 \(x_0\) 是函数 \(y=y(x)\) 的极小值点的一个充分条件。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{隐函数求导：\(y'=-F_x/F_y\)，再在 \(F_x=0\) 处求二阶导。}
+由隐函数求导公式
+\[
+y'=-\frac{F_x}{F_y}.
+\]
+在 \((x_0,y_0)\) 处，
+\[
+y'(x_0)=0.
+\]
+继续求导。由于 \(y'(x_0)=0\)，有
+\[
+y''(x_0)=-\frac{F_{xx}(x_0,y_0)}{F_y(x_0,y_0)}.
+\]
+要使 \(x_0\) 为 \(y(x)\) 的极小值点，需要
+\[
+y''(x_0)>0.
+\]
+又 \(F_y(x_0,y_0)>0\)，故充分条件为
+\[
+F_{xx}(x_0,y_0)<0.
+\]
+\[
+\boxed{\text{B}}
+\]
+\examnote{隐函数极值题先求 \(y'\)，驻点后再用 \(y''\) 判别。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{16.} 设函数 \(u(x,y)\) 在有界闭区域 \(D\) 上连续，在 \(D\) 的内部具有二阶连续偏导数，且满足
+\[
+\frac{\partial^2u}{\partial x\partial y}\ne0,\qquad
+\frac{\partial^2u}{\partial x^2}+\frac{\partial^2u}{\partial y^2}=0.
+\]
+判断最大值与最小值的位置。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{这是调和函数的最大值原理。条件 \(u_{xy}\ne0\) 排除了常函数情形。}
+由
+\[
+u_{xx}+u_{yy}=0
+\]
+知 \(u\) 是区域内部的调和函数。非常值调和函数不能在内部取得最大值或最小值，否则由最大值原理可推出其为常数，与 \(u_{xy}\ne0\) 矛盾。
+
+又 \(u\) 在有界闭区域 \(D\) 上连续，最大值和最小值一定能取得。因此最大值和最小值都在边界上取得。
+\[
+\boxed{\text{A}}
+\]
+\examnote{看到 \(u_{xx}+u_{yy}=0\)，立刻想到调和函数最大值原理。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{17.} 设
+\[
+z=\frac{x(\cos y-1)-(y-1)\cos x}{1+\sin x+\sin(y-1)},
+\]
+求
+\[
+\left.\frac{\partial z}{\partial y}\right|_{(0,1)}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{在点 \((0,1)\) 处分子为 \(0\)，所以求偏导时商法则大幅简化。}
+记
+\[
+N=x(\cos y-1)-(y-1)\cos x,\qquad
+D=1+\sin x+\sin(y-1).
+\]
+在 \((0,1)\) 处，
+\[
+N(0,1)=0,\qquad D(0,1)=1.
+\]
+因此
+\[
+z_y(0,1)=\frac{N_y(0,1)}{D(0,1)}.
+\]
+而
+\[
+N_y=-x\sin y-\cos x,
+\]
+故
+\[
+N_y(0,1)=-1.
+\]
+所以
+\[
+\boxed{z_y(0,1)=-1}.
+\]
+\examnote{分式在目标点分子为零时，商法则只剩分子导数除以分母值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{18.} 设
+\[
+z=\arctan\frac{x}{y^2},
+\]
+求
+\[
+\left.\frac{\partial^2z}{\partial y\partial x}\right|_{(0,1)}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先对 \(x\) 求偏导，再对 \(y\) 求偏导。}
+先求
+\[
+z_x=\frac{1}{1+(x/y^2)^2}\cdot\frac1{y^2}
+=\frac{y^2}{x^2+y^4}.
+\]
+再对 \(y\) 求导：
+\[
+z_{xy}
+=\frac{2y(x^2+y^4)-y^2\cdot4y^3}{(x^2+y^4)^2}
+=\frac{2yx^2-2y^5}{(x^2+y^4)^2}.
+\]
+代入 \((0,1)\)，得
+\[
+\boxed{z_{xy}(0,1)=-2}.
+\]
+\examnote{混合偏导的顺序要按题目写法执行：\(\partial^2z/\partial y\partial x\) 是先 \(x\) 后 \(y\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{19.} 设
+\[
+z=(x+e^y)^x,
+\]
+求
+\[
+\left.\frac{\partial z}{\partial x}\right|_{(1,0)}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{幂指函数对 \(x\) 求导，先取对数。}
+\[
+\ln z=x\ln(x+e^y).
+\]
+对 \(x\) 求偏导：
+\[
+\frac{z_x}{z}=\ln(x+e^y)+\frac{x}{x+e^y}.
+\]
+在 \((1,0)\) 处，
+\[
+z=2,\qquad \ln(x+e^y)=\ln2,\qquad \frac{x}{x+e^y}=\frac12.
+\]
+故
+\[
+z_x(1,0)=2\left(\ln2+\frac12\right)=\boxed{2\ln2+1}.
+\]
+\examnote{变量同时在底数和指数中时，对数求导最稳。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{20.} 设
+\[
+z=(1+xy)^{xy},
+\]
+求
+\[
+dz\big|_{(1,1)}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{令 \(u=xy\)，则 \(z=(1+u)^u\)。}
+设
+\[
+u=xy.
+\]
+则
+\[
+dz=z\left[\ln(1+u)+\frac{u}{1+u}\right]du.
+\]
+在 \((1,1)\) 处，
+\[
+u=1,\qquad z=2,\qquad du=y\,dx+x\,dy=dx+dy.
+\]
+所以
+\[
+dz\big|_{(1,1)}
+=2\left(\ln2+\frac12\right)(dx+dy)
+=\boxed{(2\ln2+1)(dx+dy)}.
+\]
+\examnote{全微分题要把 \(dx,dy\) 的线性组合写完整。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{21.} 设函数 \(z=z(x,y)\) 由方程
+\[
+(z+y)^x=xy
+\]
+确定，求
+\[
+\left.\frac{\partial z}{\partial x}\right|_{(1,2)}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先求点上的 \(z\)，再对隐式方程取对数求导。}
+当 \((x,y)=(1,2)\) 时，
+\[
+z+2=2,
+\]
+所以
+\[
+z=0.
+\]
+对方程取对数：
+\[
+x\ln(z+y)=\ln x+\ln y.
+\]
+对 \(x\) 求偏导：
+\[
+\ln(z+y)+x\frac{z_x}{z+y}=\frac1x.
+\]
+代入 \((1,2,0)\)，得
+\[
+\ln2+\frac{z_x}{2}=1.
+\]
+故
+\[
+\boxed{z_x(1,2)=2(1-\ln2)}.
+\]
+\examnote{幂式隐函数常先取对数再求导。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{22.} 设
+\[
+u=x^2e^{yz^3},
+\]
+其中 \(z=z(x,y)\) 由方程
+\[
+x^3+y^3+z^3-3xyz=0
+\]
+所确定，求
+\[
+du\big|_{x=-1,y=0}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{在目标点先由隐式方程求 \(z\)。对 \(\ln u\) 求微分最简。}
+当 \(x=-1,y=0\) 时，
+\[
+-1+z^3=0,\qquad z=1.
+\]
+取对数：
+\[
+\ln u=2\ln|x|+yz^3.
+\]
+微分：
+\[
+d(\ln u)=2\frac{dx}{x}+z^3dy+3yz^2dz.
+\]
+在 \((-1,0,1)\) 处，\(y=0,\ u=1\)，所以
+\[
+d(\ln u)=-2dx+dy.
+\]
+因此
+\[
+du=u\,d(\ln u)=\boxed{-2dx+dy}.
+\]
+\examnote{指数复合函数求微分，常先求 \(d\ln u\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{23.} 设 \(z=f(x,y)\) 满足
+\[
+\frac{\partial^2z}{\partial x\partial y}=x+y,\qquad
+f(x,0)=x,\qquad f(0,y)=y^2.
+\]
+求 \(f(x,y)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{从 \(f_{xy}\) 积分，积分“常数”分别是单变量函数，再用边界条件确定。}
+由
+\[
+f_{xy}=x+y
+\]
+先对 \(y\) 积分：
+\[
+f_x=xy+\frac12y^2+\varphi(x).
+\]
+由 \(f(x,0)=x\)，得
+\[
+f_x(x,0)=1,
+\]
+所以
+\[
+\varphi(x)=1.
+\]
+再对 \(x\) 积分：
+\[
+f(x,y)=\frac12x^2y+\frac12xy^2+x+\psi(y).
+\]
+由 \(f(0,y)=y^2\)，得
+\[
+\psi(y)=y^2.
+\]
+故
+\[
+\boxed{f(x,y)=x+y^2+\frac12x^2y+\frac12xy^2}.
+\]
+\examnote{二阶混合偏导积分两次，每次都要补上“任意函数”。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{24.} 设 \(u(x,y)\) 有连续二阶偏导数，
+\[
+u_{xx}=u_{yy},
+\]
+且
+\[
+u(x,2x)=x,\qquad u_x(x,2x)=x^2.
+\]
+求
+\[
+u_{xx}(x,2x).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{沿曲线 \(y=2x\) 对给定条件求导，得到关于 \(u_{xx},u_{xy}\) 的方程组。}
+由
+\[
+u(x,2x)=x
+\]
+求导：
+\[
+u_x(x,2x)+2u_y(x,2x)=1.
+\]
+再求导：
+\[
+u_{xx}+4u_{xy}+4u_{yy}=0.
+\]
+由 \(u_{xx}=u_{yy}\)，得
+\[
+5u_{xx}+4u_{xy}=0. \tag{1}
+\]
+又由
+\[
+u_x(x,2x)=x^2
+\]
+求导：
+\[
+u_{xx}+2u_{xy}=2x. \tag{2}
+\]
+联立 (1)(2)，由 \(2\times(2)\) 得
+\[
+2u_{xx}+4u_{xy}=4x.
+\]
+与 (1) 相减：
+\[
+3u_{xx}=-4x.
+\]
+故
+\[
+\boxed{u_{xx}(x,2x)=-\frac{4x}{3}}.
+\]
+\examnote{沿曲线给条件时，对复合函数求导会产生链式法则方程组。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{25.} 设函数 \(z=z(x,y)\) 由方程
+\[
+F\left(x+\frac{z}{y},\,y+\frac{z}{x}\right)=0
+\]
+确定，求
+\[
+x\frac{\partial z}{\partial x}+y\frac{\partial z}{\partial y}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{按题面所给条件，不能唯一确定该量。若额外假设 \(F\) 的零集具有相应齐次性，才可套用欧拉齐次公式；但原题没有给出这个条件。}
+题面只说明
+\[
+F\left(x+\frac{z}{y},\,y+\frac{z}{x}\right)=0,
+\]
+并未说明 \(F\) 是齐次函数，也未说明其零集关于伸缩不变。因此 \(z\) 不一定是二次齐次函数。
+
+例如取
+\[
+F(u,v)=u-1.
+\]
+则方程变为
+\[
+x+\frac{z}{y}=1,
+\]
+从而
+\[
+z=y(1-x).
+\]
+于是
+\[
+xz_x+yz_y=x(-y)+y(1-x)=y-2xy,
+\]
+并不等于某个只由 \(z\) 固定决定的通式，如 \(2z\)。
+
+因此按页图题面，
+\[
+\boxed{\text{条件不足，不能唯一确定。}}
+\]
+\examnote{考研中若要用欧拉公式 \(xz_x+yz_y=nz\)，必须先证明或题设给出 \(z\) 是 \(n\) 次齐次函数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{26.} 已知
+\[
+df(x,y)\big|_{(x_0,y_0)}=2dx+dy,
+\]
+求
+\[
+\lim_{t\to0}\frac{f(x_0+2t,y_0)-f(x_0,y_0-t)}{t}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{由全微分知 \(f_x(x_0,y_0)=2,\ f_y(x_0,y_0)=1\)。}
+可微展开：
+\[
+f(x_0+2t,y_0)=f(x_0,y_0)+2\cdot 2t+o(t)
+=f_0+4t+o(t),
+\]
+\[
+f(x_0,y_0-t)=f(x_0,y_0)+1\cdot(-t)+o(t)
+=f_0-t+o(t).
+\]
+两式相减：
+\[
+f(x_0+2t,y_0)-f(x_0,y_0-t)=5t+o(t).
+\]
+故极限为
+\[
+\boxed{5}.
+\]
+\examnote{全微分就是一阶线性近似，直接代增量即可。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{27.} 已知函数 \(z=f(x,y)\) 连续且满足
+\[
+\lim_{\substack{x\to1\\y\to0}}
+\frac{f(x,y)-x+2y+2}{\sqrt{(x-1)^2+y^2}}=0.
+\]
+求
+\[
+\lim_{t\to0}\frac{f(1+t,0)-f(1,2t)}{t}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{极限条件给出 \(f(x,y)=x-2y-2+o(r)\)。}
+由题设，
+\[
+f(x,y)=x-2y-2+o\left(\sqrt{(x-1)^2+y^2}\right).
+\]
+于是
+\[
+f(1+t,0)=(1+t)-2+o(t)=-1+t+o(t),
+\]
+\[
+f(1,2t)=1-4t-2+o(t)=-1-4t+o(t).
+\]
+所以
+\[
+f(1+t,0)-f(1,2t)=5t+o(t).
+\]
+故
+\[
+\boxed{5}.
+\]
+\examnote{这类题不需要先求偏导，直接用给出的局部线性展开。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{28.} 设
+\[
+z=\int_0^1|xy-t|f(t)\,dt,\qquad 0\le x\le1,\quad0\le y\le1,
+\]
+其中 \(f(x)\) 为连续函数，求
+\[
+z_{xx}+z_{yy}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{令 \(s=xy\)，则 \(z\) 是 \(s\) 的函数。利用 \(\frac{d^2}{ds^2}\int|s-t|f(t)dt=2f(s)\)。}
+令
+\[
+G(s)=\int_0^1|s-t|f(t)\,dt,\qquad s=xy.
+\]
+则
+\[
+z=G(xy).
+\]
+由于 \(0\le xy\le1\)，有
+\[
+G''(s)=2f(s).
+\]
+于是
+\[
+z_{xx}=G''(xy)y^2=2y^2f(xy),
+\]
+\[
+z_{yy}=G''(xy)x^2=2x^2f(xy).
+\]
+故
+\[
+\boxed{z_{xx}+z_{yy}=2(x^2+y^2)f(xy)}.
+\]
+\examnote{\(|s-t|\) 对 \(s\) 求二阶导会产生 \(2\delta(s-t)\)，在常规考研写法中体现为 \(G''(s)=2f(s)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{29.} 设
+\[
+u=f(x,y,z),\qquad z=\ln\sqrt{x^2+y^2},
+\]
+求
+\[
+\frac{\partial u}{\partial x},\qquad \frac{\partial^2u}{\partial x^2},
+\]
+其中 \(f\) 有二阶连续偏导数。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{这里 \(u(x,y)=f(x,y,z(x,y))\)，只有第三个变量 \(z\) 依赖于 \(x,y\)。}
+记 \(r^2=x^2+y^2\)。因为
+\[
+z=\ln\sqrt{x^2+y^2}=\frac12\ln r^2,
+\]
+所以
+\[
+z_x=\frac{x}{r^2},\qquad
+z_{xx}=\frac{y^2-x^2}{r^4}.
+\]
+于是
+\[
+\boxed{u_x=f_x+f_z\frac{x}{x^2+y^2}}.
+\]
+继续求导：
+\[
+u_{xx}=f_{xx}+2f_{xz}z_x+f_{zz}z_x^2+f_z z_{xx}.
+\]
+代入 \(z_x,z_{xx}\)，得
+\[
+\boxed{
+u_{xx}=f_{xx}
++\frac{2x}{x^2+y^2}f_{xz}
++\frac{x^2}{(x^2+y^2)^2}f_{zz}
++\frac{y^2-x^2}{(x^2+y^2)^2}f_z }.
+\]
+其中各偏导均在 \((x,y,z)\) 处取值。
+\examnote{复合函数二阶偏导要同时包含 \(f_{zz}z_x^2\) 和 \(f_z z_{xx}\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{30.} 设函数 \(z=f(x,y)\) 在点 \((1,1)\) 处可微，且
+\[
+f(1,1)=1,\qquad f_x(1,1)=2,\qquad f_y(1,1)=3.
+\]
+令
+\[
+\varphi(x)=f[x,f(x,x)].
+\]
+求
+\[
+\left.\frac{d}{dx}\varphi^3(x)\right|_{x=1}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先求 \(\varphi(1)\) 与 \(\varphi'(1)\)，再对 \(\varphi^3\) 求导。}
+由
+\[
+f(1,1)=1
+\]
+得
+\[
+\varphi(1)=f[1,f(1,1)]=f(1,1)=1.
+\]
+设
+\[
+g(x)=f(x,x).
+\]
+则
+\[
+g'(1)=f_x(1,1)+f_y(1,1)=2+3=5.
+\]
+又
+\[
+\varphi(x)=f(x,g(x)).
+\]
+所以
+\[
+\varphi'(1)=f_x(1,1)+f_y(1,1)g'(1)
+=2+3\cdot5=17.
+\]
+因此
+\[
+\left.(\varphi^3)'(x)\right|_{x=1}
+=3\varphi^2(1)\varphi'(1)
+=3\cdot1^2\cdot17
+=\boxed{51}.
+\]
+\examnote{嵌套复合 \(f[x,f(x,x)]\) 要从内层 \(g(x)=f(x,x)\) 开始求导。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{31.} 设 \(u=f(x,y,z)\) 有连续的一阶偏导数，又函数 \(y=y(x)\) 及 \(z=z(x)\) 分别由
+\[
+e^{xy}-xy=2
+\]
+和
+\[
+e^x=\int_0^{x-z}\frac{\sin t}{t}\,dt
+\]
+确定，求
+\[
+\frac{du}{dx}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{链式法则：
+\[
+\frac{du}{dx}=f_x+f_y y'+f_z z'.
+\]
+分别由两个隐式方程求 \(y',z'\)。}
+对
+\[
+e^{xy}-xy=2
+\]
+求导：
+\[
+e^{xy}(y+xy')-(y+xy')=0.
+\]
+由于由原方程可知 \(e^{xy}-1=xy+1\ne0\)，故
+\[
+y+xy'=0,\qquad y'=-\frac{y}{x}.
+\]
+对
+\[
+e^x=\int_0^{x-z}\frac{\sin t}{t}\,dt
+\]
+求导：
+\[
+e^x=\frac{\sin(x-z)}{x-z}(1-z').
+\]
+因此
+\[
+z'=1-\frac{e^x(x-z)}{\sin(x-z)}.
+\]
+所以
+\[
+\boxed{
+\frac{du}{dx}
+=f_x-\frac{y}{x}f_y
++\left[1-\frac{e^x(x-z)}{\sin(x-z)}\right]f_z }.
+\]
+其中 \(f_x,f_y,f_z\) 均在 \((x,y,z)\) 处取值。
+\examnote{多层隐函数链式求导时，先分别求出内层函数导数，再代入总微分。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{32.} 设变换
+\[
+u=x-2y,\qquad v=x+ay\quad(a\ne-2)
+\]
+可把方程
+\[
+6z_{xx}+z_{xy}-z_{yy}=0
+\]
+简化为
+\[
+z_{uv}=0.
+\]
+求常数 \(a\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{用算子变换：
+\[
+\partial_x=\partial_u+\partial_v,\qquad
+\partial_y=-2\partial_u+a\partial_v.
+\]}
+有
+\[
+z_{xx}=z_{uu}+2z_{uv}+z_{vv},
+\]
+\[
+z_{xy}=-2z_{uu}+(a-2)z_{uv}+az_{vv},
+\]
+\[
+z_{yy}=4z_{uu}-4az_{uv}+a^2z_{vv}.
+\]
+代入
+\[
+6z_{xx}+z_{xy}-z_{yy}
+\]
+得
+\[
+(10+5a)z_{uv}+(6+a-a^2)z_{vv}.
+\]
+要化为 \(z_{uv}=0\)，需
+\[
+6+a-a^2=0.
+\]
+解得
+\[
+a=3\quad\text{或}\quad a=-2.
+\]
+题设 \(a\ne-2\)，故
+\[
+\boxed{a=3}.
+\]
+\examnote{二阶线性方程变量代换，目标是让 \(z_{uu}\)、\(z_{vv}\) 项系数消失。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{33.} 设函数 \(f(u)\) 有连续一阶导数，\(f(0)=2\)，且
+\[
+z=xf\left(\frac{y}{x}\right)+yf\left(\frac{y}{x}\right)
+\]
+满足
+\[
+\frac{\partial z}{\partial x}+\frac{\partial z}{\partial y}=\frac{y}{x}\qquad(x\ne0).
+\]
+求 \(z\) 的表达式。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{令 \(v=y/x\)，则 \(z=(x+y)f(v)=x(1+v)f(v)\)。代入偏微分方程得到关于 \(f\) 的一阶线性方程。}
+令
+\[
+v=\frac{y}{x}.
+\]
+则
+\[
+z=x(1+v)f(v).
+\]
+直接计算可得
+\[
+z_x+z_y=2f(v)+(1-v^2)f'(v).
+\]
+题设给出
+\[
+(1-v^2)f'(v)+2f(v)=v.
+\]
+这是线性方程：
+\[
+f'(v)+\frac{2}{1-v^2}f(v)=\frac{v}{1-v^2}.
+\]
+积分因子为
+\[
+\mu(v)=\frac{1+v}{1-v}.
+\]
+于是
+\[
+\left[\frac{1+v}{1-v}f(v)\right]'
+=\frac{v}{(1-v)^2}.
+\]
+积分得
+\[
+\frac{1+v}{1-v}f(v)
+=\frac{1}{1-v}+\ln(1-v)+C.
+\]
+由 \(f(0)=2\)，得
+\[
+1+C=2,\qquad C=1.
+\]
+所以
+\[
+f(v)=\frac{2-v+(1-v)\ln(1-v)}{1+v}.
+\]
+因此
+\[
+z=x(1+v)f(v)
+=x\left[2-v+(1-v)\ln(1-v)\right].
+\]
+代回 \(v=y/x\)，得
+\[
+\boxed{z=2x-y+(x-y)\ln\left(1-\frac{y}{x}\right)}.
+\]
+\examnote{形如 \(f(y/x)\) 的题，令 \(v=y/x\) 是核心。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{34.} 设函数 \(f(x,y)\) 有连续二阶偏导数，满足
+\[
+\frac{\partial^2f}{\partial x\partial y}=0,
+\]
+且在极坐标系下可表示成
+\[
+f(x,y)=g(r),\qquad r=\sqrt{x^2+y^2}.
+\]
+求 \(f(x,y)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{径向函数 \(f=g(r)\) 的混合偏导含因子 \(xy[rg''(r)-g'(r)]\)。}
+有
+\[
+f_x=g'(r)\frac{x}{r}.
+\]
+再对 \(y\) 求导：
+\[
+f_{xy}=xy\left(\frac{g''(r)}{r^2}-\frac{g'(r)}{r^3}\right)
+=\frac{xy}{r^3}[rg''(r)-g'(r)].
+\]
+题设 \(f_{xy}=0\)，故
+\[
+rg''(r)-g'(r)=0.
+\]
+令 \(p=g'\)，则
+\[
+rp'-p=0,
+\]
+所以
+\[
+p=Cr.
+\]
+积分得
+\[
+g(r)=\frac C2r^2+D.
+\]
+因此
+\[
+\boxed{f(x,y)=A(x^2+y^2)+B}.
+\]
+\examnote{径向函数求偏导时，先写 \(r_x=x/r,\ r_y=y/r\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{35.} 设
+\[
+z=f\left(\sqrt{x^2+y^2}\right)
+\]
+具有二阶连续偏导数，且
+\[
+z_{xx}+z_{yy}-\frac1x z_x+z=x^2+y^2.
+\]
+求函数 \(z\) 的表达式。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{设 \(r=\sqrt{x^2+y^2}\)，径向函数满足
+\[
+z_{xx}+z_{yy}=f''(r)+\frac1r f'(r),\qquad \frac1x z_x=\frac1r f'(r).
+\]
+一阶项正好抵消。}
+令
+\[
+r=\sqrt{x^2+y^2},\qquad z=f(r).
+\]
+则
+\[
+z_{xx}+z_{yy}=f''(r)+\frac1r f'(r),
+\]
+且
+\[
+\frac1x z_x=\frac1x f'(r)\frac{x}{r}=\frac1r f'(r).
+\]
+故方程化为
+\[
+f''(r)+f(r)=r^2.
+\]
+解此常微分方程：
+\[
+f(r)=C_1\cos r+C_2\sin r+r^2-2.
+\]
+由于 \(z=f(r)\) 在原点附近具有二阶连续偏导，需 \(f'(0)=0\)，故 \(C_2=0\)。于是
+\[
+\boxed{z=C\cos\sqrt{x^2+y^2}+x^2+y^2-2}.
+\]
+\examnote{径向 PDE 常能化为关于 \(r\) 的常微分方程；还要检查原点光滑性。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{36.} 求函数
+\[
+f(x,y)=x^4+y^4-(x+y)^2
+\]
+的极值。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先求驻点，再用 Hessian 判别；判别失效的点需另作路径分析。}
+一阶偏导为
+\[
+f_x=4x^3-2(x+y),\qquad
+f_y=4y^3-2(x+y).
+\]
+令 \(f_x=f_y=0\)，相减得
+\[
+4(x^3-y^3)=0,
+\]
+所以
+\[
+x=y.
+\]
+代入
+\[
+4x^3-4x=0,
+\]
+得
+\[
+x=0,\ \pm1.
+\]
+驻点为
+\[
+(0,0),\quad(1,1),\quad(-1,-1).
+\]
+二阶偏导：
+\[
+f_{xx}=12x^2-2,\qquad f_{yy}=12y^2-2,\qquad f_{xy}=-2.
+\]
+在 \((1,1)\) 与 \((-1,-1)\) 处，
+\[
+A=10,\quad B=-2,\quad C=10,\quad AC-B^2=96>0,
+\]
+且 \(A>0\)，故均为极小值点。极小值为
+\[
+f(1,1)=f(-1,-1)=2-4=-2.
+\]
+在 \((0,0)\) 处 Hessian 判别失效。沿 \(y=-x\)，
+\[
+f(x,-x)=2x^4>0;
+\]
+沿 \(y=x\)，
+\[
+f(x,x)=2x^4-4x^2<0
+\]
+在 \(x\ne0\) 且充分小时成立，故 \((0,0)\) 不是极值点。
+
+综上，函数在
+\[
+\boxed{(1,1),\ (-1,-1)}
+\]
+处取得极小值
+\[
+\boxed{-2},
+\]
+无极大值。
+\examnote{Hessian 行列式为零时不能下结论，要用不同路径判断。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{37.} 求二元函数
+\[
+f(x,y)=\frac{x^2}{2+y^2}+y\ln y\qquad(y>0)
+\]
+的极值。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先求驻点，再用 Hessian 判别。注意定义域要求 \(y>0\)。}
+一阶偏导为
+\[
+f_x=\frac{2x}{2+y^2},
+\]
+\[
+f_y=-\frac{2x^2y}{(2+y^2)^2}+\ln y+1.
+\]
+令 \(f_x=0\)，得
+\[
+x=0.
+\]
+再代入 \(f_y=0\)，得
+\[
+\ln y+1=0,\qquad y=e^{-1}.
+\]
+唯一驻点为
+\[
+\left(0,\frac1e\right).
+\]
+在该点，
+\[
+f_{xx}=\frac{2}{2+y^2}>0,\qquad f_{xy}=0,\qquad f_{yy}=\frac1y=e>0.
+\]
+Hessian 正定，故该点为极小值点。极小值为
+\[
+f\left(0,\frac1e\right)=\frac1e\ln\frac1e=-\frac1e.
+\]
+因此
+\[
+\boxed{\text{极小值 }-\frac1e,\text{ 在 }(0,1/e)\text{ 处取得；无极大值。}}
+\]
+\examnote{含 \(y\ln y\) 的题要先写明定义域 \(y>0\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{38.} 设
+\[
+z=f(xy,\,y g(x)),
+\]
+其中 \(f\) 具有二阶连续偏导数，函数 \(g(x)\) 可导且在 \(x=1\) 处取得极值，
+\[
+g(1)=1.
+\]
+求
+\[
+\left.\frac{\partial^2z}{\partial x\partial y}\right|_{(1,1)}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{令 \(u=xy,\ v=yg(x)\)。因 \(g\) 在 \(x=1\) 处取极值，\(g'(1)=0\)。}
+设
+\[
+u=xy,\qquad v=yg(x).
+\]
+则
+\[
+z_x=f_1u_x+f_2v_x
+=y f_1+yg'(x)f_2.
+\]
+再对 \(y\) 求导：
+\[
+z_{xy}=f_1+y(f_{11}u_y+f_{12}v_y)
+g'(x)f_2+yg'(x)(f_{21}u_y+f_{22}v_y).
+\]
+在 \((x,y)=(1,1)\) 处，
+\[
+u=1,\quad v=1,\quad u_y=1,\quad v_y=g(1)=1,\quad g'(1)=0.
+\]
+故
+\[
+\boxed{z_{xy}(1,1)=f_1(1,1)+f_{11}(1,1)+f_{12}(1,1)}.
+\]
+\examnote{极值条件 \(g'(1)=0\) 会消去一批链式法则项。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{39.} 已知函数 \(f(u,v)\) 具有二阶连续偏导数，\(f(1,1)=2\) 是 \(f(u,v)\) 的极值，且
+\[
+z=f(x+y,\ f(x,y)).
+\]
+求
+\[
+\left.z_{xy}\right|_{(1,1)}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{按页图题面，外层 \(f\) 在 \((1,1)\) 处有极值，但 \(z(1,1)\) 的外层函数取值点是 \((2,2)\)，题目未给出 \(f\) 在 \((2,2)\) 处的偏导信息。}
+在 \((x,y)=(1,1)\) 处，
+\[
+x+y=2,\qquad f(x,y)=f(1,1)=2.
+\]
+因此外层函数 \(f\) 的取值点为
+\[
+(2,2).
+\]
+而题设只给出
+\[
+f(1,1)=2
+\]
+是 \(f(u,v)\) 的极值，能推出的是
+\[
+f_u(1,1)=f_v(1,1)=0,
+\]
+并不能推出 \(f\) 在 \((2,2)\) 处的偏导数信息。
+
+所以按页图题面，\(\left.z_{xy}\right|_{(1,1)}\) 不能由已知条件唯一确定。
+\[
+\boxed{\text{题面条件不足，无法唯一确定。}}
+\]
+\examnote{复合函数题必须核对“外层函数实际取值点”。极值点给的是 \((1,1)\)，但本题外层落在 \((2,2)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{40.} 求由方程
+\[
+2x^2+2y^2+z^2+8xz-z+8=0
+\]
+所确定的函数 \(z=f(x,y)\) 的极值点。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{隐函数极值点满足 \(z_x=z_y=0\)。在 \(F_z\ne0\) 时，即 \(F_x=F_y=0\)。}
+令
+\[
+F=2x^2+2y^2+z^2+8xz-z+8.
+\]
+则
+\[
+F_x=4x+8z,\qquad F_y=4y,\qquad F_z=2z+8x-1.
+\]
+极值点需满足
+\[
+F_x=0,\qquad F_y=0.
+\]
+故
+\[
+x=-2z,\qquad y=0.
+\]
+代入原方程：
+\[
+2(4z^2)+z^2+8(-2z)z-z+8=0,
+\]
+即
+\[
+7z^2+z-8=0.
+\]
+解得
+\[
+z=1,\qquad z=-\frac87.
+\]
+对应点为
+\[
+(-2,0,1),\qquad \left(\frac{16}{7},0,-\frac87\right).
+\]
+分类：在极值点处，
+\[
+z_{xx}=-\frac{F_{xx}}{F_z},\qquad z_{yy}=-\frac{F_{yy}}{F_z},\qquad z_{xy}=0.
+\]
+对 \((-2,0,1)\)，
+\[
+F_z=-15<0,
+\]
+Hessian 正定，故为极小值点。对 \((16/7,0,-8/7)\)，
+\[
+F_z=15>0,
+\]
+Hessian 负定，故为极大值点。
+
+所以
+\[
+\boxed{(-2,0)\text{ 是极小值点},\quad (16/7,0)\text{ 是极大值点}.}
+\]
+\examnote{隐函数极值点先解 \(F_x=F_y=0\)，再用二阶隐导判别。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{41.} 设 \(f(x,y)\) 有二阶连续偏导数，
+\[
+g(x,y)=f(e^{xy},x^2+y^2),
+\]
+且
+\[
+f(x,y)=1-x-y+o\bigl((x-1)^2+y^2\bigr).
+\]
+证明 \(g(x,y)\) 在 \((0,0)\) 取得极值，判断此极值是极大值还是极小值，并求出此极值。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{把 \(e^{xy}\) 和 \(x^2+y^2\) 代入 \(f\) 在 \((1,0)\) 附近的展开。}
+由展开式得
+\[
+f(1,0)=0.
+\]
+当 \((x,y)\to(0,0)\) 时，
+\[
+e^{xy}=1+xy+o(x^2+y^2),
+\]
+且
+\[
+x^2+y^2=o(1).
+\]
+代入
+\[
+f(X,Y)=1-X-Y+o((X-1)^2+Y^2),
+\]
+其中
+\[
+X=e^{xy},\qquad Y=x^2+y^2.
+\]
+得
+\[
+g(x,y)
+=1-e^{xy}-(x^2+y^2)+o(x^2+y^2).
+\]
+因此
+\[
+g(x,y)
+=-xy-x^2-y^2+o(x^2+y^2).
+\]
+二次型
+\[
+x^2+xy+y^2
+\]
+正定，所以
+\[
+-x^2-xy-y^2
+\]
+负定。故 \(g\) 在 \((0,0)\) 取得极大值，极大值为
+\[
+g(0,0)=f(1,0)=\boxed{0}.
+\]
+\examnote{复合极值题常通过局部展开转化为二次型正负定判断。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{42.} 求函数
+\[
+f(x,y)=x^2+2y^2-x^2y^2
+\]
+在区域
+\[
+D=\{(x,y)\mid x^2+y^2\le4,\ y\ge0\}
+\]
+上的最大值和最小值。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{闭区域上连续函数必有最值。分别考察内部驻点、直径边界 \(y=0\) 与半圆边界 \(x^2+y^2=4\)。}
+内部驻点满足
+\[
+f_x=2x(1-y^2)=0,\qquad
+f_y=2y(2-x^2)=0.
+\]
+在内部 \(y>0\)，得
+\[
+y=1,\qquad x=\pm\sqrt2,
+\]
+函数值为
+\[
+f(\pm\sqrt2,1)=2.
+\]
+边界 \(y=0\) 上，
+\[
+f=x^2,\qquad 0\le x^2\le4,
+\]
+故取值范围为 \([0,4]\)。
+
+边界 \(x^2+y^2=4,\ y\ge0\) 上，令 \(s=x^2\)，则 \(y^2=4-s\)，
+\[
+f=s+2(4-s)-s(4-s)=s^2-5s+8,\qquad 0\le s\le4.
+\]
+该二次函数在 \(s=5/2\) 处取最小值 \(7/4\)，在端点处最大值为 \(8\)。
+
+综合比较，最小值为
+\[
+\boxed{0}
+\]
+在 \((0,0)\) 处取得；最大值为
+\[
+\boxed{8}
+\]
+在 \((0,2)\) 处取得。
+\examnote{闭区域最值题按“内部驻点 + 各段边界”逐项比较。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{43.} 设函数 \(z=z(x,y)\) 的微分为
+\[
+dz=\left(2x+\frac12y\right)dx+\left(\frac12x+4y\right)dy,
+\]
+且 \(z(0,0)=0\)。求 \(z=z(x,y)\) 在
+\[
+4x^2+y^2\le25
+\]
+上的最大值。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先由全微分还原 \(z\)，再在椭圆上求正定二次型最大值。}
+由
+\[
+z_x=2x+\frac12y
+\]
+积分得
+\[
+z=x^2+\frac12xy+\varphi(y).
+\]
+再由
+\[
+z_y=\frac12x+\varphi'(y)=\frac12x+4y
+\]
+得
+\[
+\varphi(y)=2y^2+C.
+\]
+由 \(z(0,0)=0\)，得 \(C=0\)。故
+\[
+z=x^2+\frac12xy+2y^2.
+\]
+令
+\[
+X=2x,\qquad Y=y,
+\]
+则约束为
+\[
+X^2+Y^2\le25,
+\]
+且
+\[
+z=\frac14X^2+\frac14XY+2Y^2.
+\]
+对应矩阵为
+\[
+\begin{pmatrix}
+1/4&1/8\\
+1/8&2
+\end{pmatrix}.
+\]
+其最大特征值为
+\[
+\lambda_{\max}=\frac{9+5\sqrt2}{8}.
+\]
+所以最大值为
+\[
+\boxed{\frac{25(9+5\sqrt2)}{8}}.
+\]
+\examnote{椭圆约束下二次型最值，可先把椭圆化成圆，再求矩阵特征值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{44.} 求函数
+\[
+u=xy+2yz
+\]
+在约束条件
+\[
+x^2+y^2+z^2=10
+\]
+下的最大值和最小值。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{这是球面上二次型最值，等于半径平方乘矩阵特征值。}
+写成二次型
+\[
+u=
+\begin{pmatrix}x&y&z\end{pmatrix}
+\begin{pmatrix}
+0&1/2&0\\
+1/2&0&1\\
+0&1&0
+\end{pmatrix}
+\begin{pmatrix}x\\y\\z\end{pmatrix}.
+\]
+该矩阵特征值为
+\[
+0,\quad \frac{\sqrt5}{2},\quad -\frac{\sqrt5}{2}.
+\]
+在
+\[
+x^2+y^2+z^2=10
+\]
+上，二次型最大值和最小值分别为
+\[
+10\cdot\frac{\sqrt5}{2}=5\sqrt5,
+\]
+\[
+10\cdot\left(-\frac{\sqrt5}{2}\right)=-5\sqrt5.
+\]
+故
+\[
+\boxed{u_{\max}=5\sqrt5,\qquad u_{\min}=-5\sqrt5}.
+\]
+\examnote{球面约束下的二次型最值就是特征值问题。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{45.} 求函数
+\[
+u=x^2+y^2+z^2
+\]
+在约束条件
+\[
+z=x^2+y^2,\qquad x+y+z=4
+\]
+下的最大值与最小值。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{由第一个约束令 \(z=x^2+y^2\)，则目标化为 \(u=z+z^2\)。再确定 \(z\) 的可取范围。}
+由
+\[
+z=x^2+y^2
+\]
+和
+\[
+x+y+z=4
+\]
+得
+\[
+x+y=4-z.
+\]
+对实数 \(x,y\)，有
+\[
+(x+y)^2\le2(x^2+y^2)=2z.
+\]
+所以
+\[
+(4-z)^2\le2z.
+\]
+即
+\[
+z^2-10z+16\le0,
+\]
+故
+\[
+2\le z\le8.
+\]
+目标函数
+\[
+u=x^2+y^2+z^2=z+z^2
+\]
+在 \(z\ge0\) 上单调递增，因此
+\[
+u_{\min}=2+2^2=6,
+\]
+\[
+u_{\max}=8+8^2=72.
+\]
+当 \(z=2\) 时，\(x+y=2,\ x^2+y^2=2\)，得 \(x=y=1\)。当 \(z=8\) 时，\(x+y=-4,\ x^2+y^2=8\)，得 \(x=y=-2\)。
+故
+\[
+\boxed{u_{\min}=6,\quad u_{\max}=72}.
+\]
+\examnote{多个约束时，能消元先消元；本题消成单变量 \(z\) 最快。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{46.} 在椭圆
+\[
+3x^2+2xy+3y^2=1
+\]
+的第一象限部分上求一点，使该点的切线与两坐标轴所围成三角形面积最小，并求面积的最小值。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{二次曲线 \(Q(x,y)=1\) 在点 \((x_0,y_0)\) 处的切线可由极化写出。}
+设切点为 \((x_0,y_0)\)。椭圆对应二次型
+\[
+Q=3x^2+2xy+3y^2.
+\]
+切线为
+\[
+(3x_0+y_0)x+(x_0+3y_0)y=1.
+\]
+两截距分别为
+\[
+a=\frac1{3x_0+y_0},\qquad
+b=\frac1{x_0+3y_0}.
+\]
+面积
+\[
+S=\frac12ab
+=\frac1{2(3x_0+y_0)(x_0+3y_0)}.
+\]
+要使 \(S\) 最小，需使
+\[
+P=(3x+y)(x+3y)
+=3x^2+10xy+3y^2
+\]
+最大，且
+\[
+3x^2+2xy+3y^2=1.
+\]
+注意
+\[
+P=1+8xy.
+\]
+在第一象限内，由对称性或 \(x,y\) 的乘积最大条件，取
+\[
+x=y.
+\]
+代入约束：
+\[
+8x^2=1,
+\qquad x=y=\frac1{2\sqrt2}.
+\]
+此时
+\[
+P=2,
+\]
+所以
+\[
+S_{\min}=\frac1{2P}=\boxed{\frac14}.
+\]
+所求点为
+\[
+\boxed{\left(\frac1{2\sqrt2},\frac1{2\sqrt2}\right)}.
+\]
+\examnote{椭圆切线截距面积题，常把面积最小转为截距分母乘积最大。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{47.}（仅数学一要求）已知曲线
+\[
+C:\begin{cases}
+x^2+y^2-2z^2=0,\\
+x+y+3z=5.
+\end{cases}
+\]
+求 \(C\) 上距离 \(xOy\) 面最远的点和最近的点。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{到 \(xOy\) 面距离为 \(|z|\)。由约束推出 \(z\) 的取值范围。}
+由平面方程
+\[
+x+y=5-3z.
+\]
+又
+\[
+x^2+y^2=2z^2.
+\]
+实数 \(x,y\) 满足
+\[
+(x+y)^2\le2(x^2+y^2)=4z^2.
+\]
+所以
+\[
+(5-3z)^2\le4z^2.
+\]
+化简：
+\[
+z^2-6z+5\le0,
+\]
+故
+\[
+1\le z\le5.
+\]
+因此最近点对应 \(z=1\)，最远点对应 \(z=5\)。
+
+当 \(z=1\) 时，
+\[
+x+y=2,\quad x^2+y^2=2,
+\]
+得
+\[
+x=y=1.
+\]
+最近点为
+\[
+\boxed{(1,1,1)}.
+\]
+当 \(z=5\) 时，
+\[
+x+y=-10,\quad x^2+y^2=50,
+\]
+得
+\[
+x=y=-5.
+\]
+最远点为
+\[
+\boxed{(-5,-5,5)}.
+\]
+\examnote{距离坐标面最远/最近，本质是求对应坐标绝对值的范围。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{48.}（仅数学一要求）求椭球面
+\[
+\frac{x^2}{3}+\frac{y^2}{2}+z^2=1
+\]
+被平面
+\[
+x+y+z=0
+\]
+截得的椭圆长半轴与短半轴之长。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{中心截面椭圆的半轴由二次型
+\[
+\operatorname{diag}(1/3,1/2,1)
+\]
+限制在平面 \(x+y+z=0\) 上的特征值决定。}
+取平面 \(x+y+z=0\) 的一组标准正交基
+\[
+e_1=\frac{1}{\sqrt2}(1,-1,0),\qquad
+e_2=\frac{1}{\sqrt6}(1,1,-2).
+\]
+在该基下，二次型矩阵为
+\[
+\begin{pmatrix}
+5/12&-1/(12\sqrt3)\\
+-1/(12\sqrt3)&29/36
+\end{pmatrix}.
+\]
+其特征值为
+\[
+\lambda_1=\frac{11-\sqrt{13}}{18},\qquad
+\lambda_2=\frac{11+\sqrt{13}}{18}.
+\]
+截面椭圆方程化为
+\[
+\lambda_1 \xi^2+\lambda_2\eta^2=1.
+\]
+故长半轴为
+\[
+a=\frac1{\sqrt{\lambda_1}}
+=\sqrt{\frac{18}{11-\sqrt{13}}}
+=\boxed{\sqrt{\frac{11+\sqrt{13}}{6}}},
+\]
+短半轴为
+\[
+b=\frac1{\sqrt{\lambda_2}}
+=\sqrt{\frac{18}{11+\sqrt{13}}}
+=\boxed{\sqrt{\frac{11-\sqrt{13}}{6}}}.
+\]
+\examnote{中心椭球被过原点平面截得椭圆，半轴长度来自限制二次型的特征值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{49.} 已知 \(p>1\)，
+\[
+\frac1p+\frac1q=1,\qquad x,y>0.
+\]
+证明：
+\[
+xy\le \frac{x^p}{p}+\frac{y^q}{q}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{这是 Young 不等式。可由凸函数或一元函数最小值证明。}
+固定 \(y>0\)，考虑
+\[
+\phi(x)=\frac{x^p}{p}-xy+\frac{y^q}{q}.
+\]
+则
+\[
+\phi'(x)=x^{p-1}-y.
+\]
+令 \(\phi'(x)=0\)，得
+\[
+x=y^{1/(p-1)}.
+\]
+由
+\[
+\phi''(x)=(p-1)x^{p-2}>0,
+\]
+该点为最小点。
+
+又由
+\[
+\frac1p+\frac1q=1
+\]
+得
+\[
+q=\frac{p}{p-1}.
+\]
+在 \(x=y^{1/(p-1)}\) 处，
+\[
+x^p=y^{p/(p-1)}=y^q,
+\]
+且
+\[
+xy=y^{1+1/(p-1)}=y^q.
+\]
+所以
+\[
+\phi_{\min}=\frac{y^q}{p}-y^q+\frac{y^q}{q}
+=y^q\left(\frac1p+\frac1q-1\right)=0.
+\]
+故对任意 \(x,y>0\)，
+\[
+\phi(x)\ge0,
+\]
+即
+\[
+\boxed{xy\le \frac{x^p}{p}+\frac{y^q}{q}}.
+\]
+\examnote{Young 不等式是 Hölder、Minkowski 等不等式的基础，考研中常用一元函数最值证明。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{52.} 设 \(f(x,y)\) 在圆域
+\[
+x^2+y^2\le1
+\]
+上有连续一阶偏导数，且 \(|f(x,y)|\le1\)。求证在单位圆内至少有一点
+\((x_0,y_0)\)，可使
+\[
+\left[\frac{\partial f(x_0,y_0)}{\partial x}\right]^2+
+\left[\frac{\partial f(x_0,y_0)}{\partial y}\right]^2<16.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{题目要证明“存在一点梯度模小于 \(4\)”。这类题不能只沿某一条直径套中值定理，因为一维中值定理只能控制某个方向导数，不能直接控制整个梯度模。关键是从反面看：若处处 \(|\nabla f|\ge4\)，沿最速下降方向每走单位长度，函数值至少下降 \(4\)，而题设 \(|f|\le1\) 只允许函数值总变化不超过 \(2\)，这会与单位圆的半径为 \(1\) 冲突。}
+
+记
+\[
+D=\{(x,y):x^2+y^2\le1\},\qquad \nabla f=(f_x,f_y).
+\]
+用反证法。假设结论不成立，则对任意 \((x,y)\in D\)，都有
+\[
+f_x^2(x,y)+f_y^2(x,y)\ge16,
+\]
+即
+\[
+|\nabla f(x,y)|\ge4.
+\]
+特别地，\(\nabla f\) 在 \(D\) 内处处不为零。
+
+从圆心 \(O=(0,0)\) 出发，沿函数的最速下降方向作曲线 \(\gamma(s)\)，并用弧长 \(s\) 作参数：
+\[
+\gamma(0)=O,\qquad
+\gamma'(s)=-\frac{\nabla f(\gamma(s))}{|\nabla f(\gamma(s))|}.
+\]
+由于 \(\nabla f\) 连续且在反设下不为零，上式所给方向场连续，故这样的下降曲线在到达边界前可以存在。又因为
+\[
+|\gamma'(s)|=1,
+\]
+所以参数 \(s\) 正是从圆心走过的路程。
+
+沿这条曲线对 \(f(\gamma(s))\) 求导，得
+\[
+\frac{\mathrm d}{\mathrm ds}f(\gamma(s))
+=\nabla f(\gamma(s))\cdot \gamma'(s)
+=-|\nabla f(\gamma(s))|
+\le -4.
+\]
+于是只要曲线仍在圆域内，就有
+\[
+f(\gamma(s))\le f(O)-4s.
+\]
+而题设给出
+\[
+-1\le f(O)\le1,\qquad -1\le f(\gamma(s))\le1.
+\]
+若曲线在圆域内至少走到 \(s=\frac12\)，则
+\[
+f(\gamma(1/2))\le f(O)-2\le -1.
+\]
+并且当 \(f(O)<1\) 时右端严格小于 \(-1\)，直接矛盾；当 \(f(O)=1\) 时，由于一开始导数
+\[
+\frac{\mathrm d}{\mathrm ds}f(\gamma(s))\le-4
+\]
+且处处梯度不小于 \(4\)，任取 \(s>\frac12\) 便得到
+\[
+f(\gamma(s))< -1,
+\]
+仍与 \(|f|\le1\) 矛盾。故下降曲线不可能在圆域内走到长度 \(\frac12\)。
+
+但是从圆心到单位圆边界的最短距离等于 \(1\)。任何从圆心出发、在长度小于 \(1\) 时到达边界的曲线都不存在，因为曲线长度至少不小于两端点的直线距离。因此下降曲线若要离开单位圆，至少要走 \(1\) 的路程；而上面推出它在走到 \(\frac12\) 之前就已经不可能继续留在圆域内。矛盾。
+
+所以反设不成立，必存在 \((x_0,y_0)\in D\)，使
+\[
+|\nabla f(x_0,y_0)|<4,
+\]
+即
+\[
+\boxed{
+\left[\frac{\partial f(x_0,y_0)}{\partial x}\right]^2+
+\left[\frac{\partial f(x_0,y_0)}{\partial y}\right]^2<16
+}.
+\]
+
+\examnote{本题的考研要点是把 \(f_x^2+f_y^2\) 识别为梯度模平方。若只证明某点某个方向导数小于 \(4\)，并不能推出梯度模小于 \(4\)；必须利用二维区域的整体几何约束。}
+\end{solutionblock}
+
+\section{本章小结}
+第五章原题中可见题号已全部补充解析。第 \(25\) 题与第 \(39\) 题按题面文字存在条件不足之处，解析中已给出说明与反例，便于复习时和原书勘误核对。

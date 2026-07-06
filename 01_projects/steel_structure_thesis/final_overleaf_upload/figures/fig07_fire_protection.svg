@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs>
+<marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#1F4E73"/>
+</marker>
+<marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#6C757D"/>
+</marker>
+<marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#D8892C"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1000" fill="#FFFFFF"/>
+<text x="800" y="62" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="40" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+钢结构防火保护构造示意图
+</text>
+<text x="800" y="108" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+防火层降低钢材升温速度，保证耐火极限
+</text>
+<line x1="100" y1="132" x2="1500" y2="132" stroke="#CBD3DA" stroke-width="2"/>
+<rect x="620" y="310" width="360" height="360" rx="10" fill="#DDECF7" stroke="#1F4E73" stroke-width="3"/>
+<rect x="570" y="260" width="460" height="460" rx="18" fill="#F7E5CC" stroke="#D8892C" stroke-width="3"/>
+<rect x="620" y="310" width="360" height="360" rx="10" fill="#DDECF7" stroke="#1F4E73" stroke-width="3"/>
+<text x="800" y="490" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="32" fill="#1F4E73" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+钢构件
+</text>
+<text x="800" y="565" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#1F4E73" text-anchor="middle" dominant-baseline="middle">
+承重主体
+</text>
+<text x="800" y="250" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="28" fill="#D8892C" text-anchor="middle" dominant-baseline="middle">
+防火保护层
+</text>
+<circle cx="800" cy="490" r="230" fill="#FFFFFF" stroke="#B65C5C" stroke-width="4"/>
+<text x="1180" y="490" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" fill="#B65C5C" text-anchor="middle" dominant-baseline="middle">
+火灾热流
+</text>
+<line x1="1080" y1="490" x2="965" y2="490" stroke="#B65C5C" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<circle cx="800" cy="490" r="170" fill="#FFFFFF" stroke="#D8892C" stroke-width="4"/>
+<text x="1180" y="430" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" fill="#D8892C" text-anchor="middle" dominant-baseline="middle">
+温度衰减
+</text>
+<line x1="1080" y1="430" x2="965" y2="460" stroke="#D8892C" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<circle cx="800" cy="490" r="110" fill="#FFFFFF" stroke="#4F8F5B" stroke-width="4"/>
+<text x="1180" y="370" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle">
+钢材温升受控
+</text>
+<line x1="1080" y1="370" x2="965" y2="430" stroke="#4F8F5B" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<rect x="120" y="280" width="340" height="140" rx="14" fill="#EEF1F4" stroke="#6C757D" stroke-width="3"/>
+<text x="290" y="314" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+常见做法
+</text>
+<text x="290" y="372" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="290" dy="-26.0">厚型/薄型防火涂料</tspan>
+<tspan x="290" dy="26">防火板包覆</tspan>
+<tspan x="290" dy="26">混凝土或砂浆包覆</tspan>
+</text>
+<rect x="120" y="555" width="340" height="140" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="290" y="589" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+验收重点
+</text>
+<text x="290" y="647" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="290" dy="-26.0">涂层厚度</tspan>
+<tspan x="290" dy="26">粘结强度</tspan>
+<tspan x="290" dy="26">完整性与耐火极限</tspan>
+</text>
+</svg>

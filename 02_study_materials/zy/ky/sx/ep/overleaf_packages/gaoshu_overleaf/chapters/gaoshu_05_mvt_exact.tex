@@ -1,0 +1,1311 @@
+\chapter{高等数学：中值定理}
+
+\section{中值定理}
+
+\begin{problemblock}
+\textbf{例1.} 设 \(f(x)\) 在 \([0,1]\) 连续，且 \(f(0)=f(1)\)。证明：在 \([0,1]\) 上至少存在一点 \(\xi\)，使得
+\[
+f(\xi)=f\left(\xi+\frac1n\right).
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{要证明相隔 \(1/n\) 的两个函数值相等，先考察差函数 \(F(x)=f(x)-f(x+1/n)\)。若差函数无零点，则它在整个区间上同号，再把这些差值相加得到矛盾。}
+在区间 \(\left[0,1-\frac1n\right]\) 上定义
+\[
+F(x)=f(x)-f\left(x+\frac1n\right).
+\]
+若不存在所求的 \(\xi\)，则 \(F(x)\ne0\) 对一切 \(x\in[0,1-\frac1n]\) 成立。由于 \(F\) 连续，\(F\) 在该区间上只能恒正或恒负。
+
+取 \(x=0,\frac1n,\frac2n,\ldots,\frac{n-1}{n}\)，则
+\[
+F\left(\frac{k}{n}\right)
+=f\left(\frac{k}{n}\right)-f\left(\frac{k+1}{n}\right),\qquad k=0,1,\ldots,n-1.
+\]
+这些数若全同号，则其和不可能为 \(0\)。但
+\[
+\sum_{k=0}^{n-1}
+\left[
+f\left(\frac{k}{n}\right)-f\left(\frac{k+1}{n}\right)
+\right]
+=f(0)-f(1)=0,
+\]
+矛盾。因此 \(F\) 必有零点，即存在
+\[
+\xi\in\left[0,1-\frac1n\right]
+\]
+使
+\[
+f(\xi)=f\left(\xi+\frac1n\right).
+\]
+\answer{命题成立，且可取 \(\xi\in\left[0,1-\frac1n\right]\)。}
+\examnote{这类“平移后函数值相等”的题，常用差函数加等距点求和，求和后会发生望远镜消去。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例2.} \(f(x)\) 在 \(\left[0,\frac12\right]\) 上二阶可导，\(f(0)=f'(0)\)，\(f\left(\frac12\right)=0\)。证明：存在 \(\xi\in\left(0,\frac12\right)\)，使得
+\[
+f'(\xi)=\frac{1-2\xi}{3}f''(\xi).
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{目标式可改写为 \((1-2\xi)f''(\xi)-3f'(\xi)=0\)。这正是 \((1-2x)^{3/2}f'(x)\) 的导数中出现的因子。}
+令
+\[
+G(x)=(1-2x)^{3/2}f'(x),\qquad 0\le x\le\frac12.
+\]
+则
+\[
+G'(x)=(1-2x)^{1/2}\bigl[(1-2x)f''(x)-3f'(x)\bigr].
+\]
+因此只需证明 \(G'(x)\) 在 \(\left(0,\frac12\right)\) 内有零点。
+
+由拉格朗日中值定理，存在 \(c\in\left(0,\frac12\right)\)，使
+\[
+f'(c)=\frac{f\left(\frac12\right)-f(0)}{\frac12-0}=-2f(0)=-2f'(0).
+\]
+于是
+\[
+G(0)=f'(0),\qquad
+G(c)=(1-2c)^{3/2}[-2f'(0)],\qquad
+G\left(\frac12\right)=0.
+\]
+若 \(f'(0)=0\)，则 \(G(0)=G\left(\frac12\right)=0\)，由 Rolle 定理可得 \(G'(\xi)=0\)。
+
+若 \(f'(0)>0\)，则 \(G(0)>0,G(c)<0,G\left(\frac12\right)=0\)，所以 \(G\) 在 \([0,\frac12]\) 内取得内点极小值，从而该点处 \(G'=0\)。若 \(f'(0)<0\)，同理 \(G\) 在内点取得极大值，也有 \(G'=0\)。
+
+因此存在 \(\xi\in\left(0,\frac12\right)\)，使
+\[
+(1-2\xi)f''(\xi)-3f'(\xi)=0,
+\]
+即
+\[
+f'(\xi)=\frac{1-2\xi}{3}f''(\xi).
+\]
+\answer{命题成立。}
+\examnote{看到 \(1-2\xi\) 与系数 \(3\)，要敏感地想到 \((1-2x)^{3/2}\) 求导会产生 \(-3(1-2x)^{1/2}\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例3.} 设 \(f(x)\) 是 \([-a,a]\) 上二阶可导的奇函数，且
+\[
+\int_0^a f(x)\,dx=\frac12a^2f(a).
+\]
+\begin{enumerate}[label=(\Roman*), leftmargin=2.2em]
+\item 证明：存在 \(\xi\in(0,a)\)，有 \(f'(\xi)=f(a)\)；
+\item 证明：对任意实数 \(\lambda\)，总存在 \(\eta\in(-a,a)\)，使得
+\[
+f''(\eta)-\lambda f'(\eta)+\lambda f(a)=0.
+\]
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{积分条件先构造一个端点相等的函数；第二问则利用奇函数推出 \(f'\) 为偶函数，再对 \(e^{-\lambda x}[f'(x)-f(a)]\) 用 Rolle 定理。}
+令
+\[
+\Phi(x)=\int_0^x f(t)\,dt-\frac{x^2}{2}f(a),\qquad 0\le x\le a.
+\]
+由题设
+\[
+\Phi(0)=0,\qquad \Phi(a)=\int_0^a f(t)\,dt-\frac{a^2}{2}f(a)=0.
+\]
+由 Rolle 定理，存在 \(c\in(0,a)\)，使
+\[
+\Phi'(c)=f(c)-cf(a)=0,
+\]
+即
+\[
+f(c)=cf(a).
+\]
+又 \(f\) 为奇函数，所以 \(f(0)=0\)。对 \(f\) 在 \([0,c]\) 上用拉格朗日中值定理，存在 \(\xi\in(0,c)\subset(0,a)\)，使
+\[
+f'(\xi)=\frac{f(c)-f(0)}{c-0}=f(a).
+\]
+第一问得证。
+
+因为 \(f\) 是奇函数，\(f'\) 是偶函数，所以
+\[
+f'(-\xi)=f'(\xi)=f(a).
+\]
+令
+\[
+H(x)=e^{-\lambda x}\bigl(f'(x)-f(a)\bigr),\qquad x\in[-\xi,\xi].
+\]
+则
+\[
+H(-\xi)=H(\xi)=0.
+\]
+由 Rolle 定理，存在 \(\eta\in(-\xi,\xi)\subset(-a,a)\)，使
+\[
+H'(\eta)=0.
+\]
+而
+\[
+H'(x)=e^{-\lambda x}\bigl[f''(x)-\lambda f'(x)+\lambda f(a)\bigr].
+\]
+由于 \(e^{-\lambda\eta}\ne0\)，故
+\[
+f''(\eta)-\lambda f'(\eta)+\lambda f(a)=0.
+\]
+\answer{两问均成立。}
+\examnote{带参数 \(\lambda\) 的中值题，常把目标式写成 \(F'-\lambda F=0\)，再构造 \(e^{-\lambda x}F(x)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例4.} 设 \(f(x)\) 与 \(g(x)\) 在 \([a,b]\) 上连续，在 \((a,b)\) 内可导，且 \(f(a)=g(b)=0\)。证明：至少存在一点 \(\xi\in(a,b)\)，使得
+\[
+f'(\xi)\int_{\xi}^{b}g(t)\,dt
++g'(\xi)\int_a^{\xi}f(t)\,dt=0.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{目标式正好是某个乘积型函数的导数。要让 Rolle 定理可用，构造的函数在 \(a,b\) 两端都应为 \(0\)。}
+令
+\[
+H(x)=f(x)\int_x^b g(t)\,dt+g(x)\int_a^x f(t)\,dt.
+\]
+由 \(f(a)=0\)、\(g(b)=0\)，有
+\[
+H(a)=f(a)\int_a^b g(t)\,dt+g(a)\cdot0=0,
+\]
+\[
+H(b)=f(b)\cdot0+g(b)\int_a^b f(t)\,dt=0.
+\]
+因此由 Rolle 定理，存在 \(\xi\in(a,b)\)，使 \(H'(\xi)=0\)。
+
+对 \(H\) 求导：
+\[
+H'(x)=f'(x)\int_x^b g(t)\,dt-f(x)g(x)
++g'(x)\int_a^x f(t)\,dt+g(x)f(x).
+\]
+中间两项抵消，得
+\[
+H'(x)=f'(x)\int_x^b g(t)\,dt
++g'(x)\int_a^x f(t)\,dt.
+\]
+令 \(x=\xi\)，即得所证等式。
+\answer{命题成立。}
+\examnote{出现“函数乘以变限积分”的目标式时，先试着把它看成乘积求导后的结果。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例5.} 设函数 \(f(x)\) 在 \([0,1]\) 上有二阶导数，且
+\[
+f(1)>0,\qquad \lim_{x\to0^+}\frac{f(x)}x<0.
+\]
+证明：方程
+\[
+f(x)f''(x)+\bigl(f'(x)\bigr)^2=0
+\]
+在区间 \((0,1)\) 内至少有两个不同实根。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{左端是 \((ff')'\)。要让 \((ff')'\) 有两个零点，只需让 \(ff'\) 在三个不同点取同一个值。}
+由 \(\lim_{x\to0^+}\frac{f(x)}x<0\) 且 \(f\) 在 \(0\) 处可导，可得
+\[
+f(0)=0,\qquad f'(0)<0.
+\]
+因此当 \(x>0\) 充分小时，\(f(x)<0\)。又 \(f(1)>0\)，由介值定理，存在
+\[
+c\in(0,1)
+\]
+使
+\[
+f(c)=0.
+\]
+在 \([0,c]\) 上对 \(f\) 用 Rolle 定理，存在 \(\alpha\in(0,c)\)，使
+\[
+f'(\alpha)=0.
+\]
+考察
+\[
+G(x)=f(x)f'(x).
+\]
+则
+\[
+G(0)=f(0)f'(0)=0,\qquad
+G(\alpha)=f(\alpha)f'(\alpha)=0,\qquad
+G(c)=f(c)f'(c)=0.
+\]
+分别在 \((0,\alpha)\) 与 \((\alpha,c)\) 上对 \(G\) 用 Rolle 定理，可得两个不同点 \(\xi_1,\xi_2\in(0,1)\)，使
+\[
+G'(\xi_1)=G'(\xi_2)=0.
+\]
+而
+\[
+G'(x)=f(x)f''(x)+\bigl(f'(x)\bigr)^2.
+\]
+所以原方程在 \((0,1)\) 内至少有两个不同实根。
+\answer{至少有两个不同实根。}
+\examnote{看到 \(ff''+(f')^2\)，第一反应应是 \((ff')'\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例6.} \(f(x)\) 在 \([a,b]\) 上连续，在 \((a,b)\) 内可导，\(f(a)=a\)，且
+\[
+\int_a^b f(x)\,dx=\frac12(b^2-a^2).
+\]
+证明：至少存在 \(\xi\in(a,b)\)，使
+\[
+f'(\xi)=f(\xi)-\xi+1.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把等式改写成 \(h'(\xi)=h(\xi)\)，其中 \(h(x)=f(x)-x\)。再构造 \(e^{-x}h(x)\)，其导数正好是 \(e^{-x}(h'-h)\)。}
+令
+\[
+h(x)=f(x)-x.
+\]
+由 \(f(a)=a\)，有
+\[
+h(a)=0.
+\]
+又
+\[
+\int_a^b h(x)\,dx
+=\int_a^b f(x)\,dx-\int_a^b x\,dx
+=\frac12(b^2-a^2)-\frac12(b^2-a^2)=0.
+\]
+若 \(h(x)\equiv0\)，则 \(h'(\xi)=h(\xi)=0\)，任取 \(\xi\in(a,b)\) 即可。
+
+若 \(h\) 不恒为零，由 \(\int_a^b h(x)\,dx=0\) 且 \(h(a)=0\) 可知，\(h\) 在 \((a,b)\) 内至少还有一个零点 \(c\)，即
+\[
+h(c)=0,\qquad c\in(a,b].
+\]
+令
+\[
+H(x)=e^{-x}h(x).
+\]
+则
+\[
+H(a)=0,\qquad H(c)=0.
+\]
+由 Rolle 定理，存在 \(\xi\in(a,c)\subset(a,b)\)，使
+\[
+H'(\xi)=0.
+\]
+而
+\[
+H'(x)=e^{-x}\bigl(h'(x)-h(x)\bigr).
+\]
+所以
+\[
+h'(\xi)=h(\xi).
+\]
+代回 \(h=f-x\)，得
+\[
+f'(\xi)-1=f(\xi)-\xi,
+\]
+即
+\[
+f'(\xi)=f(\xi)-\xi+1.
+\]
+\answer{命题成立。}
+\examnote{形如 \(h'=h\) 的目标，常构造 \(e^{-x}h(x)\)；形如 \(h'+h=0\) 则常构造 \(e^x h(x)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例7.} 设函数 \(f(x)\) 在 \((a,+\infty)\) 内有二阶导数，且
+\[
+f(a+1)=0,\qquad \lim_{x\to a^+}f(x)=0,\qquad \lim_{x\to+\infty}f(x)=0.
+\]
+求证：在 \((a,+\infty)\) 内至少有一点 \(\xi\)，满足
+\[
+f''(\xi)=0.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是端点含无穷远的 Rolle 定理。先证明 \(f'\) 在 \(a+1\) 左右各有一个零点，再对 \(f'\) 用 Rolle。}
+由于
+\[
+\lim_{x\to a^+}f(x)=f(a+1)=0,
+\]
+在区间 \((a,a+1)\) 内由广义 Rolle 定理，存在 \(u\in(a,a+1)\)，使
+\[
+f'(u)=0.
+\]
+若不给出广义形式，也可取 \(x_n\to a^+\)，对 \([x_n,a+1]\) 用中值定理，再结合导数的介值性得到零点。
+
+同理，由
+\[
+f(a+1)=0,\qquad \lim_{x\to+\infty}f(x)=0,
+\]
+在区间 \((a+1,+\infty)\) 内也存在 \(v\)，使
+\[
+f'(v)=0.
+\]
+事实上，若 \(f'\) 在 \((a+1,+\infty)\) 内无零点，则由导数的介值性，\(f'\) 在该区间上恒正或恒负，\(f\) 将严格单调，不可能从 \(0\) 出发又趋于 \(0\)。
+
+于是 \(u<v\)，且
+\[
+f'(u)=f'(v)=0.
+\]
+对 \(f'\) 在 \([u,v]\) 上用 Rolle 定理，存在 \(\xi\in(u,v)\subset(a,+\infty)\)，使
+\[
+f''(\xi)=0.
+\]
+\answer{命题成立。}
+\examnote{无穷区间上的“端点函数值相同”，常先转化为导数在两侧各有零点，再回到普通 Rolle 定理。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例8.} 设可导函数 \(f(x)\) 严格单调递增且满足
+\[
+\int_{-1}^{1}f(x)\,dx=0,
+\]
+记
+\[
+a=\int_0^1 f(x)\,dx.
+\]
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 证明：\(a>0\)；
+\item 令
+\[
+F(x)=a(1-x^2)+\int_1^x f(t)\,dt,
+\]
+证明：存在 \(\xi\in(-1,1)\)，使得 \(F''(\xi)=0\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{第一问比较 \([0,1]\) 与 \([-1,0]\) 上的积分；第二问注意 \(F(-1),F(0),F(1)\) 三点全为零，可以连续两次 Rolle。}
+因为 \(f\) 严格递增，所以对任意 \(x\in(0,1)\)，有
+\[
+f(x)>f(x-1).
+\]
+积分得
+\[
+\int_0^1 f(x)\,dx>\int_0^1 f(x-1)\,dx=\int_{-1}^0 f(t)\,dt.
+\]
+又
+\[
+\int_{-1}^0 f(t)\,dt+\int_0^1 f(t)\,dt=0,
+\]
+即
+\[
+\int_{-1}^0 f(t)\,dt=-a.
+\]
+因此
+\[
+a>-a,
+\]
+从而
+\[
+a>0.
+\]
+
+下面证明第二问。由定义
+\[
+F(1)=a(1-1)+\int_1^1 f(t)\,dt=0,
+\]
+\[
+F(0)=a+\int_1^0 f(t)\,dt
+=a-\int_0^1 f(t)\,dt=0,
+\]
+\[
+F(-1)=a(1-1)+\int_1^{-1} f(t)\,dt
+=-\int_{-1}^{1}f(t)\,dt=0.
+\]
+所以 \(F\) 在 \([-1,0]\) 与 \([0,1]\) 上分别满足 Rolle 定理条件。于是存在
+\[
+u\in(-1,0),\qquad v\in(0,1),
+\]
+使
+\[
+F'(u)=0,\qquad F'(v)=0.
+\]
+再对 \(F'\) 在 \([u,v]\) 上用 Rolle 定理，存在 \(\xi\in(u,v)\subset(-1,1)\)，使
+\[
+F''(\xi)=0.
+\]
+\answer{两问均成立。}
+\examnote{三点函数值相等是“二阶导零点”的常见信号：先 Rolle 得两个一阶导零点，再 Rolle 得二阶导零点。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例9.} 设 \(f(x)\) 在 \([-1,1]\) 上二阶可导，
+\[
+f(0)=7,\qquad f(1)=13,\qquad f(-1)=11.
+\]
+证明：存在 \(\xi\in(-1,1)\)，使得
+\[
+f''(\xi)=10.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{用一个二次多项式插值三个给定点，并让它的二阶导数正好为目标值。}
+构造
+\[
+q(x)=5x^2+x+7.
+\]
+则
+\[
+q(0)=7,\qquad q(1)=13,\qquad q(-1)=11,
+\]
+且
+\[
+q''(x)=10.
+\]
+令
+\[
+F(x)=f(x)-q(x).
+\]
+则
+\[
+F(-1)=F(0)=F(1)=0.
+\]
+在 \((-1,0)\) 和 \((0,1)\) 上分别由 Rolle 定理，存在
+\[
+u\in(-1,0),\qquad v\in(0,1),
+\]
+使
+\[
+F'(u)=F'(v)=0.
+\]
+再对 \(F'\) 在 \([u,v]\) 上用 Rolle 定理，存在 \(\xi\in(u,v)\subset(-1,1)\)，使
+\[
+F''(\xi)=0.
+\]
+即
+\[
+f''(\xi)-q''(\xi)=0,
+\]
+所以
+\[
+f''(\xi)=10.
+\]
+\answer{命题成立。}
+\examnote{给三点函数值、证明二阶导取某值，优先构造二次插值多项式。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例10.} 设函数 \(f(x)\) 在 \([-2,2]\) 上二阶可导，且 \(|f(x)|\le1\)，又
+\[
+f^2(0)+\bigl(f'(0)\bigr)^2=4.
+\]
+证明：在 \((-2,2)\) 内至少存在一点 \(\xi\)，使得
+\[
+f(\xi)+f''(\xi)=0.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{目标 \(f''+f\) 可通过三角辅助函数出现：
+\((f'\cos x+f\sin x)'=(f''+f)\cos x\)。在 \(\left(-\frac\pi2,\frac\pi2\right)\) 上 \(\cos x>0\)，单调性会与 \(|f|\le1\) 冲突。}
+由 \(|f(0)|\le1\) 和
+\[
+f^2(0)+\bigl(f'(0)\bigr)^2=4
+\]
+可得
+\[
+\bigl|f'(0)\bigr|\ge\sqrt3>1.
+\]
+令
+\[
+H(x)=f'(x)\cos x+f(x)\sin x,\qquad x\in\left[-\frac\pi2,\frac\pi2\right].
+\]
+该区间包含在 \((-2,2)\) 内。并且
+\[
+H'(x)=\bigl(f''(x)+f(x)\bigr)\cos x.
+\]
+又
+\[
+H(0)=f'(0),
+\]
+\[
+H\left(\frac\pi2\right)=f\left(\frac\pi2\right),\qquad
+H\left(-\frac\pi2\right)=-f\left(-\frac\pi2\right),
+\]
+所以
+\[
+\left|H\left(\frac\pi2\right)\right|\le1,\qquad
+\left|H\left(-\frac\pi2\right)\right|\le1.
+\]
+
+反设 \(f''(x)+f(x)\) 在 \((-2,2)\) 内没有零点。由于导数具有介值性，\(f''+f\) 在 \(\left(-\frac\pi2,\frac\pi2\right)\) 内只能恒正或恒负。又 \(\cos x>0\)，故 \(H\) 在该区间上严格单调。
+
+若 \(f'(0)>1\)，则 \(H(0)>1\)。若 \(H\) 递增，则
+\[
+H\left(\frac\pi2\right)>H(0)>1,
+\]
+矛盾；若 \(H\) 递减，则
+\[
+H\left(-\frac\pi2\right)>H(0)>1,
+\]
+也矛盾。若 \(f'(0)<-1\)，同理与两端 \(|H|\le1\) 矛盾。
+
+故反设不成立，存在 \(\xi\in(-2,2)\)，使
+\[
+f''(\xi)+f(\xi)=0.
+\]
+\answer{命题成立。}
+\examnote{遇到 \(f''+f\)，可联想正弦余弦辅助函数；这是考研证明题中很典型的“微分方程型构造”。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例11.} 求极限
+\[
+\lim_{x\to0}\frac{\sin(xe^x)-\sin(xe^{-x})}{\sin(x^2)}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{两个正弦的角都趋于 \(0\)，角之差是主导量。用和差化积可把主部直接露出来。}
+由公式
+\[
+\sin A-\sin B=2\cos\frac{A+B}{2}\sin\frac{A-B}{2},
+\]
+取
+\[
+A=xe^x,\qquad B=xe^{-x},
+\]
+得
+\[
+\sin(xe^x)-\sin(xe^{-x})
+=2\cos\left(\frac{x(e^x+e^{-x})}{2}\right)
+\sin\left(\frac{x(e^x-e^{-x})}{2}\right).
+\]
+当 \(x\to0\) 时，
+\[
+\cos\left(\frac{x(e^x+e^{-x})}{2}\right)\to1,
+\]
+且
+\[
+\frac{x(e^x-e^{-x})}{2}
+=x\sinh x\sim x^2.
+\]
+因此
+\[
+\sin\left(\frac{x(e^x-e^{-x})}{2}\right)\sim x^2,
+\qquad
+\sin(x^2)\sim x^2.
+\]
+所以
+\[
+\lim_{x\to0}\frac{\sin(xe^x)-\sin(xe^{-x})}{\sin(x^2)}=2.
+\]
+\answer{\(2\)。}
+\method{方法二（Taylor 展开）}
+\[
+xe^x=x+x^2+\frac{x^3}{2}+O(x^4),\qquad
+xe^{-x}=x-x^2+\frac{x^3}{2}+O(x^4).
+\]
+由 \(\sin u\) 在同一点附近的增量主部可知，分子主部为
+\[
+(xe^x-xe^{-x})\cos x\sim 2x^2,
+\]
+分母 \(\sin(x^2)\sim x^2\)，极限仍为 \(2\)。
+\examnote{两个相近角的正弦差，优先用和差化积或中值定理，不要分别展开到过高阶。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例12.} 设 \(f(x)\) 在 \([0,1]\) 上可导，\(f'(x)\ge M>0\)。证明：总存在一个 \([0,1]\) 的子区间 \(I\)，其长度为 \(\frac14\)，使得对任意 \(x\in I\)，有
+\[
+|f(x)|\ge\frac14M.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(f'(x)\ge M\) 表明 \(f\) 至少以斜率 \(M\) 增长。若 \(f\) 有零点，则离零点距离至少 \(1/4\) 的一段上，函数绝对值至少为 \(M/4\)。}
+若 \(f(x)>0\) 对所有 \(x\in[0,1]\) 成立，则对 \(x\in\left[\frac14,\frac12\right]\)，由中值定理
+\[
+f(x)\ge f(0)+Mx>\frac14M,
+\]
+取 \(I=\left[\frac14,\frac12\right]\) 即可。
+
+若 \(f(x)<0\) 对所有 \(x\in[0,1]\) 成立，则对 \(x\in\left[\frac12,\frac34\right]\)，由
+\[
+f(1)-f(x)\ge M(1-x)\ge \frac14M
+\]
+且 \(f(1)<0\)，可得
+\[
+f(x)\le f(1)-\frac14M<-\frac14M,
+\]
+取 \(I=\left[\frac12,\frac34\right]\) 即可。
+
+若 \(f\) 在 \([0,1]\) 内有零点，取一个零点 \(x_0\)。若 \(x_0\le\frac12\)，取
+\[
+I=\left[x_0+\frac14,x_0+\frac12\right]\subset[0,1].
+\]
+则对任意 \(x\in I\)，
+\[
+f(x)-f(x_0)\ge M(x-x_0)\ge\frac14M,
+\]
+即 \(f(x)\ge M/4\)。
+
+若 \(x_0>\frac12\)，取
+\[
+I=\left[x_0-\frac12,x_0-\frac14\right]\subset[0,1].
+\]
+则对任意 \(x\in I\)，
+\[
+f(x_0)-f(x)\ge M(x_0-x)\ge\frac14M,
+\]
+即 \(f(x)\le -M/4\)。
+
+综上，总存在长度为 \(\frac14\) 的子区间 \(I\)，使 \(|f(x)|\ge M/4\)。
+\answer{命题成立。}
+\examnote{“导数下界 + 绝对值下界”常围绕零点讨论：离零点多远，函数值至少增长多少。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例13.} 设 \(f(x)\) 在区间 \((a,b)\) 内可导。证明：导函数 \(f'(x)\) 在 \((a,b)\) 内严格单调增加的充要条件是：对 \((a,b)\) 内任意
+\[
+x_1<x_2<x_3,
+\]
+都有
+\[
+\frac{f(x_2)-f(x_1)}{x_2-x_1}
+<
+\frac{f(x_3)-f(x_2)}{x_3-x_2}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{割线斜率由中值定理等于某点导数。若导数严格递增，左右两段割线斜率自然递增；反过来由割线斜率递增先推出 \(f'\) 非减，再排除相等情形。}
+先证必要性。设 \(f'\) 严格单调增加。由拉格朗日中值定理，存在
+\[
+\xi_1\in(x_1,x_2),\qquad \xi_2\in(x_2,x_3),
+\]
+使
+\[
+\frac{f(x_2)-f(x_1)}{x_2-x_1}=f'(\xi_1),
+\qquad
+\frac{f(x_3)-f(x_2)}{x_3-x_2}=f'(\xi_2).
+\]
+由于 \(\xi_1<\xi_2\)，且 \(f'\) 严格递增，故
+\[
+f'(\xi_1)<f'(\xi_2),
+\]
+必要性成立。
+
+再证充分性。任取 \(u<v\)。对任意 \(s\in(u,v)\)，由题设
+\[
+\frac{f(s)-f(u)}{s-u}
+<
+\frac{f(v)-f(s)}{v-s}.
+\]
+令 \(s\to u^+\)，得到
+\[
+f'(u)\le \frac{f(v)-f(u)}{v-u}.
+\]
+令 \(s\to v^-\)，得到
+\[
+\frac{f(v)-f(u)}{v-u}\le f'(v).
+\]
+所以 \(f'(u)\le f'(v)\)，即 \(f'\) 非减。
+
+若存在 \(u<v\) 使 \(f'(u)=f'(v)\)，由于 \(f'\) 非减，必有 \(f'\) 在 \([u,v]\) 上恒等于同一常数。于是 \(f\) 在 \([u,v]\) 上为一次函数，从而任取 \(u<x_2<v\)，左右割线斜率相等，这与题设的严格不等式矛盾。
+
+故对任意 \(u<v\)，都有
+\[
+f'(u)<f'(v),
+\]
+即 \(f'\) 严格单调增加。
+\answer{充要条件成立。}
+\examnote{“导数单调”与“割线斜率单调”互化，是中值定理和凸性思想的核心。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例14.} \(f(x)\) 在 \([0,1]\) 上可导，\(f(0)=0,f(1)=1\)。证明：
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 至少存在不相等的 \(x_1,x_2\in(0,1)\)，使
+\[
+\frac1{f'(x_1)}+\frac1{f'(x_2)}=2;
+\]
+\item 至少存在不相等的 \(x_1,x_2,\cdots,x_n\in(0,1)\)，使
+\[
+\frac1{f'(x_1)}+\frac1{f'(x_2)}+\cdots+\frac1{f'(x_n)}=n;
+\]
+\item 至少存在不相等的 \(x_1,x_2\in(0,1)\)，使
+\[
+\frac{m}{f'(x_1)}+\frac{n}{f'(x_2)}=m+n,\qquad m,n>0.
+\]
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{核心做法是“按函数值等分”。若 \(f(t_i)=i/n\)，则在相邻点之间用中值定理，导数倒数正好变成区间长度的倍数。}
+先证一般的第 (2) 问。由于 \(f\) 连续且 \(f(0)=0,f(1)=1\)，对每个
+\[
+i=0,1,\ldots,n
+\]
+可按第一次达到高度 \(i/n\) 的方式选取
+\[
+0=t_0<t_1<\cdots<t_n=1,
+\qquad
+f(t_i)=\frac{i}{n}.
+\]
+对每个区间 \([t_{i-1},t_i]\) 使用拉格朗日中值定理，存在
+\[
+x_i\in(t_{i-1},t_i)\subset(0,1),
+\]
+使
+\[
+f'(x_i)=\frac{f(t_i)-f(t_{i-1})}{t_i-t_{i-1}}
+=\frac{1/n}{t_i-t_{i-1}}.
+\]
+因此
+\[
+\frac1{f'(x_i)}=n(t_i-t_{i-1}).
+\]
+求和得
+\[
+\sum_{i=1}^n\frac1{f'(x_i)}
+=n\sum_{i=1}^n(t_i-t_{i-1})
+=n.
+\]
+并且各 \(x_i\) 位于互不相交的区间内，故互不相等。第 (2) 问成立；取 \(n=2\) 即得第 (1) 问。
+
+再证第 (3) 问。由连续性，取 \(c\in(0,1)\)，使
+\[
+f(c)=\frac{m}{m+n}.
+\]
+在 \([0,c]\) 上用中值定理，存在 \(x_1\in(0,c)\)，使
+\[
+f'(x_1)=\frac{f(c)-f(0)}{c-0}
+=\frac{m}{(m+n)c}.
+\]
+在 \([c,1]\) 上用中值定理，存在 \(x_2\in(c,1)\)，使
+\[
+f'(x_2)=\frac{f(1)-f(c)}{1-c}
+=\frac{n}{(m+n)(1-c)}.
+\]
+于是
+\[
+\frac{m}{f'(x_1)}=(m+n)c,\qquad
+\frac{n}{f'(x_2)}=(m+n)(1-c).
+\]
+相加得
+\[
+\frac{m}{f'(x_1)}+\frac{n}{f'(x_2)}=m+n.
+\]
+\answer{三问均成立。}
+\examnote{这题不要试图控制 \(f'\) 本身，而要让 \(f\) 的增量人为变成等分值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例15.} 设非线性函数 \(f(x)\) 在 \([a,b]\) 上连续，在 \((a,b)\) 内可导。证明：存在 \(\xi\in(a,b)\)，使
+\[
+|f'(\xi)|>\left|\frac{f(b)-f(a)}{b-a}\right|.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{若所有导数的绝对值都不超过端点割线斜率的绝对值，则函数只能是一条直线；这与“非线性”矛盾。}
+记端点割线斜率为
+\[
+m=\frac{f(b)-f(a)}{b-a}.
+\]
+若 \(m=0\)，假设 \(|f'(x)|\le0\)，即 \(f'(x)=0\) 对所有 \(x\in(a,b)\) 成立，则由中值定理 \(f\) 为常数函数，矛盾。因此存在 \(\xi\) 使 \(|f'(\xi)|>0=|m|\)。
+
+若 \(m>0\)，反设对所有 \(x\in(a,b)\) 都有
+\[
+|f'(x)|\le m.
+\]
+则 \(f'(x)\le m\)。令
+\[
+F(x)=f(x)-mx.
+\]
+有
+\[
+F'(x)=f'(x)-m\le0,
+\]
+所以 \(F\) 在 \([a,b]\) 上单调不增。另一方面，
+\[
+F(b)-F(a)=f(b)-f(a)-m(b-a)=0,
+\]
+故 \(F(a)=F(b)\)。单调不增函数端点相等，只能恒为常数，于是 \(f(x)=mx+C\)，与非线性矛盾。
+
+若 \(m<0\)，同理反设 \(|f'(x)|\le|m|\)，则 \(f'(x)\ge m\)，从而 \(F'(x)=f'(x)-m\ge0\)。又 \(F(a)=F(b)\)，推出 \(F\) 恒为常数，仍矛盾。
+
+故必存在 \(\xi\in(a,b)\)，使
+\[
+|f'(\xi)|>|m|.
+\]
+\answer{命题成立。}
+\examnote{“非线性”在中值定理题中通常用于排除“处处等于平均斜率”的极端情形。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例16.} 已知 \(f(x)\) 在 \([0,1]\) 上三阶可导，
+\[
+\lim_{x\to0^+}\frac{f(x)}x>0,\qquad
+\lim_{x\to1^-}\frac{f(x)}{\ln x}>0.
+\]
+证明：
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 存在 \(\xi\in(0,1)\)，使得 \(f''(\xi)=0\)；
+\item 存在 \(\eta\in(0,1)\)，使得 \(f'''(\eta)>0\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{两个极限给出端点附近的符号：靠近 \(0\) 时 \(f(x)>0\)，靠近 \(1\) 时因 \(\ln x<0\)，有 \(f(x)<0\)。因此可在左侧取内点极大、右侧取内点极小。}
+由第一个极限可知
+\[
+f(0)=0,
+\]
+且当 \(x>0\) 充分小时 \(f(x)>0\)。由第二个极限可知
+\[
+f(1)=0,
+\]
+且当 \(x<1\) 充分接近 \(1\) 时，由 \(\ln x<0\)，有 \(f(x)<0\)。
+
+因此可在靠近 \(0\) 的一个小区间内取得正的内点极大值，记极大点为 \(u\)，则
+\[
+f'(u)=0,\qquad f''(u)\le0.
+\]
+又可在靠近 \(1\) 的一个小区间内取得负的内点极小值，记极小点为 \(v\)，并可取 \(u<v\)，则
+\[
+f'(v)=0,\qquad f''(v)\ge0.
+\]
+由 \(f''(u)\le0\le f''(v)\) 及 \(f''\) 的连续性，存在 \(\xi\in(u,v)\subset(0,1)\)，使
+\[
+f''(\xi)=0.
+\]
+第一问成立。
+
+下面证明第二问。反设
+\[
+f'''(x)\le0,\qquad x\in(0,1).
+\]
+则 \(f''\) 在 \((0,1)\) 上单调不增。由于 \(u<v\)，应有
+\[
+f''(u)\ge f''(v).
+\]
+但前面又有 \(f''(u)\le0\le f''(v)\)，故只能
+\[
+f''(u)=f''(v)=0,
+\]
+并且 \(f''(x)=0\) 在 \([u,v]\) 上恒成立。于是 \(f'(x)\) 在 \([u,v]\) 上恒为常数；又 \(f'(u)=0\)，故
+\[
+f'(x)\equiv0,\qquad x\in[u,v].
+\]
+这推出 \(f\) 在 \([u,v]\) 上恒为常数，与 \(f(u)>0\)、\(f(v)<0\) 矛盾。
+
+因此反设不成立，必存在 \(\eta\in(0,1)\)，使
+\[
+f'''(\eta)>0.
+\]
+\answer{两问均成立。}
+\examnote{端点极限不只给数值，还给端点附近的符号；符号能制造内点极大和极小。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例17.} 设函数 \(f(x)\) 在 \([0,1]\) 上二阶可导，\(f(0)=0,f(1)=1\)，且 \(f''(x)<0\)。证明：
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 存在唯一的 \(\xi\in(0,1)\)，使得 \(f(\xi)=1-\xi\)；
+\item \(\xi\le\frac12\)。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(f''<0\) 表示严格凹。令 \(h(x)=f(x)+x-1\)，求 \(f(x)=1-x\) 等价于求 \(h(x)=0\)。}
+令
+\[
+h(x)=f(x)+x-1.
+\]
+则
+\[
+h(0)=-1<0,\qquad h(1)=1>0.
+\]
+由介值定理，存在 \(\xi\in(0,1)\)，使 \(h(\xi)=0\)，即
+\[
+f(\xi)=1-\xi.
+\]
+
+又
+\[
+h''(x)=f''(x)<0,
+\]
+所以 \(h\) 严格凹。若 \(h\) 在 \((0,1)\) 内有两个零点 \(\alpha<\beta\)，则由严格凹性可知，\(h\) 在 \((\alpha,\beta)\) 上为正，并且在 \(\beta\) 之后导数不能再增加到使 \(h(1)>0\) 的状态。更直接地，由 Rolle 定理，在 \((\alpha,\beta)\) 内有一点 \(c\) 使 \(h'(c)=0\)；由于 \(h'\) 严格递减，\(x>\beta\) 时 \(h'(x)<0\)，故 \(h(1)<h(\beta)=0\)，这与 \(h(1)=1\) 矛盾。
+
+所以零点唯一。
+
+因为 \(f''<0\)，\(f\) 严格凹。对端点连线 \(y=x\)，严格凹函数在开区间内位于弦的上方，故
+\[
+f(x)>x,\qquad 0<x<1.
+\]
+在 \(x=\xi\) 处，
+\[
+1-\xi=f(\xi)>\xi,
+\]
+因此
+\[
+\xi<\frac12.
+\]
+从而当然有 \(\xi\le\frac12\)。
+\answer{存在唯一 \(\xi\)，且 \(\xi<\frac12\)（故 \(\xi\le\frac12\)）。}
+\examnote{凹凸性题中，函数与端点弦的位置关系常常直接给出根所在范围。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例18.} 设 \(f(x)\) 在 \([2,4]\) 上一阶可导，且
+\[
+f'(x)\ge M>0,\qquad f(2)>0.
+\]
+证明：
+\begin{enumerate}[label=(\arabic*), leftmargin=2.2em]
+\item 对任意 \(x\in[3,4]\)，均有 \(f(x)>M\)；
+\item 存在 \(\xi\in(3,4)\)，使得
+\[
+f(\xi)>M\cdot\frac{e^{\xi-3}}{e-1}.
+\]
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由 \(f'\ge M\) 可得 \(f(x)\) 至少比 \(f(2)\) 多增长 \(M(x-2)\)。第二问再比较 \(x-2\) 与指数函数。}
+对任意 \(x\in[3,4]\)，由拉格朗日中值定理或积分形式，
+\[
+f(x)=f(2)+\int_2^x f'(t)\,dt
+\ge f(2)+M(x-2).
+\]
+由于 \(f(2)>0\)，且 \(x-2\ge1\)，所以
+\[
+f(x)>M.
+\]
+第一问成立。
+
+再证第二问。对 \(x\in[3,4]\)，设
+\[
+\phi(x)=x-2-\frac{e^{x-3}}{e-1}.
+\]
+则
+\[
+\phi(3)=1-\frac1{e-1}>0,\qquad
+\phi(4)=2-\frac e{e-1}>0.
+\]
+并且
+\[
+\phi'(x)=1-\frac{e^{x-3}}{e-1},\qquad
+\phi''(x)=-\frac{e^{x-3}}{e-1}<0.
+\]
+故 \(\phi\) 为凹函数，其最小值在端点取得，所以
+\[
+\phi(x)>0,\qquad x\in[3,4].
+\]
+即
+\[
+x-2>\frac{e^{x-3}}{e-1}.
+\]
+于是对任意 \(x\in(3,4)\)，
+\[
+f(x)>M(x-2)>M\cdot\frac{e^{x-3}}{e-1}.
+\]
+任取 \(\xi\in(3,4)\) 即得第二问。
+\answer{两问均成立。}
+\examnote{这题第二问虽然只要求“存在”，但由导数下界可证明更强的“任意 \(x\in(3,4)\)”都成立。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例19.} 设 \(f(x)\) 是 \([0,1]\) 上正值连续函数，且在 \((0,1)\) 内二阶可导，\(f(0)=0\)。证明：存在 \(\xi\in(0,1)\)，有
+\[
+\int_0^1 f^3(x)\,dx
+=f'(\xi)\left(\int_0^1 f(x)\,dx\right)^2.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先对 \(\int_0^x f^3\) 与 \(\left(\int_0^x f\right)^2\) 用 Cauchy 中值定理，再对 \(f^2\) 与 \(\int_0^x f\) 用一次 Cauchy 中值定理。}
+令
+\[
+A(x)=\int_0^x f(t)\,dt,\qquad
+B(x)=\int_0^x f^3(t)\,dt.
+\]
+因为 \(f(x)>0\) 在 \((0,1]\) 上成立，所以 \(A(x)>0\) 当 \(x>0\)。
+
+对 \(B(x)\) 与 \(A^2(x)\) 在 \([0,1]\) 上使用 Cauchy 中值定理，存在 \(c\in(0,1)\)，使
+\[
+\frac{B(1)-B(0)}{A^2(1)-A^2(0)}
+=\frac{B'(c)}{(A^2)'(c)}.
+\]
+即
+\[
+\frac{\int_0^1 f^3(x)\,dx}{\left(\int_0^1 f(x)\,dx\right)^2}
+=\frac{f^3(c)}{2A(c)f(c)}
+=\frac{f^2(c)}{2A(c)}.
+\]
+再对 \(f^2(x)\) 与 \(A(x)\) 在 \([0,c]\) 上用 Cauchy 中值定理。由于 \(f(0)=0,A(0)=0\)，存在 \(\xi\in(0,c)\)，使
+\[
+\frac{f^2(c)-f^2(0)}{A(c)-A(0)}
+=\frac{2f(\xi)f'(\xi)}{f(\xi)}
+=2f'(\xi).
+\]
+因此
+\[
+\frac{f^2(c)}{2A(c)}=f'(\xi).
+\]
+代回上式，得到
+\[
+\int_0^1 f^3(x)\,dx
+=f'(\xi)\left(\int_0^1 f(x)\,dx\right)^2.
+\]
+\answer{命题成立。}
+\examnote{出现“一个积分等于某点导数乘另一个积分的平方”，通常要连续使用 Cauchy 中值定理。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例20.} 求证：
+\[
+\sqrt{\frac{1-x}{1+x}}<
+\frac{\ln(1+x)}{\arcsin x},\qquad x\in(0,1).
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把 \(\ln(1+x)\) 与 \(\arcsin x\) 都写成积分，二者之比就是某个递减函数的加权平均。加权平均严格大于右端最小值。}
+有
+\[
+\ln(1+x)=\int_0^x\frac{dt}{1+t},
+\qquad
+\arcsin x=\int_0^x\frac{dt}{\sqrt{1-t^2}}.
+\]
+注意
+\[
+\frac{1}{1+t}
+=\sqrt{\frac{1-t}{1+t}}\cdot\frac1{\sqrt{1-t^2}}.
+\]
+令
+\[
+r(t)=\sqrt{\frac{1-t}{1+t}},\qquad
+w(t)=\frac1{\sqrt{1-t^2}}>0.
+\]
+则
+\[
+\frac{\ln(1+x)}{\arcsin x}
+=\frac{\int_0^x r(t)w(t)\,dt}{\int_0^x w(t)\,dt}.
+\]
+在 \((0,1)\) 上，\(r(t)\) 严格递减。因此当 \(0<t<x\) 时，
+\[
+r(t)>r(x)=\sqrt{\frac{1-x}{1+x}}.
+\]
+于是
+\[
+\int_0^x r(t)w(t)\,dt
+>r(x)\int_0^x w(t)\,dt.
+\]
+两边除以正数 \(\int_0^x w(t)\,dt\)，得到
+\[
+\frac{\ln(1+x)}{\arcsin x}>
+\sqrt{\frac{1-x}{1+x}}.
+\]
+\answer{不等式成立。}
+\method{方法二（Cauchy 中值定理）}
+对 \(F(x)=\ln(1+x)\)、\(G(x)=\arcsin x\) 在 \([0,x]\) 上用 Cauchy 中值定理，存在 \(\xi\in(0,x)\)，使
+\[
+\frac{\ln(1+x)}{\arcsin x}
+=\frac{F'(\xi)}{G'(\xi)}
+=\sqrt{\frac{1-\xi}{1+\xi}}.
+\]
+由于 \(\xi<x\)，而 \(t\mapsto\sqrt{\frac{1-t}{1+t}}\) 严格递减，故
+\[
+\sqrt{\frac{1-\xi}{1+\xi}}>
+\sqrt{\frac{1-x}{1+x}}.
+\]
+\examnote{两个从 0 开始的函数比值，优先考虑 Cauchy 中值定理。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例21.} 设 \(a>0\)，函数 \(f(x)\) 在 \([a,b]\) 上连续，在 \((a,b)\) 内可导。证明：若对任意 \(x\in(a,b)\) 都有 \(f'(x)\ne0\)，则存在 \(\xi_1,\xi_2\in(a,b)\)，使得
+\[
+\frac{f'(\xi_1)}{f'(\xi_2)}
+=\frac{a^2+ab+b^2}{a+b}\cdot\frac{2\xi_1}{3\xi_2^2}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{式中 \(\frac{a^2+ab+b^2}{a+b}\) 来自 \(\frac{b^3-a^3}{b^2-a^2}\)，而 \(\frac{2\xi_1}{3\xi_2^2}\) 来自 \(x^2\)、\(x^3\) 的导数。}
+因为 \(f'(x)\ne0\) 且导数具有介值性，所以 \(f'\) 在 \((a,b)\) 上不变号，\(f\) 严格单调。因此
+\[
+f(b)-f(a)\ne0.
+\]
+对 \(f(x)\) 与 \(x^2\) 在 \([a,b]\) 上用 Cauchy 中值定理，存在 \(\xi_1\in(a,b)\)，使
+\[
+\frac{f(b)-f(a)}{b^2-a^2}
+=\frac{f'(\xi_1)}{2\xi_1}.
+\]
+对 \(f(x)\) 与 \(x^3\) 在 \([a,b]\) 上用 Cauchy 中值定理，存在 \(\xi_2\in(a,b)\)，使
+\[
+\frac{f(b)-f(a)}{b^3-a^3}
+=\frac{f'(\xi_2)}{3\xi_2^2}.
+\]
+两式相除，得
+\[
+\frac{f'(\xi_1)}{2\xi_1}\cdot\frac{3\xi_2^2}{f'(\xi_2)}
+=\frac{b^3-a^3}{b^2-a^2}.
+\]
+而
+\[
+\frac{b^3-a^3}{b^2-a^2}
+=\frac{(b-a)(a^2+ab+b^2)}{(b-a)(a+b)}
+=\frac{a^2+ab+b^2}{a+b}.
+\]
+整理即得
+\[
+\frac{f'(\xi_1)}{f'(\xi_2)}
+=\frac{a^2+ab+b^2}{a+b}\cdot\frac{2\xi_1}{3\xi_2^2}.
+\]
+\answer{命题成立。}
+\examnote{复杂比例式先拆来源：多项式差商通常对应 Cauchy 中值定理中的辅助函数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例22.} 设函数 \(f(x)\) 在闭区间 \([a,b]\) 上连续，在 \((a,b)\) 内可导，\(f(a)=0\)。证明：在 \((a,b)\) 内存在 \(\xi,\eta\)，且 \(\xi\ne\eta\)，使
+\[
+f'(\eta)(b^2-a^2)=\frac{2\xi}{\xi-a}\int_a^b f(x)\,dx.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先用 Cauchy 中值定理把积分平均值写成 \(f(\xi)/(2\xi)\)，再对 \(f\) 在 \([a,\xi]\) 上用一次中值定理。}
+令
+\[
+G(x)=\int_a^x f(t)\,dt,\qquad H(x)=x^2-a^2.
+\]
+对 \(G,H\) 在 \([a,b]\) 上用 Cauchy 中值定理，存在 \(\xi\in(a,b)\)，使
+\[
+\bigl(G(b)-G(a)\bigr)H'(\xi)
+=\bigl(H(b)-H(a)\bigr)G'(\xi).
+\]
+即
+\[
+\left(\int_a^b f(x)\,dx\right)2\xi
+=(b^2-a^2)f(\xi),
+\]
+从而
+\[
+f(\xi)=\frac{2\xi}{b^2-a^2}\int_a^b f(x)\,dx.
+\]
+又 \(f(a)=0\)。对 \(f\) 在 \([a,\xi]\) 上用拉格朗日中值定理，存在
+\[
+\eta\in(a,\xi),
+\]
+使
+\[
+f'(\eta)=\frac{f(\xi)-f(a)}{\xi-a}
+=\frac{f(\xi)}{\xi-a}.
+\]
+代入上式，得
+\[
+f'(\eta)
+=\frac{2\xi}{(\xi-a)(b^2-a^2)}
+\int_a^b f(x)\,dx.
+\]
+即
+\[
+f'(\eta)(b^2-a^2)=\frac{2\xi}{\xi-a}\int_a^b f(x)\,dx.
+\]
+且 \(\eta\in(a,\xi)\)，故 \(\eta\ne\xi\)。
+\answer{命题成立。}
+\examnote{本题的 \(\frac{2\xi}{b^2-a^2}\) 提示辅助函数取 \(x^2\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例23.} \(f(x)\) 在 \([a,b]\) 上二阶可导，
+\[
+\lim_{x\to a}\frac{f(x)}{(x-a)^2}=1.
+\]
+证明：在 \((a,b)\) 上存在 \(\xi,\delta\)，使
+\[
+(\sqrt a+\sqrt b)(b-a)f''(\delta)=4\sqrt{\xi}\,f'(\xi),
+\]
+其中 \(a,b\) 均为正数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{极限条件推出 \(f(a)=f'(a)=0\)。一方面用 Taylor 中值公式表示 \(f(b)\)，另一方面对 \(f\) 与 \(\sqrt x\) 用 Cauchy 中值定理。}
+由
+\[
+\lim_{x\to a}\frac{f(x)}{(x-a)^2}=1
+\]
+可知
+\[
+f(a)=0,\qquad f'(a)=0.
+\]
+由 Taylor 公式的 Lagrange 余项，存在 \(\delta\in(a,b)\)，使
+\[
+f(b)=f(a)+f'(a)(b-a)+\frac12 f''(\delta)(b-a)^2
+=\frac12 f''(\delta)(b-a)^2.
+\]
+即
+\[
+f''(\delta)=\frac{2f(b)}{(b-a)^2}.
+\]
+
+再对 \(f(x)\) 与 \(\sqrt x\) 在 \([a,b]\) 上用 Cauchy 中值定理，存在 \(\xi\in(a,b)\)，使
+\[
+\frac{f(b)-f(a)}{\sqrt b-\sqrt a}
+=\frac{f'(\xi)}{\frac1{2\sqrt{\xi}}}
+=2\sqrt{\xi}\,f'(\xi).
+\]
+由于 \(f(a)=0\)，故
+\[
+2\sqrt{\xi}\,f'(\xi)=\frac{f(b)}{\sqrt b-\sqrt a}.
+\]
+于是
+\[
+4\sqrt{\xi}\,f'(\xi)=\frac{2f(b)}{\sqrt b-\sqrt a}.
+\]
+另一方面，
+\[
+(\sqrt a+\sqrt b)(b-a)f''(\delta)
+=(\sqrt a+\sqrt b)(b-a)\frac{2f(b)}{(b-a)^2}.
+\]
+因为
+\[
+b-a=(\sqrt b-\sqrt a)(\sqrt b+\sqrt a),
+\]
+所以
+\[
+(\sqrt a+\sqrt b)(b-a)f''(\delta)
+=\frac{2f(b)}{\sqrt b-\sqrt a}
+=4\sqrt{\xi}\,f'(\xi).
+\]
+\answer{命题成立。}
+\examnote{含 \(\sqrt a+\sqrt b\) 与 \(b-a\) 的式子，常把 \(b-a\) 分解成 \((\sqrt b-\sqrt a)(\sqrt b+\sqrt a)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例24.} \(f(x)\) 在 \([0,1]\) 上三阶可导，
+\[
+\lim_{x\to0}\frac{f(x)}{x^3}=a>0.
+\]
+证明：存在 \(\xi_1,\xi_2,\xi_3\in(0,1)\)，使
+\[
+e^{\xi_1}f'''(\xi_2)=6e^{\xi_3}f'(\xi_1).
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{极限条件给出 \(f(0)=f'(0)=f''(0)=0\)。然后用三阶 Taylor 公式表示 \(f(1)\)，再用 Cauchy 中值定理把 \(f(1)\) 和 \(f'(\xi_1)\) 联系起来。}
+由
+\[
+\lim_{x\to0}\frac{f(x)}{x^3}=a>0
+\]
+可得
+\[
+f(0)=0,\qquad f'(0)=0,\qquad f''(0)=0.
+\]
+由 Taylor 公式，存在 \(\xi_2\in(0,1)\)，使
+\[
+f(1)=\frac{f'''(\xi_2)}{6}.
+\]
+
+对 \(f(x)\) 与 \(e^x\) 在 \([0,1]\) 上用 Cauchy 中值定理，存在 \(\xi_1\in(0,1)\)，使
+\[
+\frac{f(1)-f(0)}{e-1}
+=\frac{f'(\xi_1)}{e^{\xi_1}}.
+\]
+由于 \(f(0)=0\)，故
+\[
+f(1)=\frac{e-1}{e^{\xi_1}}f'(\xi_1).
+\]
+又由拉格朗日中值定理，存在 \(\xi_3\in(0,1)\)，使
+\[
+e-1=e^{\xi_3}.
+\]
+因此
+\[
+f(1)=\frac{e^{\xi_3}}{e^{\xi_1}}f'(\xi_1).
+\]
+与
+\[
+f(1)=\frac{f'''(\xi_2)}6
+\]
+比较，得
+\[
+\frac{f'''(\xi_2)}6
+=\frac{e^{\xi_3}}{e^{\xi_1}}f'(\xi_1).
+\]
+整理即
+\[
+e^{\xi_1}f'''(\xi_2)=6e^{\xi_3}f'(\xi_1).
+\]
+\answer{命题成立。}
+\examnote{多中值点等式通常不是一次中值定理完成，而是把目标式拆成几个差商分别套定理。}
+\end{solutionblock}

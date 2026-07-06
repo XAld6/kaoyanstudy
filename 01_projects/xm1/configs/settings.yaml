@@ -1,0 +1,30 @@
+project:
+  name: "校园建筑外墙 AI 图像识别巡检系统"
+  version: "1.0.0"
+
+server:
+  cors_origins:
+    - "*"
+
+paths:
+  samples_dir: "data/samples"
+  uploads_dir: "data/uploads"
+  results_dir: "data/results"
+  database_url: "sqlite:///data/inspection.db"
+  yolo_weights: "data/models/best.pt"
+
+model:
+  use_yolo_when_available: true
+  confidence_threshold: 0.25
+  image_size: 960
+  classes:
+    crack: "裂缝"
+    peeling: "墙皮脱落"
+    seepage: "渗水"
+    hollowing: "鼓包空鼓"
+
+risk:
+  urgent_area_ratio: 0.18
+  high_area_ratio: 0.08
+  medium_area_ratio: 0.03
+  high_confidence: 0.70

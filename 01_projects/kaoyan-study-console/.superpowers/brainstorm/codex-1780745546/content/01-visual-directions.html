@@ -1,0 +1,98 @@
+<h2>考研学习控制台：三种产品设计方向</h2>
+<p class="subtitle">先选整体气质。选定后我再把正式 React 前端按这个方向重做。</p>
+
+<div class="cards">
+  <div class="card" data-choice="focus-command" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="height:320px;background:#090b10;border-radius:16px;padding:18px;color:#f6f2e8;font-family:'Microsoft YaHei',sans-serif;overflow:hidden;border:1px solid #283140">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+          <div style="font-weight:800;font-size:18px">今日作战台</div>
+          <div style="background:#d6ff62;color:#14170d;padding:6px 10px;border-radius:6px;font-weight:800;font-size:12px">D-180</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1.1fr .9fr;gap:14px">
+          <div>
+            <div style="border:1px solid #2d3848;background:#111722;border-radius:10px;padding:14px;margin-bottom:12px">
+              <div style="font-size:12px;color:#91a0b5;margin-bottom:8px">NEXT BLOCK</div>
+              <div style="font-size:24px;font-weight:900;line-height:1.2">高数强化<br/>极限与导数</div>
+              <div style="margin-top:14px;height:8px;background:#273241;border-radius:99px"><div style="width:62%;height:100%;background:#d6ff62;border-radius:99px"></div></div>
+            </div>
+            <div style="display:grid;gap:8px">
+              <div style="display:flex;gap:8px;align-items:center;background:#151b27;border:1px solid #2d3848;border-radius:8px;padding:10px"><span style="width:18px;height:18px;border:2px solid #d6ff62;border-radius:50%"></span>英语阅读精读</div>
+              <div style="display:flex;gap:8px;align-items:center;background:#151b27;border:1px solid #2d3848;border-radius:8px;padding:10px"><span style="width:18px;height:18px;border:2px solid #e16bff;border-radius:50%"></span>专业课真题</div>
+            </div>
+          </div>
+          <div style="display:grid;gap:10px">
+            <div style="background:#151b27;border:1px solid #2d3848;border-radius:10px;padding:12px"><b style="font-size:28px">4.5h</b><br/><span style="color:#91a0b5;font-size:12px">实际执行</span></div>
+            <div style="background:#151b27;border:1px solid #2d3848;border-radius:10px;padding:12px"><b style="font-size:28px">68%</b><br/><span style="color:#91a0b5;font-size:12px">完成率</span></div>
+            <div style="background:#172015;border:1px solid #38542a;border-radius:10px;padding:12px;color:#d6ff62">AI：明天先补数学，任务切成 45 分钟。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. Focus Command</h3>
+      <p>像“学习作战台”：高对比、紧凑、任务优先。适合每天快速打开、立刻知道下一步做什么。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="calm-planner" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="height:320px;background:#f4f1e8;border-radius:16px;padding:18px;color:#24231f;font-family:'Microsoft YaHei',sans-serif;overflow:hidden;border:1px solid #ddd5c5">
+        <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+          <div><div style="font-size:12px;color:#777064">考研计划</div><b style="font-size:22px">今天稳住节奏</b></div>
+          <div style="background:#20231f;color:#f4f1e8;border-radius:8px;padding:8px 10px;height:max-content">6月6日</div>
+        </div>
+        <div style="display:grid;grid-template-columns:.85fr 1.15fr;gap:14px">
+          <div style="background:#fffaf0;border:1px solid #ded5c3;border-radius:12px;padding:14px">
+            <div style="height:150px;border-radius:10px;background:linear-gradient(180deg,#e9ddc8,#f7f0e3);display:grid;place-items:center">
+              <div style="width:112px;height:112px;border-radius:50%;border:14px solid #335c4c;display:grid;place-items:center;font-weight:900;font-size:24px">72%</div>
+            </div>
+            <p style="line-height:1.6;color:#6e675d">今天不追求爆发，只保证数学和英语两个核心块完成。</p>
+          </div>
+          <div style="display:grid;gap:10px">
+            <div style="background:#fffaf0;border:1px solid #ded5c3;border-radius:10px;padding:12px"><b>09:00 数学</b><br/><span style="color:#777064">高数强化 90 分钟</span></div>
+            <div style="background:#fffaf0;border:1px solid #ded5c3;border-radius:10px;padding:12px"><b>14:30 英语</b><br/><span style="color:#777064">阅读精读 60 分钟</span></div>
+            <div style="background:#e4eee7;border:1px solid #bdd1c6;border-radius:10px;padding:12px"><b>复盘问题</b><br/><span style="color:#426252">今天偏差最大的原因是什么？</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. Calm Planner</h3>
+      <p>像安静的学习手账：更舒缓、更少压迫感，适合长期坚持和复盘。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="data-coach" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="height:320px;background:#0c1020;border-radius:16px;padding:18px;color:#edf4ff;font-family:'Microsoft YaHei',sans-serif;overflow:hidden;border:1px solid #253353">
+        <div style="display:grid;grid-template-columns:1fr auto;gap:12px;margin-bottom:14px">
+          <div><div style="font-size:12px;color:#7f96bc">AI STUDY OPS</div><b style="font-size:22px">数据驱动复习</b></div>
+          <div style="color:#6ff0c2;background:#112c2a;border:1px solid #1f6656;padding:7px 10px;border-radius:999px">AI Ready</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px">
+          <div style="background:#131a2d;border:1px solid #26395d;border-radius:10px;padding:12px"><b style="font-size:24px">5.2h</b><br/><span style="font-size:12px;color:#8399bf">今日时长</span></div>
+          <div style="background:#131a2d;border:1px solid #26395d;border-radius:10px;padding:12px"><b style="font-size:24px">81%</b><br/><span style="font-size:12px;color:#8399bf">执行率</span></div>
+          <div style="background:#131a2d;border:1px solid #26395d;border-radius:10px;padding:12px"><b style="font-size:24px">数学</b><br/><span style="font-size:12px;color:#8399bf">风险科目</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="background:#131a2d;border:1px solid #26395d;border-radius:12px;padding:12px">
+            <div style="height:110px;display:flex;align-items:end;gap:8px">
+              <i style="height:45%;width:18%;background:#6b8cff;border-radius:4px"></i><i style="height:72%;width:18%;background:#6ff0c2;border-radius:4px"></i><i style="height:58%;width:18%;background:#f6c85f;border-radius:4px"></i><i style="height:88%;width:18%;background:#e16bff;border-radius:4px"></i>
+            </div>
+          </div>
+          <div style="background:#151d30;border:1px solid #36517f;border-radius:12px;padding:12px;color:#cfe4ff">
+            <b>明日建议</b>
+            <p style="font-size:13px;line-height:1.6;color:#9bb0d2">数学安排在第一时段；专业课压缩为错题复盘；英语维持低强度连续性。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. Data Coach</h3>
+      <p>像“AI 教练后台”：数据感更强，适合看趋势、风险提醒和建议。</p>
+    </div>
+  </div>
+</div>
+
+<p class="subtitle">我的推荐：A 和 C 结合。首页用 A 的任务推进感，进度和 AI 页用 C 的数据教练感；避免 B 那种太柔和导致效率工具感不足。</p>

@@ -1,0 +1,7 @@
+{
+  "source": "D:\\xm\\zy\\jglx\\6.作业&答案\\结构力学基础与技巧班第3次作业答案（材料力学回顾）.pdf",
+  "page": 5,
+  "method": "pdf-text",
+  "text": "（e）解：取整体隔离体对A点取矩，由\n4 4 4 2 4 20\nB\nF \\times =\\times \\times ++\n可得B处支座反力\n14\nB\nF\nKN\n=\n。再由整体竖向力平衡，可得A处支座反力\n2\nA\nF\nKN\n=\n。画出弯矩图和\n剪力图如图（b）（c）所示。\n（f）解：取整体隔离体对A点取矩，由\n11\n4\n2\n3\n8\nB\nF\na\nF\na\nF\na\nF\na\n\\times\n+\n\\times\n=\n\\times\n+\n\\times\n，可得B\n处支座反力\n5\n16\nB\nF\nF\n=\n，再由整体竖向力平衡，可得A处支座反力\n5\n16\nA\nF\nF\n=\n。画\n出弯矩图和剪力图如图（b）（c）所示。",
+  "figure": "figures/结构力学基础与技巧班第3次作业答案_材料力学回顾__p005.jpg"
+}

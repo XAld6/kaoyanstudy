@@ -1,0 +1,7 @@
+{
+  "source": "D:\\xm\\zy\\jglx\\6.作业&答案\\结构力学基础与技巧班第3次作业答案（材料力学回顾）.pdf",
+  "page": 7,
+  "method": "pdf-text",
+  "text": "（a）解：取CD部分隔离体并对B点取矩，由\nC\nF\na\nqa a\n\\times =\n\\times 可得C结点的竖向反\n力\nC\nF\nqa\n=\n，再取AC部分，可得A处固定端反力矩\n2\n2\n1\n1\n2\n2\nA\nM\nqa a\nqa\nqa\n=\n\\times\n-\n=\n（下\n侧受拉）。画出弯矩图和剪力图如图（b）（c）所示。\n（b）解：已知AC为二力杆，没有剪力和弯矩，易画出弯矩图和剪力图如图（a）\n（b）所示。",
+  "figure": "figures/结构力学基础与技巧班第3次作业答案_材料力学回顾__p007.jpg"
+}

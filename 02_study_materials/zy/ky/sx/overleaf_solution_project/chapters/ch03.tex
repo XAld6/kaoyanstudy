@@ -1,0 +1,2522 @@
+\chapter{一元函数积分学}
+
+\section{原题页索引}
+本章原题对应做题本第 \(39\)--\(62\) 页。本节完成第 \(1\)--\(61\) 题详细解析。
+
+\begin{center}
+\includegraphics[width=.92\textwidth]{figures/original_pages/page_039.png}
+\end{center}
+
+\section{详细解析}
+
+\begin{problemblock}
+\textbf{1.} 若 \(f(x)\) 的导函数是 \(\sin x\)，则 \(f(x)\) 有一个原函数为
+\[
+\text{A. }1+\sin x\quad
+\text{B. }1-\sin x\quad
+\text{C. }1+\cos x\quad
+\text{D. }1-\cos x.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{已知的是 \(f'(x)=\sin x\)，先还原 \(f(x)\)，再判断谁的导数可以等于 \(f(x)\)。}
+由 \(f'(x)=\sin x\)，得
+\[
+f(x)=-\cos x+C.
+\]
+选项 B 的导数为
+\[
+(1-\sin x)'=-\cos x.
+\]
+这对应 \(C=0\) 时的 \(f(x)\)，因此 \(1-\sin x\) 是 \(f(x)\) 的一个原函数。
+\[
+\boxed{\text{B}}
+\]
+\examnote{“\(f\) 的导函数”和“\(f\) 的原函数”不要混淆。本题要先由 \(f'\) 求 \(f\)，再由 \(f\) 找原函数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{2.} 设
+\[
+f(x)=
+\begin{cases}
+\cos x,&x\ge0,\\
+\sin x,&x<0,
+\end{cases}
+\qquad
+g(x)=
+\begin{cases}
+x\sin\dfrac1x,&x\ne0,\\
+0,&x=0.
+\end{cases}
+\]
+则在 \((-\infty,+\infty)\) 上
+\[
+\text{A. }f,g\text{ 都存在原函数}\quad
+\text{B. }f,g\text{ 都不存在原函数}
+\]
+\[
+\text{C. }f\text{ 存在原函数},g\text{ 不存在原函数}\quad
+\text{D. }f\text{ 不存在原函数},g\text{ 存在原函数}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{原函数的导数必须具有介值性。连续函数一定存在原函数。}
+函数 \(f\) 在 \(x=0\) 处左极限为
+\[
+\lim_{x\to0^-}\sin x=0,
+\]
+右侧函数值趋于
+\[
+\lim_{x\to0^+}\cos x=1.
+\]
+若 \(f\) 是某函数的导数，则 \(f\) 必须满足达布性质，即不能在 \(0\) 附近从接近 \(0\) 跳到接近 \(1\) 而漏掉中间值。因此 \(f\) 不存在原函数。
+
+而 \(g(x)=x\sin(1/x)\) 在 \(x=0\) 处连续，因为
+\[
+|x\sin(1/x)|\le |x|\to0.
+\]
+连续函数在任意区间上都有原函数，所以 \(g\) 存在原函数。
+\[
+\boxed{\text{D}}
+\]
+\examnote{判断“是否存在原函数”时，连续性是充分条件；不连续函数还要看是否违反导数的介值性。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{3.} 已知
+\[
+f(x)=
+\begin{cases}
+x^2,&0\le x<1,\\
+1,&1\le x\le2,
+\end{cases}
+\qquad
+F(x)=\int_1^x f(t)\,dt\quad(0\le x\le2).
+\]
+求 \(F(x)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{积分下限为 \(1\)，当 \(x<1\) 时要反向积分。}
+当 \(0\le x<1\) 时，
+\[
+F(x)=\int_1^x t^2\,dt=-\int_x^1t^2\,dt
+=\frac{x^3-1}{3}.
+\]
+当 \(1\le x\le2\) 时，
+\[
+F(x)=\int_1^x1\,dt=x-1.
+\]
+因此
+\[
+F(x)=
+\begin{cases}
+\dfrac13x^3-\dfrac13,&0\le x<1,\\
+x-1,&1\le x\le2.
+\end{cases}
+\]
+\[
+\boxed{\text{D}}
+\]
+\examnote{变下限积分要注意方向，不能把 \(\int_1^x\) 误看成 \(\int_0^x\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{4.} 设
+\[
+f(x)=
+\begin{cases}
+e^x,&x\le0,\\
+x^2+a,&x>0,
+\end{cases}
+\qquad
+F(x)=\int_{-1}^x f(t)\,dt.
+\]
+判断 \(F(x)\) 在 \(x=0\) 处的可导性。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{积分函数 \(F\) 一定连续；在分段点可导要看被积函数左右极限是否一致。}
+由于 \(f\) 在 \([-1,x]\) 上分段连续，\(F\) 在 \(0\) 处连续。
+左导数为
+\[
+F'_-(0)=\lim_{x\to0^-}f(x)=1.
+\]
+右导数为
+\[
+F'_+(0)=\lim_{x\to0^+}f(x)=a.
+\]
+故 \(F\) 在 \(0\) 处可导当且仅当
+\[
+a=1.
+\]
+\[
+\boxed{\text{D}}
+\]
+\examnote{变上限定积分在连续点处导数等于被积函数；在间断点处要分别算左右导数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{5.} 设在区间 \([a,b]\) 上 \(f(x)>0,\ f'(x)<0,\ f''(x)>0\)。令
+\[
+S_1=\int_a^b f(x)\,dx,\quad
+S_2=f(b)(b-a),\quad
+S_3=\frac12[f(a)+f(b)](b-a).
+\]
+比较 \(S_1,S_2,S_3\) 的大小。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{\(f'<0\) 表明函数递减，右端矩形低估面积；\(f''>0\) 表明函数凸，梯形面积高估曲边梯形面积。}
+因为 \(f\) 单调递减，故对 \(x\in(a,b)\)，
+\[
+f(x)>f(b),
+\]
+所以
+\[
+S_1>\int_a^b f(b)\,dx=f(b)(b-a)=S_2.
+\]
+又因为 \(f''(x)>0\)，函数图像是凸的，曲线位于端点弦线下方，因此梯形面积大于曲边梯形面积：
+\[
+S_1<S_3.
+\]
+故
+\[
+S_2<S_1<S_3.
+\]
+\[
+\boxed{\text{B}}
+\]
+\examnote{单调性比较矩形面积，凸凹性比较梯形面积，这是积分几何估值的固定套路。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{6.} 设 \(f(x)\) 连续，求
+\[
+\frac{d}{dx}\int_0^x t f(x^2-t^2)\,dt.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先换元把 \(x\) 同时出现在上限和被积函数中的复杂形式化成普通变上限积分。}
+令
+\[
+u=x^2-t^2,\qquad du=-2t\,dt.
+\]
+当 \(t=0\) 时 \(u=x^2\)，当 \(t=x\) 时 \(u=0\)。于是
+\[
+\int_0^x t f(x^2-t^2)\,dt
+=\frac12\int_0^{x^2}f(u)\,du.
+\]
+所以
+\[
+\frac{d}{dx}\int_0^x t f(x^2-t^2)\,dt
+=\frac12 f(x^2)\cdot 2x
+=xf(x^2).
+\]
+\[
+\boxed{\text{A}}
+\]
+\examnote{含 \(x^2-t^2\) 且前面有 \(t\,dt\)，优先令 \(u=x^2-t^2\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{7.} 设 \(f(x)\) 连续，且存在常数 \(a\)，满足
+\[
+5x^3+40=\int_a^x f(t)\,dt.
+\]
+当 \(x\to0\) 时，\(axf(x)\) 与 \(c(\tan x-x)^k\) 是等价无穷小，求 \(k,c\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先由积分等式确定 \(a\)，再求 \(f(x)\)，最后与 \(\tan x-x\sim x^3/3\) 比较。}
+令 \(x=a\)，右端为 \(0\)，所以
+\[
+5a^3+40=0,\qquad a=-2.
+\]
+对原式两边求导，得
+\[
+f(x)=15x^2.
+\]
+于是
+\[
+axf(x)=-2x\cdot15x^2=-30x^3.
+\]
+又
+\[
+\tan x-x\sim \frac{x^3}{3}\quad(x\to0).
+\]
+要使 \(c(\tan x-x)^k\) 与 \(-30x^3\) 等价，必须
+\[
+k=1,\qquad c\cdot\frac13=-30,
+\]
+即
+\[
+c=-90.
+\]
+\[
+\boxed{\text{D}}
+\]
+\examnote{等价无穷小比较幂次先定 \(k\)，再定系数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{8.} 设
+\[
+a_n=\frac32\int_0^{(n+1)/n}x^{n-1}\sqrt{1+x^n}\,dx,
+\]
+求
+\[
+\lim_{n\to\infty}na_n.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{被积函数含 \(x^{n-1}\) 与 \(1+x^n\)，直接令 \(u=1+x^n\)。}
+令
+\[
+u=1+x^n,\qquad du=nx^{n-1}\,dx.
+\]
+则
+\[
+a_n=\frac{3}{2n}\int_1^{1+\left(1+\frac1n\right)^n}u^{1/2}\,du
+=\frac1n\left[u^{3/2}\right]_1^{1+\left(1+\frac1n\right)^n}.
+\]
+所以
+\[
+na_n=\left[1+\left(1+\frac1n\right)^n\right]^{3/2}-1.
+\]
+令 \(n\to\infty\)，得
+\[
+\lim_{n\to\infty}na_n=(1+e)^{3/2}-1.
+\]
+\[
+\boxed{\text{D}}
+\]
+\examnote{\((1+1/n)^n\to e\) 与含参积分换元经常一起出现。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{9.} 求
+\[
+\lim_{n\to\infty}\ln\sqrt[n]{\left(1+\frac1n\right)^2
+\left(1+\frac2n\right)^2\cdots
+\left(1+\frac nn\right)^2}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先取对数并把乘积化为和，再识别黎曼和。}
+原式等于
+\[
+\lim_{n\to\infty}\frac1n\sum_{k=1}^n
+2\ln\left(1+\frac{k}{n}\right).
+\]
+这是区间 \([0,1]\) 上函数 \(2\ln(1+x)\) 的黎曼和，故极限为
+\[
+2\int_0^1\ln(1+x)\,dx.
+\]
+令 \(u=1+x\)，得
+\[
+2\int_0^1\ln(1+x)\,dx=2\int_1^2\ln u\,du.
+\]
+\[
+\boxed{\text{B}}
+\]
+\examnote{乘积极限常先取对数；\(\frac1n\sum \varphi(k/n)\) 是黎曼和标准形。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{10.} 设
+\[
+I_1=\int_0^{\pi/2}\sin(\sin x)\,dx,\qquad
+I_2=\int_0^{\pi/2}\cos(\sin x)\,dx.
+\]
+比较 \(I_1,I_2,1\) 的大小。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{用基本不等式与单调性比较：\(\sin u<u\)，且 \(\sin x<x\) 推出 \(\cos(\sin x)>\cos x\)。}
+当 \(0<x<\pi/2\) 时，
+\[
+0<\sin x<x,\qquad \sin(\sin x)<\sin x.
+\]
+因此
+\[
+I_1<\int_0^{\pi/2}\sin x\,dx=1.
+\]
+又因 \(\cos u\) 在 \([0,\pi/2]\) 上单调递减，且 \(\sin x<x\)，故
+\[
+\cos(\sin x)>\cos x.
+\]
+于是
+\[
+I_2>\int_0^{\pi/2}\cos x\,dx=1.
+\]
+所以
+\[
+I_1<1<I_2.
+\]
+\[
+\boxed{\text{A}}
+\]
+\examnote{比较积分大小时，先比较被积函数；不必强行求积分值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{11.} 设
+\[
+I=\int_0^{\pi/4}\ln\sin x\,dx,\quad
+J=\int_0^{\pi/4}\ln\cot x\,dx,\quad
+K=\int_0^{\pi/4}\ln\cos x\,dx.
+\]
+比较 \(I,J,K\) 的大小。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{在 \((0,\pi/4)\) 上 \(\cos x>\sin x\)，所以 \(\ln\cos x>\ln\sin x\)。同时 \(\cot x>1\)，所以 \(J>0\)。}
+因为
+\[
+\ln\cot x=\ln\cos x-\ln\sin x,
+\]
+所以
+\[
+J=K-I.
+\]
+在 \(0<x<\pi/4\) 上，
+\[
+0<\sin x<\cos x<1.
+\]
+因此
+\[
+\ln\sin x<\ln\cos x<0,
+\]
+即
+\[
+I<K<0.
+\]
+又 \(\cot x>1\)，故
+\[
+J=\int_0^{\pi/4}\ln\cot x\,dx>0.
+\]
+于是
+\[
+I<K<J.
+\]
+\[
+\boxed{\text{B}}
+\]
+\examnote{含 \(\ln\cot x\) 时先拆成 \(\ln\cos x-\ln\sin x\)，符号关系会很清楚。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{12.} 设
+\[
+I_k=\int_0^{k\pi}e^{x^2}\sin x\,dx\qquad(k=1,2,3).
+\]
+比较 \(I_1,I_2,I_3\) 的大小。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{\(\sin x\) 正负交替，而 \(e^{x^2}\) 递增。后面的半波权重更大，这是比较的关键。}
+显然
+\[
+I_1=\int_0^\pi e^{x^2}\sin x\,dx>0.
+\]
+又
+\[
+I_2-I_1=\int_\pi^{2\pi}e^{x^2}\sin x\,dx<0,
+\]
+所以
+\[
+I_2<I_1.
+\]
+比较 \(I_3\) 与 \(I_1\)：
+\[
+I_3-I_1=\int_\pi^{3\pi}e^{x^2}\sin x\,dx.
+\]
+将 \([2\pi,3\pi]\) 上的积分令 \(x=u+\pi\)，得
+\[
+I_3-I_1
+=\int_\pi^{2\pi}\left[e^{x^2}-e^{(x+\pi)^2}\right]\sin x\,dx.
+\]
+在 \((\pi,2\pi)\) 上，
+\[
+\sin x<0,\qquad e^{x^2}-e^{(x+\pi)^2}<0,
+\]
+故乘积为正，因而
+\[
+I_3>I_1.
+\]
+综上
+\[
+I_2<I_1<I_3.
+\]
+\[
+\boxed{\text{D}}
+\]
+\examnote{含 \(\sin x\) 的多周期积分，常按相邻半波配对比较权重。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{13.} 曲线
+\[
+y=\sin^{3/2}x\quad(0\le x\le\pi)
+\]
+与 \(x\) 轴围成的图形绕 \(x\) 轴旋转所得旋转体体积为多少？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{绕 \(x\) 轴旋转，用圆盘法 \(V=\pi\int y^2\,dx\)。}
+有
+\[
+y^2=\sin^3x.
+\]
+所以
+\[
+V=\pi\int_0^\pi \sin^3x\,dx.
+\]
+而
+\[
+\int_0^\pi\sin^3x\,dx
+=\int_0^\pi(1-\cos^2x)\sin x\,dx
+=\frac43.
+\]
+故
+\[
+V=\frac43\pi.
+\]
+\[
+\boxed{\text{B}}
+\]
+\examnote{旋转体体积要平方半径；本题 \(y=\sin^{3/2}x\)，平方后才是 \(\sin^3x\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{14.} 计算
+\[
+\int\frac{x+5}{x^2-6x+13}\,dx.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{分母配方，并把分子拆成分母导数的一部分加常数。}
+因为
+\[
+x^2-6x+13=(x-3)^2+4,
+\]
+且
+\[
+x+5=\frac12(2x-6)+8.
+\]
+所以
+\[
+\int\frac{x+5}{x^2-6x+13}\,dx
+=\frac12\ln(x^2-6x+13)
+8\int\frac{dx}{(x-3)^2+4}.
+\]
+后一个积分为
+\[
+8\cdot\frac12\arctan\frac{x-3}{2}
+=4\arctan\frac{x-3}{2}.
+\]
+故
+\[
+\boxed{\frac12\ln(x^2-6x+13)+4\arctan\frac{x-3}{2}+C}.
+\]
+\examnote{有不可约二次式时，通常会同时出现 \(\ln\) 与 \(\arctan\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{15.} 计算
+\[
+\int\frac{\arcsin x}{x^2}\,dx.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{含反三角函数乘 \(x^{-2}\)，优先分部积分。}
+取
+\[
+u=\arcsin x,\qquad dv=\frac{dx}{x^2}.
+\]
+则
+\[
+du=\frac{dx}{\sqrt{1-x^2}},\qquad v=-\frac1x.
+\]
+于是
+\[
+\int\frac{\arcsin x}{x^2}\,dx
+=-\frac{\arcsin x}{x}
+\int\frac{dx}{x\sqrt{1-x^2}}.
+\]
+令 \(x=\sin\theta\)，则
+\[
+\int\frac{dx}{x\sqrt{1-x^2}}
+=\int \csc\theta\,d\theta
+=\ln\left|\tan\frac{\theta}{2}\right|.
+\]
+由
+\[
+\tan\frac{\theta}{2}=\frac{\sin\theta}{1+\cos\theta}
+=\frac{x}{1+\sqrt{1-x^2}},
+\]
+得
+\[
+\boxed{
+\int\frac{\arcsin x}{x^2}\,dx
+=-\frac{\arcsin x}{x}
+\ln\left|\frac{x}{1+\sqrt{1-x^2}}\right|+C }.
+\]
+\examnote{反三角函数积分常用分部积分；\(\int\csc\theta\,d\theta\) 的结果要熟。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{16.} 计算
+\[
+\int\frac{x^2e^x}{(x+2)^2}\,dx.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{寻找形如 \((e^xR(x))'\) 的结构，即解 \(R+R'=x^2/(x+2)^2\)。}
+注意到
+\[
+\frac{x^2}{(x+2)^2}
+=\left(1-\frac4{x+2}\right)
+\left(1-\frac4{x+2}\right)'.
+\]
+因此
+\[
+\left[e^x\left(1-\frac4{x+2}\right)\right]'
+=e^x\frac{x^2}{(x+2)^2}.
+\]
+所以
+\[
+\boxed{
+\int\frac{x^2e^x}{(x+2)^2}\,dx
+=e^x\left(1-\frac4{x+2}\right)+C
+=\frac{(x-2)e^x}{x+2}+C }.
+\]
+\examnote{有 \(e^x\) 乘有理式时，可尝试把原式配成 \((e^xR)'=e^x(R+R')\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{17.} 设 \(f(x)\) 是连续函数，且
+\[
+\int_0^{x^3-1}f(t)\,dt=x-1.
+\]
+求 \(f(7)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{对变上限积分求导，再令上限 \(x^3-1=7\)。}
+两边对 \(x\) 求导：
+\[
+f(x^3-1)\cdot 3x^2=1.
+\]
+要计算 \(f(7)\)，令
+\[
+x^3-1=7,\qquad x=2.
+\]
+于是
+\[
+f(7)\cdot 3\cdot 2^2=1,
+\]
+故
+\[
+\boxed{f(7)=\frac1{12}}.
+\]
+\examnote{变上限是复合函数时，求导必须乘上限的导数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{18.} 设 \(f(x)\) 是连续函数，且
+\[
+f(x)=x+2\int_0^1f(t)\,dt.
+\]
+求 \(f(x)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{把定积分看作常数，反代求常数。}
+令
+\[
+A=\int_0^1f(t)\,dt.
+\]
+则
+\[
+f(x)=x+2A.
+\]
+两边在 \([0,1]\) 上积分：
+\[
+A=\int_0^1(x+2A)\,dx=\frac12+2A.
+\]
+所以
+\[
+A=-\frac12.
+\]
+代回得
+\[
+\boxed{f(x)=x-1}.
+\]
+\examnote{含 \(\int_0^1f(t)\,dt\) 的方程，一般先设常数 \(A\)，再积分求 \(A\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{19.} 计算
+\[
+\int_0^1\frac{x\,dx}{(2-x^2)\sqrt{1-x^2}}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{根号中是 \(1-x^2\)，且有 \(x\,dx\)，令 \(u=\sqrt{1-x^2}\)。}
+令
+\[
+u=\sqrt{1-x^2},\qquad x\,dx=-u\,du.
+\]
+又
+\[
+2-x^2=1+u^2.
+\]
+当 \(x=0\) 时 \(u=1\)，当 \(x=1\) 时 \(u=0\)。故
+\[
+\int_0^1\frac{x\,dx}{(2-x^2)\sqrt{1-x^2}}
+=\int_1^0\frac{-du}{1+u^2}
+=\int_0^1\frac{du}{1+u^2}
+=\frac{\pi}{4}.
+\]
+\[
+\boxed{\frac{\pi}{4}}
+\]
+\examnote{根号换元后要同步改上下限，避免符号出错。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{20.} 计算
+\[
+\int_0^{\pi^2}\sqrt{x}\cos\sqrt{x}\,dx.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{令 \(t=\sqrt{x}\)，把根号变量变为普通三角积分。}
+令
+\[
+t=\sqrt{x},\qquad x=t^2,\qquad dx=2t\,dt.
+\]
+则
+\[
+\int_0^{\pi^2}\sqrt{x}\cos\sqrt{x}\,dx
+=2\int_0^\pi t^2\cos t\,dt.
+\]
+分部积分可得
+\[
+\int t^2\cos t\,dt=t^2\sin t+2t\cos t-2\sin t.
+\]
+于是
+\[
+2\int_0^\pi t^2\cos t\,dt
+=2[-2\pi]
+=-4\pi.
+\]
+\[
+\boxed{-4\pi}
+\]
+\examnote{出现 \(\sqrt{x}\) 同时在代数项和三角函数中，令 \(t=\sqrt{x}\) 通常最直接。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{21.} 计算
+\[
+\int_{-\pi/2}^{\pi/2}
+\left[\cos^2x+\int_0^x e^{-t^2}\,dt\right]\sin^2x\,dx.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{利用奇偶性。\(\int_0^x e^{-t^2}dt\) 是奇函数，\(\sin^2x\) 是偶函数。}
+记
+\[
+E(x)=\int_0^x e^{-t^2}\,dt.
+\]
+因为 \(e^{-t^2}\) 是偶函数，所以 \(E(x)\) 是奇函数。于是
+\[
+E(x)\sin^2x
+\]
+是奇函数，在对称区间上的积分为 \(0\)。
+因此原积分等于
+\[
+\int_{-\pi/2}^{\pi/2}\cos^2x\sin^2x\,dx.
+\]
+由
+\[
+\sin^2x\cos^2x=\frac18(1-\cos4x),
+\]
+得
+\[
+\int_{-\pi/2}^{\pi/2}\cos^2x\sin^2x\,dx
+=\frac18\int_{-\pi/2}^{\pi/2}(1-\cos4x)\,dx
+=\frac{\pi}{8}.
+\]
+\[
+\boxed{\frac{\pi}{8}}
+\]
+\examnote{对称区间积分先看奇偶性，经常可以直接消去复杂项。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{22.} 计算
+\[
+\int_0^\pi x\sqrt{\cos^2x-\cos^4x}\,dx.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{根号化简为 \(|\sin x\cos x|\)，再用关于 \(\pi/2\) 的对称性。}
+因为
+\[
+\sqrt{\cos^2x-\cos^4x}
+=\sqrt{\cos^2x(1-\cos^2x)}
+=|\sin x\cos x|.
+\]
+设
+\[
+q(x)=|\sin x\cos x|.
+\]
+则
+\[
+q(\pi-x)=q(x).
+\]
+因此
+\[
+\int_0^\pi xq(x)\,dx
+=\frac{\pi}{2}\int_0^\pi q(x)\,dx.
+\]
+而
+\[
+\int_0^\pi|\sin x\cos x|\,dx
+=2\int_0^{\pi/2}\sin x\cos x\,dx=1.
+\]
+所以
+\[
+\boxed{\frac{\pi}{2}}.
+\]
+\examnote{若 \(q(\pi-x)=q(x)\)，则 \(\int_0^\pi xq(x)dx=\frac{\pi}{2}\int_0^\pi q(x)dx\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{23.} 设 \(a>0\)，计算
+\[
+\int_0^{2a}x\sqrt{2ax-x^2}\,dx.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{把二次式配成圆：\(2ax-x^2=a^2-(x-a)^2\)。}
+令
+\[
+u=x-a.
+\]
+则
+\[
+2ax-x^2=a^2-u^2,\qquad x=u+a.
+\]
+积分化为
+\[
+\int_{-a}^{a}(u+a)\sqrt{a^2-u^2}\,du.
+\]
+其中
+\[
+\int_{-a}^{a}u\sqrt{a^2-u^2}\,du=0
+\]
+因为被积函数为奇函数。因此
+\[
+\int_0^{2a}x\sqrt{2ax-x^2}\,dx
+=a\int_{-a}^{a}\sqrt{a^2-u^2}\,du.
+\]
+后一个积分是半径为 \(a\) 的上半圆面积：
+\[
+\int_{-a}^{a}\sqrt{a^2-u^2}\,du=\frac{\pi a^2}{2}.
+\]
+故
+\[
+\boxed{\frac{\pi a^3}{2}}.
+\]
+\examnote{含 \(\sqrt{2ax-x^2}\) 时，配方后常转化为半圆面积。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{24.} 设
+\[
+f(x)=x-\int_0^\pi f(x)\cos x\,dx.
+\]
+求 \(f(x)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{积分号中的变量与外面的 \(x\) 同名，实质上该定积分是一个常数。设它为 \(A\)，再反代。}
+令
+\[
+A=\int_0^\pi f(x)\cos x\,dx.
+\]
+则
+\[
+f(x)=x-A.
+\]
+代入 \(A\)：
+\[
+A=\int_0^\pi (x-A)\cos x\,dx
+=\int_0^\pi x\cos x\,dx-A\int_0^\pi\cos x\,dx.
+\]
+由于
+\[
+\int_0^\pi\cos x\,dx=0,
+\]
+且
+\[
+\int_0^\pi x\cos x\,dx
+=\left[x\sin x+\cos x\right]_0^\pi=-2,
+\]
+所以
+\[
+A=-2.
+\]
+故
+\[
+\boxed{f(x)=x+2}.
+\]
+\examnote{定积分变量只是哑变量；遇到这种题先把整个积分设为常数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{25.} 设 \(f(x)\) 为连续函数，且
+\[
+\int_0^x f(t)\,dt=3x^3-x\int_{-1}^{1}f(t)\,dt.
+\]
+求 \(f(x)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{把 \(\int_{-1}^{1}f(t)dt\) 设为常数，再由求导和反代确定。}
+令
+\[
+A=\int_{-1}^{1}f(t)\,dt.
+\]
+则
+\[
+\int_0^x f(t)\,dt=3x^3-Ax.
+\]
+两边求导得
+\[
+f(x)=9x^2-A.
+\]
+于是
+\[
+A=\int_{-1}^{1}(9x^2-A)\,dx=6-2A.
+\]
+故
+\[
+A=2.
+\]
+所以
+\[
+\boxed{f(x)=9x^2-2}.
+\]
+\examnote{含未知函数的定积分常数，依然是“设常数、求导、反代”。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{26.} 求
+\[
+\lim_{n\to\infty}\frac1{n^2}\left[
+\sqrt{n^2-1}+\sqrt{n^2-2^2}+\cdots+\sqrt{n^2-(n-1)^2}
+\right].
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{把每项提出一个 \(n\)，化成黎曼和。}
+原式等于
+\[
+\lim_{n\to\infty}\frac1n\sum_{k=1}^{n-1}
+\sqrt{1-\left(\frac{k}{n}\right)^2}.
+\]
+这是函数 \(\sqrt{1-x^2}\) 在 \([0,1]\) 上的黎曼和，因此极限为
+\[
+\int_0^1\sqrt{1-x^2}\,dx.
+\]
+该积分表示单位圆第一象限面积，故
+\[
+\boxed{\frac{\pi}{4}}.
+\]
+\examnote{根式和式极限常对应几何面积；这里就是四分之一单位圆。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{27.} 求
+\[
+\lim_{n\to\infty}\frac1n\left(
+\sqrt{1+\cos\frac{\pi}{n}}
++\sqrt{1+\cos\frac{2\pi}{n}}
++\cdots
++\sqrt{1+\cos\frac{n\pi}{n}}
+\right).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先识别黎曼和，再用半角公式化简被积函数。}
+原式为
+\[
+\int_0^1\sqrt{1+\cos\pi x}\,dx.
+\]
+由
+\[
+1+\cos\pi x=2\cos^2\frac{\pi x}{2},
+\]
+且 \(0\le x\le1\) 时 \(\cos(\pi x/2)\ge0\)，所以
+\[
+\sqrt{1+\cos\pi x}=\sqrt2\cos\frac{\pi x}{2}.
+\]
+因此
+\[
+\int_0^1\sqrt{1+\cos\pi x}\,dx
+=\sqrt2\int_0^1\cos\frac{\pi x}{2}\,dx
+=\sqrt2\cdot\frac{2}{\pi}.
+\]
+故
+\[
+\boxed{\frac{2\sqrt2}{\pi}}.
+\]
+\examnote{黎曼和中的 \(\cos(k\pi/n)\) 对应 \(\cos\pi x\)，不要漏掉 \(\pi\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{28.} 求
+\[
+\lim_{n\to\infty}\int_0^1 e^{-x}\sin nx\,dx.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{这是典型的振荡积分，连续函数乘 \(\sin nx\) 在有限区间上的积分趋于 \(0\)。}
+由黎曼-勒贝格型结论，
+\[
+\lim_{n\to\infty}\int_0^1 e^{-x}\sin nx\,dx=0.
+\]
+也可分部积分：
+\[
+\int_0^1 e^{-x}\sin nx\,dx
+=\left[-\frac{e^{-x}\cos nx}{n}\right]_0^1
+-\frac1n\int_0^1 e^{-x}\cos nx\,dx,
+\]
+右端绝对值被 \(O(1/n)\) 控制，故极限为
+\[
+\boxed{0}.
+\]
+\examnote{固定区间上，光滑函数乘高频 \(\sin nx\) 或 \(\cos nx\) 的积分通常趋于 \(0\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{29.} 设函数 \(f(x)\) 连续，且
+\[
+\int_0^x f(t-x)\,dt=(1+x^2)^x-1.
+\]
+求
+\[
+\int_{-1}^{1}f(x)\,dx.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先把左边换元成 \(\int_{-x}^0f(u)du\)，再求导得到 \(f(-x)\)。}
+令 \(u=t-x\)，则
+\[
+\int_0^x f(t-x)\,dt=\int_{-x}^0 f(u)\,du.
+\]
+记
+\[
+\varphi(x)=(1+x^2)^x-1.
+\]
+于是
+\[
+\int_{-x}^0 f(u)\,du=\varphi(x).
+\]
+两边对 \(x\) 求导：
+\[
+-f(-x)=\varphi'(x),
+\]
+即
+\[
+f(-x)=-\varphi'(x).
+\]
+因此
+\[
+\int_{-1}^{1}f(u)\,du
+=\int_{-1}^{1}f(-x)\,dx
+=-\int_{-1}^{1}\varphi'(x)\,dx.
+\]
+所以
+\[
+\int_{-1}^{1}f(u)\,du
+=-[\varphi(1)-\varphi(-1)].
+\]
+计算
+\[
+\varphi(1)=2^1-1=1,\qquad
+\varphi(-1)=2^{-1}-1=-\frac12.
+\]
+故
+\[
+\boxed{\int_{-1}^{1}f(x)\,dx=-\frac32}.
+\]
+\examnote{变下限含 \(-x\) 时，求导符号最容易错；本题关键是 \(\frac{d}{dx}\int_{-x}^{0}f(u)du=-f(-x)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{30.} 若
+\[
+\int_0^x f(t)\,dt=xe^{-x},
+\]
+求
+\[
+\int_1^{+\infty}\frac{f(\ln x)}{x}\,dx.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先用 \(u=\ln x\) 把反常积分化回 \(f(u)\) 的积分。}
+令
+\[
+u=\ln x,\qquad \frac{dx}{x}=du.
+\]
+当 \(x=1\) 时 \(u=0\)，当 \(x\to+\infty\) 时 \(u\to+\infty\)。所以
+\[
+\int_1^{+\infty}\frac{f(\ln x)}{x}\,dx
+=\int_0^{+\infty}f(u)\,du.
+\]
+由题设
+\[
+\int_0^x f(t)\,dt=xe^{-x}.
+\]
+令 \(x\to+\infty\)，得
+\[
+\int_0^{+\infty}f(t)\,dt
+=\lim_{x\to+\infty}xe^{-x}=0.
+\]
+故
+\[
+\boxed{0}.
+\]
+\examnote{出现 \(f(\ln x)/x\)，几乎必令 \(u=\ln x\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{31.} 计算
+\[
+\int_2^{+\infty}\frac{dx}{(x+7)\sqrt{x-2}}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{令 \(u=\sqrt{x-2}\)，根号和无穷上限都会简化。}
+令
+\[
+u=\sqrt{x-2},\qquad x=u^2+2,\qquad dx=2u\,du.
+\]
+则
+\[
+x+7=u^2+9.
+\]
+原积分为
+\[
+\int_0^{+\infty}\frac{2u\,du}{(u^2+9)u}
+=\int_0^{+\infty}\frac{2\,du}{u^2+9}.
+\]
+所以
+\[
+\int_0^{+\infty}\frac{2\,du}{u^2+9}
+=2\cdot \frac{\pi}{2\cdot3}
+=\frac{\pi}{3}.
+\]
+\[
+\boxed{\frac{\pi}{3}}
+\]
+\examnote{反常积分换元后要同时检查新上限；本题 \(x\to+\infty\) 对应 \(u\to+\infty\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{32.} 函数
+\[
+y=\frac{x^2}{\sqrt{1-x^2}}
+\]
+在区间
+\[
+\left[\frac12,\frac{\sqrt3}{2}\right]
+\]
+上的平均值为多少？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{函数平均值为区间积分除以区间长度。令 \(x=\sin t\)。}
+平均值为
+\[
+\frac{1}{\frac{\sqrt3}{2}-\frac12}
+\int_{1/2}^{\sqrt3/2}\frac{x^2}{\sqrt{1-x^2}}\,dx.
+\]
+令
+\[
+x=\sin t.
+\]
+则 \(t\) 从 \(\pi/6\) 到 \(\pi/3\)，且
+\[
+\frac{x^2}{\sqrt{1-x^2}}dx=\sin^2t\,dt.
+\]
+因此
+\[
+\int_{1/2}^{\sqrt3/2}\frac{x^2}{\sqrt{1-x^2}}\,dx
+=\int_{\pi/6}^{\pi/3}\sin^2t\,dt
+=\frac{\pi}{12}.
+\]
+区间长度为
+\[
+\frac{\sqrt3-1}{2}.
+\]
+所以平均值为
+\[
+\frac{\pi/12}{(\sqrt3-1)/2}
+=\frac{\pi}{6(\sqrt3-1)}
+=\boxed{\frac{\pi(\sqrt3+1)}{12}}.
+\]
+\examnote{平均值不是积分值，最后一定要除以区间长度。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{33.} 由曲线
+\[
+y=x+\frac1x,\qquad x=2,\qquad y=2
+\]
+所围图形的面积 \(S\) 为多少？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先求交点。\(x+1/x=2\) 给出 \(x=1\)。}
+由
+\[
+x+\frac1x=2
+\]
+得
+\[
+(x-1)^2=0,\qquad x=1.
+\]
+在 \(1\le x\le2\) 上，
+\[
+x+\frac1x\ge2.
+\]
+所以面积
+\[
+S=\int_1^2\left(x+\frac1x-2\right)\,dx.
+\]
+计算得
+\[
+S=\left[\frac{x^2}{2}+\ln x-2x\right]_1^2
+=\ln2-\frac12.
+\]
+故
+\[
+\boxed{\ln2-\frac12}.
+\]
+\examnote{面积题先画上下关系；本题曲线在直线 \(y=2\) 上方。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{34.} 设曲线的极坐标方程为
+\[
+r=e^{a\theta}\quad(a>0),
+\]
+求该曲线上 \(\theta\) 从 \(0\) 变到 \(2\pi\) 的一段弧与极轴所围成图形的面积。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{极坐标面积公式为 \(S=\frac12\int r^2\,d\theta\)。}
+所求面积为
+\[
+S=\frac12\int_0^{2\pi}e^{2a\theta}\,d\theta.
+\]
+计算得
+\[
+S=\frac12\cdot \frac{e^{2a\theta}}{2a}\bigg|_0^{2\pi}
+=\frac{e^{4\pi a}-1}{4a}.
+\]
+故
+\[
+\boxed{\frac{e^{4\pi a}-1}{4a}}.
+\]
+\examnote{极坐标面积不要漏掉系数 \(1/2\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{35.}（数学三不要求）曲线
+\[
+y=\int_0^x\tan t\,dt\qquad\left(0\le x\le\frac{\pi}{4}\right)
+\]
+的弧长 \(s\) 为多少？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先求导 \(y'=\tan x\)，再用弧长公式。}
+弧长
+\[
+s=\int_0^{\pi/4}\sqrt{1+(y')^2}\,dx
+=\int_0^{\pi/4}\sqrt{1+\tan^2x}\,dx.
+\]
+因为在该区间 \(\sec x>0\)，所以
+\[
+s=\int_0^{\pi/4}\sec x\,dx
+=\left[\ln|\sec x+\tan x|\right]_0^{\pi/4}.
+\]
+故
+\[
+\boxed{s=\ln(1+\sqrt2)}.
+\]
+\examnote{变上限定积分给出的曲线，先由牛顿-莱布尼茨公式求 \(y'\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{36.}（数学三不要求）一根长为 \(1\) 的细棒位于 \(x\) 轴的区间 \([0,1]\) 上，若其线密度
+\[
+\rho=-x^2+2x+1,
+\]
+求该细棒的质心坐标 \(\bar x\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{质心坐标等于一阶矩除以质量。}
+质量为
+\[
+m=\int_0^1(-x^2+2x+1)\,dx
+=-\frac13+1+1=\frac53.
+\]
+关于原点的一阶矩为
+\[
+M=\int_0^1x(-x^2+2x+1)\,dx
+=-\frac14+\frac23+\frac12
+=\frac{11}{12}.
+\]
+故
+\[
+\bar x=\frac{M}{m}
+=\frac{11/12}{5/3}
+=\boxed{\frac{11}{20}}.
+\]
+\examnote{质心题记住 \(\bar x=\dfrac{\int x\rho(x)\,dx}{\int\rho(x)\,dx}\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{37.} 计算
+\[
+\int_0^1\frac{f(x)}{\sqrt{x}}\,dx,\qquad
+f(x)=\int_1^x\frac{\ln(1+t)}{t}\,dt.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{外层积分含 \(f(x)x^{-1/2}\)，用分部积分把 \(f\) 转成 \(f'\)。}
+取
+\[
+u=f(x),\qquad dv=x^{-1/2}\,dx,
+\]
+则
+\[
+du=\frac{\ln(1+x)}{x}\,dx,\qquad v=2\sqrt{x}.
+\]
+由于 \(f(1)=0\)，且 \(\sqrt{x}f(x)\to0\ (x\to0^+)\)，所以
+\[
+\int_0^1\frac{f(x)}{\sqrt{x}}\,dx
+=-2\int_0^1\frac{\ln(1+x)}{\sqrt{x}}\,dx.
+\]
+令 \(x=t^2\)，得
+\[
+-2\int_0^1\frac{\ln(1+x)}{\sqrt{x}}\,dx
+=-4\int_0^1\ln(1+t^2)\,dt.
+\]
+而
+\[
+\int_0^1\ln(1+t^2)\,dt
+=\left[t\ln(1+t^2)-2t+2\arctan t\right]_0^1
+=\ln2-2+\frac{\pi}{2}.
+\]
+故
+\[
+\boxed{8-4\ln2-2\pi}.
+\]
+\examnote{含“积分定义的函数”时，分部积分常能把未知函数降为已知导数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{38.} 计算积分
+\[
+\int_{1/2}^{3/2}\frac{dx}{\sqrt{|x-x^2|}}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{绝对值在 \(x=1\) 处分段：左边是 \(x-x^2\)，右边是 \(x^2-x\)。}
+\[
+\int_{1/2}^{3/2}\frac{dx}{\sqrt{|x-x^2|}}
+=\int_{1/2}^{1}\frac{dx}{\sqrt{x(1-x)}}
++\int_1^{3/2}\frac{dx}{\sqrt{x(x-1)}}.
+\]
+第一段令 \(2x-1=\sin u\)，得
+\[
+\int_{1/2}^{1}\frac{dx}{\sqrt{x(1-x)}}=\frac{\pi}{2}.
+\]
+第二段令 \(u=2x-1\)，则
+\[
+\int_1^{3/2}\frac{dx}{\sqrt{x(x-1)}}
+=\int_1^2\frac{du}{\sqrt{u^2-1}}
+=\ln(2+\sqrt3).
+\]
+所以
+\[
+\boxed{\frac{\pi}{2}+\ln(2+\sqrt3)}.
+\]
+\examnote{有绝对值的根式积分必须先找符号变化点。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{39.} 求极限
+\[
+\lim_{x\to0}
+\frac{\displaystyle\int_0^x\left[\int_0^{u^2}\arctan(1+t)\,dt\right]du}
+{x(1-\cos x)}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{只需抓主部。内层积分上限为 \(u^2\)，被积函数在 \(0\) 处为 \(\arctan1=\pi/4\)。}
+当 \(u\to0\) 时，
+\[
+\int_0^{u^2}\arctan(1+t)\,dt
+\sim \frac{\pi}{4}u^2.
+\]
+于是
+\[
+\int_0^x\left[\int_0^{u^2}\arctan(1+t)\,dt\right]du
+\sim \int_0^x\frac{\pi}{4}u^2\,du
+=\frac{\pi}{12}x^3.
+\]
+又
+\[
+x(1-\cos x)\sim x\cdot\frac{x^2}{2}=\frac{x^3}{2}.
+\]
+故极限为
+\[
+\boxed{\frac{\pi}{6}}.
+\]
+\examnote{多重变限积分求极限，先从最内层提取等价主部。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{40.} 设 \(f(x)\) 为非负连续函数，且
+\[
+f(x)\int_0^x f(x-t)\,dt=\sin^4x.
+\]
+求 \(f(x)\) 在 \([0,\pi/2]\) 上的平均值。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{令 \(F(x)=\int_0^x f(t)dt\)，则 \(\int_0^x f(x-t)dt=F(x)\)，并且 \(F'=f\)。}
+令
+\[
+F(x)=\int_0^x f(t)\,dt.
+\]
+则题设化为
+\[
+F'(x)F(x)=\sin^4x.
+\]
+因此
+\[
+\frac12(F^2(x))'=\sin^4x.
+\]
+由 \(F(0)=0\)，得
+\[
+F^2(x)=2\int_0^x\sin^4t\,dt.
+\]
+因为 \(f\ge0\)，所以 \(F(x)\ge0\)。于是
+\[
+F\left(\frac{\pi}{2}\right)
+=\sqrt{2\int_0^{\pi/2}\sin^4t\,dt}
+=\sqrt{2\cdot\frac{3\pi}{16}}
+=\sqrt{\frac{3\pi}{8}}.
+\]
+所求平均值为
+\[
+\frac{1}{\pi/2}\int_0^{\pi/2}f(x)\,dx
+=\frac{2}{\pi}F\left(\frac{\pi}{2}\right)
+=\boxed{\sqrt{\frac{3}{2\pi}}}.
+\]
+\examnote{卷积型 \(\int_0^x f(x-t)dt\) 换元后就是 \(\int_0^x f(t)dt\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{41.} 设 \(f(x)\) 在 \(x=a\) 的某邻域内可导，且 \(f(a)\ne0\)，求
+\[
+\lim_{x\to a}\left(
+\frac{1}{(x-a)f(a)}
+-\frac{1}{\displaystyle\int_a^x f(t)\,dt}
+\right).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{两项都含一阶无穷小，直接通分后用积分的局部展开。}
+记 \(h=x-a\)。因为 \(f\) 在 \(a\) 处可导，
+\[
+\int_a^x f(t)\,dt
+=f(a)h+\frac12f'(a)h^2+o(h^2).
+\]
+于是
+\[
+\frac{1}{hf(a)}
+-\frac{1}{\int_a^x f(t)\,dt}
+=
+\frac{\int_a^x f(t)\,dt-hf(a)}
+{hf(a)\int_a^x f(t)\,dt}.
+\]
+分子为
+\[
+\frac12f'(a)h^2+o(h^2),
+\]
+分母为
+\[
+h f(a)\,[f(a)h+o(h)]=f^2(a)h^2+o(h^2).
+\]
+故极限为
+\[
+\boxed{\frac{f'(a)}{2f^2(a)}}.
+\]
+\examnote{两个无穷大相减，先通分；积分主部要展开到二阶。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{42.} 函数 \(f(x)\) 在 \([0,+\infty)\) 上可导，\(f(0)=0\)，且其反函数为 \(g(x)\)。若
+\[
+\int_x^{x+f(x)}g(t-x)\,dt=x^2\ln(1+x),
+\]
+求 \(f(x)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先令 \(u=t-x\)，再使用反函数面积公式
+\(\int_0^{f(x)}g(u)du=xf(x)-\int_0^x f(s)ds\)。}
+令 \(u=t-x\)，则
+\[
+\int_x^{x+f(x)}g(t-x)\,dt
+=\int_0^{f(x)}g(u)\,du.
+\]
+由反函数积分公式，
+\[
+\int_0^{f(x)}g(u)\,du+\int_0^x f(s)\,ds=xf(x).
+\]
+所以题设等价于
+\[
+xf(x)-\int_0^x f(s)\,ds=x^2\ln(1+x).
+\]
+两边求导：
+\[
+f(x)+xf'(x)-f(x)=2x\ln(1+x)+\frac{x^2}{1+x}.
+\]
+即
+\[
+f'(x)=2\ln(1+x)+\frac{x}{1+x}.
+\]
+由 \(f(0)=0\)，积分得
+\[
+f(x)=2\int_0^x\ln(1+t)\,dt+\int_0^x\frac{t}{1+t}\,dt.
+\]
+计算：
+\[
+2\int_0^x\ln(1+t)\,dt
+=2[(1+x)\ln(1+x)-x],
+\]
+\[
+\int_0^x\frac{t}{1+t}\,dt=x-\ln(1+x).
+\]
+故
+\[
+\boxed{f(x)=(2x+1)\ln(1+x)-x}.
+\]
+\examnote{反函数题常用面积公式：\(\int_0^a f+\int_0^{f(a)}f^{-1}=af(a)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{43.} 设函数
+\[
+S(x)=\int_0^x|\cos t|\,dt.
+\]
+\begin{enumerate}
+\item 当 \(n\) 为正整数，且 \(n\pi\le x<(n+1)\pi\) 时，证明
+\[
+2n\le S(x)<2(n+1).
+\]
+\item 求
+\[
+\lim_{x\to+\infty}\frac{S(x)}{x}.
+\]
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{\(|\cos t|\) 的周期为 \(\pi\)，每个周期面积为 \(2\)。}
+\textbf{(1)} 因为
+\[
+\int_0^\pi|\cos t|\,dt=2,
+\]
+且 \(|\cos t|\) 以 \(\pi\) 为周期，所以
+\[
+S(n\pi)=2n.
+\]
+当 \(n\pi\le x<(n+1)\pi\) 时，
+\[
+S(x)=S(n\pi)+\int_{n\pi}^x|\cos t|\,dt.
+\]
+其中
+\[
+0\le\int_{n\pi}^x|\cos t|\,dt<2.
+\]
+故
+\[
+2n\le S(x)<2(n+1).
+\]
+
+\textbf{(2)} 若 \(n\pi\le x<(n+1)\pi\)，则
+\[
+\frac{2n}{(n+1)\pi}<\frac{S(x)}{x}\le\frac{2(n+1)}{n\pi}
+\]
+可作夹逼。令 \(x\to+\infty\) 时 \(n\to+\infty\)，两边都趋于
+\[
+\frac{2}{\pi}.
+\]
+因此
+\[
+\boxed{\lim_{x\to+\infty}\frac{S(x)}{x}=\frac{2}{\pi}}.
+\]
+\examnote{周期函数积分的长期平均值等于一个周期积分除以周期长度。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{44.} 
+\begin{enumerate}
+\item 比较
+\[
+\int_0^1|\ln t|[\ln(1+t)]^n\,dt
+\quad\text{与}\quad
+\int_0^1t^n|\ln t|\,dt
+\]
+的大小，其中 \(n=1,2,\cdots\)；
+\item 记
+\[
+u_n=\int_0^1|\ln t|[\ln(1+t)]^n\,dt,
+\]
+求
+\[
+\lim_{n\to\infty}u_n.
+\]
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{在 \(0<t\le1\) 上有 \(0<\ln(1+t)<t\)，乘以正函数 \(|\ln t|\) 后积分比较。}
+\textbf{(1)} 对 \(0<t\le1\)，
+\[
+0<\ln(1+t)<t.
+\]
+因此
+\[
+0<[\ln(1+t)]^n<t^n.
+\]
+又 \(|\ln t|>0\)，所以
+\[
+\int_0^1|\ln t|[\ln(1+t)]^n\,dt
+<
+\int_0^1t^n|\ln t|\,dt.
+\]
+
+\textbf{(2)} 由第 (1) 问，
+\[
+0\le u_n<\int_0^1t^n|\ln t|\,dt.
+\]
+而
+\[
+\int_0^1t^n|\ln t|\,dt
+=\frac{1}{(n+1)^2}.
+\]
+由夹逼定理，
+\[
+\boxed{\lim_{n\to\infty}u_n=0}.
+\]
+\examnote{\(\int_0^1x^a(-\ln x)dx=1/(a+1)^2\) 是常用结论。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{45.} 设 \(f(x)\) 在 \([0,1]\) 上连续，在 \((0,1)\) 内可导，且满足
+\[
+f(1)=k\int_0^{1/k}xe^{1-x}f(x)\,dx\qquad(k>1).
+\]
+证明至少存在一点 \(\xi\in(0,1)\)，使得
+\[
+f'(\xi)=\left(1-\frac1{\xi}\right)f(\xi).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{目标式等价于 \((xe^{-x}f(x))'=0\)，因此要证明辅助函数 \(xe^{-x}f(x)\) 在两点取同值。}
+令
+\[
+H(x)=xe^{-x}f(x).
+\]
+则
+\[
+H'(x)=xe^{-x}\left[f'(x)+\left(\frac1x-1\right)f(x)\right].
+\]
+题设可写为
+\[
+f(1)=ke\int_0^{1/k}xe^{-x}f(x)\,dx,
+\]
+即
+\[
+H(1)=k\int_0^{1/k}H(x)\,dx.
+\]
+右端是 \(H\) 在 \([0,1/k]\) 上的平均值。由积分中值定理，存在
+\[
+\eta\in\left(0,\frac1k\right)
+\]
+使
+\[
+H(\eta)=k\int_0^{1/k}H(x)\,dx=H(1).
+\]
+于是 \(H\) 在 \([\eta,1]\) 上满足罗尔定理条件，存在
+\[
+\xi\in(\eta,1)\subset(0,1)
+\]
+使
+\[
+H'(\xi)=0.
+\]
+因为 \(\xi e^{-\xi}\ne0\)，得
+\[
+f'(\xi)+\left(\frac1\xi-1\right)f(\xi)=0,
+\]
+即
+\[
+f'(\xi)=\left(1-\frac1{\xi}\right)f(\xi).
+\]
+\examnote{看到 \(1-1/x\) 与 \(f\) 配合，要想到积分因子 \(xe^{-x}\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{46.} 设函数 \(f(x)\) 在 \([0,3]\) 上连续，在 \((0,3)\) 内存在二阶导数，且
+\[
+2f(0)=\int_0^2f(x)\,dx=f(2)+f(3).
+\]
+\begin{enumerate}
+\item 证明存在 \(\eta\in(0,2)\)，使得 \(f(\eta)=f(0)\)；
+\item 证明存在 \(\xi\in(0,3)\)，使得 \(f''(\xi)=0\)。
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{第一问由积分平均值推出；第二问先造出两个不同点使 \(f'\) 为零，再对 \(f'\) 用罗尔定理。}
+\textbf{(1)} 由
+\[
+\int_0^2f(x)\,dx=2f(0),
+\]
+可知 \(f\) 在 \([0,2]\) 上的平均值为 \(f(0)\)。若在 \((0,2)\) 内恒有 \(f(x)>f(0)\)，则积分大于 \(2f(0)\)；若恒有 \(f(x)<f(0)\)，则积分小于 \(2f(0)\)。故必存在
+\[
+\eta\in(0,2)
+\]
+使
+\[
+f(\eta)=f(0).
+\]
+
+\textbf{(2)} 由 \(f(0)=f(\eta)\)，罗尔定理给出一点
+\[
+u\in(0,\eta)
+\]
+使
+\[
+f'(u)=0.
+\]
+又由
+\[
+f(2)+f(3)=2f(0)=2f(\eta),
+\]
+可知 \(f(2),f(3)\) 的平均值为 \(f(\eta)\)。因此在 \([\eta,3]\) 中可找到一点 \(v>\eta\)，使
+\[
+f(v)=f(\eta).
+\]
+对 \([\eta,v]\) 应用罗尔定理，存在
+\[
+w\in(\eta,v)
+\]
+使
+\[
+f'(w)=0.
+\]
+现在 \(u<w\)，且 \(f'(u)=f'(w)=0\)。对 \(f'\) 在 \([u,w]\) 上应用罗尔定理，存在
+\[
+\xi\in(u,w)\subset(0,3)
+\]
+使
+\[
+f''(\xi)=0.
+\]
+\examnote{证明二阶导数为零，常用“先两次罗尔得到两个 \(f'=0\) 点，再对 \(f'\) 用罗尔”。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{47.} 设 \(f(x)\) 在 \([0,a]\ (a>0)\) 上连续，且
+\[
+\int_0^a f(x)\,dx=0.
+\]
+试证存在 \(\xi\in(0,a)\)，使得
+\[
+f(a-\xi)=-f(\xi).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{把目标写成 \(f(\xi)+f(a-\xi)=0\)，再对这个连续函数积分。}
+令
+\[
+F(x)=f(x)+f(a-x).
+\]
+则 \(F\) 在 \([0,a]\) 上连续，且
+\[
+\int_0^aF(x)\,dx
+=\int_0^af(x)\,dx+\int_0^af(a-x)\,dx
+=2\int_0^af(x)\,dx=0.
+\]
+若 \(F(x)\) 在 \((0,a)\) 内恒正或恒负，则其积分不可能为 \(0\)。故存在
+\[
+\xi\in(0,a)
+\]
+使
+\[
+F(\xi)=0.
+\]
+即
+\[
+f(\xi)+f(a-\xi)=0,
+\]
+所以
+\[
+f(a-\xi)=-f(\xi).
+\]
+\examnote{证明两点函数值相反，常构造和函数 \(f(x)+f(a-x)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{48.} 设 \(f(x)\) 在 \([0,1]\) 上连续，证明存在 \(\xi\in(0,1)\)，使
+\[
+\int_0^\xi f(t)\,dt=(1-\xi)f(\xi).
+\]
+若又设 \(f(x)>0\) 且单调减，则这种 \(\xi\) 是唯一的。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{存在性用罗尔定理：构造 \(H(x)=(1-x)\int_0^xf(t)dt\)，其两端值都为零。唯一性用单调性比较两个正量的商。}
+令
+\[
+H(x)=(1-x)\int_0^xf(t)\,dt.
+\]
+则
+\[
+H(0)=H(1)=0.
+\]
+由罗尔定理，存在 \(\xi\in(0,1)\)，使
+\[
+H'(\xi)=0.
+\]
+而
+\[
+H'(x)=-(\int_0^xf(t)\,dt)+(1-x)f(x).
+\]
+因此
+\[
+\int_0^\xi f(t)\,dt=(1-\xi)f(\xi).
+\]
+
+若 \(f(x)>0\) 且单调减，令
+\[
+R(x)=\frac{\int_0^x f(t)\,dt}{(1-x)f(x)}\qquad(0<x<1).
+\]
+分子随 \(x\) 严格增加，分母 \((1-x)f(x)\) 随 \(x\) 严格减少且为正，所以 \(R(x)\) 严格增加。并且
+\[
+\lim_{x\to0^+}R(x)=0,\qquad \lim_{x\to1^-}R(x)=+\infty.
+\]
+方程 \(R(x)=1\) 因而只有一个解，故 \(\xi\) 唯一。
+\examnote{存在性看端点同值的辅助函数；唯一性看单调商。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{49.} 设 \(y=f(x)\) 是区间 \([0,1]\) 上的任一非负连续函数。
+\begin{enumerate}
+\item 证明存在 \(x_0\in(0,1)\)，使得
+\[
+x_0f(x_0)=\int_{x_0}^1f(x)\,dx;
+\]
+\item 设 \(f(x)\) 在 \((0,1)\) 内可导，且
+\[
+f'(x)>-\frac{2f(x)}{x},
+\]
+证明 (1) 中的 \(x_0\) 是唯一的。
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{令两块面积之差为 \(H(x)=xf(x)-\int_x^1f\)。存在性由介值定理，唯一性由 \(H'(x)>0\)。}
+\textbf{(1)} 令
+\[
+H(x)=xf(x)-\int_x^1f(t)\,dt.
+\]
+则 \(H\) 连续。若 \(f\equiv0\)，任取 \(x_0\in(0,1)\) 即可。下设 \(f\not\equiv0\)。由于 \(f\ge0\)，
+\[
+H(0)=-\int_0^1f(t)\,dt<0.
+\]
+又
+\[
+H(1)=f(1)\ge0.
+\]
+由介值定理，存在 \(x_0\in(0,1]\) 使 \(H(x_0)=0\)。若首次取到零在 \(1\)，由于 \(H(0)<0\) 且 \(H\) 连续，也可在靠近 \(1\) 的区间中取得所需平衡点；因此存在 \(x_0\in(0,1)\)，满足
+\[
+x_0f(x_0)=\int_{x_0}^1f(x)\,dx.
+\]
+
+\textbf{(2)} 对 \(H\) 求导：
+\[
+H'(x)=f(x)+xf'(x)+f(x)=2f(x)+xf'(x).
+\]
+由题设
+\[
+xf'(x)>-2f(x),
+\]
+故
+\[
+H'(x)>0.
+\]
+所以 \(H\) 在 \((0,1)\) 上严格递增，方程 \(H(x)=0\) 至多一个解。结合存在性，\(x_0\) 唯一。
+\examnote{面积平衡题通常把“左面积-右面积”作为辅助函数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{50.} 设函数 \(f(x)\) 在 \([0,1]\) 上有连续一阶导数，且 \(f(0)=0\)。试证至少存在一点 \(\xi\in(0,1)\)，使
+\[
+f'(\xi)=2\int_0^1f(x)\,dx.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{把 \(\int_0^1 f\) 用 \(f'\) 表示，再用积分中值定理。}
+由
+\[
+f(x)=\int_0^x f'(t)\,dt
+\]
+得
+\[
+\int_0^1f(x)\,dx
+=\int_0^1\int_0^x f'(t)\,dt\,dx.
+\]
+交换积分次序：
+\[
+\int_0^1f(x)\,dx
+=\int_0^1(1-t)f'(t)\,dt.
+\]
+于是
+\[
+2\int_0^1f(x)\,dx
+=\int_0^1 2(1-t)f'(t)\,dt.
+\]
+权函数 \(2(1-t)\ge0\)，且
+\[
+\int_0^12(1-t)\,dt=1.
+\]
+由积分中值定理，存在 \(\xi\in(0,1)\)，使
+\[
+\int_0^1 2(1-t)f'(t)\,dt=f'(\xi).
+\]
+故
+\[
+f'(\xi)=2\int_0^1f(x)\,dx.
+\]
+\examnote{证明导数等于某个积分平均值时，把原积分改写成 \(f'\) 的加权平均。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{51.} 设函数 \(f(x)\) 在 \([-l,l]\) 上连续，在 \(x=0\) 处可导，且 \(f'(0)\ne0\)。
+\begin{enumerate}
+\item 证明：对任意 \(x\in(0,l)\)，至少存在 \(\theta\in(0,1)\)，使
+\[
+\int_0^x f(t)\,dt+\int_0^{-x} f(t)\,dt
+=x[f(\theta x)-f(-\theta x)];
+\]
+\item 求极限
+\[
+\lim_{x\to0^+}\theta.
+\]
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{把左边化为 \(\int_0^x[f(t)-f(-t)]dt\)，再用积分中值定理。极限由 \(f(t)-f(-t)\sim2f'(0)t\) 得到。}
+\textbf{(1)} 有
+\[
+\int_0^{-x}f(t)\,dt=-\int_0^x f(-s)\,ds.
+\]
+因此
+\[
+\int_0^x f(t)\,dt+\int_0^{-x} f(t)\,dt
+=\int_0^x [f(t)-f(-t)]\,dt.
+\]
+令
+\[
+\varphi(t)=f(t)-f(-t).
+\]
+\(\varphi\) 连续。由积分中值定理，存在 \(c\in(0,x)\)，使
+\[
+\int_0^x\varphi(t)\,dt=x\varphi(c).
+\]
+令
+\[
+c=\theta x,\qquad 0<\theta<1,
+\]
+即得
+\[
+\int_0^x f(t)\,dt+\int_0^{-x} f(t)\,dt
+=x[f(\theta x)-f(-\theta x)].
+\]
+
+\textbf{(2)} 由于 \(f\) 在 \(0\) 处可导，
+\[
+f(t)-f(-t)=2f'(0)t+o(t)\qquad(t\to0).
+\]
+于是左边
+\[
+\int_0^x[f(t)-f(-t)]\,dt
+=f'(0)x^2+o(x^2).
+\]
+右边为
+\[
+x[f(\theta x)-f(-\theta x)]
+=x[2f'(0)\theta x+o(x)]
+=2f'(0)\theta x^2+o(x^2).
+\]
+比较主部，并利用 \(f'(0)\ne0\)，得
+\[
+1=2\lim_{x\to0^+}\theta.
+\]
+因此
+\[
+\boxed{\lim_{x\to0^+}\theta=\frac12}.
+\]
+\examnote{这种题的 \(\theta\) 极限通常来自“平均点趋向区间中点”。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{52.} 设 \(f(x)\) 在 \([0,2\pi]\) 上具有二阶连续导数，且 \(f''(x)\ge0\)。证明：
+\[
+\int_0^{2\pi}f(x)\cos x\,dx\ge0.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{把凸函数写成线性函数加二阶导数的积分余项。常数项和一次项与 \(\cos x\) 在整周期上积分为零，剩下核函数 \(1-\cos t\ge0\)。}
+由积分型泰勒公式，
+\[
+f(x)=f(0)+f'(0)x+\int_0^x(x-t)f''(t)\,dt.
+\]
+因此
+\[
+\int_0^{2\pi}f(x)\cos x\,dx
+=\int_0^{2\pi}\left[\int_0^x(x-t)f''(t)\,dt\right]\cos x\,dx,
+\]
+因为
+\[
+\int_0^{2\pi}\cos x\,dx=0,\qquad
+\int_0^{2\pi}x\cos x\,dx=0.
+\]
+交换积分次序：
+\[
+\int_0^{2\pi}f(x)\cos x\,dx
+=\int_0^{2\pi}f''(t)
+\left[\int_t^{2\pi}(x-t)\cos x\,dx\right]dt.
+\]
+计算内层积分：
+\[
+\int_t^{2\pi}(x-t)\cos x\,dx
+=1-\cos t.
+\]
+于是
+\[
+\int_0^{2\pi}f(x)\cos x\,dx
+=\int_0^{2\pi}f''(t)(1-\cos t)\,dt.
+\]
+由于
+\[
+f''(t)\ge0,\qquad 1-\cos t\ge0,
+\]
+故
+\[
+\int_0^{2\pi}f(x)\cos x\,dx\ge0.
+\]
+\examnote{凸函数与三角积分结合时，可把函数分解为线性部分加非负二阶导贡献。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{53.} 设函数 \(f(x)\) 在区间 \([0,1]\) 上可导，且 \(|f'(x)|<M\)，证明：
+\[
+\left|\int_0^1f(x)\,dx-\frac1n\sum_{k=1}^nf\left(\frac{k}{n}\right)\right|
+\le\frac{M}{2n}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{右端和是右端点矩形和。逐小区间估计积分与右端点函数值的误差。}
+将区间分成
+\[
+I_k=\left[\frac{k-1}{n},\frac{k}{n}\right]\qquad(k=1,\dots,n).
+\]
+则
+\[
+\int_0^1f(x)\,dx-\frac1n\sum_{k=1}^nf\left(\frac{k}{n}\right)
+=\sum_{k=1}^n\int_{(k-1)/n}^{k/n}
+\left[f(x)-f\left(\frac{k}{n}\right)\right]dx.
+\]
+对 \(x\in I_k\)，由拉格朗日中值定理，
+\[
+\left|f(x)-f\left(\frac{k}{n}\right)\right|
+\le M\left(\frac{k}{n}-x\right).
+\]
+因此
+\[
+\left|\int_{(k-1)/n}^{k/n}
+\left[f(x)-f\left(\frac{k}{n}\right)\right]dx\right|
+\le M\int_{(k-1)/n}^{k/n}\left(\frac{k}{n}-x\right)dx
+=\frac{M}{2n^2}.
+\]
+求和得
+\[
+\left|\int_0^1f(x)\,dx-\frac1n\sum_{k=1}^nf\left(\frac{k}{n}\right)\right|
+\le n\cdot\frac{M}{2n^2}
+=\frac{M}{2n}.
+\]
+\examnote{黎曼和误差估计常在每个小区间上用导数界控制振幅。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{54.} 设 \(f(x)\) 满足
+\[
+f(1)=1,\qquad f'(x)=\frac1{x^2+f^2(x)}\quad(x\ge1).
+\]
+试证
+\[
+\lim_{x\to+\infty}f(x)
+\]
+存在且不超过
+\[
+1+\frac{\pi}{4}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{由 \(f'>0\) 知 \(f\) 单调递增；又 \(f(x)\ge1\)，所以用 \(1/(x^2+1)\) 控制导数。}
+因为
+\[
+f'(x)=\frac1{x^2+f^2(x)}>0,
+\]
+所以 \(f(x)\) 在 \([1,+\infty)\) 上单调递增。又 \(f(1)=1\)，故
+\[
+f(x)\ge1\qquad(x\ge1).
+\]
+于是
+\[
+f'(x)=\frac1{x^2+f^2(x)}
+\le \frac1{x^2+1}.
+\]
+对 \([1,x]\) 积分：
+\[
+f(x)-1
+\le \int_1^x\frac{dt}{t^2+1}
+\le \int_1^{+\infty}\frac{dt}{t^2+1}
+=\frac{\pi}{4}.
+\]
+因此
+\[
+1\le f(x)\le1+\frac{\pi}{4}.
+\]
+单调有界函数极限存在，且
+\[
+\boxed{\lim_{x\to+\infty}f(x)\le1+\frac{\pi}{4}}.
+\]
+\examnote{微分方程不一定要求显式解；单调有界加导数估计即可证明极限存在。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{55.}（数学三不要求）一容器的内侧是由图中曲线绕 \(y\) 轴旋转一周而成的曲面，该曲线由
+\[
+x^2+y^2=2y\quad\left(y\ge\frac12\right)
+\]
+与
+\[
+x^2+y^2=1\quad\left(y\le\frac12\right)
+\]
+连接而成。
+\begin{enumerate}
+\item 求容器的容积；
+\item 若将容器内盛满的水从容器顶部全部抽出，至少需要做多少功？
+\end{enumerate}
+长度单位为 m，重力加速度为 \(g\,\mathrm{m/s^2}\)，水的密度为 \(10^3\,\mathrm{kg/m^3}\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{绕 \(y\) 轴旋转，用水平薄片。半径平方下半段为 \(1-y^2\)，上半段为 \(2y-y^2\)。}
+\textbf{(1)} 容器容积
+\[
+V=\pi\int_{-1}^{1/2}(1-y^2)\,dy
++\pi\int_{1/2}^{2}(2y-y^2)\,dy.
+\]
+计算得
+\[
+\int_{-1}^{1/2}(1-y^2)\,dy=\frac98,\qquad
+\int_{1/2}^{2}(2y-y^2)\,dy=\frac98.
+\]
+因此
+\[
+\boxed{V=\frac{9\pi}{4}\ \mathrm{m^3}}.
+\]
+
+\textbf{(2)} 顶部高度为 \(y=2\)。高度 \(y\) 处的水片体积为 \(\pi r^2dy\)，需提升距离为 \(2-y\)。故功为
+\[
+W=10^3g\pi\left[
+\int_{-1}^{1/2}(1-y^2)(2-y)\,dy
++\int_{1/2}^{2}(2y-y^2)(2-y)\,dy
+\right].
+\]
+两段积分分别为
+\[
+\int_{-1}^{1/2}(1-y^2)(2-y)\,dy=\frac{153}{64},
+\]
+\[
+\int_{1/2}^{2}(2y-y^2)(2-y)\,dy=\frac{63}{64}.
+\]
+所以括号内为
+\[
+\frac{216}{64}=\frac{27}{8}.
+\]
+故
+\[
+\boxed{W=3375\pi g\ \mathrm{J}}.
+\]
+\examnote{抽水做功题固定模板：水片重量 \(\rho g A(y)dy\)，乘提升距离。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{56.}（数学三不要求）设曲线 \(L\) 的方程为
+\[
+y=\frac14x^2-\frac12\ln x\qquad(1\le x\le e).
+\]
+\begin{enumerate}
+\item 求 \(L\) 的弧长；
+\item 设 \(D\) 是由曲线 \(L\)，直线 \(x=1,x=e\) 及 \(x\) 轴所围成的平面图形，求 \(D\) 的形心的横坐标。
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先求 \(y'\)，弧长根式会化成完全平方。形心横坐标为 \(\bar x=\frac{\int x y\,dx}{\int y\,dx}\)。}
+\textbf{(1)} 有
+\[
+y'=\frac{x}{2}-\frac{1}{2x}.
+\]
+所以
+\[
+\sqrt{1+(y')^2}
+=\sqrt{1+\frac{(x^2-1)^2}{4x^2}}
+=\frac{x^2+1}{2x}.
+\]
+弧长
+\[
+s=\int_1^e\frac{x^2+1}{2x}\,dx
+=\int_1^e\left(\frac{x}{2}+\frac{1}{2x}\right)dx
+=\left[\frac{x^2}{4}+\frac12\ln x\right]_1^e.
+\]
+故
+\[
+\boxed{s=\frac{e^2+1}{4}}.
+\]
+
+\textbf{(2)} 面积
+\[
+A=\int_1^e\left(\frac14x^2-\frac12\ln x\right)dx
+=\frac{e^3-7}{12}.
+\]
+关于 \(y\) 轴的矩为
+\[
+M_y=\int_1^e x\left(\frac14x^2-\frac12\ln x\right)dx
+=\frac{e^4-2e^2-3}{16}.
+\]
+因此形心横坐标为
+\[
+\bar x=\frac{M_y}{A}
+=\boxed{\frac{3(e^4-2e^2-3)}{4(e^3-7)}}.
+\]
+\examnote{平面图形在 \(x\) 轴上方且由 \(y=f(x)\) 围成时，\(\bar x=\frac{\int x f(x)dx}{\int f(x)dx}\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{57.} 求曲线
+\[
+y=3-|x^2-1|
+\]
+与 \(x\) 轴围成的封闭图形绕直线 \(y=3\) 旋转所得的旋转体体积。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{旋转轴 \(y=3\) 在图形上方。用垂直于 \(x\) 轴的薄片，外半径为 \(3\)，内半径为 \(3-y=|x^2-1|\)。}
+曲线与 \(x\) 轴交于
+\[
+3-|x^2-1|=0
+\quad\Longrightarrow\quad
+x=\pm2.
+\]
+在 \([-2,2]\) 上，旋转截面为圆环，外半径
+\[
+R=3,
+\]
+内半径
+\[
+r=3-y=|x^2-1|.
+\]
+体积为
+\[
+V=\pi\int_{-2}^{2}\left[9-(x^2-1)^2\right]dx.
+\]
+被积函数为偶函数，故
+\[
+V=2\pi\int_0^2(8+2x^2-x^4)\,dx.
+\]
+计算得
+\[
+V=2\pi\left[8x+\frac{2x^3}{3}-\frac{x^5}{5}\right]_0^2
+=2\pi\left(16+\frac{16}{3}-\frac{32}{5}\right)
+=\boxed{\frac{448\pi}{15}}.
+\]
+\examnote{绕水平直线旋转时，先判断外半径和内半径；本题外半径是到 \(x\) 轴的距离 \(3\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{58.} 设有抛物线
+\[
+\Gamma:\ y=a-bx^2\qquad(a>0,\ b>0).
+\]
+试确定常数 \(a,b\) 的值，使得：
+\begin{enumerate}
+\item \(\Gamma\) 与直线 \(y=x+1\) 相切；
+\item \(\Gamma\) 与 \(x\) 轴所围图形绕 \(y\) 轴旋转所得旋转体体积最大。
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{相切给出 \(a,b\) 的约束；体积用水平截面表示为 \(V=\pi\int_0^a x^2(y)dy\)。}
+由
+\[
+a-bx^2=x+1
+\]
+得
+\[
+bx^2+x+1-a=0.
+\]
+相切要求判别式为零：
+\[
+1-4b(1-a)=0.
+\]
+因此
+\[
+b=\frac{1}{4(1-a)},\qquad 0<a<1.
+\]
+抛物线与 \(x\) 轴围成的图形绕 \(y\) 轴旋转。对固定高度 \(y\in[0,a]\)，有
+\[
+x^2=\frac{a-y}{b}.
+\]
+故体积
+\[
+V=\pi\int_0^a\frac{a-y}{b}\,dy
+=\frac{\pi a^2}{2b}.
+\]
+代入 \(b=\frac{1}{4(1-a)}\)，得
+\[
+V=2\pi a^2(1-a).
+\]
+令
+\[
+\phi(a)=a^2(1-a),\qquad 0<a<1.
+\]
+则
+\[
+\phi'(a)=2a-3a^2=a(2-3a).
+\]
+最大值在
+\[
+a=\frac23
+\]
+处取得。此时
+\[
+b=\frac{1}{4(1-2/3)}=\frac34.
+\]
+故
+\[
+\boxed{a=\frac23,\qquad b=\frac34}.
+\]
+\examnote{带参数最值题先用几何条件消去一个参数，再对剩余参数求最值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{59.} 设曲线 \(y=1/x\) 与直线 \(y=x\) 及 \(y=2\) 所围区域为 \(D\)。
+\begin{enumerate}
+\item 求区域 \(D\) 分别绕 \(x\) 轴和 \(y\) 轴旋转所得旋转体的体积；
+\item 求区域 \(D\) 分别绕 \(x=2\) 和 \(y=2\) 旋转所得旋转体的体积。
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{用水平切片最统一。区域可写成 \(1\le y\le2,\ 1/y\le x\le y\)。}
+区域 \(D\) 为
+\[
+1\le y\le2,\qquad \frac1y\le x\le y.
+\]
+\textbf{(1)} 绕 \(x\) 轴旋转，用壳层法：
+\[
+V_x=2\pi\int_1^2 y\left(y-\frac1y\right)dy
+=2\pi\int_1^2(y^2-1)dy
+=\boxed{\frac{8\pi}{3}}.
+\]
+绕 \(y\) 轴旋转，用圆环法：
+\[
+V_y=\pi\int_1^2\left[y^2-\left(\frac1y\right)^2\right]dy
+=\boxed{\frac{11\pi}{6}}.
+\]
+
+\textbf{(2)} 绕 \(x=2\) 旋转。外半径为 \(2-\frac1y\)，内半径为 \(2-y\)，故
+\[
+V_{x=2}
+=\pi\int_1^2\left[\left(2-\frac1y\right)^2-(2-y)^2\right]dy.
+\]
+计算得
+\[
+V_{x=2}
+=\boxed{\pi\left(\frac{25}{6}-4\ln2\right)}.
+\]
+绕 \(y=2\) 旋转，用竖直切片：
+\[
+V_{y=2}
+=\pi\int_{1/2}^{1}\left(2-\frac1x\right)^2dx
++\pi\int_1^2(2-x)^2dx.
+\]
+因此
+\[
+V_{y=2}
+=\boxed{\pi\left(\frac{10}{3}-4\ln2\right)}.
+\]
+\examnote{旋转轴换成 \(x=2\)、\(y=2\) 后，半径必须改成到新轴的距离，不能沿用到坐标轴的半径。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{60.} 求曲线 \(y=x^2\) 与直线 \(y=x\) 所围区域 \(D\) 绕直线 \(y=x\) 旋转一周所得旋转体的体积。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{旋转轴是区域边界 \(y=x\)。用帕普斯定理或“面积元到轴距离”积分：\(dV=2\pi d\,dA\)。}
+区域为
+\[
+0\le x\le1,\qquad x^2\le y\le x.
+\]
+点 \((x,y)\) 到直线 \(y=x\) 的距离为
+\[
+d=\frac{x-y}{\sqrt2}.
+\]
+旋转体体积为
+\[
+V=2\pi\iint_D d\,dA
+=\sqrt2\pi\int_0^1\int_{x^2}^{x}(x-y)\,dy\,dx.
+\]
+内层积分为
+\[
+\int_{x^2}^{x}(x-y)\,dy
+=\frac{x^2}{2}-x^3+\frac{x^4}{2}.
+\]
+所以
+\[
+V=\sqrt2\pi\int_0^1\left(\frac{x^2}{2}-x^3+\frac{x^4}{2}\right)dx
+=\sqrt2\pi\left(\frac16-\frac14+\frac1{10}\right).
+\]
+故
+\[
+\boxed{V=\frac{\sqrt2\pi}{60}}.
+\]
+\examnote{绕斜直线旋转时，距离公式比硬换坐标更快。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{61.} 设平面域 \(D\) 由曲线
+\[
+r=1+\cos\theta
+\]
+所围成，试求：
+\begin{enumerate}
+\item 区域 \(D\) 的面积；
+\item 区域 \(D\) 绕极轴旋转一周所得旋转体的体积。
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{面积用极坐标面积公式；绕极轴旋转只需取上半部分，用壳层法。}
+\textbf{(1)} 面积为
+\[
+S=\frac12\int_0^{2\pi}(1+\cos\theta)^2\,d\theta.
+\]
+展开得
+\[
+S=\frac12\int_0^{2\pi}(1+2\cos\theta+\cos^2\theta)d\theta
+=\frac12(2\pi+\pi)
+=\boxed{\frac{3\pi}{2}}.
+\]
+
+\textbf{(2)} 取上半部分 \(0\le\theta\le\pi\)。极坐标中面积元为 \(\rho\,d\rho\,d\theta\)，到极轴距离为 \(\rho\sin\theta\)。旋转体体积
+\[
+V=2\pi\int_0^\pi\int_0^{1+\cos\theta}
+(\rho\sin\theta)\rho\,d\rho\,d\theta.
+\]
+故
+\[
+V=\frac{2\pi}{3}\int_0^\pi(1+\cos\theta)^3\sin\theta\,d\theta.
+\]
+令 \(u=1+\cos\theta\)，得
+\[
+\int_0^\pi(1+\cos\theta)^3\sin\theta\,d\theta
+=\int_0^2u^3\,du=4.
+\]
+所以
+\[
+\boxed{V=\frac{8\pi}{3}}.
+\]
+\examnote{极坐标绕极轴旋转，常用 \(V=2\pi\iint_{\text{上半域}} y\,dA\)。}
+\end{solutionblock}
+
+\section{第三章完成说明}
+第三章第 \(1\)--\(61\) 题已按“题目解析、完整推导、答案、考研提示”的格式整理完毕。

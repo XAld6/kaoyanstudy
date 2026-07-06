@@ -1,0 +1,728 @@
+\chapter{高等数学：函数极限}
+
+\section{函数极限}
+
+\begin{problemblock}
+\textbf{例1.} 已知 \(\displaystyle \lim_{x\to+\infty}f(x)\) 存在，且
+\[
+f(x)=\frac{x^{1+x}}{(1+x)^x}-\frac{x}{e}
+  +2\lim_{x\to+\infty}f(x),
+\]
+求 \(f(x)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{本题是“含未知极限的函数表达式”。考研中遇到这种题，先设未知极限，再对等式两端取极限。难点在于精确求
+\(\frac{x^{1+x}}{(1+x)^x}-\frac{x}{e}\) 的极限。}
+
+设
+\[
+L=\lim_{x\to+\infty}f(x).
+\]
+先处理主项：
+\[
+\frac{x^{1+x}}{(1+x)^x}
+=x\left(\frac{x}{x+1}\right)^x
+=x\left(1+\frac1x\right)^{-x}.
+\]
+因此需要求
+\[
+\lim_{x\to+\infty}x\left[\left(1+\frac1x\right)^{-x}-\frac1e\right].
+\]
+令
+\[
+u_x=\left(1+\frac1x\right)^{-x}.
+\]
+由于
+\[
+\ln u_x=-x\ln\left(1+\frac1x\right)
+=-x\left(\frac1x-\frac1{2x^2}+O\left(\frac1{x^3}\right)\right)
+=-1+\frac1{2x}+O\left(\frac1{x^2}\right),
+\]
+所以
+\[
+u_x=e^{-1}\exp\left(\frac1{2x}+O\left(\frac1{x^2}\right)\right)
+=\frac1e\left(1+\frac1{2x}+O\left(\frac1{x^2}\right)\right).
+\]
+于是
+\[
+\frac{x^{1+x}}{(1+x)^x}
+=\frac{x}{e}+\frac1{2e}+O\left(\frac1x\right),
+\]
+从而
+\[
+\lim_{x\to+\infty}\left(\frac{x^{1+x}}{(1+x)^x}-\frac{x}{e}\right)=\frac1{2e}.
+\]
+对原式取极限得
+\[
+L=\frac1{2e}+2L,
+\]
+故
+\[
+L=-\frac1{2e}.
+\]
+代回原式，
+\[
+f(x)=\frac{x^{1+x}}{(1+x)^x}-\frac{x}{e}-\frac1e.
+\]
+
+\method{方法二：洛必达型处理}
+也可把
+\[
+x\left[\left(1+\frac1x\right)^{-x}-\frac1e\right]
+\]
+看作 \(\infty\cdot0\) 型，令 \(t=1/x\)，转为
+\[
+\lim_{t\to0^+}\frac{(1+t)^{-1/t}-e^{-1}}{t},
+\]
+这就是函数 \(g(t)=(1+t)^{-1/t}\) 在 \(0\) 处的右导数。由展开或求导可得该极限为 \(1/(2e)\)。
+
+\answer{\(\displaystyle f(x)=\frac{x^{1+x}}{(1+x)^x}-\frac{x}{e}-\frac1e\)。}
+\examnote{这题关键不是套等价无穷小，而是保留到常数项；只知道 \((1+1/x)^x\to e\) 不够。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例2.} 已知 \(\varphi(x)\) 是 \(x\to0\) 时的无穷小量，则下列说法中正确的有几项？
+\[
+\begin{array}{ll}
+\text{① } \displaystyle\lim_{x\to0}\frac{\sin\varphi(x)}{\varphi(x)}=1; &
+\text{② 当 }x\to0\text{ 时，}\sin\varphi(x)\text{ 与 }\varphi(x)\text{ 是等价无穷小；}\\[2mm]
+\text{③ 当 }x\to0\text{ 时，}\displaystyle\frac1{\varphi(x)}\text{ 是无穷大量；}&
+\text{④ 若连续函数 }f(x)\text{ 满足 }\displaystyle\lim_{x\to0}f(x)=1,\\
+&\qquad\text{则 }\displaystyle\lim_{x\to0}f(\varphi(x))=1.
+\end{array}
+\]
+A. 0 \qquad B. 1 \qquad C. 2 \qquad D. 3
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{本题考查复合极限与无穷小的基本性质。容易误判的是③：无穷小的倒数要成为无穷大量，通常还需保证该无穷小在去心邻域内不为零。题干只说 \(\varphi(x)\to0\)，没有说明 \(\varphi(x)\ne0\)。}
+
+① 因为 \(\varphi(x)\to0\)，令 \(u=\varphi(x)\)，由基本极限
+\[
+\lim_{u\to0}\frac{\sin u}{u}=1
+\]
+可得①正确。这里按考研中复合极限的常规理解：在表达式有定义的点上考察极限；即使 \(\varphi(x)\) 在个别点取 \(0\)，也不影响沿其非零取值趋于 \(0\) 时的极限值。
+
+② 由①直接得到
+\[
+\sin\varphi(x)\sim\varphi(x),
+\]
+故②正确。等价无穷小同样是在相应比值有定义的去心取值上理解。
+
+③ 不一定正确。例如取
+\[
+\varphi(x)\equiv0,
+\]
+它当然是 \(x\to0\) 时的无穷小，但 \(\frac1{\varphi(x)}\) 根本无定义，不能称为无穷大量。即使取在某些点为零的无穷小，也会破坏该说法。因此③错误。
+
+④ 因为 \(\varphi(x)\to0\)，且 \(\lim_{u\to0}f(u)=1\)，复合极限定理给出
+\[
+\lim_{x\to0}f(\varphi(x))=1.
+\]
+故④正确。
+
+正确的是①②④，共 3 项。
+
+\answer{D}
+\examnote{考研选择题里“无穷小的倒数是无穷大”一定要看是否默认非零；题干没给非零条件时要谨慎。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例3.} 当 \(x\to0\) 时，\(\alpha(x),\beta(x)\) 是非零无穷小量，则以下命题中：
+\[
+\begin{array}{ll}
+\text{① }\alpha(x)\sim\beta(x),\text{ 则 }\alpha^2(x)\sim\beta^2(x);&
+\text{② }\alpha^2(x)\sim\beta^2(x),\text{ 则 }\alpha(x)\sim\beta(x);\\
+\text{③ }\alpha(x)\sim\beta(x),\text{ 则 }\alpha(x)-\beta(x)=o(\alpha(x));&
+\text{④ }\alpha(x)-\beta(x)=o(\alpha(x)),\text{ 则 }\alpha(x)\sim\beta(x).
+\end{array}
+\]
+所有真命题的序号是（\quad）
+
+A. ①③ \qquad B. ①④ \qquad C. ①③④ \qquad D. ②③④
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{本题考查等价无穷小的定义。核心是把所有命题都化成比值极限。}
+
+① 若 \(\alpha\sim\beta\)，则
+\[
+\frac{\alpha^2}{\beta^2}=\left(\frac{\alpha}{\beta}\right)^2\to1,
+\]
+所以①正确。
+
+② 错误。取
+\[
+\alpha(x)=x,\qquad \beta(x)=-x.
+\]
+则
+\[
+\alpha^2(x)=\beta^2(x),
+\]
+因此 \(\alpha^2\sim\beta^2\)，但
+\[
+\frac{\alpha(x)}{\beta(x)}=-1\not\to1,
+\]
+所以 \(\alpha\not\sim\beta\)。
+
+③ 若 \(\alpha\sim\beta\)，则
+\[
+\frac{\alpha-\beta}{\alpha}=1-\frac{\beta}{\alpha}\to0,
+\]
+所以
+\[
+\alpha-\beta=o(\alpha).
+\]
+③正确。
+
+④ 若
+\[
+\alpha-\beta=o(\alpha),
+\]
+则
+\[
+\frac{\alpha-\beta}{\alpha}\to0,
+\]
+即
+\[
+1-\frac{\beta}{\alpha}\to0.
+\]
+于是
+\[
+\frac{\beta}{\alpha}\to1,
+\]
+从而 \(\alpha\sim\beta\)。④正确。
+
+\answer{C}
+\examnote{“平方等价”只能推出绝对值量级相同，不能推出符号一致，这是②的陷阱。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例4.} 当 \(x\to0\) 时，下列无穷小量最高阶的是（\quad）
+\[
+\begin{array}{ll}
+\text{A. }\displaystyle\int_0^{5x}(1+t)^{1/t}\,dt,&
+\text{B. }\displaystyle\int_{x^2}^{1-\cos x}\frac{\sin t}{t}\,dt,\\[2mm]
+\text{C. }\displaystyle\int_x^{1-\cos x}\ln(1+t^2)\,dt,&
+\text{D. }\displaystyle\int_x^{\sin x}(e^{x^2}-1)\,dt.
+\end{array}
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{比较无穷小阶数，核心是求主部。含变限积分时，先看被积函数主部，再看上下限差的阶数。}
+
+A 中
+\[
+(1+t)^{1/t}\to e,
+\]
+所以
+\[
+\int_0^{5x}(1+t)^{1/t}\,dt\sim 5ex,
+\]
+是一阶无穷小。
+
+B 中
+\[
+\frac{\sin t}{t}\to1,\qquad 1-\cos x\sim\frac{x^2}{2},
+\]
+故
+\[
+\int_{x^2}^{1-\cos x}\frac{\sin t}{t}\,dt
+\sim (1-\cos x)-x^2
+\sim -\frac{x^2}{2},
+\]
+是二阶无穷小。
+
+C 中
+\[
+\ln(1+t^2)\sim t^2.
+\]
+又 \(1-\cos x=O(x^2)\)，所以
+\[
+\int_x^{1-\cos x}\ln(1+t^2)\,dt
+\sim\int_x^0t^2\,dt=-\frac{x^3}{3},
+\]
+是三阶无穷小。
+
+D 中注意被积函数 \(e^{x^2}-1\) 与积分变量 \(t\) 无关，因此
+\[
+\int_x^{\sin x}(e^{x^2}-1)\,dt
+=(e^{x^2}-1)(\sin x-x).
+\]
+而
+\[
+e^{x^2}-1\sim x^2,\qquad \sin x-x\sim-\frac{x^3}{6},
+\]
+所以
+\[
+\int_x^{\sin x}(e^{x^2}-1)\,dt
+\sim-\frac{x^5}{6},
+\]
+是五阶无穷小。
+
+最高阶为 D。
+
+\answer{D}
+\examnote{D 的被积函数写的是 \(e^{x^2}-1\)，不是 \(e^{t^2}-1\)。考场上这类细节决定答案。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例5.} 已知
+\[
+\lim_{x\to0}\frac{2-2\cos x+x f(x)}{x^3}=0,
+\]
+计算
+\[
+(1)\ \lim_{x\to0}\frac{x+f(x)}{x^2};\qquad
+(2)\ \lim_{x\to0}\frac{x+f(\sin x)}{x^2}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{本题由极限条件反推 \(f(x)\) 的局部主部。要注意第二问是 \(f(\sin x)\)，不能直接把第一问结果机械代入。}
+
+由题意
+\[
+2-2\cos x+x f(x)=o(x^3).
+\]
+又
+\[
+2-2\cos x=x^2-\frac{x^4}{12}+O(x^6),
+\]
+所以
+\[
+x f(x)=-(2-2\cos x)+o(x^3),
+\]
+即
+\[
+f(x)=-\frac{2-2\cos x}{x}+o(x^2).
+\]
+由于
+\[
+\frac{2-2\cos x}{x}=x-\frac{x^3}{12}+O(x^5),
+\]
+因此
+\[
+f(x)=-x+o(x^2).
+\]
+于是
+\[
+\frac{x+f(x)}{x^2}\to0.
+\]
+故第一问答案为 0。
+
+第二问中令 \(u=\sin x\)，由上式对任意 \(u\to0\) 成立，
+\[
+f(u)=-\frac{2-2\cos u}{u}+o(u^2).
+\]
+于是
+\[
+f(\sin x)=-\frac{2-2\cos(\sin x)}{\sin x}+o(\sin^2x).
+\]
+利用
+\[
+\frac{2-2\cos u}{u}=u-\frac{u^3}{12}+O(u^5),
+\]
+可得
+\[
+f(\sin x)=-\sin x+O(x^3)+o(x^2).
+\]
+所以
+\[
+x+f(\sin x)=x-\sin x+O(x^3)+o(x^2)=o(x^2),
+\]
+从而
+\[
+\lim_{x\to0}\frac{x+f(\sin x)}{x^2}=0.
+\]
+
+\method{方法二：只抓阶数}
+由已知直接得到 \(f(x)+x=o(x^2)\)。对第二问，用 \(u=\sin x\) 得 \(f(\sin x)+\sin x=o(x^2)\)，于是
+\[
+x+f(\sin x)=x-\sin x+o(x^2)=o(x^2).
+\]
+这比完整展开更快。
+
+\answer{(1) \(0\)；(2) \(0\)。}
+\examnote{若已推出 \(f(x)+x=o(x^2)\)，第二问要补上 \(x-\sin x=O(x^3)\)，这样才能严谨说明除以 \(x^2\) 后趋零。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例6.} 若函数
+\[
+f(x)=\frac{e^x-b}{(x-a)(x-b)}
+\]
+有可去间断点，则 \(ab\) 的取值范围为（\quad）
+
+A. \([e,+\infty)\) \qquad
+B. \(\left[-\frac1e,e\right]\) \qquad
+C. \(\left(-\frac1e,e\right)\) \qquad
+D. \(\left[-\frac1e,+\infty\right)\)
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{可去间断点来自“分母为零、分子也为零，并能约去”。本题要把条件转化为 \(a,b\) 的关系，再求 \(ab\) 的范围。}
+
+分母零点为 \(x=a\) 与 \(x=b\)。若在某点 \(c\) 可去间断，则必须有
+\[
+e^c-b=0.
+\]
+也就是
+\[
+c=\ln b,\qquad b>0.
+\]
+
+若可去点为 \(x=a\)，则
+\[
+a=\ln b.
+\]
+此时
+\[
+ab=b\ln b,\qquad b>0.
+\]
+令
+\[
+\phi(b)=b\ln b.
+\]
+则
+\[
+\phi'(b)=\ln b+1.
+\]
+当 \(b=e^{-1}\) 时取最小值
+\[
+\phi(e^{-1})=-\frac1e.
+\]
+且当 \(b\to+\infty\) 时，\(b\ln b\to+\infty\)。因此
+\[
+ab\in\left[-\frac1e,+\infty\right).
+\]
+
+若可去点为 \(x=b\)，则需
+\[
+e^b-b=0,
+\]
+但 \(e^b>b\) 对一切实数 \(b\) 成立，因此无解。
+
+\answer{D}
+\examnote{不要把“分母有两个零点”误认为两个都能约去；\(e^b=b\) 在实数范围无解。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例7.} 设函数 \(y=f(x)\) 由参数方程
+\[
+\begin{cases}
+x=\dfrac1{t-2},\\[1mm]
+y=\dfrac{t\ln|t|}{|t-t^3|}
+\end{cases}
+\]
+确定，则 \(f(x)\) 的第一类间断点的个数为（\quad）
+
+A. 0 \qquad B. 1 \qquad C. 2 \qquad D. 3
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{参数方程确定函数时，先找参数表达式中可能出问题的 \(t\)，再通过 \(x=1/(t-2)\) 映射到 \(x\)-点。第一类间断点要求左右极限都存在且有限。}
+
+当 \(t\ne0,\pm1,2\) 时，
+\[
+y=\frac{t\ln|t|}{|t-t^3|}
+=\frac{\ln|t|}{|1-t^2|}.
+\]
+可能产生间断的参数为
+\[
+t=0,\quad t=1,\quad t=-1.
+\]
+其中 \(t=2\) 对应 \(x\to\infty\)，不对应有限的 \(x\) 间断点。
+
+当 \(t\to1\) 时，
+\[
+\ln t\sim t-1,\qquad |1-t^2|\sim2|t-1|.
+\]
+所以
+\[
+\lim_{t\to1^+}y=\frac12,\qquad
+\lim_{t\to1^-}y=-\frac12.
+\]
+两侧极限有限但不相等，对应
+\[
+x=\frac1{1-2}=-1,
+\]
+是第一类间断点。
+
+当 \(t\to-1\) 时，令 \(t=-1+s\)，则
+\[
+\ln|t|\sim -s,\qquad |1-t^2|\sim2|s|.
+\]
+故两侧极限分别为 \(\pm\frac12\)，有限但不相等，对应
+\[
+x=\frac1{-1-2}=-\frac13,
+\]
+也是第一类间断点。
+
+当 \(t\to0\) 时，
+\[
+y=\frac{\ln|t|}{|1-t^2|}\to-\infty,
+\]
+对应
+\[
+x=\frac1{0-2}=-\frac12.
+\]
+该点为无穷间断点，不是第一类间断点。
+
+所以第一类间断点共有 2 个。
+
+\answer{C}
+\examnote{第一类间断点必须左右极限有限；趋于无穷的不算第一类。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例8.} 设 \(f(x)\) 在 \((0,+\infty)\) 内有定义，有一个间断点，而
+\[
+g(x)=\lim_{n\to\infty}\frac{\ln(e^n+x^n)}{n}\qquad(x>0),
+\]
+则（\quad）
+
+A. \(g[f(x)]\) 必有间断点。\qquad
+B. \(f[g(x)]\) 必有间断点。
+
+C. \([f(x)]^2\) 必有间断点。\qquad
+D. \(\dfrac{f(x)}{g(x)}\) 必有间断点。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{本题是复合函数与四则运算的间断性判断。先求出 \(g(x)\)，再判断哪些操作一定保持间断。}
+
+用最大项原则：
+\[
+\lim_{n\to\infty}\frac{\ln(e^n+x^n)}{n}
+=\max\{1,\ln x\}.
+\]
+因此
+\[
+g(x)=
+\begin{cases}
+1,&0<x\le e,\\
+\ln x,&x>e.
+\end{cases}
+\]
+所以 \(g(x)\) 在 \((0,+\infty)\) 上连续，且 \(g(x)>0\)。
+
+对 D，若 \(\dfrac{f(x)}{g(x)}\) 在 \(f\) 的那个间断点 \(x_0\) 处连续，由于 \(g(x)\) 连续且 \(g(x_0)>0\)，则
+\[
+f(x)=g(x)\cdot\frac{f(x)}{g(x)}
+\]
+也应在 \(x_0\) 连续，这与 \(f\) 在 \(x_0\) 间断矛盾。因此 \(\dfrac{f(x)}{g(x)}\) 必有间断点。
+
+其余选项不一定。比如平方可能消除跳跃间断：若某点附近 \(f\) 左右分别为 \(1\) 与 \(-1\)，则 \(f^2\) 可连续。复合 \(g[f(x)]\) 或 \(f[g(x)]\) 也可能因为值域落在连续区域或被 \(g\) 的常值段消除间断，不能保证。
+
+\answer{D}
+\examnote{非零连续函数作乘除不会消除原函数的间断，这是本题最稳的逻辑入口。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例9.} 设函数 \(f(x)\) 在 \((0,\pi)\) 内可导，\(f(x)>0\)，
+\[
+f\left(\frac\pi2\right)=\frac4{\pi^2},
+\]
+且
+\[
+\lim_{h\to0}\left[\frac{f(x+h\sin x)}{f(x)}\right]^{1/h}
+=e^{\frac{2(x\cos x-\sin x)}{x}},\qquad x\in(0,\pi).
+\]
+(1) 求 \(f(x)\)；(2) 证明 \(f(x)\) 在 \((0,\pi)\) 上有界。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{这是“指数型极限反推出微分方程”。因为 \(f(x)>0\)，可以取对数。}
+
+对极限取对数：
+\[
+\lim_{h\to0}\frac1h
+\ln\frac{f(x+h\sin x)}{f(x)}
+=\frac{2(x\cos x-\sin x)}{x}.
+\]
+左边是复合增量的导数。因为
+\[
+x+h\sin x-x=h\sin x,
+\]
+所以
+\[
+\ln f(x+h\sin x)-\ln f(x)
+\sim h\sin x\cdot \frac{f'(x)}{f(x)}.
+\]
+故
+\[
+\sin x\frac{f'(x)}{f(x)}
+=\frac{2(x\cos x-\sin x)}{x}.
+\]
+在 \(x\in(0,\pi)\) 内 \(\sin x>0\)，于是
+\[
+\frac{f'(x)}{f(x)}
+=2\cot x-\frac2x.
+\]
+积分得
+\[
+\ln f(x)=2\ln(\sin x)-2\ln x+C,
+\]
+即
+\[
+f(x)=C\left(\frac{\sin x}{x}\right)^2.
+\]
+由
+\[
+f\left(\frac\pi2\right)=C\left(\frac{1}{\pi/2}\right)^2
+=C\frac4{\pi^2}
+=\frac4{\pi^2},
+\]
+得 \(C=1\)。因此
+\[
+f(x)=\left(\frac{\sin x}{x}\right)^2.
+\]
+
+下面证明有界。对 \(x\in(0,\pi)\)，有
+\[
+0<\sin x\le x,
+\]
+所以
+\[
+0<f(x)=\left(\frac{\sin x}{x}\right)^2\le1.
+\]
+故 \(f(x)\) 在 \((0,\pi)\) 上有界。
+
+\method{一题多解提示}
+也可令 \(F(x)=\ln f(x)\)，原极限直接化为
+\[
+\lim_{h\to0}\frac{F(x+h\sin x)-F(x)}{h}
+=F'(x)\sin x,
+\]
+从而更快得到同一个微分方程。
+
+\answer{\(\displaystyle f(x)=\left(\frac{\sin x}{x}\right)^2\)，且 \(0<f(x)\le1\)。}
+\examnote{处理 \([\,\cdot\,]^{1/h}\) 型极限，第一反应是取对数；这是考研中最稳定的标准动作。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例10.} (1) 证明：当 \(x\ge1\) 时，
+\[
+\frac1{1+x}<\ln\left(1+\frac1x\right)<\frac1x.
+\]
+(2) 设函数 \(f(x)\) 在区间 \([1,+\infty)\) 上连续可导，且
+\[
+f'(x)=\frac1{1+f^2(x)}
+\left[\sqrt{\frac1x}-\sqrt{\ln\left(1+\frac1x\right)}\right],
+\]
+证明：\(\displaystyle\lim_{x\to+\infty}f(x)\) 存在。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{第一问是对数不等式；第二问要把微分方程转为 \(\arctan f(x)\) 的收敛性。}
+
+\method{(1) 积分证明}
+因为
+\[
+\ln\left(1+\frac1x\right)=\int_x^{x+1}\frac1t\,dt.
+\]
+当 \(t\in[x,x+1]\) 时，
+\[
+\frac1{x+1}\le\frac1t\le\frac1x.
+\]
+且不恒等，于是积分得
+\[
+\frac1{x+1}<\int_x^{x+1}\frac1t\,dt<\frac1x,
+\]
+即
+\[
+\frac1{1+x}<\ln\left(1+\frac1x\right)<\frac1x.
+\]
+
+\method{(1) 函数法}
+也可令
+\[
+\phi(u)=\ln(1+u)-\frac{u}{1+u},\qquad u>0.
+\]
+则
+\[
+\phi'(u)=\frac1{1+u}-\frac1{(1+u)^2}>0,\qquad \phi(0)=0,
+\]
+所以 \(\ln(1+u)>\frac{u}{1+u}\)。取 \(u=1/x\) 得左边不等式。右边由
+\[
+\ln(1+u)<u
+\]
+得到。
+
+\method{(2) 证明极限存在}
+由第一问，
+\[
+0<\ln\left(1+\frac1x\right)<\frac1x,
+\]
+所以
+\[
+\sqrt{\frac1x}-\sqrt{\ln\left(1+\frac1x\right)}>0.
+\]
+注意这里题目中已经有
+\[
+f'(x)=\frac1{1+f^2(x)}\left[\sqrt{\frac1x}-\sqrt{\ln\left(1+\frac1x\right)}\right].
+\]
+为了利用反正切，应改看 \(F(x)=\int_0^{f(x)}(1+u^2)\,du=f(x)+\frac{f^3(x)}3\)。则
+\[
+F'(x)=(1+f^2(x))f'(x)
+=\sqrt{\frac1x}-\sqrt{\ln\left(1+\frac1x\right)}.
+\]
+下面证明右端在 \([1,+\infty)\) 上可积。
+
+记
+\[
+A(x)=\sqrt{\frac1x}-\sqrt{\ln\left(1+\frac1x\right)}.
+\]
+因为
+\[
+A(x)=
+\frac{\frac1x-\ln(1+\frac1x)}
+{\sqrt{\frac1x}+\sqrt{\ln(1+\frac1x)}}.
+\]
+又
+\[
+\frac1x-\ln\left(1+\frac1x\right)
+=\int_0^{1/x}\frac{t}{1+t}\,dt
+<\int_0^{1/x}t\,dt
+=\frac1{2x^2},
+\]
+并且由第一问
+\[
+\ln\left(1+\frac1x\right)>\frac1{x+1},
+\]
+故
+\[
+\sqrt{\frac1x}+\sqrt{\ln\left(1+\frac1x\right)}
+\ge \sqrt{\ln\left(1+\frac1x\right)}
+>\frac1{\sqrt{x+1}}.
+\]
+因此当 \(x\ge1\) 时，
+\[
+0<A(x)<\frac{\sqrt{x+1}}{2x^2}\le \frac{C}{x^{3/2}},
+\]
+其中 \(C\) 为常数。由于
+\[
+\int_1^{+\infty}\frac{dx}{x^{3/2}}
+\]
+收敛，故
+\[
+\int_1^{+\infty}A(x)\,dx
+\]
+收敛。
+
+于是
+\[
+F(x)=F(1)+\int_1^x A(t)\,dt
+\]
+随 \(x\to+\infty\) 有极限。函数
+\[
+F(u)=u+\frac{u^3}{3}
+\]
+严格单调递增，且 \(F(u)\to\pm\infty\) 当 \(u\to\pm\infty\)。因此由 \(F(f(x))\) 有极限，可推出 \(f(x)\) 有极限。
+
+\answer{结论成立，\(\displaystyle\lim_{x\to+\infty}f(x)\) 存在。}
+\examnote{这里不能误用 \(\arctan f\)。因为题目给的是 \(f'=\frac{A(x)}{1+f^2}\)，真正一乘就消掉分母的是 \(f+\frac{f^3}{3}\)。}
+\end{solutionblock}

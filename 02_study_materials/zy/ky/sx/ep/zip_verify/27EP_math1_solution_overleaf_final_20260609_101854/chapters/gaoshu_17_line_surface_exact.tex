@@ -1,0 +1,1650 @@
+\chapter{高等数学：曲线曲面积分}
+
+\section{第一型曲面积分与曲线积分}
+
+\begin{problemblock}
+\textbf{例 1.} 设曲面
+\[
+\Sigma:\ |x|+|y|+|z|=1,
+\]
+求
+\[
+\iint_{\Sigma}(x+|y|)\,dS.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{曲面是以坐标轴正负方向为顶点的正八面体。由关于 \(x\) 的对称性，
+\[
+\iint_{\Sigma}x\,dS=0.
+\]
+于是只需求 \(\iint_{\Sigma}|y|\,dS\)。在曲面上恒有
+\[
+|x|+|y|+|z|=1.
+\]
+三个坐标在该正八面体上完全对称，所以
+\[
+\iint_{\Sigma}|x|\,dS
+=\iint_{\Sigma}|y|\,dS
+=\iint_{\Sigma}|z|\,dS.
+\]
+两边对曲面积分得
+\[
+3\iint_{\Sigma}|y|\,dS
+=\iint_{\Sigma}1\,dS=S_{\Sigma}.
+\]
+该正八面体有 8 个全等正三角形面，每个面的边长为 \(\sqrt2\)，面积为
+\[
+\frac{\sqrt3}{4}(\sqrt2)^2=\frac{\sqrt3}{2}.
+\]
+因此
+\[
+S_{\Sigma}=8\cdot\frac{\sqrt3}{2}=4\sqrt3,
+\]
+从而
+\[
+\iint_{\Sigma}(x+|y|)\,dS=\frac{4\sqrt3}{3}.
+\]}
+\method{方法二：第一卦限直接积分}
+在第一卦限的面 \(x+y+z=1\) 上，\(z=1-x-y\)，投影区域为
+\[
+D=\{(x,y):x\ge0,\ y\ge0,\ x+y\le1\},
+\]
+且
+\[
+dS=\sqrt{1+z_x^2+z_y^2}\,dx\,dy=\sqrt3\,dx\,dy.
+\]
+该面上 \(|y|=y\)，因此
+\[
+\iint_{\Sigma}|y|\,dS
+=8\sqrt3\iint_D y\,dx\,dy
+=8\sqrt3\cdot\frac16
+=\frac{4\sqrt3}{3}.
+\]
+\answer{\(\displaystyle \frac{4\sqrt3}{3}\)}
+\examnote{绝对值曲面优先看对称性。这里把 \(|x|,|y|,|z|\) 三者对称相加，比逐面硬算更快。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 2.} 计算
+\[
+\iint_{\Sigma}(a x^2+b y^2+c z^2)\,dS,
+\]
+其中
+\[
+\Sigma:\ x^2+y^2+z^2=2z.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{曲面可写成
+\[
+x^2+y^2+(z-1)^2=1,
+\]
+即球心为 \((0,0,1)\)、半径为 1 的球面。令
+\[
+X=x,\qquad Y=y,\qquad Z=z-1,
+\]
+则 \(X^2+Y^2+Z^2=1\)。单位球面对称性给出
+\[
+\iint_{\Sigma}X^2\,dS
+=\iint_{\Sigma}Y^2\,dS
+=\iint_{\Sigma}Z^2\,dS
+=\frac13\iint_{\Sigma}(X^2+Y^2+Z^2)\,dS
+=\frac{4\pi}{3}.
+\]
+又
+\[
+z^2=(Z+1)^2=Z^2+2Z+1.
+\]
+由于 \(\iint_{\Sigma}Z\,dS=0\)，且球面面积为 \(4\pi\)，所以
+\[
+\iint_{\Sigma}z^2\,dS
+=\frac{4\pi}{3}+4\pi
+=\frac{16\pi}{3}.
+\]
+故
+\[
+\iint_{\Sigma}(a x^2+b y^2+c z^2)\,dS
+=a\frac{4\pi}{3}+b\frac{4\pi}{3}+c\frac{16\pi}{3}.
+\]}
+\answer{\(\displaystyle \frac{4\pi}{3}(a+b+4c)\)}
+\examnote{球面不在原点时，要先平移到标准球面；含 \(z^2\) 的项不能直接按三个坐标对称处理。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 3.} 设 \(\Sigma\) 为
+\[
+x^2+y^2+z^2=1,\qquad z\ge0,
+\]
+\(l,m,n\) 为 \(\Sigma\) 上任一点处外法线的方向余弦，求
+\[
+I=\iint_{\Sigma}z(lx+my+nz)\,dS.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{在单位球面上，外单位法向量就是
+\[
+(l,m,n)=(x,y,z).
+\]
+因此
+\[
+lx+my+nz=x^2+y^2+z^2=1.
+\]
+原积分化为
+\[
+I=\iint_{\Sigma}z\,dS.
+\]
+用球坐标参数化上半球：
+\[
+x=\sin\varphi\cos\theta,\quad
+y=\sin\varphi\sin\theta,\quad
+z=\cos\varphi,
+\]
+其中 \(0\le\varphi\le\frac{\pi}{2}\)，\(0\le\theta\le2\pi\)，且 \(dS=\sin\varphi\,d\varphi\,d\theta\)。故
+\[
+I=\int_0^{2\pi}\int_0^{\pi/2}\cos\varphi\sin\varphi\,d\varphi\,d\theta
+=2\pi\cdot\frac12
+=\pi.
+\]}
+\answer{\(\displaystyle \pi\)}
+\examnote{方向余弦题先把法向量写出来。单位球面外法线尤其简单，\((l,m,n)=(x,y,z)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 4.} 设 \(\Sigma\) 为球心在原点的单位球面，\(\Omega\) 为 \(\Sigma\) 所围成的空间区域。函数 \(f(x,y,z)\) 在 \(\Omega\) 上具有二阶连续偏导数，且
+\[
+\frac{\partial^2 f}{\partial x^2}
++\frac{\partial^2 f}{\partial y^2}
++\frac{\partial^2 f}{\partial z^2}
+=\varphi\!\left(\sqrt{x^2+y^2+z^2}\right),
+\]
+其中 \(\varphi(r)\) 满足微分方程
+\[
+y''-2y'+y=0,
+\]
+已知
+\[
+\varphi(1)=e,\qquad \varphi'(1)=2e.
+\]
+(I) 求 \(\varphi(r)\)；(II) 求
+\[
+\iint_{\Sigma}\left(x\frac{\partial f}{\partial x}
++y\frac{\partial f}{\partial y}
++z\frac{\partial f}{\partial z}\right)dS.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先解微分方程。特征方程为
+\[
+\lambda^2-2\lambda+1=(\lambda-1)^2=0,
+\]
+故
+\[
+\varphi(r)=(C_1+C_2r)e^r.
+\]
+由 \(\varphi(1)=e\) 得
+\[
+C_1+C_2=1.
+\]
+又
+\[
+\varphi'(r)=(C_1+C_2r+C_2)e^r,
+\]
+由 \(\varphi'(1)=2e\) 得
+\[
+C_1+2C_2=2.
+\]
+解得 \(C_2=1,\ C_1=0\)，所以
+\[
+\varphi(r)=re^r.
+\]
+在单位球面上，外单位法向量为 \(\boldsymbol n=(x,y,z)\)，所以
+\[
+x f_x+y f_y+z f_z=\nabla f\cdot\boldsymbol n.
+\]
+由 Gauss 公式，
+\[
+\iint_{\Sigma}\nabla f\cdot\boldsymbol n\,dS
+=\iiint_{\Omega}\Delta f\,dV.
+\]
+于是
+\[
+\iiint_{\Omega}\Delta f\,dV
+=\iiint_{x^2+y^2+z^2\le1}
+\sqrt{x^2+y^2+z^2}\,e^{\sqrt{x^2+y^2+z^2}}\,dV.
+\]
+用球坐标得
+\[
+4\pi\int_0^1 r^3e^r\,dr.
+\]
+分部积分可得
+\[
+\int_0^1r^3e^r\,dr
+=\left[e^r(r^3-3r^2+6r-6)\right]_0^1
+=6-2e.
+\]
+因此所求积分为
+\[
+4\pi(6-2e)=8\pi(3-e).
+\]}
+\answer{(I) \(\varphi(r)=re^r\)；(II) \(\displaystyle 8\pi(3-e)\)。}
+\examnote{看到 \(\nabla f\cdot \boldsymbol n\) 的球面积分，应立即联想到 Gauss 公式，把边界通量化成体积分。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 5.} 设 \(P\) 为椭球面
+\[
+S:\ x^2+y^2+z^2-yz=1
+\]
+上的动点，若 \(S\) 在点 \(P\) 处的切平面与 \(xOy\) 面垂直，求点 \(P\) 的轨迹 \(C\)，并计算曲面积分
+\[
+I=\iint_{\Sigma}
+\frac{(x+\sqrt3)|y-2z|}
+{\sqrt{4+y^2+z^2-4yz}}\,dS,
+\]
+其中 \(\Sigma\) 是椭球面 \(S\) 位于曲线 \(C\) 上方的部分。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设
+\[
+F(x,y,z)=x^2+y^2+z^2-yz-1.
+\]
+切平面的法向量为
+\[
+\nabla F=(2x,2y-z,2z-y).
+\]
+切平面与 \(xOy\) 面垂直，等价于两平面的法向量垂直。\(xOy\) 面法向量为 \((0,0,1)\)，故
+\[
+(2x,2y-z,2z-y)\cdot(0,0,1)=2z-y=0.
+\]
+所以 \(y=2z\)。代入椭球面方程得
+\[
+x^2+4z^2+z^2-2z^2=1,
+\]
+即
+\[
+C:\quad y=2z,\qquad x^2+3z^2=1.
+\]
+
+曲面位于 \(C\) 上方，取椭球面关于 \(xOy\) 投影的上支，即
+\[
+z=\frac{y+\sqrt{4-4x^2-3y^2}}2,\qquad 4x^2+3y^2\le4.
+\]
+在该支上有 \(2z-y\ge0\)，且
+\[
+|y-2z|=2z-y.
+\]
+由隐函数曲面 \(F=0\) 写成 \(z=z(x,y)\)，有
+\[
+dS=\frac{|\nabla F|}{|F_z|}\,dx\,dy
+=\frac{\sqrt{4x^2+(2y-z)^2+(2z-y)^2}}{|2z-y|}\,dx\,dy.
+\]
+利用椭球面方程化简分子：
+\[
+4x^2+(2y-z)^2+(2z-y)^2
+=4+y^2+z^2-4yz.
+\]
+因此
+\[
+\frac{|y-2z|}{\sqrt{4+y^2+z^2-4yz}}\,dS=dx\,dy.
+\]
+于是
+\[
+I=\iint_D (x+\sqrt3)\,dx\,dy,
+\]
+其中
+\[
+D:\ 4x^2+3y^2\le4.
+\]
+由于 \(D\) 关于 \(x\) 对称，\(\iint_Dx\,dx\,dy=0\)。而椭圆 \(D\) 的半轴长为
+\[
+1,\qquad \frac2{\sqrt3},
+\]
+面积为
+\[
+S_D=\frac{2\pi}{\sqrt3}.
+\]
+故
+\[
+I=\sqrt3\,S_D=2\pi.
+\]}
+\answer{\(C:\ y=2z,\ x^2+3z^2=1\)；\(\displaystyle I=2\pi\)。}
+\examnote{本题的核心是让曲面积分中的根式和曲面面积元相消。先判定“上方”对应 \(2z-y\ge0\)，再用隐函数面积元。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 6.} 设 \(S\) 为椭球面
+\[
+\frac{x^2}{2}+\frac{y^2}{2}+z^2=1
+\]
+的上半部分，点 \(P(x,y,z)\in S\)，\(\pi\) 为 \(S\) 在点 \(P\) 处的切平面，\(\rho(x,y,z)\) 为点 \(O(0,0,0)\) 到平面 \(\pi\) 的距离，求
+\[
+\iint_S\frac{z}{\rho(x,y,z)}\,dS.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{椭球面在点 \((x,y,z)\) 处的切平面为
+\[
+\frac{x}{2}X+\frac{y}{2}Y+zZ=1.
+\]
+原点到该平面的距离为
+\[
+\rho=\frac1{\sqrt{x^2/4+y^2/4+z^2}}.
+\]
+把上半椭球写成图形
+\[
+z=\sqrt{1-\frac{x^2+y^2}{2}},
+\]
+其投影区域为
+\[
+D:\ x^2+y^2\le2.
+\]
+令 \(r^2=x^2+y^2\)。则
+\[
+\sqrt{\frac{x^2}{4}+\frac{y^2}{4}+z^2}
+=\sqrt{\frac{r^2}{4}+1-\frac{r^2}{2}}
+=\sqrt{1-\frac{r^2}{4}}.
+\]
+又
+\[
+dS=\sqrt{1+z_x^2+z_y^2}\,dx\,dy
+=\frac{\sqrt{1-r^2/4}}{z}\,dx\,dy.
+\]
+因此
+\[
+\frac{z}{\rho}\,dS
+=z\sqrt{1-\frac{r^2}{4}}\cdot
+\frac{\sqrt{1-r^2/4}}{z}\,dx\,dy
+=\left(1-\frac{r^2}{4}\right)dx\,dy.
+\]
+所求积分为
+\[
+\int_0^{2\pi}\int_0^{\sqrt2}
+\left(1-\frac{r^2}{4}\right)r\,dr\,d\theta
+=2\pi\left[\frac{r^2}{2}-\frac{r^4}{16}\right]_0^{\sqrt2}
+=\frac{3\pi}{2}.
+\]}
+\answer{\(\displaystyle \frac{3\pi}{2}\)}
+\examnote{切平面距离一般先写成“常数项除以法向量长度”。本题面积元与距离中的根式相消，是最省算的结构。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 7.} 计算曲面积分
+\[
+\iint_{\Sigma}(x\arcsin x+y\cos y+z\sec z)\,dS,
+\]
+其中
+\[
+\Sigma:\ x^2+y^2+z^2=1.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{单位球面对 \(x,y,z\) 各坐标均对称。函数
+\[
+y\cos y
+\]
+关于 \(y\) 为奇函数，函数
+\[
+z\sec z
+\]
+关于 \(z\) 为奇函数，所以它们在整个球面上的积分均为 0。只需计算
+\[
+\iint_{\Sigma}x\arcsin x\,dS.
+\]
+单位球面上若被积函数只依赖 \(x\)，有
+\[
+\iint_{\Sigma}g(x)\,dS=2\pi\int_{-1}^{1}g(x)\,dx.
+\]
+故
+\[
+\iint_{\Sigma}x\arcsin x\,dS
+=2\pi\int_{-1}^{1}x\arcsin x\,dx
+=4\pi\int_0^1x\arcsin x\,dx.
+\]
+分部积分：
+\[
+\int_0^1x\arcsin x\,dx
+=\left.\frac{x^2}{2}\arcsin x\right|_0^1
+-\frac12\int_0^1\frac{x^2}{\sqrt{1-x^2}}\,dx.
+\]
+令 \(x=\sin t\)，则
+\[
+\frac12\int_0^1\frac{x^2}{\sqrt{1-x^2}}\,dx
+=\frac12\int_0^{\pi/2}\sin^2t\,dt
+=\frac{\pi}{8}.
+\]
+又第一项为 \(\pi/4\)，因此
+\[
+\int_0^1x\arcsin x\,dx=\frac{\pi}{8}.
+\]
+原积分为
+\[
+4\pi\cdot\frac{\pi}{8}=\frac{\pi^2}{2}.
+\]}
+\answer{\(\displaystyle \frac{\pi^2}{2}\)}
+\examnote{球面上只含单个坐标的积分，可把曲面积分压成 \(2\pi\int_{-1}^1\)。奇偶性通常先筛掉一大半项。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 8.} 设平面曲线 \(L\) 为下半圆
+\[
+y=-\sqrt{1-x^2},
+\]
+计算曲线积分
+\[
+\int_L(x^2+y^2)\,ds.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{曲线 \(L\) 是单位圆的下半圆弧，所以在 \(L\) 上恒有
+\[
+x^2+y^2=1.
+\]
+因此
+\[
+\int_L(x^2+y^2)\,ds=\int_L1\,ds.
+\]
+右端就是单位圆下半圆的弧长，等于
+\[
+\pi.
+\]}
+\answer{\(\displaystyle \pi\)}
+\examnote{第一型曲线积分若被积函数在曲线上可直接化简，应先代入曲线方程；不要一上来就求 \(ds\) 的复杂表达式。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 9.} 设 \(\Gamma\) 是空间圆周
+\[
+\begin{cases}
+x^2+y^2+z^2=1,\\
+x+y+z=0,
+\end{cases}
+\]
+求
+\[
+\oint_{\Gamma}(x^2+y^2)\,ds.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(\Gamma\) 是单位球被过原点平面截得的大圆，半径为 1，弧长为 \(2\pi\)。平面法向量为
+\[
+\boldsymbol n=\frac1{\sqrt3}(1,1,1).
+\]
+在该平面单位圆周上，三个坐标平方的平均值相同。也可用
+\[
+x^2+y^2+z^2=1
+\]
+以及对称性得
+\[
+\oint_{\Gamma}x^2\,ds
+=\oint_{\Gamma}y^2\,ds
+=\oint_{\Gamma}z^2\,ds.
+\]
+三者相加为
+\[
+\oint_{\Gamma}1\,ds=2\pi,
+\]
+故
+\[
+\oint_{\Gamma}x^2\,ds
+=\oint_{\Gamma}y^2\,ds
+=\frac{2\pi}{3}.
+\]
+于是
+\[
+\oint_{\Gamma}(x^2+y^2)\,ds
+=\frac{4\pi}{3}.
+\]}
+\answer{\(\displaystyle \frac{4\pi}{3}\)}
+\examnote{过原点的单位球截面圆仍是大圆。遇到 \(x^2,y^2,z^2\) 对称时，先用总和等于 1。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 10.} 设 \(L\) 是圆周
+\[
+x^2+y^2=1,
+\]
+\(\boldsymbol n\) 为 \(L\) 的外法线向量，
+\[
+u(x,y)=\frac1{12}(x^4+y^4),
+\]
+求
+\[
+\oint_L\frac{\partial u}{\partial n}\,ds.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由平面 Green 公式的散度形式，
+\[
+\oint_L\frac{\partial u}{\partial n}\,ds
+=\iint_D\Delta u\,dx\,dy,
+\]
+其中 \(D:x^2+y^2\le1\)。计算
+\[
+u_{xx}=\frac{1}{12}\cdot12x^2=x^2,\qquad
+u_{yy}=y^2.
+\]
+所以
+\[
+\Delta u=x^2+y^2.
+\]
+于是
+\[
+\oint_L\frac{\partial u}{\partial n}\,ds
+=\iint_D(x^2+y^2)\,dx\,dy.
+\]
+用极坐标：
+\[
+\iint_D(x^2+y^2)\,dx\,dy
+=\int_0^{2\pi}\int_0^1 r^2\cdot r\,dr\,d\theta
+=2\pi\cdot\frac14
+=\frac{\pi}{2}.
+\]}
+\method{方法二：沿圆周直接算}
+在单位圆上，外单位法向量为 \(\boldsymbol n=(x,y)\)。又
+\[
+\nabla u=\left(\frac{x^3}{3},\frac{y^3}{3}\right),
+\]
+所以
+\[
+\frac{\partial u}{\partial n}
+=\nabla u\cdot\boldsymbol n
+=\frac{x^4+y^4}{3}.
+\]
+令 \(x=\cos\theta,\ y=\sin\theta\)，\(ds=d\theta\)，则
+\[
+\oint_L\frac{\partial u}{\partial n}\,ds
+=\frac13\int_0^{2\pi}(\cos^4\theta+\sin^4\theta)\,d\theta
+=\frac13\cdot\frac{3\pi}{2}
+=\frac{\pi}{2}.
+\]
+\answer{\(\displaystyle \frac{\pi}{2}\)}
+\examnote{法向导数沿闭曲线积分，本质上是二维散度定理；若边界是标准圆，直接参数化也很快。}
+\end{solutionblock}
+
+\section{第二型曲面积分与 Gauss 公式}
+
+\begin{problemblock}
+\textbf{例 11.} 设直线 \(L\) 过点 \(A(-1,0,1)\) 与 \(B(0,0,0)\)，\(L\) 绕 \(z\) 轴旋转一周得曲面 \(\Sigma_0\)。计算
+\[
+I=\iint_{\Sigma}\frac{e^z}{\sqrt{x^2+y^2}}\,dx\,dy,
+\]
+其中 \(\Sigma\) 是由 \(\Sigma_0,z=1,z=2\) 所围有界闭区域的边界曲面，取外侧。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{直线 \(AB\) 旋转所得圆锥满足
+\[
+r=\sqrt{x^2+y^2}=z.
+\]
+由 \(z=1\) 与 \(z=2\) 截得的闭区域为
+\[
+1\le z\le2,\qquad 0\le r\le z.
+\]
+把曲面积分看成向量场
+\[
+\boldsymbol F=\left(0,0,\frac{e^z}{r}\right)
+\]
+通过闭曲面 \(\Sigma\) 的通量，其中 \(r=\sqrt{x^2+y^2}\)。则
+\[
+I=\iint_{\Sigma}\boldsymbol F\cdot\boldsymbol n\,dS.
+\]
+由 Gauss 公式，
+\[
+I=\iiint_{\Omega}\operatorname{div}\boldsymbol F\,dV
+=\iiint_{\Omega}\frac{\partial}{\partial z}\left(\frac{e^z}{r}\right)dV
+=\iiint_{\Omega}\frac{e^z}{r}\,dV.
+\]
+在柱坐标中 \(dV=r\,dr\,d\theta\,dz\)，故
+\[
+I=\int_1^2\int_0^{2\pi}\int_0^z
+\frac{e^z}{r}\,r\,dr\,d\theta\,dz
+=2\pi\int_1^2 z e^z\,dz.
+\]
+而
+\[
+\int z e^z\,dz=e^z(z-1),
+\]
+所以
+\[
+I=2\pi\left[e^z(z-1)\right]_1^2
+=2\pi e^2.
+\]}
+\answer{\(\displaystyle 2\pi e^2\)}
+\examnote{第二型曲面积分中只有 \(dx\,dy\) 项时，可看作通量的第三分量。闭曲面且取外侧，优先用 Gauss 公式。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 12.} 计算曲面积分
+\[
+I=\iint_{\Sigma}
+\frac{2\,dy\,dz}{x\cos^2x}
++\frac{dz\,dx}{\cos^2y}
+-\frac{dx\,dy}{z\cos^2z},
+\]
+其中 \(\Sigma\) 是球面
+\[
+x^2+y^2+z^2=1
+\]
+的外侧。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{在单位球面外侧，有
+\[
+dy\,dz=x\,dS,\qquad dz\,dx=y\,dS,\qquad dx\,dy=z\,dS.
+\]
+代入可得
+\[
+I=\iint_{\Sigma}
+\left(2\sec^2x+y\sec^2y-\sec^2z\right)dS.
+\]
+其中 \(y\sec^2y\) 关于 \(y\) 为奇函数，在球面上积分为 0。又由球面对称性，
+\[
+\iint_{\Sigma}\sec^2x\,dS
+=\iint_{\Sigma}\sec^2z\,dS.
+\]
+因此
+\[
+I=\iint_{\Sigma}\sec^2x\,dS.
+\]
+单位球面上只依赖 \(x\) 的函数满足
+\[
+\iint_{\Sigma}g(x)\,dS=2\pi\int_{-1}^{1}g(x)\,dx.
+\]
+故
+\[
+I=2\pi\int_{-1}^{1}\sec^2x\,dx
+=2\pi[\tan x]_{-1}^{1}
+=4\pi\tan1.
+\]}
+\answer{\(\displaystyle 4\pi\tan1\)}
+\examnote{这题表面有 \(1/x,1/z\)，但与有向面积元 \(dy\,dz,dx\,dy\) 相乘后在球面上可化简。关键是先转成 \(dS\) 形式。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 13.} 设锥面 \(\Sigma\) 的顶点为原点，准线为曲线
+\[
+\Gamma:\quad x=1,\quad z=y^2,\quad |y|\le1.
+\]
+(1) 求 \(\Sigma\) 的方程；(2) 设
+\[
+I=\iint_{\Sigma}y\,dy\,dz+x\,dz\,dx+z\,dx\,dy,
+\]
+\(\Sigma\) 取上侧，求 \(I\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{准线上点可写成
+\[
+(1,u,u^2),\qquad -1\le u\le1.
+\]
+从原点出发经过该点的射线为
+\[
+(x,y,z)=(t,tu,tu^2),\qquad 0\le t\le1.
+\]
+于是
+\[
+x=t,\qquad y=tu,\qquad z=tu^2,
+\]
+消去 \(u,t\) 得
+\[
+xz=y^2.
+\]
+有限锥面还满足
+\[
+0\le x\le1,\qquad |y|\le x.
+\]
+因此
+\[
+\Sigma:\quad z=\frac{y^2}{x},\qquad 0\le x\le1,\quad -x\le y\le x.
+\]
+
+第二型曲面积分对应向量场
+\[
+\boldsymbol F=(y,x,z).
+\]
+取上侧，即取图形 \(z=f(x,y)=y^2/x\) 的向上有向面积元：
+\[
+dy\,dz\,\boldsymbol i+dz\,dx\,\boldsymbol j+dx\,dy\,\boldsymbol k
+=(-f_x,-f_y,1)\,dx\,dy.
+\]
+由于
+\[
+f_x=-\frac{y^2}{x^2},\qquad f_y=\frac{2y}{x},
+\]
+所以
+\[
+(-f_x,-f_y,1)=\left(\frac{y^2}{x^2},-\frac{2y}{x},1\right).
+\]
+于是
+\[
+\boldsymbol F\cdot(-f_x,-f_y,1)
+=y\frac{y^2}{x^2}+x\left(-\frac{2y}{x}\right)+\frac{y^2}{x}
+=\frac{y^3}{x^2}-2y+\frac{y^2}{x}.
+\]
+在区域 \(-x\le y\le x\) 上，前两项关于 \(y\) 为奇函数，积分为 0。故
+\[
+I=\int_0^1\int_{-x}^{x}\frac{y^2}{x}\,dy\,dx
+=\int_0^1\frac1x\cdot\frac{2x^3}{3}\,dx
+=\frac23\int_0^1x^2\,dx
+=\frac29.
+\]}
+\answer{(1) \(\Sigma:\ xz=y^2,\ 0\le x\le1,\ |y|\le x\)；(2) \(\displaystyle I=\frac29\)。}
+\examnote{锥面由“顶点 + 准线”确定时，先写射线参数。第二型曲面积分若曲面可写成图形，直接用有向面积元最稳。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 14.} 设曲面
+\[
+\Sigma:\ x^2+y^2+z^2=4,\qquad x+y+z\ge\sqrt3,
+\]
+取上侧，求
+\[
+I=\iint_{\Sigma}x\,dy\,dz+y\,dz\,dx+z\,dx\,dy.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{积分对应向量场
+\[
+\boldsymbol F=(x,y,z),
+\]
+且
+\[
+\operatorname{div}\boldsymbol F=3.
+\]
+曲面是半径 \(R=2\) 的球面被平面
+\[
+x+y+z=\sqrt3
+\]
+截出的球冠。平面到原点的距离为
+\[
+d=\frac{\sqrt3}{\sqrt{1^2+1^2+1^2}}=1,
+\]
+球冠高度为
+\[
+h=R-d=1.
+\]
+取上侧，即取朝向 \(x+y+z\) 增大的外侧法向。用平面圆盘 \(D\) 把球冠补成闭曲面。球冠所围体积为
+\[
+V=\pi h^2\left(R-\frac h3\right)
+=\pi\left(2-\frac13\right)
+=\frac{5\pi}{3}.
+\]
+闭曲面总通量为
+\[
+3V=5\pi.
+\]
+底面圆盘位于平面 \(x+y+z=\sqrt3\)，单位法向量
+\[
+\boldsymbol n_0=\frac1{\sqrt3}(1,1,1).
+\]
+对闭区域而言，底面外法向为 \(-\boldsymbol n_0\)。在底面上
+\[
+\boldsymbol F\cdot\boldsymbol n_0
+=\frac{x+y+z}{\sqrt3}=1.
+\]
+底面圆盘半径为
+\[
+\sqrt{R^2-d^2}=\sqrt3,
+\]
+面积为 \(3\pi\)，因此底面通量为
+\[
+-3\pi.
+\]
+于是球冠上侧通量为
+\[
+I=5\pi-(-3\pi)=8\pi.
+\]}
+\answer{\(\displaystyle 8\pi\)}
+\examnote{球冠通量题常用“补底面 + Gauss 公式”。不要忘记底面法向与球冠区域外法向相反。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 15.} 设 \(\Sigma\) 是由直线
+\[
+\begin{cases}
+x=0,\\
+y=0
+\end{cases}
+\]
+绕直线
+\[
+\begin{cases}
+x=t,\\
+y=t,\\
+z=t
+\end{cases}
+\]
+旋转一周得到的曲面，\(\Sigma_1\) 是 \(\Sigma\) 介于平面 \(x+y+z=0\) 与 \(x+y+z=1\) 之间部分的外侧，计算
+\[
+I=\iint_{\Sigma_1}x\,dy\,dz+(y+1)\,dz\,dx+(z+2)\,dx\,dy.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{被旋转直线为 \(z\) 轴，旋转轴方向为 \((1,1,1)\)。两直线夹角 \(\alpha\) 满足
+\[
+\cos\alpha=\frac{(0,0,1)\cdot(1,1,1)}
+{|(0,0,1)|\,|(1,1,1)|}
+=\frac1{\sqrt3}.
+\]
+因此所得圆锥的轴为 \(x=y=z\)，且
+\[
+(x+y+z)^2=x^2+y^2+z^2.
+\]
+设
+\[
+s=x+y+z.
+\]
+截面 \(s=\text{常数}\) 到顶点的轴向距离为 \(s/\sqrt3\)，圆锥半顶角满足
+\[
+\tan\alpha=\sqrt2.
+\]
+故当 \(s=1\) 时，截面圆半径为
+\[
+\frac1{\sqrt3}\cdot\sqrt2=\sqrt{\frac23}.
+\]
+于是由 \(0\le s\le1\) 围成的圆锥体体积为
+\[
+V=\frac13\pi\left(\frac23\right)\frac1{\sqrt3}
+=\frac{2\pi}{9\sqrt3}.
+\]
+积分对应向量场
+\[
+\boldsymbol F=(x,y+1,z+2),
+\]
+其散度为
+\[
+\operatorname{div}\boldsymbol F=3.
+\]
+用底面 \(s=1\) 把侧面补成闭曲面。闭曲面总通量为
+\[
+3V=\frac{2\pi}{3\sqrt3}.
+\]
+底面外法向为
+\[
+\boldsymbol n=\frac1{\sqrt3}(1,1,1),
+\]
+且底面上
+\[
+\boldsymbol F\cdot\boldsymbol n
+=\frac{x+y+z+3}{\sqrt3}
+=\frac4{\sqrt3}.
+\]
+底面面积为
+\[
+\pi\cdot\frac23=\frac{2\pi}{3}.
+\]
+所以底面通量为
+\[
+\frac4{\sqrt3}\cdot\frac{2\pi}{3}
+=\frac{8\pi}{3\sqrt3}.
+\]
+因此侧面外侧通量为
+\[
+I=\frac{2\pi}{3\sqrt3}-\frac{8\pi}{3\sqrt3}
+=-\frac{2\pi}{\sqrt3}.
+\]}
+\answer{\(\displaystyle -\frac{2\pi}{\sqrt3}\)}
+\examnote{旋转直线成圆锥时，先由夹角确定半顶角，再用 Gauss 公式。这里底面通量比总体通量大，所以侧面结果为负。}
+\end{solutionblock}
+
+\section{第二型曲线积分、Green 公式与 Stokes 公式}
+
+\begin{problemblock}
+\textbf{例 16.} 已知曲线 \(L\) 的方程为
+\[
+y=1-|x|,\qquad x\in[-1,1],
+\]
+起点是 \((-1,0)\)，终点为 \((1,0)\)，求
+\[
+\int_L xy\,dx+x^2\,dy.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{曲线由两段折线组成。
+
+第一段：从 \((-1,0)\) 到 \((0,1)\)，设
+\[
+x=t,\qquad y=t+1,\qquad -1\le t\le0.
+\]
+则 \(dx=dy=dt\)，积分为
+\[
+\int_{-1}^{0}\left[t(t+1)+t^2\right]dt
+=\int_{-1}^{0}(2t^2+t)\,dt
+=\frac16.
+\]
+第二段：从 \((0,1)\) 到 \((1,0)\)，设
+\[
+x=t,\qquad y=1-t,\qquad 0\le t\le1.
+\]
+则 \(dx=dt,\ dy=-dt\)，积分为
+\[
+\int_0^1\left[t(1-t)-t^2\right]dt
+=\int_0^1(t-2t^2)\,dt
+=-\frac16.
+\]
+两段相加得
+\[
+I=\frac16-\frac16=0.
+\]}
+\method{方法二：补线段用 Green 公式}
+用 \(x\) 轴上线段从 \((1,0)\) 回到 \((-1,0)\) 补成闭曲线。该线段上 \(y=0,\ dy=0\)，补线积分为 0。闭区域关于 \(y\) 轴对称，而
+\[
+\frac{\partial}{\partial x}(x^2)-\frac{\partial}{\partial y}(xy)=2x-x=x
+\]
+为关于 \(x\) 的奇函数，故闭曲线积分为 0，原积分也为 0。
+\answer{\(\displaystyle 0\)}
+\examnote{折线题直接分段最稳；若补线后补边积分为 0，也可用 Green 公式借对称性快速判断。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 17.} 在连接 \((0,0)\) 和 \(A(\pi,0)\) 的曲线族
+\[
+y=a\sin x,\qquad a>0
+\]
+中，求一条曲线 \(L\)，使沿该曲线从 \(O\) 到 \(A\) 的积分
+\[
+\int_L(1+y^3)\,dx+(2x+y)\,dy
+\]
+的值最小。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{在曲线 \(y=a\sin x\) 上，
+\[
+dy=a\cos x\,dx,\qquad 0\le x\le\pi.
+\]
+积分化为关于参数 \(a\) 的函数：
+\[
+J(a)=\int_0^{\pi}\left[
+1+a^3\sin^3x+(2x+a\sin x)a\cos x
+\right]dx.
+\]
+逐项计算：
+\[
+\int_0^{\pi}1\,dx=\pi,
+\]
+\[
+\int_0^{\pi}a^3\sin^3x\,dx
+=a^3\cdot\frac43,
+\]
+\[
+\int_0^{\pi}2ax\cos x\,dx
+=2a\left[x\sin x+\cos x\right]_0^{\pi}
+=-4a,
+\]
+\[
+\int_0^{\pi}a^2\sin x\cos x\,dx=0.
+\]
+所以
+\[
+J(a)=\pi-4a+\frac43a^3,\qquad a>0.
+\]
+求导：
+\[
+J'(a)=-4+4a^2.
+\]
+令 \(J'(a)=0\)，得 \(a=1\)。又
+\[
+J''(a)=8a>0\quad(a>0),
+\]
+故最小值在 \(a=1\) 处取得。所求曲线为
+\[
+y=\sin x.
+\]
+最小积分值为
+\[
+J(1)=\pi-4+\frac43=\pi-\frac83.
+\]}
+\answer{所求曲线为 \(\displaystyle y=\sin x\)，最小值为 \(\displaystyle \pi-\frac83\)。}
+\examnote{含参数曲线族的线积分，先把积分化成参数函数，再做一元最值。不要把 \(a\) 当成变量 \(x\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 18.} 求
+\[
+I=\int_L\left[e^x\sin y-b(x+y)\right]dx
++(e^x\cos y-a x)\,dy,
+\]
+其中 \(a,b\) 为正常数，\(L\) 为从点 \(A(2a,0)\) 沿曲线
+\[
+y=\sqrt{2ax-x^2}
+\]
+到点 \(O(0,0)\) 的弧。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先观察
+\[
+e^x\sin y\,dx+e^x\cos y\,dy=d(e^x\sin y).
+\]
+由于起点与终点均满足 \(y=0\)，故该全微分项在线积分中的贡献为
+\[
+\left.e^x\sin y\right|_{A}^{O}=0.
+\]
+于是只需计算
+\[
+I=\int_L\left[-b(x+y)\,dx-a x\,dy\right].
+\]
+曲线是圆
+\[
+(x-a)^2+y^2=a^2
+\]
+的上半圆，方向从 \((2a,0)\) 到 \((0,0)\)。取参数
+\[
+x=a(1+\cos t),\qquad y=a\sin t,\qquad 0\le t\le\pi.
+\]
+则
+\[
+dx=-a\sin t\,dt,\qquad dy=a\cos t\,dt.
+\]
+代入得
+\[
+I=\int_0^{\pi}
+\left[
+ba^2(1+\cos t+\sin t)\sin t
+-a^3(1+\cos t)\cos t
+\right]dt.
+\]
+利用
+\[
+\int_0^{\pi}\sin t\,dt=2,\quad
+\int_0^{\pi}\sin t\cos t\,dt=0,\quad
+\int_0^{\pi}\sin^2t\,dt=\frac{\pi}{2},
+\]
+\[
+\int_0^{\pi}\cos t\,dt=0,\quad
+\int_0^{\pi}\cos^2t\,dt=\frac{\pi}{2},
+\]
+得到
+\[
+I=ba^2\left(2+\frac{\pi}{2}\right)-a^3\frac{\pi}{2}.
+\]}
+\answer{\(\displaystyle 2a^2b+\frac{\pi a^2b}{2}-\frac{\pi a^3}{2}\)}
+\examnote{遇到 \(e^x\sin y\,dx+e^x\cos y\,dy\)，应马上识别为 \(d(e^x\sin y)\)，先把路径无关部分拿掉。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 19.} 设 \(\Sigma\) 为曲面
+\[
+4x^2+y^2+z^2=1,\qquad z\ge0
+\]
+的下侧，计算曲面积分
+\[
+I=\iint_{\Sigma}(x+2y)\,dy\,dz
++\frac{z}{\sqrt{x^2+y^2+z^2}}\,dz\,dx
++\left(x^2-\frac{y}{\sqrt{x^2+y^2+z^2}}\right)dx\,dy.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设向量场
+\[
+\boldsymbol F=\left(x+2y,\frac{z}{r},x^2-\frac{y}{r}\right),
+\qquad r=\sqrt{x^2+y^2+z^2}.
+\]
+则
+\[
+\operatorname{div}\boldsymbol F
+=1-\frac{zy}{r^3}+\frac{yz}{r^3}=1.
+\]
+先取上半椭球的外侧，并用底面椭圆
+\[
+D:\ 4x^2+y^2\le1,\quad z=0
+\]
+补成闭曲面。上半椭球体积为
+\[
+V=\frac12\cdot\frac{4\pi}{3}\cdot\frac12\cdot1\cdot1
+=\frac{\pi}{3}.
+\]
+闭曲面总通量为 \(\pi/3\)。
+
+底面外法向为 \((0,0,-1)\)。在 \(z=0\) 上，
+\[
+F_3=x^2-\frac{y}{\sqrt{x^2+y^2}}.
+\]
+因此底面通量为
+\[
+\iint_D(-F_3)\,dx\,dy
+=-\iint_Dx^2\,dx\,dy
+\]
+其中含 \(y/\sqrt{x^2+y^2}\) 的项关于 \(y\) 为奇函数，积分为 0。椭圆 \(D\) 的半轴为 \(1/2\) 和 \(1\)，所以
+\[
+\iint_Dx^2\,dx\,dy
+=\frac{\pi a^3b}{4}
+=\frac{\pi}{32}.
+\]
+故底面通量为 \(-\pi/32\)。设上半椭球外侧通量为 \(I_{\text{out}}\)，则
+\[
+I_{\text{out}}-\frac{\pi}{32}=\frac{\pi}{3},
+\]
+即
+\[
+I_{\text{out}}=\frac{35\pi}{96}.
+\]
+题目要求下侧，方向与外侧相反，因此
+\[
+I=-\frac{35\pi}{96}.
+\]}
+\answer{\(\displaystyle -\frac{35\pi}{96}\)}
+\examnote{“下侧”是本题的负号来源。先算外侧闭曲面通量，再反号，比直接处理下侧更不容易错。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 20.} 计算曲线积分
+\[
+\oint_C(z-y)\,dx+(x-z)\,dy+(x-y)\,dz,
+\]
+其中 \(C\) 是曲线
+\[
+\begin{cases}
+x^2+y^2=1,\\
+x-y+z=2,
+\end{cases}
+\]
+从 \(z\) 轴正向往 \(z\) 轴负向看，\(C\) 的方向是顺时针的。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设
+\[
+\boldsymbol F=(z-y,\ x-z,\ x-y).
+\]
+其旋度为
+\[
+\nabla\times\boldsymbol F
+=\left(R_y-Q_z,\ P_z-R_x,\ Q_x-P_y\right)
+=(0,0,2).
+\]
+由 Stokes 公式，
+\[
+\oint_C\boldsymbol F\cdot d\boldsymbol r
+=\iint_S(\nabla\times\boldsymbol F)\cdot\boldsymbol n\,dS.
+\]
+曲线在 \(xy\) 平面上的投影是单位圆。题设“从 \(z\) 轴正向往 \(z\) 轴负向看为顺时针”，对应的有向法向量具有负 \(z\) 分量，因此
+\[
+n_z\,dS=-dx\,dy.
+\]
+于是
+\[
+I=\iint_D 2\,n_z\,dS
+=-2\iint_Ddx\,dy
+=-2\pi,
+\]
+其中 \(D:x^2+y^2\le1\)。}
+\answer{\(\displaystyle -2\pi\)}
+\examnote{空间曲线方向题先翻译成法向量方向。顺时针从 \(+z\) 看，通常对应负 \(z\) 法向。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 21.} 计算
+\[
+I=\oint_L(y^2-z^2)\,dx+(2z^2-x^2)\,dy+(3x^2-y^2)\,dz,
+\]
+其中 \(L\) 是平面
+\[
+x+y+z=2
+\]
+与柱面
+\[
+|x|+|y|=1
+\]
+的交线，从 \(z\) 轴正向看去，\(L\) 为逆时针方向。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设
+\[
+\boldsymbol F=(y^2-z^2,\ 2z^2-x^2,\ 3x^2-y^2).
+\]
+其旋度为
+\[
+\nabla\times\boldsymbol F
+=(-2y-4z,\ -2z-6x,\ -2x-2y).
+\]
+由于从 \(+z\) 方向看为逆时针，取平面
+\[
+z=2-x-y
+\]
+的上侧，即有向面积元
+\[
+(-z_x,-z_y,1)\,dx\,dy=(1,1,1)\,dx\,dy.
+\]
+于是
+\[
+(\nabla\times\boldsymbol F)\cdot(1,1,1)
+=-8x-4y-6z.
+\]
+代入 \(z=2-x-y\)，得
+\[
+-8x-4y-6(2-x-y)
+=-2x+2y-12.
+\]
+投影区域为菱形
+\[
+D:\ |x|+|y|\le1,
+\]
+其面积为 2，且关于 \(x,y\) 对称，所以 \(\iint_Dx\,dx\,dy=\iint_Dy\,dx\,dy=0\)。故
+\[
+I=\iint_D(-2x+2y-12)\,dx\,dy
+=-12\cdot2
+=-24.
+\]}
+\answer{\(\displaystyle -24\)}
+\examnote{Stokes 公式后，方向常体现在有向面积元。平面写成 \(z=z(x,y)\) 时，上侧面积元是 \((-z_x,-z_y,1)\,dx\,dy\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 22.} 已知有向曲线 \(\Gamma\) 为球面
+\[
+x^2+y^2+z^2=2x
+\]
+与平面
+\[
+2x-z-1=0
+\]
+的交线，从 \(z\) 轴正向往 \(z\) 轴负向看去为逆时针方向，计算曲线积分
+\[
+\int_{\Gamma}(6xyz-yz^2)\,dx+2x^2z\,dy+xyz\,dz.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设
+\[
+\boldsymbol F=(6xyz-yz^2,\ 2x^2z,\ xyz).
+\]
+其旋度为
+\[
+\nabla\times\boldsymbol F
+=(xz-2x^2,\ 6xy-3yz,\ z^2-2xz).
+\]
+由题意取法向量具有正 \(z\) 分量的平面片。平面为
+\[
+z=2x-1,
+\]
+故有向面积元为
+\[
+(-z_x,-z_y,1)\,dx\,dy=(-2,0,1)\,dx\,dy.
+\]
+于是
+\[
+(\nabla\times\boldsymbol F)\cdot(-2,0,1)
+=-2(xz-2x^2)+z^2-2xz
+=(z-2x)^2.
+\]
+在平面 \(z=2x-1\) 上，
+\[
+z-2x=-1,
+\]
+所以点积恒为 1。
+
+投影区域由球面方程给出：
+\[
+x^2+y^2+(2x-1)^2=2x,
+\]
+即
+\[
+5x^2-6x+y^2+1=0,
+\]
+整理为
+\[
+5\left(x-\frac35\right)^2+y^2=\frac45.
+\]
+这是椭圆，半轴长为
+\[
+\frac25,\qquad \frac2{\sqrt5}.
+\]
+因此
+\[
+I=\iint_D1\,dx\,dy
+=\pi\cdot\frac25\cdot\frac2{\sqrt5}
+=\frac{4\pi}{5\sqrt5}.
+\]}
+\answer{\(\displaystyle \frac{4\pi}{5\sqrt5}\)}
+\examnote{旋度点积若化成常数，后面只剩投影区域面积。投影椭圆一定要从“球面 + 平面”联立得出。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 23.} 设 \(P\) 为椭球面
+\[
+S:\ x^2+y^2+z^2+yz=1
+\]
+上的动点，且 \(S\) 在点 \(P\) 处的切平面与平面 \(y-z=1\) 垂直。
+
+(1) 求 \(P\) 的轨迹方程 \(\Gamma\)；
+
+(2) 计算曲线积分
+\[
+\oint_{\Gamma}(3yz^2+\cos z)\,dx-(xyz+x^3)\,dy
++(xy^2-x\sin z)\,dz,
+\]
+从 \(z\) 轴正向看去，\(\Gamma\) 为逆时针方向。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设
+\[
+F(x,y,z)=x^2+y^2+z^2+yz-1.
+\]
+椭球面法向量为
+\[
+\nabla F=(2x,2y+z,2z+y).
+\]
+平面 \(y-z=1\) 的法向量为 \((0,1,-1)\)。两平面垂直，等价于法向量垂直：
+\[
+(2x,2y+z,2z+y)\cdot(0,1,-1)=0.
+\]
+即
+\[
+2y+z-(2z+y)=y-z=0.
+\]
+所以 \(z=y\)。代入椭球面方程：
+\[
+x^2+y^2+y^2+y^2=1,
+\]
+得
+\[
+\Gamma:\quad z=y,\qquad x^2+3y^2=1.
+\]
+
+设
+\[
+\boldsymbol F=(3yz^2+\cos z,\ -(xyz+x^3),\ xy^2-x\sin z).
+\]
+其旋度为
+\[
+\nabla\times\boldsymbol F
+=\left(3xy,\ 6yz-y^2,\ -yz-3x^2-3z^2\right).
+\]
+取平面 \(z=y\) 上由 \(\Gamma\) 围成的椭圆片。由于从 \(+z\) 方向看为逆时针，取参数
+\[
+\boldsymbol r(x,y)=(x,y,y),
+\]
+有向面积元为
+\[
+\boldsymbol r_x\times\boldsymbol r_y=(0,-1,1).
+\]
+在 \(z=y\) 上，
+\[
+\nabla\times\boldsymbol F
+=\left(3xy,\ 5y^2,\ -3x^2-4y^2\right).
+\]
+点积为
+\[
+\left(3xy,\ 5y^2,\ -3x^2-4y^2\right)\cdot(0,-1,1)
+=-3x^2-9y^2.
+\]
+投影区域为
+\[
+D:\ x^2+3y^2\le1.
+\]
+该椭圆半轴为 \(1\) 与 \(1/\sqrt3\)，所以
+\[
+\iint_Dx^2\,dx\,dy=\frac{\pi}{4\sqrt3},
+\qquad
+\iint_Dy^2\,dx\,dy=\frac{\pi}{12\sqrt3}.
+\]
+故
+\[
+I=-3\cdot\frac{\pi}{4\sqrt3}
+-9\cdot\frac{\pi}{12\sqrt3}
+=-\frac{3\pi}{2\sqrt3}
+=-\frac{\sqrt3\pi}{2}.
+\]}
+\answer{(1) \(\Gamma:\ z=y,\ x^2+3y^2=1\)；(2) \(\displaystyle -\frac{\sqrt3\pi}{2}\)。}
+\examnote{“切平面与给定平面垂直”转化为两法向量垂直。曲线积分含空间闭曲线，优先用 Stokes 公式。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 24.} 设在上半平面
+\[
+D=\{(x,y):y>0\}
+\]
+内，函数 \(f(x,y)\) 具有连续偏导数，且对任意 \(t>0\) 都有
+\[
+f(tx,ty)=t^{-2}f(x,y).
+\]
+证明：对 \(D\) 内的任意分段光滑有向简单闭曲线 \(L\)，都有
+\[
+\oint_L yf(x,y)\,dx-xf(x,y)\,dy=0.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{令
+\[
+P=yf(x,y),\qquad Q=-xf(x,y).
+\]
+由 Green 公式，
+\[
+\oint_LP\,dx+Q\,dy
+=\iint_G\left(Q_x-P_y\right)dx\,dy,
+\]
+其中 \(G\subset D\) 是 \(L\) 围成的区域。计算
+\[
+Q_x=-(f+xf_x),\qquad P_y=f+yf_y.
+\]
+因此
+\[
+Q_x-P_y=-2f-(xf_x+yf_y).
+\]
+由齐次函数性质
+\[
+f(tx,ty)=t^{-2}f(x,y),
+\]
+对 \(t\) 求导后令 \(t=1\)，得到 Euler 公式
+\[
+xf_x+yf_y=-2f.
+\]
+于是
+\[
+Q_x-P_y=-2f-(-2f)=0.
+\]
+所以
+\[
+\oint_L yf(x,y)\,dx-xf(x,y)\,dy=0.
+\]}
+\answer{结论成立，即 \(\displaystyle \oint_L yf(x,y)\,dx-xf(x,y)\,dy=0\)。}
+\examnote{齐次函数题要想到 Euler 公式：若 \(f\) 为 \(k\) 次齐次，则 \(xf_x+yf_y=kf\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 25.} 设函数 \(\varphi(y)\) 具有连续导数，在围绕原点的任意分段光滑简单闭曲线 \(L\) 上，曲线积分
+\[
+\oint_L\frac{\varphi(y)\,dx+2xy\,dy}{2x^2+y^4}
+\]
+的值恒为同一常数。
+
+(1) 证明：对右半平面 \(x>0\) 内的任意分段光滑简单闭曲线 \(C\)，有
+\[
+\oint_C\frac{\varphi(y)\,dx+2xy\,dy}{2x^2+y^4}=0;
+\]
+
+(2) 求函数 \(\varphi(y)\) 的表达式。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{(1) 设右半平面 \(x>0\) 内的任意简单闭曲线为 \(C\)。取一条围绕原点的简单闭曲线 \(L_1\)，再取另一条围绕原点的简单闭曲线 \(L_2\)，使 \(L_2\) 相当于在 \(L_1\) 的基础上再绕 \(C\) 一圈；两条连接小弧可取成方向相反，在线积分中互相抵消。于是
+\[
+\oint_{L_2}\omega=\oint_{L_1}\omega+\oint_C\omega,
+\qquad
+\omega=\frac{\varphi(y)\,dx+2xy\,dy}{2x^2+y^4}.
+\]
+题设说所有围绕原点的简单闭曲线积分值恒为同一常数，故
+\[
+\oint_{L_2}\omega=\oint_{L_1}\omega.
+\]
+从而
+\[
+\oint_C\omega=0.
+\]
+这就证明了右半平面内任意分段光滑简单闭曲线上的积分为 \(0\)。
+
+(2) 在右半平面内任意闭曲线积分为 0，因此该微分形式在 \(x>0\) 内满足
+\[
+\frac{\partial P}{\partial y}=\frac{\partial Q}{\partial x},
+\]
+其中
+\[
+P=\frac{\varphi(y)}{2x^2+y^4},\qquad
+Q=\frac{2xy}{2x^2+y^4}.
+\]
+计算
+\[
+\frac{\partial Q}{\partial x}
+=\frac{2y(2x^2+y^4)-2xy\cdot4x}{(2x^2+y^4)^2}
+=\frac{2y(y^4-2x^2)}{(2x^2+y^4)^2},
+\]
+\[
+\frac{\partial P}{\partial y}
+=\frac{\varphi'(y)(2x^2+y^4)-4y^3\varphi(y)}
+{(2x^2+y^4)^2}.
+\]
+令二者相等，并比较关于 \(x^2\) 的系数：
+\[
+\varphi'(y)(2x^2+y^4)-4y^3\varphi(y)
+=2y^5-4x^2y.
+\]
+比较 \(x^2\) 系数得
+\[
+2\varphi'(y)=-4y,
+\]
+所以
+\[
+\varphi'(y)=-2y,\qquad \varphi(y)=C-y^2.
+\]
+再比较常数项：
+\[
+\varphi'(y)y^4-4y^3\varphi(y)=2y^5.
+\]
+代入 \(\varphi'(y)=-2y\)、\(\varphi(y)=C-y^2\)，得
+\[
+-2y^5-4y^3(C-y^2)=2y^5,
+\]
+即
+\[
+-4Cy^3=0.
+\]
+故 \(C=0\)，从而
+\[
+\varphi(y)=-y^2.
+\]}
+\answer{(1) 右半平面内闭曲线积分为 \(0\)；(2) \(\displaystyle \varphi(y)=-y^2\)。}
+\examnote{“任意闭曲线积分为 0”在单连通区域内等价于 \(\partial P/\partial y=\partial Q/\partial x\)。本题最后必须比较 \(x^2\) 系数和常数项。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 26.} 设函数 \(Q(x,y)\) 在 \(xOy\) 平面上具有一阶连续偏导数，曲线积分
+\[
+\int_L2xy\,dx+Q(x,y)\,dy
+\]
+与路径无关，并且对任意 \(t\) 恒有
+\[
+\int_{(0,0)}^{(t,1)}2xy\,dx+Q(x,y)\,dy
+=
+\int_{(0,0)}^{(1,t)}2xy\,dx+Q(x,y)\,dy.
+\]
+求 \(Q(x,y)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{曲线积分与路径无关，说明存在势函数 \(F(x,y)\)，使
+\[
+F_x=2xy,\qquad F_y=Q(x,y).
+\]
+由 \(F_x=2xy\) 对 \(x\) 积分得
+\[
+F(x,y)=x^2y+h(y),
+\]
+其中 \(h(y)\) 为只依赖 \(y\) 的函数。因此
+\[
+Q(x,y)=F_y=x^2+h'(y).
+\]
+题设积分等式可写为势函数差相等：
+\[
+F(t,1)-F(0,0)=F(1,t)-F(0,0).
+\]
+即
+\[
+F(t,1)=F(1,t).
+\]
+代入 \(F=x^2y+h(y)\)，得
+\[
+t^2+h(1)=t+h(t).
+\]
+所以
+\[
+h(t)=t^2-t+h(1).
+\]
+由于 \(t\) 任意，
+\[
+h'(y)=2y-1.
+\]
+于是
+\[
+Q(x,y)=x^2+2y-1.
+\]}
+\answer{\(\displaystyle Q(x,y)=x^2+2y-1\)}
+\examnote{这题原题端点是 \((t,1)\) 与 \((1,t)\)，不要误看成固定点。路径无关题最稳的做法是引入势函数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例 27.} 确定常数 \(\lambda\)，使在右半平面 \(x>0\) 上的向量
+\[
+A(x,y)=2xy(x^4+y^2)^{\lambda}\boldsymbol i
+-x^2(x^4+y^2)^{\lambda}\boldsymbol j
+\]
+为某二元函数 \(u(x,y)\) 的梯度，并求 \(u(x,y)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{若 \(A=\nabla u\)，则
+\[
+u_x=2xy(x^4+y^2)^{\lambda},\qquad
+u_y=-x^2(x^4+y^2)^{\lambda}.
+\]
+在右半平面内 \(x^4+y^2>0\)，梯度场的必要充分条件为
+\[
+\frac{\partial}{\partial y}\left[2xy(x^4+y^2)^{\lambda}\right]
+=
+\frac{\partial}{\partial x}\left[-x^2(x^4+y^2)^{\lambda}\right].
+\]
+令
+\[
+S=x^4+y^2.
+\]
+左边为
+\[
+2xS^{\lambda}+4\lambda xy^2S^{\lambda-1},
+\]
+右边为
+\[
+-2xS^{\lambda}-4\lambda x^5S^{\lambda-1}.
+\]
+两边同乘 \(S^{1-\lambda}\)，并除以 \(2x\) 得
+\[
+S+2\lambda y^2=-S-2\lambda x^4.
+\]
+等价于
+\[
+2S+2\lambda(x^4+y^2)=0,
+\]
+即
+\[
+(1+\lambda)(x^4+y^2)=0.
+\]
+由于 \(x^4+y^2>0\)，故
+\[
+\lambda=-1.
+\]
+此时
+\[
+u_x=\frac{2xy}{x^4+y^2},\qquad
+u_y=-\frac{x^2}{x^4+y^2}.
+\]
+在右半平面 \(x>0\) 上，取
+\[
+u(x,y)=-\arctan\frac{y}{x^2}+C.
+\]
+验证：
+\[
+u_x
+=-\frac{1}{1+(y/x^2)^2}\left(-\frac{2y}{x^3}\right)
+=\frac{2xy}{x^4+y^2},
+\]
+\[
+u_y
+=-\frac{1}{1+(y/x^2)^2}\cdot\frac1{x^2}
+=-\frac{x^2}{x^4+y^2}.
+\]
+因此满足题意。}
+\answer{\(\displaystyle \lambda=-1,\qquad u(x,y)=-\arctan\frac{y}{x^2}+C\)。}
+\examnote{判断平面向量场是否为梯度场，考研标准动作是比较 \(P_y\) 与 \(Q_x\)。求势函数时，右半平面 \(x>0\) 使 \(-\arctan(y/x^2)\) 是全局可用的表达式。}
+\end{solutionblock}

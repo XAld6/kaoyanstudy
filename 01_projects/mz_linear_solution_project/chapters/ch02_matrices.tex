@@ -1,0 +1,2042 @@
+\chapter{矩阵}
+
+\section{逐题解析}
+
+\subsection{2.3 矩阵基本运算}
+
+\begin{solutionblock}
+\textbf{2.3 例 1}
+
+\question{设
+\[
+A=\operatorname{diag}(a_{11},a_{22},\ldots,a_{nn}),\qquad
+B=\operatorname{diag}(b_{11},b_{22},\ldots,b_{nn}).
+\]
+求乘积 \(AB\)。}
+
+
+\analysis{设
+\[
+A=\operatorname{diag}(a_{11},a_{22},\ldots,a_{nn}),\qquad
+B=\operatorname{diag}(b_{11},b_{22},\ldots,b_{nn}).
+\]
+乘积 \(AB=(c_{ij})\) 的元素为
+\[
+c_{ij}=\sum_{k=1}^n a_{ik}b_{kj}.
+\]
+因为 \(A,B\) 都是对角矩阵，只有 \(a_{ii}\) 与 \(b_{jj}\) 可能非零。若 \(i\ne j\)，求和式中每一项至少含有一个非对角元，所以 \(c_{ij}=0\)；若 \(i=j\)，只有 \(k=i\) 项保留，故
+\[
+c_{ii}=a_{ii}b_{ii}.
+\]
+因此 \(AB\) 仍为对角矩阵。}
+\answer{\[
+AB=\operatorname{diag}(a_{11}b_{11},a_{22}b_{22},\ldots,a_{nn}b_{nn}).
+\]}
+\examnote{对角矩阵相乘时，对角元逐项相乘；这是矩阵乘法中最常用的简化结构之一。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.3 例 2}
+
+\question{设
+\[
+A=\begin{pmatrix}
+a_{11}&a_{12}&a_{13}\\
+a_{21}&a_{22}&a_{23}
+\end{pmatrix},\quad
+B=\begin{pmatrix}
+k_1&0&0\\
+0&k_2&0\\
+0&0&k_3
+\end{pmatrix},\quad
+C=\begin{pmatrix}
+l_1&0\\
+0&l_2
+\end{pmatrix}.
+\]
+求 \(AB\) 与 \(CA\)。}
+
+
+\analysis{右乘对角矩阵会分别放大 \(A\) 的每一列，左乘对角矩阵会分别放大 \(A\) 的每一行。题中
+\[
+A=\begin{pmatrix}
+a_{11}&a_{12}&a_{13}\\
+a_{21}&a_{22}&a_{23}
+\end{pmatrix},\quad
+B=\begin{pmatrix}
+k_1&0&0\\
+0&k_2&0\\
+0&0&k_3
+\end{pmatrix},\quad
+C=\begin{pmatrix}
+l_1&0\\
+0&l_2
+\end{pmatrix}.
+\]
+于是
+\[
+AB=\begin{pmatrix}
+k_1a_{11}&k_2a_{12}&k_3a_{13}\\
+k_1a_{21}&k_2a_{22}&k_3a_{23}
+\end{pmatrix},
+\]
+而
+\[
+CA=\begin{pmatrix}
+l_1a_{11}&l_1a_{12}&l_1a_{13}\\
+l_2a_{21}&l_2a_{22}&l_2a_{23}
+\end{pmatrix}.
+\]}
+\answer{\[
+AB=\begin{pmatrix}
+k_1a_{11}&k_2a_{12}&k_3a_{13}\\
+k_1a_{21}&k_2a_{22}&k_3a_{23}
+\end{pmatrix},\qquad
+CA=\begin{pmatrix}
+l_1a_{11}&l_1a_{12}&l_1a_{13}\\
+l_2a_{21}&l_2a_{22}&l_2a_{23}
+\end{pmatrix}.
+\]}
+\method{方法二（列行视角）}
+把 \(A\) 写成列向量组 \(A=(\alpha_1,\alpha_2,\alpha_3)\)，则
+\[
+AB=(k_1\alpha_1,k_2\alpha_2,k_3\alpha_3).
+\]
+把 \(A\) 写成行向量组，则 \(CA\) 是第 1 行乘 \(l_1\)，第 2 行乘 \(l_2\)。
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.3 例 3}
+
+\question{设
+\[
+A=(1,2,-3),\qquad B=\begin{pmatrix}2\\1\\1\end{pmatrix}.
+\]
+分别求 \(AB\) 与 \(BA\)。}
+
+
+\analysis{\(A\) 是 \(1\times3\) 行矩阵，\(B\) 是 \(3\times1\) 列矩阵，所以 \(AB\) 是 \(1\times1\) 矩阵，本质上是内积：
+\[
+AB=(1,2,-3)\begin{pmatrix}2\\1\\1\end{pmatrix}
+=2+2-3=1.
+\]
+而 \(BA\) 是 \(3\times3\) 矩阵，本质上是列向量与行向量的外积：
+\[
+BA=\begin{pmatrix}2\\1\\1\end{pmatrix}(1,2,-3)
+=\begin{pmatrix}
+2&4&-6\\
+1&2&-3\\
+1&2&-3
+\end{pmatrix}.
+\]}
+\answer{\[
+AB=(1),\qquad
+BA=\begin{pmatrix}
+2&4&-6\\
+1&2&-3\\
+1&2&-3
+\end{pmatrix}.
+\]}
+\examnote{矩阵乘法不满足交换律，甚至 \(AB\) 与 \(BA\) 的阶数都可能不同。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.3 例 4}
+
+\question{设 \(A,B\) 为同阶方阵且 \(AB=O\)。判断下列命题中哪些一定成立：\(A+B=O\)、\(|A|=0\)、\(|B|=0\)、\(|A|+|B|=0\)、\(A=O\) 或 \(B=O\)、\(BA=O\)。}
+
+
+\analysis{由 \(AB=O\) 得
+\[
+|A||B|=|AB|=|O|=0,
+\]
+所以必有 \(|A|=0\) 或 \(|B|=0\)，第 3 条一定成立。
+
+其余命题均不一定成立。取
+\[
+A=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+B=\begin{pmatrix}0&0\\0&1\end{pmatrix},
+\]
+则 \(AB=O\)，但 \(A\ne O,B\ne O\)，且 \(A+B=E\ne O\)，因此第 1、2、5 条不成立，第 4 条也不成立，因为 \(|A|+|B|=0+0=0\) 在该例中成立但并非由题设推出；要否定第 4 条，可取 \(A=O,\ B=E\)，此时 \(AB=O\)，而 \(|A|+|B|=1\ne0\)。
+
+第 6 条也不一定成立。取
+\[
+A=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+B=\begin{pmatrix}0&0\\1&0\end{pmatrix},
+\]
+则 \(AB=O\)，但
+\[
+BA=\begin{pmatrix}0&0\\1&0\end{pmatrix}\ne O.
+\]}
+\answer{只有第 3 条成立，选 B。}
+\examnote{考研选择题中，遇到“必然成立”要用定理证明；其余选项只需要一个反例即可排除。}
+\end{solutionblock}
+
+\subsection{2.4 方阵的幂和方阵的多项式}
+
+\begin{solutionblock}
+\textbf{2.4 例 1}
+
+\question{设
+\[
+A=\operatorname{diag}(\lambda_1,\lambda_2,\lambda_3),
+\]
+求 \(A^n\)。}
+
+
+\analysis{对角矩阵的幂仍为对角矩阵，且对角元分别取幂。因为
+\[
+A=\operatorname{diag}(\lambda_1,\lambda_2,\lambda_3),
+\]
+所以反复相乘得到
+\[
+A^n=\operatorname{diag}(\lambda_1^n,\lambda_2^n,\lambda_3^n).
+\]}
+\answer{\[
+A^n=\begin{pmatrix}
+\lambda_1^n&0&0\\
+0&\lambda_2^n&0\\
+0&0&\lambda_3^n
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.4 例 2}
+
+\question{设
+\[
+A=\begin{pmatrix}
+2&6&4\\
+-1&-3&-2\\
+2&6&4
+\end{pmatrix}.
+\]
+求 \(A^n\)（\(n\ge3\)）。}
+
+
+\analysis{直接计算一次平方：
+\[
+A^2=
+\begin{pmatrix}
+2&6&4\\
+-1&-3&-2\\
+2&6&4
+\end{pmatrix}^2
+=3
+\begin{pmatrix}
+2&6&4\\
+-1&-3&-2\\
+2&6&4
+\end{pmatrix}
+=3A.
+\]
+于是从 \(A^2=3A\) 出发递推：
+\[
+A^3=A\cdot A^2=3A^2=3^2A,\quad
+A^4=A\cdot A^3=3^2A^2=3^3A.
+\]
+归纳可得 \(n\ge2\) 时
+\[
+A^n=3^{\,n-1}A.
+\]}
+\answer{\[
+A^n=3^{\,n-1}
+\begin{pmatrix}
+2&6&4\\
+-1&-3&-2\\
+2&6&4
+\end{pmatrix}\quad(n\ge3).
+\]}
+\examnote{矩阵幂题先算 \(A^2\) 或 \(A^3\)，若出现 \(A^2=kA\)、\(A^2=O\)、\(A^2=kE\) 等结构，后面全部变成递推。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.4 例 3}
+
+\question{设 \(A\) 为四阶矩阵，其主对角线元素均为 \(1\)，非主对角线元素均为 \(-1\)。求 \(A^n\)。}
+
+
+\analysis{该矩阵主对角线为 \(1\)，非主对角线为 \(-1\)。记 \(J\) 为 \(4\) 阶全 \(1\) 矩阵，则
+\[
+A=2E-J.
+\]
+又 \(J^2=4J\)，所以
+\[
+A^2=(2E-J)^2=4E-4J+J^2=4E.
+\]
+因此
+\[
+A^{2m}=(A^2)^m=4^mE=2^{2m}E,
+\]
+\[
+A^{2m+1}=A(A^2)^m=4^mA=2^{2m}A.
+\]}
+\answer{\[
+A^n=
+\begin{cases}
+2^nE, & n\text{ 为偶数},\\[2mm]
+2^{\,n-1}A, & n\text{ 为奇数}.
+\end{cases}
+\]}
+\method{方法二（特征结构）}
+矩阵 \(J\) 在 \((1,1,1,1)^T\) 方向上的特征值为 \(4\)，在其正交补上的特征值为 \(0\)。所以 \(A=2E-J\) 的特征值只有 \(-2\) 与 \(2\)，从而 \(A^2=4E\)。
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.4 例 4}
+
+\question{计算：
+\[
+A^2=
+\begin{pmatrix}
+1&0&1\\
+0&2&0\\
+1&0&1
+\end{pmatrix}^2
+=
+\begin{pmatrix}
+2&0&2\\
+0&4&0\\
+2&0&2
+\end{pmatrix}
+=2A.
+\]}
+
+
+\analysis{直接计算
+\[
+A^2=
+\begin{pmatrix}
+1&0&1\\
+0&2&0\\
+1&0&1
+\end{pmatrix}^2
+=
+\begin{pmatrix}
+2&0&2\\
+0&4&0\\
+2&0&2
+\end{pmatrix}
+=2A.
+\]
+于是
+\[
+A^n=2^{\,n-1}A\quad(n\ge1).
+\]}
+\answer{\[
+A^n=2^{\,n-1}
+\begin{pmatrix}
+1&0&1\\
+0&2&0\\
+1&0&1
+\end{pmatrix}\quad(n\ge3).
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.4 例 5}
+
+\question{设
+\[
+A=\begin{pmatrix}
+0&0&0\\
+2&0&0\\
+1&3&0
+\end{pmatrix}.
+\]
+求 \(A^2\) 与 \(A^3\)。}
+
+
+\analysis{题中
+\[
+A=\begin{pmatrix}
+0&0&0\\
+2&0&0\\
+1&3&0
+\end{pmatrix}.
+\]
+先求平方：
+\[
+A^2=
+\begin{pmatrix}
+0&0&0\\
+0&0&0\\
+6&0&0
+\end{pmatrix}.
+\]
+再乘一次：
+\[
+A^3=A^2A=O.
+\]
+原因是 \(A\) 为严格下三角矩阵，三阶严格下三角矩阵至多三次幂就为零矩阵。}
+\answer{\[
+A^2=\begin{pmatrix}
+0&0&0\\
+0&0&0\\
+6&0&0
+\end{pmatrix},\qquad A^3=O.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.4 例 6}
+
+\question{设
+\[
+A=\begin{pmatrix}
+1&0&0\\
+1&1&0\\
+0&1&1
+\end{pmatrix}.
+\]
+求 \(A^n\)（\(n\ge3\)）。}
+
+
+\analysis{把矩阵写成
+\[
+A=E+N,\qquad
+N=\begin{pmatrix}
+0&0&0\\
+1&0&0\\
+0&1&0
+\end{pmatrix}.
+\]
+计算得
+\[
+N^2=\begin{pmatrix}
+0&0&0\\
+0&0&0\\
+1&0&0
+\end{pmatrix},\qquad N^3=O.
+\]
+由于 \(E\) 与 \(N\) 可交换，二项式公式可用于矩阵：
+\[
+A^n=(E+N)^n=E+nN+\binom n2N^2.
+\]
+代入 \(N,N^2\) 得
+\[
+A^n=
+\begin{pmatrix}
+1&0&0\\
+n&1&0\\
+\dfrac{n(n-1)}2&n&1
+\end{pmatrix}.
+\]}
+\answer{\[
+A^n=
+\begin{pmatrix}
+1&0&0\\
+n&1&0\\
+\dfrac{n(n-1)}2&n&1
+\end{pmatrix}\quad(n\ge3).
+\]}
+\examnote{形如“单位矩阵加严格三角矩阵”的幂，优先使用二项式展开和幂零性。}
+\end{solutionblock}
+
+\subsection{2.5 转置矩阵}
+
+\begin{solutionblock}
+\textbf{2.5 例 1}
+
+\question{设 \(A\) 为反对称矩阵，\(\alpha\) 为同维列向量。证明 \(\alpha^TA\alpha=0\)。}
+
+
+\analysis{因 \(A\) 为反对称矩阵，所以 \(A^T=-A\)。令
+\[
+s=\alpha^TA\alpha.
+\]
+这是 \(1\times1\) 矩阵，即一个数，故 \(s=s^T\)。于是
+\[
+s^T=(\alpha^TA\alpha)^T=\alpha^TA^T\alpha=\alpha^T(-A)\alpha=-s.
+\]
+所以 \(s=-s\)，从而 \(s=0\)。}
+\answer{\(\alpha^TA\alpha=0\)。}
+\examnote{证明二次型为零时，常用“标量等于自身转置”这一招。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.5 例 2}
+
+\question{设列向量 \(X\) 满足 \(X^TX=1\)，令
+\[
+H=E-2XX^T.
+\]
+证明 \(H\) 为对称矩阵且为正交矩阵。}
+
+
+\analysis{已知 \(X^TX=1\)，且
+\[
+H=E-2XX^T.
+\]
+先证对称性：
+\[
+H^T=E^T-2(XX^T)^T=E-2XX^T=H.
+\]
+再证正交性。因为 \(H^T=H\)，只需算 \(H^2\)：
+\[
+H^2=(E-2XX^T)^2
+=E-4XX^T+4X(X^TX)X^T.
+\]
+由 \(X^TX=1\)，得
+\[
+H^2=E-4XX^T+4XX^T=E.
+\]
+故
+\[
+HH^T=H^2=E.
+\]}
+\answer{\(H\) 为对称矩阵，且 \(HH^T=E\)。}
+\method{方法二（Householder 矩阵）}
+\(XX^T\) 是沿单位向量 \(X\) 方向的投影矩阵，\(E-2XX^T\) 表示关于与 \(X\) 垂直的超平面的反射。反射矩阵必为对称正交矩阵。
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.5 例 3}
+
+\question{判断下列命题：\((1)\) 若 \(A^2=O\)，是否必有 \(A=O\)；\((2)\) 若 \(A^2=O\) 且 \(A^T=A\)，是否必有 \(A=O\)。若 \(A^2=O\) 且 \(A^T=A\)，则对任意列向量 \(x\)，
+\[
+\|Ax\|^2=(Ax)^T(Ax)=x^TA^TAx=x^TA^2x=0.
+\]}
+
+
+\analysis{第 (1) 问不正确。反例取
+\[
+A=\begin{pmatrix}0&1\\0&0\end{pmatrix}.
+\]
+则
+\[
+A^2=\begin{pmatrix}0&0\\0&0\end{pmatrix}=O,
+\]
+但 \(A\ne O\)。这说明一般矩阵可以非零但幂零。
+
+第 (2) 问增加了对称条件。若 \(A^2=O\) 且 \(A^T=A\)，则对任意列向量 \(x\)，
+\[
+\|Ax\|^2=(Ax)^T(Ax)=x^TA^TAx=x^TA^2x=0.
+\]
+所以对任意 \(x\) 都有 \(Ax=0\)，从而 \(A=O\)。}
+\answer{第 (1) 问不正确；第 (2) 问结论成立，\(A=O\)。}
+\examnote{实对称矩阵适合配合 \(\|Ax\|^2=x^TA^TAx\) 使用，这是“平方为零推出矩阵为零”的关键补充条件。}
+\end{solutionblock}
+
+\subsection{2.6 伴随矩阵}
+
+\begin{solutionblock}
+\textbf{2.6 例 1}
+
+\question{设
+\[
+A=\begin{pmatrix}
+0&1&3\\
+1&-1&0\\
+-1&2&1
+\end{pmatrix}.
+\]
+求伴随矩阵 \(A^*\)。}
+
+
+\analysis{对
+\[
+A=\begin{pmatrix}
+0&1&3\\
+1&-1&0\\
+-1&2&1
+\end{pmatrix}
+\]
+逐项求代数余子式并转置，得到伴随矩阵。也可先算 \(|A|=2\)，再由 \(A^*=|A|A^{-1}\) 得到。直接计算结果为
+\[
+A^*=
+\begin{pmatrix}
+-1&5&3\\
+-1&3&3\\
+1&-1&-1
+\end{pmatrix}.
+\]
+验算：
+\[
+AA^*=A^*A=2E.
+\]}
+\answer{\[
+A^*=
+\begin{pmatrix}
+-1&5&3\\
+-1&3&3\\
+1&-1&-1
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.6 例 2}
+
+\question{设 \(A\) 为三阶矩阵，\(|A|=2\)。交换 \(A\) 的第 \(1\) 行与第 \(3\) 行得到 \(B\)，求 \(|BA^*|\)。}
+
+
+\analysis{交换 \(A\) 的第 1 行与第 3 行得 \(B\)，因此
+\[
+|B|=-|A|=-2.
+\]
+又 \(A\) 为三阶矩阵，所以
+\[
+|A^*|=|A|^{3-1}=|A|^2=4.
+\]
+于是
+\[
+|BA^*|=|B||A^*|=(-2)\cdot4=-8.
+\]}
+\answer{\(-8\)}
+\examnote{\(n\) 阶矩阵满足 \(|A^*|=|A|^{n-1}\)。三阶时就是 \(|A^*|=|A|^2\)。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.6 例 3}
+
+\question{设三阶矩阵 \(A\) 满足 \(A^*=A^T\)，且第一行三个元素相等并均为正数。求第一行元素的值，并判断正确选项。}
+
+
+\analysis{题设 \(A^*=A^T\)。由伴随矩阵基本恒等式
+\[
+AA^*=|A|E
+\]
+得
+\[
+AA^T=|A|E.
+\]
+这说明 \(A\) 的各行两两正交，且每一行的长度平方都等于 \(|A|\)。
+
+另一方面，
+\[
+|A^*|=|A|^{2},\qquad |A^T|=|A|.
+\]
+由 \(A^*=A^T\) 得
+\[
+|A|^2=|A|.
+\]
+若 \(|A|=0\)，则 \(AA^T=O\)，从而 \(A=O\)，这与第一行有三个相等的正数矛盾。因此 \(|A|=1\)。
+
+设
+\[
+a_{11}=a_{12}=a_{13}=t,\qquad t>0.
+\]
+由第一行长度平方为 \(1\)，
+\[
+t^2+t^2+t^2=1,
+\]
+故
+\[
+t=\frac1{\sqrt3}=\frac{\sqrt3}{3}.
+\]}
+\answer{\(\dfrac{\sqrt3}{3}\)，选 A。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.6 例 4}
+
+\question{设 \(A\) 为方阵且 \(A^n=E\)。求 \((A^*)^n\)。}
+
+
+\analysis{由 \(A^n=E\) 可知 \(A\) 可逆，且 \(A^{-n}=E\)。伴随矩阵满足
+\[
+A^*=|A|A^{-1}.
+\]
+于是
+\[
+(A^*)^n=|A|^nA^{-n}.
+\]
+又
+\[
+|A|^n=|A^n|=|E|=1,
+\]
+所以
+\[
+(A^*)^n=E.
+\]}
+\answer{\(E\)}
+\end{solutionblock}
+
+\subsection{2.7 逆矩阵}
+
+\begin{solutionblock}
+\textbf{2.7 例 1}
+
+\question{设方阵 \(A\) 满足
+\[
+A^2-3A-10E=O.
+\]
+求 \(A^{-1}\) 与 \((A-4E)^{-1}\)。}
+
+
+\analysis{由
+\[
+A^2-3A-10E=O
+\]
+可整理为
+\[
+A(A-3E)=10E.
+\]
+因此 \(A\) 可逆，且
+\[
+A^{-1}=\frac1{10}(A-3E).
+\]
+
+再求 \(A-4E\) 的逆。利用原方程 \(A^2=3A+10E\)，有
+\[
+(A-4E)(A+E)=A^2-3A-4E=(3A+10E)-3A-4E=6E.
+\]
+所以 \(A-4E\) 可逆，且
+\[
+(A-4E)^{-1}=\frac16(A+E).
+\]}
+\answer{\[
+A^{-1}=\frac1{10}(A-3E),\qquad
+(A-4E)^{-1}=\frac16(A+E).
+\]}
+\examnote{矩阵满足多项式方程时，把等式凑成 \(AB=E\) 的形式即可证明可逆并读出逆矩阵。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.7 例 2}
+
+\question{设同阶方阵 \(A,B\) 满足 \(A+B=AB\)。证明：\((1)\ A-E\) 可逆；\((2)\ AB=BA\)。}
+
+
+\analysis{由 \(A+B=AB\) 得
+\[
+AB-A-B=O.
+\]
+两边加 \(E\)，得
+\[
+(A-E)(B-E)=E.
+\]
+所以 \(A-E\) 可逆，并且
+\[
+(A-E)^{-1}=B-E.
+\]
+既然 \(B-E\) 是 \(A-E\) 的逆矩阵，则也有
+\[
+(B-E)(A-E)=E.
+\]
+展开得
+\[
+BA-B-A=O,
+\]
+即
+\[
+BA=A+B.
+\]
+而题设给出 \(AB=A+B\)，故
+\[
+AB=BA.
+\]}
+\answer{\(A-E\) 可逆，且 \(AB=BA\)。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.7 例 3}
+
+\question{设同阶方阵 \(A,B,C\) 满足 \(ABC=E\)。判断 \(BCA,CAB,ACB,BAC,CBA\) 中哪些必等于 \(E\)。}
+
+
+\analysis{由 \(ABC=E\) 可知 \(A,B,C\) 均可逆。对等式作循环移动：
+\[
+ABC=E.
+\]
+左乘 \(A^{-1}\)、右乘 \(A\)，得
+\[
+BCA=E.
+\]
+再左乘 \(B^{-1}\)、右乘 \(B\)，得
+\[
+CAB=E.
+\]
+因此循环排列 \(ABC,BCA,CAB\) 都等于 \(E\)。
+
+非循环排列一般不必等于 \(E\)。例如矩阵乘法通常不交换，所以 \(ACB,BAC,CBA\) 没有必然结论。}
+\answer{必等于 \(E\) 的是 \(BCA\) 与 \(CAB\)。}
+\examnote{从 \(ABC=E\) 出发，安全变形是“整体循环移动”，不是任意交换两个因子。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.7 例 4}
+
+\question{设矩阵如下，求其逆矩阵：
+\[
+|A|=
+\begin{vmatrix}
+1&2&3\\
+2&2&1\\
+3&4&3
+\end{vmatrix}=2\ne0,
+\]}
+
+
+\analysis{先算行列式：
+\[
+|A|=
+\begin{vmatrix}
+1&2&3\\
+2&2&1\\
+3&4&3
+\end{vmatrix}=2\ne0,
+\]
+故 \(A\) 可逆。用伴随矩阵公式
+\[
+A^{-1}=\frac1{|A|}A^*
+\]
+计算，得到
+\[
+A^{-1}=
+\begin{pmatrix}
+1&3&-2\\
+-\dfrac32&-3&\dfrac52\\
+1&1&-1
+\end{pmatrix}.
+\]}
+\answer{\[
+A^{-1}=
+\begin{pmatrix}
+1&3&-2\\
+-\dfrac32&-3&\dfrac52\\
+1&1&-1
+\end{pmatrix}.
+\]}
+\method{方法二（初等行变换）}
+也可对 \((A\mid E)\) 作初等行变换，将左半边化为 \(E\)，右半边即为 \(A^{-1}\)。数值逆矩阵题考场上更推荐初等行变换，符号逆矩阵题更推荐伴随矩阵公式。
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.7 例 5}
+
+\question{设 \(A,B\) 为同阶方阵。判断下列命题中正确的一项：
+\begin{enumerate}
+\item 若 \(A\) 或 \(B\) 可逆，则 \(AB\) 可逆；
+\item 若 \(A\) 或 \(B\) 不可逆，则 \(AB\) 不可逆；
+\item 若 \(A,B\) 均可逆，则 \(A+B\) 可逆；
+\item 若 \(A,B\) 均不可逆，则 \(A+B\) 不可逆。
+\end{enumerate}}
+
+
+\analysis{逐项判断：
+
+A 项错误。若只有 \(A\) 或 \(B\) 中一个可逆，另一个可能不可逆，则 \(AB\) 仍不可逆。例如 \(A=E,B=O\)。
+
+B 项正确。若 \(A\) 或 \(B\) 不可逆，则 \(|A|=0\) 或 \(|B|=0\)，所以
+\[
+|AB|=|A||B|=0,
+\]
+故 \(AB\) 不可逆。
+
+C 项错误。即使 \(A,B\) 均可逆，也可能 \(A+B\) 不可逆，例如 \(B=-A\)。
+
+D 项错误。即使 \(A,B\) 均不可逆，也可能 \(A+B\) 可逆，例如
+\[
+A=\begin{pmatrix}1&0\\0&0\end{pmatrix},\quad
+B=\begin{pmatrix}0&0\\0&1\end{pmatrix},
+\]
+则 \(A+B=E\)。}
+\answer{选 B。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.7 例 6}
+
+\question{设
+\[
+A=\begin{pmatrix}
+1&0&1\\
+0&3&0\\
+0&0&1
+\end{pmatrix}.
+\]
+求 \((A+2E)^{-1}(A^2-4E)\)。}
+
+
+\analysis{注意
+\[
+A^2-4E=(A-2E)(A+2E).
+\]
+因为
+\[
+A+2E=
+\begin{pmatrix}
+3&0&1\\
+0&5&0\\
+0&0&3
+\end{pmatrix}
+\]
+为上三角矩阵，主对角元均非零，所以可逆。于是
+\[
+(A+2E)^{-1}(A^2-4E)
+=(A+2E)^{-1}(A-2E)(A+2E).
+\]
+由于 \(A-2E\) 与 \(A+2E\) 都是 \(A\) 的多项式，二者可交换，所以
+\[
+(A+2E)^{-1}(A^2-4E)=A-2E.
+\]
+代入
+\[
+A=\begin{pmatrix}
+1&0&1\\
+0&3&0\\
+0&0&1
+\end{pmatrix},
+\]
+得
+\[
+A-2E=\begin{pmatrix}
+-1&0&1\\
+0&1&0\\
+0&0&-1
+\end{pmatrix}.
+\]}
+\answer{\[
+\begin{pmatrix}
+-1&0&1\\
+0&1&0\\
+0&0&-1
+\end{pmatrix}.
+\]}
+\examnote{矩阵多项式彼此可交换。若能因式分解，就不要硬算逆矩阵。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.7 例 7}
+
+\question{设 \(A\) 为三阶可逆矩阵，\(|A|=\dfrac12\)。求行列式
+\[
+\left|(3A)^{-1}-2A^*\right|.
+\]}
+
+
+\analysis{三阶矩阵满足
+\[
+A^*=|A|A^{-1}.
+\]
+已知 \(|A|=\dfrac12\)，所以
+\[
+A^*=\frac12A^{-1}.
+\]
+又
+\[
+(3A)^{-1}=\frac13A^{-1}.
+\]
+因此
+\[
+(3A)^{-1}-2A^*
+=\frac13A^{-1}-A^{-1}
+=-\frac23A^{-1}.
+\]
+取行列式。因 \(A\) 为三阶，
+\[
+\left|-\frac23A^{-1}\right|
+=\left(-\frac23\right)^3|A^{-1}|
+=-\frac8{27}\cdot\frac1{|A|}
+=-\frac8{27}\cdot2
+=-\frac{16}{27}.
+\]}
+\answer{\(-\dfrac{16}{27}\)}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.7 例 8}
+
+\question{设 \(A,B\) 为同阶可逆矩阵，且 \(|A|=1,\ |B|=2,\ |A+B|=2\)。求
+\[
+\left|\left(A^{-1}+B^{-1}\right)^{-1}\right|.
+\]}
+
+
+\analysis{先把和式化成含 \(A+B\) 的形式：
+\[
+A^{-1}+B^{-1}=A^{-1}(A+B)B^{-1}.
+\]
+因此
+\[
+|A^{-1}+B^{-1}|
+=|A^{-1}|\,|A+B|\,|B^{-1}|
+=\frac{|A+B|}{|A||B|}.
+\]
+代入 \(|A|=1, |B|=2, |A+B|=2\)，得
+\[
+|A^{-1}+B^{-1}|=\frac2{1\cdot2}=1.
+\]
+于是
+\[
+\left|\left(A^{-1}+B^{-1}\right)^{-1}\right|
+=\frac1{|A^{-1}+B^{-1}|}=1.
+\]}
+\answer{\(1\)，选 A。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.7 例 9}
+
+\question{设 \(A\) 为 \(n\ge3\) 阶可逆矩阵。判断关于伴随矩阵、逆矩阵和数乘矩阵伴随的四个结论是否正确。}
+
+
+\analysis{逐条判断。设 \(A\) 为 \(n\ge3\) 阶可逆矩阵。
+
+第 1 条：
+\[
+A^*=|A|A^{-1},
+\]
+所以
+\[
+(A^*)^{-1}=\frac1{|A|}A.
+\]
+而
+\[
+(A^{-1})^*=|A^{-1}|(A^{-1})^{-1}=\frac1{|A|}A.
+\]
+故第 1 条正确。
+
+第 2 条：
+\[
+(kA)^*=|kA|(kA)^{-1}=k^n|A|\cdot\frac1kA^{-1}=k^{n-1}A^*
+\quad(k\ne0),
+\]
+正确。
+
+第 3 条：代数余子式与转置相容，等价地
+\[
+(A^*)^T=(A^T)^*,
+\]
+正确。
+
+第 4 条：
+\[
+(A^*)^*=|A^*|(A^*)^{-1}
+=|A|^{n-1}\cdot\frac1{|A|}A
+=|A|^{n-2}A,
+\]
+正确。}
+\answer{四条均正确，选 D。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.7 例 10}
+
+\question{设
+\[
+A=\begin{pmatrix}
+a&1&0\\
+1&a&-1\\
+0&1&a
+\end{pmatrix}.
+\]
+(1) 若 \(A^3=O\)，求 \(a\)；(2) 在此条件下，解矩阵方程
+\[
+X-XA^2-AX+AXA^2=E.
+\]}
+
+
+\analysis{第 (1) 问，设
+\[
+A=\begin{pmatrix}
+a&1&0\\
+1&a&-1\\
+0&1&a
+\end{pmatrix}.
+\]
+直接计算
+\[
+A^3=
+\begin{pmatrix}
+a^3+3a&3a^2&-3a\\
+3a^2&a^3&-3a^2\\
+3a&3a^2&a^3-3a
+\end{pmatrix}.
+\]
+若 \(A^3=O\)，由 \((1,3)\) 元 \(-3a=0\) 得 \(a=0\)。代回后确有 \(A^3=O\)，故
+\[
+a=0.
+\]
+
+第 (2) 问，此时
+\[
+A=\begin{pmatrix}
+0&1&0\\
+1&0&-1\\
+0&1&0
+\end{pmatrix},\qquad A^3=O.
+\]
+原方程
+\[
+X-XA^2-AX+AXA^2=E
+\]
+可因式分解为
+\[
+(E-A)X(E-A^2)=E.
+\]
+由于 \(A^3=O\)，
+\[
+(E-A)^{-1}=E+A+A^2,\qquad (E-A^2)^{-1}=E+A^2.
+\]
+因此
+\[
+X=(E-A)^{-1}(E-A^2)^{-1}
+=(E+A+A^2)(E+A^2)=E+A+2A^2.
+\]
+计算得
+\[
+X=
+\begin{pmatrix}
+3&1&-2\\
+1&1&-1\\
+2&1&-1
+\end{pmatrix}.
+\]}
+\answer{\[
+a=0,\qquad
+X=\begin{pmatrix}
+3&1&-2\\
+1&1&-1\\
+2&1&-1
+\end{pmatrix}.
+\]}
+\examnote{非交换矩阵方程中，因式分解要保持左右顺序。本题是 \((E-A)X(E-A^2)\)，不能随意把 \(X\) 挪到右侧。}
+\end{solutionblock}
+
+\subsection{2.8 矩阵的分块}
+
+\begin{solutionblock}
+\textbf{2.8 例 1}
+
+\question{计算矩阵乘积
+\[
+AB=\begin{pmatrix}
+1&0&1&2\\
+0&1&3&4\\
+0&0&1&0\\
+0&0&0&-1
+\end{pmatrix}
+\begin{pmatrix}
+1&0&0&0\\
+0&1&0&0\\
+2&1&1&0\\
+0&3&0&-1
+\end{pmatrix}.
+\]}
+
+
+\analysis{直接按行列相乘，或把矩阵按块看成上三角分块矩阵。计算得
+\[
+AB=
+\begin{pmatrix}
+1&0&1&2\\
+0&1&3&4\\
+0&0&1&0\\
+0&0&0&-1
+\end{pmatrix}
+\begin{pmatrix}
+1&0&0&0\\
+0&1&0&0\\
+2&1&1&0\\
+0&3&0&-1
+\end{pmatrix}
+=
+\begin{pmatrix}
+3&7&1&-2\\
+6&16&3&-4\\
+2&1&1&0\\
+0&-3&0&1
+\end{pmatrix}.
+\]}
+\answer{\[
+AB=
+\begin{pmatrix}
+3&7&1&-2\\
+6&16&3&-4\\
+2&1&1&0\\
+0&-3&0&1
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.8 例 2}
+
+\question{设
+\[
+A=\begin{pmatrix}
+1&0&0&0&0\\
+0&1&0&0&0\\
+-1&2&1&0&0\\
+1&1&0&1&0\\
+0&1&0&0&1
+\end{pmatrix},\quad
+B=\begin{pmatrix}
+1&0&0&0\\
+-1&0&0&0\\
+0&1&2&-1\\
+0&2&1&2\\
+0&1&2&1
+\end{pmatrix}.
+\]
+求 \(AB\)。}
+
+
+\analysis{矩阵 \(A\) 是 \(5\times5\)，\(B\) 是 \(5\times4\)，所以 \(AB\) 为 \(5\times4\)。按行乘列计算：
+\[
+AB=
+\begin{pmatrix}
+1&0&0&0&0\\
+0&1&0&0&0\\
+-1&2&1&0&0\\
+1&1&0&1&0\\
+0&1&0&0&1
+\end{pmatrix}
+\begin{pmatrix}
+1&0&0&0\\
+-1&0&0&0\\
+0&1&2&-1\\
+0&2&1&2\\
+0&1&2&1
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&0&0&0\\
+-1&0&0&0\\
+-3&1&2&-1\\
+0&2&1&2\\
+-1&1&2&1
+\end{pmatrix}.
+\]}
+\answer{\[
+AB=
+\begin{pmatrix}
+1&0&0&0\\
+-1&0&0&0\\
+-3&1&2&-1\\
+0&2&1&2\\
+-1&1&2&1
+\end{pmatrix}.
+\]}
+\method{方法二（初等矩阵视角）}
+\(A\) 的前两行等于单位矩阵前两行，后面几行是对 \(B\) 的行线性组合。因此 \(AB\) 的每一行可以直接看成 \(B\) 的若干行组合，计算量比逐元素相乘少。
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.8 例 3}
+
+\question{设分块矩阵
+\[
+A=\begin{pmatrix}C&O\\O&D\end{pmatrix},\quad
+C=\begin{pmatrix}1&1\\2&2\end{pmatrix},\quad
+D=\begin{pmatrix}0&1&0\\0&0&1\\0&0&0\end{pmatrix}.
+\]
+求 \(A^{100}\)。}
+
+
+\analysis{把 \(A\) 分成左上 \(2\times2\) 块与右下 \(3\times3\) 块：
+\[
+A=\begin{pmatrix}
+C&O\\
+O&D
+\end{pmatrix},
+\quad
+C=\begin{pmatrix}1&1\\2&2\end{pmatrix},\quad
+D=\begin{pmatrix}0&1&0\\0&0&1\\0&0&0\end{pmatrix}.
+\]
+其中
+\[
+C^2=3C,
+\]
+故
+\[
+C^{100}=3^{99}C.
+\]
+而 \(D\) 是三阶严格上三角矩阵，\(D^3=O\)，所以 \(D^{100}=O\)。因此
+\[
+A^{100}=
+\begin{pmatrix}
+3^{99}C&O\\
+O&O
+\end{pmatrix}.
+\]}
+\answer{\[
+A^{100}=
+\begin{pmatrix}
+3^{99}&3^{99}&0&0&0\\
+2\cdot3^{99}&2\cdot3^{99}&0&0&0\\
+0&0&0&0&0\\
+0&0&0&0&0\\
+0&0&0&0&0
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.8 例 4}
+
+\question{设
+\[
+A=\begin{pmatrix}
+0&2&0\\
+0&0&-3\\
+4&0&0
+\end{pmatrix}.
+\]
+求 \(A^{-1}\)。}
+
+
+\analysis{矩阵
+\[
+A=\begin{pmatrix}
+0&2&0\\
+0&0&-3\\
+4&0&0
+\end{pmatrix}
+\]
+每一行每一列只有一个非零元。设
+\[
+A^{-1}=\begin{pmatrix}
+x_{11}&x_{12}&x_{13}\\
+x_{21}&x_{22}&x_{23}\\
+x_{31}&x_{32}&x_{33}
+\end{pmatrix},
+\]
+由 \(AA^{-1}=E\) 解得
+\[
+A^{-1}=
+\begin{pmatrix}
+0&0&\dfrac14\\
+\dfrac12&0&0\\
+0&-\dfrac13&0
+\end{pmatrix}.
+\]}
+\answer{\[
+A^{-1}=
+\begin{pmatrix}
+0&0&\dfrac14\\
+\dfrac12&0&0\\
+0&-\dfrac13&0
+\end{pmatrix}.
+\]}
+\method{方法二（置换乘对角）}
+该矩阵等于“置换矩阵 \(\times\) 对角矩阵”的形式，逆矩阵就是反向置换并把非零系数取倒数。
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.8 例 5}
+
+\question{设 \(A,B\) 为二阶可逆矩阵，\(|A|=2,\ |B|=3\)，令
+\[
+M=\begin{pmatrix}O&A\\B&O\end{pmatrix}.
+\]
+求 \(M^*\)，并判断正确选项。}
+
+
+\analysis{记
+\[
+M=\begin{pmatrix}O&A\\B&O\end{pmatrix}.
+\]
+由于 \(|A|=2, |B|=3\)，\(A,B\) 均可逆。直接验证
+\[
+M^{-1}=\begin{pmatrix}O&B^{-1}\\A^{-1}&O\end{pmatrix}.
+\]
+又
+\[
+|M|=|A||B|=6
+\]
+（这里 \(A,B\) 都是二阶矩阵，块交换符号为正）。因此
+\[
+M^*=|M|M^{-1}
+=6\begin{pmatrix}O&B^{-1}\\A^{-1}&O\end{pmatrix}.
+\]
+由二阶矩阵
+\[
+A^*=|A|A^{-1}=2A^{-1},\qquad
+B^*=|B|B^{-1}=3B^{-1},
+\]
+得
+\[
+6B^{-1}=2B^*,\qquad 6A^{-1}=3A^*.
+\]}
+\answer{\[
+M^*=\begin{pmatrix}O&2B^*\\3A^*&O\end{pmatrix},
+\]
+选 B。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.8 例 6}
+
+\question{设 \[
+P=\begin{pmatrix}
+E&0\\
+-\alpha^TA^*&|A|
+\end{pmatrix},\qquad
+Q=\begin{pmatrix}
+A&\alpha\\
+\alpha^T&b
+\end{pmatrix}.
+\]
+其中 \(A^*\) 为 \(A\) 的伴随矩阵。计算分块乘法：
+\[
+PQ=
+\begin{pmatrix}
+A&\alpha\\
+-\alpha^TA^*A+|A|\alpha^T&
+-\alpha^TA^*\alpha+|A|b
+\end{pmatrix}.
+\]}
+
+
+\analysis{题中
+\[
+P=\begin{pmatrix}
+E&0\\
+-\alpha^TA^*&|A|
+\end{pmatrix},\qquad
+Q=\begin{pmatrix}
+A&\alpha\\
+\alpha^T&b
+\end{pmatrix}.
+\]
+其中 \(A^*\) 为 \(A\) 的伴随矩阵。计算分块乘法：
+\[
+PQ=
+\begin{pmatrix}
+A&\alpha\\
+-\alpha^TA^*A+|A|\alpha^T&
+-\alpha^TA^*\alpha+|A|b
+\end{pmatrix}.
+\]
+因为
+\[
+A^*A=|A|E,\qquad A^*=|A|A^{-1},
+\]
+所以
+\[
+-\alpha^TA^*A+|A|\alpha^T=0,
+\]
+并且
+\[
+-\alpha^TA^*\alpha+|A|b
+=|A|\bigl(b-\alpha^TA^{-1}\alpha\bigr).
+\]
+故
+\[
+PQ=
+\begin{pmatrix}
+A&\alpha\\
+0&|A|\bigl(b-\alpha^TA^{-1}\alpha\bigr)
+\end{pmatrix}.
+\]
+这是上三角分块矩阵，因此
+\[
+|PQ|=|A|\cdot |A|\bigl(b-\alpha^TA^{-1}\alpha\bigr).
+\]
+又 \(|P|=|A|\ne0\)，故
+\[
+|Q|=|A|\bigl(b-\alpha^TA^{-1}\alpha\bigr).
+\]
+于是 \(Q\) 可逆的充要条件为
+\[
+b-\alpha^TA^{-1}\alpha\ne0.
+\]}
+\answer{\[
+PQ=
+\begin{pmatrix}
+A&\alpha\\
+0&|A|\bigl(b-\alpha^TA^{-1}\alpha\bigr)
+\end{pmatrix},
+\qquad
+Q\text{ 可逆}\Longleftrightarrow \alpha^TA^{-1}\alpha\ne b.
+\]}
+\examnote{这是 Schur 补思想的典型考法。分块矩阵可逆性常通过块消元化成三角分块矩阵。}
+\end{solutionblock}
+
+\subsection{2.9 初等变换与初等矩阵}
+
+\begin{solutionblock}
+\textbf{2.9 例 1}
+
+\question{将矩阵
+\[
+\begin{pmatrix}
+1&-1&0&2\\
+0&2&2&-1\\
+0&0&3&-1\\
+0&0&0&0
+\end{pmatrix}
+\]
+化为标准形。}
+
+
+\analysis{原矩阵已是阶梯形：
+\[
+\begin{pmatrix}
+1&-1&0&2\\
+0&2&2&-1\\
+0&0&3&-1\\
+0&0&0&0
+\end{pmatrix}.
+\]
+前三行有非零主元，所以秩为 \(3\)。任意矩阵经初等行、列变换可化为标准形
+\[
+\begin{pmatrix}
+E_r&O\\
+O&O
+\end{pmatrix}.
+\]
+这里 \(r=3\)，故标准形为
+\[
+\begin{pmatrix}
+1&0&0&0\\
+0&1&0&0\\
+0&0&1&0\\
+0&0&0&0
+\end{pmatrix}.
+\]}
+\answer{\[
+\begin{pmatrix}
+1&0&0&0\\
+0&1&0&0\\
+0&0&1&0\\
+0&0&0&0
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.9 例 2}
+
+\question{设矩阵 \(A=(\alpha_1,\alpha_2,\alpha_3)\)，矩阵
+\[
+B=(3\alpha_1,\ 3\alpha_1-2\alpha_2,\ \alpha_3).
+\]
+判断 \(A\) 与 \(B\) 是否等价。}
+
+
+\analysis{记 \(A\) 的三列分别为 \(\alpha_1,\alpha_2,\alpha_3\)。由题中 \(B\) 的表达式可见
+\[
+B=(3\alpha_1,\ 3\alpha_1-2\alpha_2,\ \alpha_3).
+\]
+因此
+\[
+B=A
+\begin{pmatrix}
+3&3&0\\
+0&-2&0\\
+0&0&1
+\end{pmatrix}.
+\]
+右侧乘的矩阵行列式为
+\[
+3\cdot(-2)\cdot1=-6\ne0,
+\]
+所以它是可逆矩阵。于是 \(B\) 可由 \(A\) 经过有限次初等列变换得到，故 \(A\) 与 \(B\) 等价。}
+\answer{矩阵 \(A\) 与 \(B\) 等价。}
+\examnote{证明等价常用形式：若 \(B=PAQ\)，其中 \(P,Q\) 可逆，则 \(A\) 与 \(B\) 等价。本题只需要右乘一个可逆矩阵。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.9 例 3}
+
+\question{设
+\[
+P=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},\quad
+M=\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix},\quad
+Q=\begin{pmatrix}1&-1&0\\0&1&0\\0&0&1\end{pmatrix}.
+\]
+求 \(PMQ\)。}
+
+
+\analysis{设
+\[
+P=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},\quad
+M=\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix},\quad
+Q=\begin{pmatrix}1&-1&0\\0&1&0\\0&0&1\end{pmatrix}.
+\]
+矩阵 \(P\) 表示交换第 1、2 行，故 \(P^2=E\)，从而
+\[
+P^{100}=E.
+\]
+于是原式为 \(MQ\)。右乘 \(Q\) 表示列变换：
+\[
+C_1\text{ 不变},\qquad C_2\leftarrow -C_1+C_2,\qquad C_3\text{ 不变}.
+\]
+所以
+\[
+MQ=
+\begin{pmatrix}
+1&1&3\\
+4&1&6\\
+7&1&9
+\end{pmatrix}.
+\]}
+\answer{\[
+\begin{pmatrix}
+1&1&3\\
+4&1&6\\
+7&1&9
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.9 例 4}
+
+\question{设三阶可逆矩阵 \(A=(\alpha_1,\alpha_2,\alpha_3)\)，\(|A|=2\)，且
+\[
+B=(\alpha_1,\alpha_2,3\alpha_1+\alpha_3).
+\]
+求 \(A^*B\)。}
+
+
+\analysis{设 \(A\) 的列向量为 \(\alpha_1,\alpha_2,\alpha_3\)。题中
+\[
+B=(\alpha_1,\alpha_2,3\alpha_1+\alpha_3),
+\]
+因此
+\[
+B=A
+\begin{pmatrix}
+1&0&3\\
+0&1&0\\
+0&0&1
+\end{pmatrix}.
+\]
+由伴随矩阵性质
+\[
+A^*A=|A|E=2E,
+\]
+故
+\[
+A^*B=A^*A
+\begin{pmatrix}
+1&0&3\\
+0&1&0\\
+0&0&1
+\end{pmatrix}
+=2
+\begin{pmatrix}
+1&0&3\\
+0&1&0\\
+0&0&1
+\end{pmatrix}.
+\]}
+\answer{\[
+A^*B=
+\begin{pmatrix}
+2&0&6\\
+0&2&0\\
+0&0&2
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.9 例 5}
+
+\question{设 \(P_1\) 表示交换矩阵的第 \(1,2\) 行，\(P_2\) 表示交换矩阵的第 \(2,3\) 列。若 \(P_1AP_2=E\)，判断 \(A^*\) 的正确表达式。}
+
+
+\analysis{左乘 \(P_1\) 表示交换矩阵的第 1、2 行，右乘 \(P_2\) 表示交换矩阵的第 2、3 列。题设等价于
+\[
+P_1AP_2=E.
+\]
+因此
+\[
+A^{-1}=P_2P_1.
+\]
+又 \(P_1,P_2\) 均为一次交换对应的初等矩阵，行列式均为 \(-1\)，所以
+\[
+|A|=\frac{|E|}{|P_1||P_2|}=1.
+\]
+于是
+\[
+A^*=|A|A^{-1}=P_2P_1.
+\]}
+\answer{\(A^*=P_2P_1\)，选 B。}
+\examnote{行变换左乘初等矩阵，列变换右乘初等矩阵。左右顺序是本题的关键。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.9 例 6}
+
+\question{设
+\[
+A=\begin{pmatrix}
+0&1&3\\
+1&-1&0\\
+-1&2&1
+\end{pmatrix}.
+\]
+求 \(A^{-1}\)。}
+
+
+\analysis{题中矩阵
+\[
+A=\begin{pmatrix}
+0&1&3\\
+1&-1&0\\
+-1&2&1
+\end{pmatrix}
+\]
+与 2.6 例 1 相同，已知
+\[
+|A|=2,\qquad
+A^*=
+\begin{pmatrix}
+-1&5&3\\
+-1&3&3\\
+1&-1&-1
+\end{pmatrix}.
+\]
+因此
+\[
+A^{-1}=\frac1{|A|}A^*
+=\frac12
+\begin{pmatrix}
+-1&5&3\\
+-1&3&3\\
+1&-1&-1
+\end{pmatrix}.
+\]}
+\answer{\[
+A^{-1}=
+\begin{pmatrix}
+-\dfrac12&\dfrac52&\dfrac32\\
+-\dfrac12&\dfrac32&\dfrac32\\
+\dfrac12&-\dfrac12&-\dfrac12
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\subsection{2.10 矩阵的秩}
+
+\begin{solutionblock}
+\textbf{2.10 例 1}
+
+\question{设 \(a_1,a_2,\ldots,a_5\) 两两不同，矩阵 \(A\) 的第 \(i\) 列为
+\[
+(1,a_i,a_i^2,a_i^3,(a_i+1)^3)^T\quad(i=1,2,\ldots,5).
+\]
+求 \(r(A)\)。}
+
+
+\analysis{矩阵的前四行分别是
+\[
+1,\quad a_i,\quad a_i^2,\quad a_i^3\quad(i=1,\ldots,5),
+\]
+它们组成 \(4\times5\) 的 Vandermonde 型矩阵。由于 \(a_i\ne a_j\)，任取四列可得到四阶 Vandermonde 行列式，非零，因此前四行秩为 \(4\)。
+
+最后一行为
+\[
+(a_i+1)^3=a_i^3+3a_i^2+3a_i+1,
+\]
+即它等于“第 4 行 \(+3\) 倍第 3 行 \(+3\) 倍第 2 行 \(+\) 第 1 行”。所以最后一行不增加秩。}
+\answer{\(r(A)=4\)。}
+\examnote{看到 \((a_i+1)^3\)，要立刻展开成 \(a_i^3,a_i^2,a_i,1\) 的线性组合。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.10 例 2}
+
+\question{设
+\[
+A=\begin{pmatrix}
+1&2&-1&1\\
+2&0&a&0\\
+0&-4&5&-2
+\end{pmatrix}.
+\]
+若 \(r(A)=2\)，求 \(a\)。}
+
+
+\analysis{矩阵为
+\[
+A=\begin{pmatrix}
+1&2&-1&1\\
+2&0&a&0\\
+0&-4&5&-2
+\end{pmatrix}.
+\]
+它是 \(3\times4\) 矩阵。若秩为 \(2\)，则所有三阶子式均为 \(0\)，且至少有一个二阶子式非零。
+
+取由第 \(1,2,3\) 列组成的三阶子式：
+\[
+\begin{vmatrix}
+1&2&-1\\
+2&0&a\\
+0&-4&5
+\end{vmatrix}
+=4(a-3).
+\]
+取由第 \(1,3,4\) 列组成的三阶子式：
+\[
+\begin{vmatrix}
+1&-1&1\\
+2&a&0\\
+0&5&-2
+\end{vmatrix}
+=-2(a-3).
+\]
+其余三阶子式也含因子 \(a-3\) 或恒为 \(0\)。因此所有三阶子式为 \(0\) 当且仅当
+\[
+a=3.
+\]
+此时前两列构成的二阶子式
+\[
+\begin{vmatrix}1&2\\2&0\end{vmatrix}=-4\ne0,
+\]
+故秩确为 \(2\)。}
+\answer{\(a=3\)。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.10 例 3}
+
+\question{设矩阵 \(A,B\) 满足 \(B\) 可逆，其中
+\[
+B=\begin{pmatrix}
+1&0&4\\
+0&2&0\\
+2&0&3
+\end{pmatrix}.
+\]
+根据题给矩阵 \(A\) 与 \(B\)，求 \(r(AB)\)。}
+
+
+\analysis{先看
+\[
+B=\begin{pmatrix}
+1&0&4\\
+0&2&0\\
+2&0&3
+\end{pmatrix}.
+\]
+其行列式为
+\[
+|B|=2\begin{vmatrix}1&4\\2&3\end{vmatrix}
+=2(3-8)=-10\ne0.
+\]
+所以 \(B\) 可逆。右乘可逆矩阵不改变矩阵的秩，因此
+\[
+r(AB)=r(A)=2.
+\]}
+\answer{\(r(AB)=2\)。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.10 例 4}
+
+\question{设 \(A\) 为 \(m\times n\) 矩阵，\(r(A)=r<m<n\)。判断关于子式、行列式和标准形的四个命题中正确命题的个数。}
+
+
+\analysis{已知 \(A\) 为 \(m\times n\) 矩阵，\(r(A)=r<m<n\)。
+
+第 1 条错误。秩为 \(r\) 不代表任意 \(r-1\) 阶子式都非零。
+
+第 2 条错误。\(A\) 不是方阵，\(|A|\) 本身没有定义，不能说 \(|A|=0\)。
+
+第 3 条错误。秩为 \(r\) 只说明至少存在一个 \(r\) 阶子式非零，不是任意 \(r\) 阶子式都非零。
+
+第 4 条错误。仅经过初等行变换，一般只能化成行阶梯形，不能保证右上角也化为零块；要化成标准形 \(\begin{pmatrix}E_r&O\\O&O\end{pmatrix}\)，通常需要初等行变换和初等列变换共同作用。}
+\answer{正确的个数为 \(0\)，选 A。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.10 例 5}
+
+\question{设 \(A\) 为 \(m\times n\) 矩阵，\(B\) 为 \(n\times m\) 矩阵。判断关于 \(|AB|\) 与 \(m,n\) 大小关系的选项是否正确。}
+
+
+\analysis{题面四个选项中，A、B 两项在原 PDF 中均印成“当 \(m>n\) 时，必有 \(|AB|\ne0\)”。按这一题面判断，四项均不正确。
+
+理由如下：\(A\) 为 \(m\times n\)，\(B\) 为 \(n\times m\)，所以 \(AB\) 为 \(m\times m\)。若 \(m>n\)，则
+\[
+r(AB)\le n<m,
+\]
+故
+\[
+|AB|=0,
+\]
+不是 \(|AB|\ne0\)。
+
+若 \(m<n\)，则 \(|AB|\) 不一定为 \(0\)，也不一定非零。例如取
+\[
+A=(I_m\ O),\qquad B=\begin{pmatrix}I_m\\O\end{pmatrix},
+\]
+则 \(AB=I_m\)，行列式非零；而取 \(A=O\) 时，\(AB=O\)，行列式为零。}
+\answer{按扫描件现有题面：无正确选项。若 B 项原意为“当 \(m>n\) 时，必有 \(|AB|=0\)”，则应选 B。}
+\examnote{这里疑似原题选项有印刷错误。考研做题时若发现选项自相矛盾，应回到秩不等式 \(r(AB)\le\min\{r(A),r(B)\}\) 判断。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.10 例 6}
+
+\question{设 \(A\) 为 \(m\times n\) 矩阵，\(B\) 为 \(n\times m\) 矩阵，且 \(AB=E_m\)。判断关于 \(r(A)\)、\(r(B)\) 及 \(m,n\) 的正确结论。}
+
+
+\analysis{由 \(AB=E_m\) 得
+\[
+r(AB)=r(E_m)=m.
+\]
+又
+\[
+r(AB)\le r(A)\le m,\qquad r(AB)\le r(B)\le m,
+\]
+所以只能有
+\[
+r(A)=m,\qquad r(B)=m.
+\]}
+\answer{选 A。}
+\examnote{\(AB=E_m\) 说明 \(A\) 有右逆、\(B\) 有左逆，并立刻推出 \(m\le n\) 且二者秩均为 \(m\)。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.10 例 7}
+
+\question{设非零三阶矩阵 \(P\) 与
+\[
+Q=\begin{pmatrix}
+1&2&3\\
+2&4&k\\
+3&6&9
+\end{pmatrix}
+\]
+满足 \(PQ=O\)。判断 \(k\) 与 \(r(P)\) 的正确关系。}
+
+
+\analysis{设
+\[
+Q=\begin{pmatrix}
+1&2&3\\
+2&4&k\\
+3&6&9
+\end{pmatrix}.
+\]
+其第 2 列恒为第 1 列的 \(2\) 倍，所以 \(r(Q)\le2\)。当 \(k=6\) 时，第 3 列也为第 1 列的 \(3\) 倍，故
+\[
+r(Q)=1.
+\]
+当 \(k\ne6\) 时，第 1 列与第 3 列不成比例，故
+\[
+r(Q)=2.
+\]
+
+题设 \(P\ne O\) 且 \(PQ=O\)。这说明 \(Q\) 的列空间包含在 \(P\) 的零空间中，即
+\[
+r(Q)\le n-r(P)=3-r(P).
+\]
+若 \(k\ne6\)，则 \(r(Q)=2\)，所以 \(r(P)\le1\)。又 \(P\ne O\)，故
+\[
+r(P)=1.
+\]
+若 \(k=6\)，只能推出 \(r(P)\le2\)，不一定为 \(1\) 或 \(2\) 中某一个固定值。}
+\answer{选 C。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.10 例 8}
+
+\question{设
+\[
+A=\begin{pmatrix}
+a&b&b\\
+b&a&b\\
+b&b&a
+\end{pmatrix},
+\]
+且 \(r(A^*)=1\)。判断 \(a,b\) 应满足的正确条件。}
+
+
+\analysis{矩阵
+\[
+A=\begin{pmatrix}
+a&b&b\\
+b&a&b\\
+b&b&a
+\end{pmatrix}
+=(a-b)E+bJ,
+\]
+其中 \(J\) 为三阶全 \(1\) 矩阵。它的特征值为
+\[
+a-b\quad(\text{二重}),\qquad a+2b\quad(\text{一重}).
+\]
+对于三阶矩阵，有
+\[
+r(A^*)=
+\begin{cases}
+3,& r(A)=3,\\
+1,& r(A)=2,\\
+0,& r(A)\le1.
+\end{cases}
+\]
+题设 \(r(A^*)=1\)，所以 \(r(A)=2\)。这要求恰有一个特征值为零。
+
+若 \(a=b\)，则 \(a-b=0\) 为二重零特征值，且 \(a,b\ne0\) 时 \(a+2b=3a\ne0\)，此时 \(r(A)=1\)，不符合。
+
+因此必须
+\[
+a+2b=0,\qquad a-b\ne0.
+\]
+由于 \(b\ne0\)，由 \(a=-2b\) 自动有 \(a-b=-3b\ne0\)。}
+\answer{\(a+2b=0\)，选 C。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{2.10 例 9}
+
+\question{设 \(A\) 为 \(n\) 阶幂等矩阵，即 \(A^2=A\)。证明并求与 \(r(A)\)、\(r(E-A)\) 有关的结论。}
+
+
+\analysis{第 (1) 问，若 \(A^2=A\)，则 \(A\) 为幂等矩阵。对任意向量 \(x\)，有分解
+\[
+x=Ax+(E-A)x.
+\]
+其中 \(Ax\in \operatorname{Im}A\)，\((E-A)x\in\operatorname{Im}(E-A)\)，故
+\[
+\mathbb{R}^n=\operatorname{Im}A+\operatorname{Im}(E-A).
+\]
+若 \(y\) 同时属于二者，则 \(y=Au=(E-A)v\)。于是
+\[
+Ay=A^2u=Au=y,
+\]
+同时
+\[
+Ay=A(E-A)v=(A-A^2)v=O.
+\]
+故 \(y=0\)。所以这是直和分解：
+\[
+\mathbb{R}^n=\operatorname{Im}A\oplus\operatorname{Im}(E-A).
+\]
+取维数得
+\[
+r(A)+r(E-A)=n.
+\]
+由于 \(r(E-A)=r(A-E)\)，故
+\[
+r(A)+r(A-E)=n.
+\]
+
+第 (2) 问，若 \(A^2=E\)，则
+\[
+(A+E)(A-E)=A^2-E=O.
+\]
+对任意向量 \(x\)，
+\[
+x=\frac12(A+E)x-\frac12(A-E)x,
+\]
+故
+\[
+\mathbb{R}^n=\operatorname{Im}(A+E)+\operatorname{Im}(A-E).
+\]
+若 \(y\) 同时属于 \(\operatorname{Im}(A+E)\) 和 \(\operatorname{Im}(A-E)\)，则
+\[
+(A-E)y=O,\qquad (A+E)y=O.
+\]
+两式相减或相加可得 \(y=0\)，所以二者也是直和。于是
+\[
+r(A+E)+r(A-E)=n.
+\]}
+\answer{两个等式均成立：
+\[
+r(A)+r(A-E)=n,\qquad r(A+E)+r(A-E)=n.
+\]}
+\examnote{幂等矩阵和对合矩阵的秩等式，本质都是把空间分解成两个互补子空间。考研证明题中这种“像空间直和”写法很稳。}
+\end{solutionblock}

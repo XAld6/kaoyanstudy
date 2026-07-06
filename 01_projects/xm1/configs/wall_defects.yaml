@@ -1,0 +1,10 @@
+path: data/datasets/wall_defects
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: crack
+  1: peeling
+  2: seepage
+  3: hollowing

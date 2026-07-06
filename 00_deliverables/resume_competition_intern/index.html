@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>顾诗渝 - 竞赛导向通用实习简历</title>
+  <style>
+    :root {
+      --ink: #1f2933;
+      --muted: #627085;
+      --line: #d8dee8;
+      --paper: #fffdf8;
+      --side: #263244;
+      --side-2: #334155;
+      --blue: #0e6689;
+      --gold: #c69233;
+      --soft: #f3f6f8;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #e3e7ed;
+      color: var(--ink);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+      line-height: 1.45;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 18px auto;
+      display: grid;
+      grid-template-columns: 58mm 1fr;
+      background: var(--paper);
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
+      overflow: hidden;
+    }
+
+    aside {
+      background: var(--side);
+      color: #eef3f8;
+      padding: 13mm 7.5mm 10mm;
+    }
+
+    .portrait {
+      width: 35mm;
+      height: 45mm;
+      margin: 0 auto 9mm;
+      background: #fff;
+      border: 2px solid rgba(255,255,255,0.9);
+      overflow: hidden;
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .side-section {
+      margin-top: 7mm;
+    }
+
+    .side-section:first-of-type {
+      margin-top: 0;
+    }
+
+    .side-section h2 {
+      margin: 0 0 7px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid rgba(255,255,255,0.22);
+      color: #fff;
+      font-size: 13.5px;
+      letter-spacing: 0;
+    }
+
+    .side-list,
+    .side-points {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 10.2px;
+      color: #e7edf5;
+    }
+
+    .side-list li {
+      margin: 4px 0;
+      word-break: break-word;
+    }
+
+    .side-list strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .side-points li {
+      position: relative;
+      padding-left: 10px;
+      margin: 5px 0;
+    }
+
+    .side-points li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.7em;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 3px 6px;
+      border: 1px solid rgba(255,255,255,0.24);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.07);
+      color: #fff;
+      font-size: 9.3px;
+      white-space: nowrap;
+    }
+
+    main {
+      padding: 11.5mm 11mm 9mm;
+    }
+
+    .headline {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: end;
+      padding-bottom: 9px;
+      border-bottom: 2px solid var(--side);
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--side);
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .position {
+      margin-top: 6px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 5px;
+      max-width: 74mm;
+    }
+
+    .meta span {
+      padding: 3px 7px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: #4c5868;
+      font-size: 9.5px;
+      white-space: nowrap;
+    }
+
+    .summary {
+      margin-top: 9px;
+      padding: 8px 10px;
+      border-left: 4px solid var(--gold);
+      background: var(--soft);
+      color: #3c4654;
+      font-size: 10.7px;
+      line-height: 1.62;
+    }
+
+    section {
+      margin-top: 9px;
+    }
+
+    section > h2 {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin: 0 0 6px;
+      color: var(--blue);
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    section > h2::before {
+      content: "";
+      width: 4px;
+      height: 15px;
+      background: var(--gold);
+    }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .highlight {
+      padding: 7px 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .highlight b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--side);
+      font-size: 10.4px;
+    }
+
+    .highlight p {
+      margin: 0;
+      color: #4d5868;
+      font-size: 9.2px;
+      line-height: 1.45;
+    }
+
+    .project {
+      padding: 7px 8px;
+      margin-bottom: 6px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .project-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+
+    h3 {
+      margin: 0;
+      color: var(--side);
+      font-size: 11.7px;
+      line-height: 1.35;
+    }
+
+    .date {
+      color: var(--muted);
+      font-size: 9.2px;
+      white-space: nowrap;
+    }
+
+    .bullets {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      color: #414b5a;
+      font-size: 9.85px;
+      line-height: 1.48;
+    }
+
+    .bullets li {
+      position: relative;
+      padding-left: 10px;
+      margin: 2px 0;
+    }
+
+    .bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.68em;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .award-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .award-grid li {
+      padding: 5px 7px;
+      border-left: 3px solid var(--gold);
+      background: var(--soft);
+      color: #394454;
+      font-size: 9.25px;
+      line-height: 1.38;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+
+    .compact-card {
+      padding: 6px 7px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: #404a58;
+      font-size: 9.35px;
+      line-height: 1.45;
+    }
+
+    .compact-card strong {
+      color: var(--side);
+    }
+
+    @page { size: A4; margin: 0; }
+
+    @media print {
+      body { background: #fff; }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside>
+      <div class="portrait"><img src="assets/portrait.png" alt="证件照"></div>
+
+      <div class="side-section">
+        <h2>联系信息</h2>
+        <ul class="side-list">
+          <li><strong>电话：</strong>13013936376</li>
+          <li><strong>邮箱：</strong>gsy1193@outlook.com</li>
+          <li><strong>意向城市：</strong>徐州</li>
+          <li><strong>求职类型：</strong>实习 / 校园实践</li>
+          <li><strong>政治面貌：</strong>中共预备党员</li>
+        </ul>
+      </div>
+
+      <div class="side-section">
+        <h2>教育背景</h2>
+        <ul class="side-list">
+          <li><strong>宁夏理工学院</strong></li>
+          <li>土木工程 ｜ 本科</li>
+          <li>2023.08 - 2027.06</li>
+          <li>主修：混凝土结构、理论力学、材料力学、结构力学、流体力学</li>
+        </ul>
+      </div>
+
+      <div class="side-section">
+        <h2>技能标签</h2>
+        <div class="pill-grid">
+          <span class="pill">数学建模</span>
+          <span class="pill">Python</span>
+          <span class="pill">OpenCV</span>
+          <span class="pill">Pandas</span>
+          <span class="pill">NumPy</span>
+          <span class="pill">YOLO</span>
+          <span class="pill">OpenClaw</span>
+          <span class="pill">AutoCAD</span>
+          <span class="pill">Revit</span>
+          <span class="pill">MATLAB</span>
+          <span class="pill">Word</span>
+          <span class="pill">Excel</span>
+          <span class="pill">PPT</span>
+          <span class="pill">商业计划书</span>
+          <span class="pill">公文写作</span>
+          <span class="pill">项目统筹</span>
+        </div>
+      </div>
+
+      <div class="side-section">
+        <h2>证书</h2>
+        <ul class="side-points">
+          <li>普通话二级甲等</li>
+          <li>计算机二级</li>
+          <li>日语 N2</li>
+          <li>驾驶证</li>
+        </ul>
+      </div>
+
+      <div class="side-section">
+        <h2>求职定位</h2>
+        <ul class="side-points">
+          <li>通用实习、项目助理、资料与申报材料支持</li>
+          <li>工程建模、数据处理、图像识别项目协作</li>
+          <li>适合需要执行力、文档能力和跨角色沟通的岗位</li>
+        </ul>
+      </div>
+    </aside>
+
+    <main>
+      <div class="headline">
+        <div>
+          <h1>顾诗渝</h1>
+          <div class="position">通用实习 ｜ 工程建模 ｜ 项目执行 ｜ 竞赛申报</div>
+        </div>
+        <div class="meta">
+          <span>土木工程本科</span>
+          <span>中共预备党员</span>
+          <span>数学建模全国二等奖</span>
+          <span>Python / OpenCV</span>
+        </div>
+      </div>
+
+      <div class="summary">
+        土木工程本科在读，具备数学建模、工程图像识别、科创项目统筹和材料撰写经验。曾获全国大学生数学建模竞赛全国二等奖、APMCM 亚太地区大学生数学建模竞赛二等奖、节能减排竞赛一等奖等荣誉；能够在数据处理、模型训练、项目申报、商业计划书撰写和团队协作中承担执行型任务。
+      </div>
+
+      <section>
+        <h2>能力亮点</h2>
+        <div class="highlights">
+          <div class="highlight">
+            <b>竞赛成果稳定</b>
+            <p>连续参与数学建模、创新创业、节能减排等赛事，具备从建模分析到材料表达的完整经验。</p>
+          </div>
+          <div class="highlight">
+            <b>项目执行清晰</b>
+            <p>能拆解时间节点、任务流程和材料清单，推进数据、模型、展示和申报工作落地。</p>
+          </div>
+          <div class="highlight">
+            <b>综合协作能力</b>
+            <p>班级、团委、党支部多角色经历，熟悉活动组织、材料归档、公文处理和跨角色沟通。</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>竞赛 / 项目经历</h2>
+        <div class="project">
+          <div class="project-head">
+            <h3>慧眼识裂 - 基于 OpenClaw 的基础设施裂缝全链路智能诊断与闭环处置系统</h3>
+            <span class="date">2026.01 - 至今</span>
+          </div>
+          <ul class="bullets">
+            <li>规划项目技术路线与实施步骤，推进数据集构建、模型适配、性能测试和系统闭环设计。</li>
+            <li>负责核心技术工作，围绕裂缝识别效率与准确率优化算法流程，支撑项目展示与申报材料形成。</li>
+            <li>结合土木工程安全检测场景，梳理“识别 - 诊断 - 处置 - 反馈”的项目表达逻辑。</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-head">
+            <h3>智眼识蚜 - 枸杞蚜虫精准防控引领者</h3>
+            <span class="date">2024.11 - 2025.09</span>
+          </div>
+          <ul class="bullets">
+            <li>制定项目实施计划，明确数据采集、处理、模型训练各阶段时间节点并推进落地。</li>
+            <li>负责全流程数据处理与模型搭建，协调解决样本标注、参数调优等问题。</li>
+            <li>参与项目材料整理与成果表达，支持团队完成竞赛申报和展示准备。</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-head">
+            <h3>智井卫士 - 城市智能监测井盖项目</h3>
+            <span class="date">2025.11 - 至今</span>
+          </div>
+          <ul class="bullets">
+            <li>独立完成商业计划书撰写，覆盖市场定位、商业模式、运营策略、风险管控等内容。</li>
+            <li>梳理项目应用场景与落地路径，将工程问题转化为可展示、可申报的项目方案。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>获奖荣誉</h2>
+        <ul class="award-grid">
+          <li>2025 年全国大学生数学建模竞赛全国二等奖</li>
+          <li>2025 年第十五届 APMCM 亚太地区大学生数学建模竞赛二等奖</li>
+          <li>2024 年全国大学生数学建模竞赛宁夏赛区一等奖</li>
+          <li>第二届宁夏大学生节能减排社会实践与科技竞赛一等奖</li>
+          <li>宁夏第十一届大学生数学建模竞赛暨全国选拔赛二等奖</li>
+          <li>宁夏第十届大学生数学建模竞赛暨全国选拔赛三等奖</li>
+          <li>中国国际大学生创新大赛宁夏回族自治区铜奖</li>
+          <li>第七届中青杯全国大学生数学建模竞赛三等奖</li>
+          <li>第八届中华职业教育创新创业大赛宁夏选拔赛二等奖</li>
+          <li>2026 年第十一届全国大学生统计建模大赛校级一等奖</li>
+          <li>2023-2024、2024-2025 学年校级优秀学生干部</li>
+          <li>2025-2026 学年校级优秀共青团员</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>校内经历</h2>
+        <div class="two-col">
+          <div class="compact-card"><strong>土木工程 23101 班副班长：</strong>配合完成班级日常管理，推进学风建设和师生沟通，统筹班级事务协调。</div>
+          <div class="compact-card"><strong>建筑与环境学院团委办公室干事 / 委员：</strong>负责团务材料整理归档、团学活动筹备执行，锻炼公文处理与多任务统筹能力。</div>
+          <div class="compact-card"><strong>建筑与环境学院学生党支部督察组委员：</strong>负责支部督查相关工作，带动同学参与理论学习。</div>
+          <div class="compact-card"><strong>建筑与环境学院学生党支部 23 党小组委员：</strong>协助党小组日常事务、学习记录和组织沟通，参与支部材料整理与活动落实。</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>补充能力</h2>
+        <div class="two-col">
+          <div class="compact-card"><strong>材料表达：</strong>可独立完成商业计划书、项目申报书、汇报 PPT、公文和活动材料整理，能把技术内容转化为清晰表达。</div>
+          <div class="compact-card"><strong>办公与数据：</strong>熟练使用 Word / Excel / PPT，能够使用 Excel 函数进行数据统计与分析，配合 Python 完成数据处理和可视化。</div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

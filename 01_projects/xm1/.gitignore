@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv/
+data/inspection.db
+data/uploads/*
+data/results/*
+data/models/*.pt
+runs/
+cf-worker/node_modules/
+cf-worker/.wrangler/

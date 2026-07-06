@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs>
+<marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#1F4E73"/>
+</marker>
+<marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#6C757D"/>
+</marker>
+<marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#D8892C"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1000" fill="#FFFFFF"/>
+<text x="800" y="62" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="40" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+装配式钢结构质量控制闭环图
+</text>
+<text x="800" y="108" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+问题发现、纠偏、复核与反馈形成闭环
+</text>
+<line x1="100" y1="132" x2="1500" y2="132" stroke="#CBD3DA" stroke-width="2"/>
+<circle cx="800" cy="505" r="130" fill="#EEF1F4" stroke="#6C757D" stroke-width="4"/>
+<text x="800" y="505" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="30" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+<tspan x="800" dy="-19.0">质量数据</tspan>
+<tspan x="800" dy="38">闭环管理</tspan>
+</text>
+<rect x="670" y="155" width="260" height="130" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="800" y="189" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+设计校核
+</text>
+<text x="800" y="242" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+节点、模数、碰撞
+</text>
+<rect x="990" y="295" width="260" height="130" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="1120" y="329" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+工厂检验
+</text>
+<text x="1120" y="382" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+材料、焊缝、尺寸
+</text>
+<rect x="990" y="595" width="260" height="130" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="1120" y="629" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+现场验收
+</text>
+<text x="1120" y="682" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+吊装、连接、偏差
+</text>
+<rect x="670" y="740" width="260" height="130" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="800" y="774" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+问题整改
+</text>
+<text x="800" y="827" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+返修、复测、确认
+</text>
+<rect x="350" y="595" width="260" height="130" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="480" y="629" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+运输保护
+</text>
+<text x="480" y="682" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+编号、堆放、防损
+</text>
+<rect x="350" y="295" width="260" height="130" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="480" y="329" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+施工交底
+</text>
+<text x="480" y="382" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+工序、风险、责任
+</text>
+<line x1="800" y1="220" x2="1120" y2="360" stroke="#D8892C" stroke-width="4" marker-end="url(#arrow-orange)"/>
+<line x1="1120" y1="360" x2="1120" y2="660" stroke="#D8892C" stroke-width="4" marker-end="url(#arrow-orange)"/>
+<line x1="1120" y1="660" x2="800" y2="805" stroke="#D8892C" stroke-width="4" marker-end="url(#arrow-orange)"/>
+<line x1="800" y1="805" x2="480" y2="660" stroke="#D8892C" stroke-width="4" marker-end="url(#arrow-orange)"/>
+<line x1="480" y1="660" x2="480" y2="360" stroke="#D8892C" stroke-width="4" marker-end="url(#arrow-orange)"/>
+<line x1="480" y1="360" x2="800" y2="220" stroke="#D8892C" stroke-width="4" marker-end="url(#arrow-orange)"/>
+<text x="800" y="930" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+控制思想：全过程记录、关键节点验收、问题可追溯、整改有反馈
+</text>
+</svg>

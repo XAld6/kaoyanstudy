@@ -1,0 +1,765 @@
+\chapter{行列式}
+
+\section{逐题解析}
+
+\subsection{1.2 行列式的性质}
+
+\begin{solutionblock}
+\textbf{1.2 例 1}
+
+\question{已知 \(\det(c,b,a)=-2\)，其中 \(c=(c_1,c_2,c_3)^T\)，\(b=(b_1,b_2,b_3)^T\)，\(a=(a_1,a_2,a_3)^T\)。求 \(\det(a,2c+a,-a-b)\)。}
+
+
+\analysis{本题考查列变换对行列式的影响。把原行列式看成由三列向量
+\[
+C=(c,\ b,\ a)
+\]
+组成，其中 \(c=(c_1,c_2,c_3)^T,\ b=(b_1,b_2,b_3)^T,\ a=(a_1,a_2,a_3)^T\)。题设给出
+\[
+\det(c,b,a)=-2.
+\]
+目标行列式的三列分别为
+\[
+a,\qquad 2c+a,\qquad -a-b.
+\]
+它们相对于旧列组 \((c,b,a)\) 的坐标为
+\[
+a=C\begin{pmatrix}0\\0\\1\end{pmatrix},\quad
+2c+a=C\begin{pmatrix}2\\0\\1\end{pmatrix},\quad
+-a-b=C\begin{pmatrix}0\\-1\\-1\end{pmatrix}.
+\]
+因此新列组等于 \(CT\)，其中
+\[
+T=\begin{pmatrix}
+0&2&0\\
+0&0&-1\\
+1&1&-1
+\end{pmatrix}.
+\]
+于是
+\[
+\det(a,2c+a,-a-b)=\det(c,b,a)\det T.
+\]
+计算
+\[
+\det T=-2,
+\]
+故目标行列式为
+\[
+(-2)\cdot(-2)=4.
+\]}
+\answer{\(4\)}
+\examnote{遇到“已知一个列组行列式，求另一个列组合行列式”，优先写出新列组相对于旧列组的变换矩阵，答案就是旧行列式乘以该变换矩阵的行列式。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{1.2 例 2}
+
+\question{证明恒等式
+\[
+\begin{vmatrix}
+ax+by&ay+bz&az+bx\\
+ay+bz&az+bx&ax+by\\
+az+bx&ax+by&ay+bz
+\end{vmatrix}
+=(a^3+b^3)
+\begin{vmatrix}
+x&y&z\\y&z&x\\z&x&y
+\end{vmatrix}.
+\]}
+
+
+\analysis{记
+\[
+C=\begin{pmatrix}
+x&y&z\\
+y&z&x\\
+z&x&y
+\end{pmatrix},
+\]
+其三列为 \(u,v,w\)。题目左端矩阵的三列分别是
+\[
+au+bv,\qquad av+bw,\qquad aw+bu.
+\]
+所以左端矩阵可写成
+\[
+C\begin{pmatrix}
+a&0&b\\
+b&a&0\\
+0&b&a
+\end{pmatrix}.
+\]
+由行列式乘法公式，
+\[
+\det\bigl(au+bv,\ av+bw,\ aw+bu\bigr)
+=\det C\cdot
+\begin{vmatrix}
+a&0&b\\
+b&a&0\\
+0&b&a
+\end{vmatrix}.
+\]
+右侧小行列式按第一行展开：
+\[
+\begin{vmatrix}
+a&0&b\\
+b&a&0\\
+0&b&a
+\end{vmatrix}
+=a\cdot a^2+b\cdot b^2=a^3+b^3.
+\]
+因此
+\[
+\begin{vmatrix}
+ax+by&ay+bz&az+bx\\
+ay+bz&az+bx&ax+by\\
+az+bx&ax+by&ay+bz
+\end{vmatrix}
+=(a^3+b^3)
+\begin{vmatrix}
+x&y&z\\
+y&z&x\\
+z&x&y
+\end{vmatrix}.
+\]}
+\answer{等式成立。}
+\method{方法二（列向量法）}
+直接把三列看成 \(u,v,w\) 的线性组合，列组合系数矩阵就是上面的 \(3\times3\) 循环矩阵。考场上这种方法比逐项展开稳定得多。
+\end{solutionblock}
+
+\subsection{1.3 行列式的计算}
+
+\begin{solutionblock}
+\textbf{1.3 例 1}
+
+\question{设
+\[
+D=\begin{vmatrix}
+3&-5&2&1\\
+1&1&0&-5\\
+-1&3&1&3\\
+2&-4&-1&-3
+\end{vmatrix},
+\]
+\(A_{ij}\) 为元素 \(a_{ij}\) 的代数余子式，\(M_{ij}\) 为余子式。求 \((1)\ A_{11}+A_{12}+A_{13}+A_{14}\)；\((2)\ A_{11}+M_{21}+A_{31}+M_{41}\)。}
+
+
+\analysis{本题考查代数余子式展开的逆用法。若固定第 \(i\) 行，则
+\[
+b_1A_{i1}+b_2A_{i2}+\cdots+b_nA_{in}
+\]
+等于把原行列式第 \(i\) 行替换为 \((b_1,b_2,\ldots,b_n)\) 后得到的新行列式；若固定第 \(j\) 列，也有类似结论。解题时要先分清 \(A_{ij}\) 与 \(M_{ij}\)：代数余子式 \(A_{ij}=(-1)^{i+j}M_{ij}\)，余子式 \(M_{ij}\) 本身不带符号。第 (1) 问直接把第一行替换为全 \(1\)；第 (2) 问先把 \(M_{21},M_{41}\) 转成对应的代数余子式，再转化为第一列替换后的行列式。}
+
+\method{第 (1) 问}
+由第一行展开公式可知
+\[
+A_{11}+A_{12}+A_{13}+A_{14}
+=
+\begin{vmatrix}
+1&1&1&1\\
+1&1&0&-5\\
+-1&3&1&3\\
+2&-4&-1&-3
+\end{vmatrix}.
+\]
+对第 2、3、4 行分别作
+\[
+R_2\leftarrow R_2-R_1,\quad
+R_3\leftarrow R_3+R_1,\quad
+R_4\leftarrow R_4-2R_1,
+\]
+得
+\[
+\begin{vmatrix}
+1&1&1&1\\
+0&0&-1&-6\\
+0&4&2&4\\
+0&-6&-3&-5
+\end{vmatrix}
+=
+\begin{vmatrix}
+0&-1&-6\\
+4&2&4\\
+-6&-3&-5
+\end{vmatrix}=4.
+\]
+故第 (1) 问答案为 \(4\)。
+
+\method{第 (2) 问}
+注意余子式 \(M_{21}\) 与代数余子式的关系为
+\[
+A_{21}=(-1)^{2+1}M_{21}=-M_{21},\qquad M_{21}=-A_{21},
+\]
+同理 \(M_{41}=-A_{41}\)。因此
+\[
+A_{11}+M_{21}+A_{31}+M_{41}
+=A_{11}-A_{21}+A_{31}-A_{41}.
+\]
+这是把原行列式第一列替换成 \((1,-1,1,-1)^T\) 后按第一列展开所得：
+\[
+\begin{vmatrix}
+1&-5&2&1\\
+-1&1&0&-5\\
+1&3&1&3\\
+-1&-4&-1&-3
+\end{vmatrix}=0.
+\]
+\answer{第 (1) 问为 \(4\)；第 (2) 问为 \(0\)。}
+\examnote{余子式 \(M_{ij}\) 不带符号，代数余子式 \(A_{ij}=(-1)^{i+j}M_{ij}\)。选择题里常故意混写二者，先转成同一种符号。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{1.3 例 2}
+
+\question{设四阶行列式
+\[
+D=\begin{vmatrix}
+0&1&0&0\\
+0&0&2&0\\
+0&0&0&3\\
+4&0&0&0
+\end{vmatrix},
+\]
+求第二行各元素代数余子式之和 \(A_{21}+A_{22}+A_{23}+A_{24}\)。}
+
+
+\analysis{由第二行展开，
+\[
+A_{21}+A_{22}+A_{23}+A_{24}
+\]
+等于把原行列式第二行替换为全 \(1\) 后的行列式。即
+\[
+A_{21}+A_{22}+A_{23}+A_{24}
+=
+\begin{vmatrix}
+0&1&0&0\\
+1&1&1&1\\
+0&0&0&3\\
+4&0&0&0
+\end{vmatrix}.
+\]
+按第三行展开：
+\[
+=-3
+\begin{vmatrix}
+0&1&0\\
+1&1&1\\
+4&0&0
+\end{vmatrix}.
+\]
+再按第三行展开小行列式，
+\[
+\begin{vmatrix}
+0&1&0\\
+1&1&1\\
+4&0&0
+\end{vmatrix}
+=4
+\begin{vmatrix}
+1&0\\
+1&1
+\end{vmatrix}=4.
+\]
+故
+\[
+A_{21}+A_{22}+A_{23}+A_{24}=-3\cdot4=-12.
+\]}
+\answer{\(-12\)}
+\examnote{某一行代数余子式的和，直接替换该行后展开，不要逐个求四个余子式。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{1.3 例 3}
+
+\question{计算 \(n\) 阶行列式
+\[
+D_n=\begin{vmatrix}
+1&1&\cdots&1\\
+x_1+1&x_2+1&\cdots&x_n+1\\
+x_1^2+x_1&x_2^2+x_2&\cdots&x_n^2+x_n\\
+\vdots&\vdots&&\vdots\\
+x_1^{n-1}+x_1^{n-2}&x_2^{n-1}+x_2^{n-2}&\cdots&x_n^{n-1}+x_n^{n-2}
+\end{vmatrix}.
+\]}
+
+
+\analysis{第 \(j\) 列由
+\[
+1,\quad x_j+1,\quad x_j^2+x_j,\quad \cdots,\quad x_j^{n-1}+x_j^{n-2}
+\]
+组成。把这些看成关于 \(x_j\) 的多项式：
+\[
+f_0(x)=1,\qquad f_k(x)=x^k+x^{k-1}\quad(k=1,\ldots,n-1).
+\]
+它们的次数依次为 \(0,1,\ldots,n-1\)，且每个最高次项系数都为 \(1\)。从单项式基
+\[
+1,x,x^2,\ldots,x^{n-1}
+\]
+变到 \(f_0,f_1,\ldots,f_{n-1}\) 的系数矩阵是对角线全为 \(1\) 的三角矩阵，行列式为 \(1\)。因此该行列式与标准范德蒙德行列式相同：
+\[
+D_n=
+\begin{vmatrix}
+1&1&\cdots&1\\
+x_1&x_2&\cdots&x_n\\
+x_1^2&x_2^2&\cdots&x_n^2\\
+\vdots&\vdots&&\vdots\\
+x_1^{n-1}&x_2^{n-1}&\cdots&x_n^{n-1}
+\end{vmatrix}
+=\prod_{1\le i<j\le n}(x_j-x_i).
+\]}
+\answer{\(\displaystyle D_n=\prod_{1\le i<j\le n}(x_j-x_i)\)}
+\method{方法二（列因式视角）}
+也可把每列看成多项式值列。只要第 \(k\) 行对应的是首项系数为 \(1\) 的 \(k-1\) 次多项式，行列式就仍是范德蒙德行列式。
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{1.3 例 4}
+
+\question{设
+\[
+f(x)=\begin{vmatrix}
+1&x&x^2&x^3\\
+1&2&4&8\\
+1&-1&1&-1\\
+1&1&1&1
+\end{vmatrix},
+\]
+求 \(f(x)\) 的零点个数。}
+
+
+\analysis{该行列式是以
+\[
+t_1=x,\quad t_2=2,\quad t_3=-1,\quad t_4=1
+\]
+为节点的范德蒙德行列式：
+\[
+f(x)=
+\begin{vmatrix}
+1&x&x^2&x^3\\
+1&2&4&8\\
+1&-1&1&-1\\
+1&1&1&1
+\end{vmatrix}
+=\prod_{1\le i<j\le4}(t_j-t_i).
+\]
+含 \(x\) 的因子为
+\[
+(2-x)(-1-x)(1-x),
+\]
+其余常数因子为
+\[
+(-1-2)(1-2)(1-(-1))=(-3)(-1)2=6.
+\]
+所以
+\[
+f(x)=6(2-x)(-1-x)(1-x).
+\]
+零点为
+\[
+x=2,\quad x=-1,\quad x=1,
+\]
+共有 \(3\) 个。}
+\answer{\(3\)，选 D。}
+\examnote{只要行列式中出现 \((1,t,t^2,\ldots)\) 结构，先想范德蒙德；求零点个数时不必完全展开。}
+\end{solutionblock}
+
+\subsection{1.4 特殊行列式的计算}
+
+\begin{solutionblock}
+\textbf{1.4 例 1}
+
+\question{计算行列式
+\[
+\begin{vmatrix}
+1&1&1&1\\
+1&2&0&0\\
+1&0&3&0\\
+1&0&0&4
+\end{vmatrix}.
+\]}
+
+
+\analysis{把行列式分块为
+\[
+\begin{vmatrix}
+1&\mathbf 1^T\\
+\mathbf 1&D
+\end{vmatrix},
+\qquad
+D=\operatorname{diag}(2,3,4),\quad
+\mathbf 1=(1,1,1)^T.
+\]
+由 Schur 补公式，
+\[
+\det
+\begin{pmatrix}
+1&\mathbf 1^T\\
+\mathbf 1&D
+\end{pmatrix}
+=\det D\cdot\bigl(1-\mathbf 1^TD^{-1}\mathbf 1\bigr).
+\]
+这里
+\[
+\det D=24,\qquad
+\mathbf 1^TD^{-1}\mathbf 1=\frac12+\frac13+\frac14=\frac{13}{12}.
+\]
+于是
+\[
+D=24\left(1-\frac{13}{12}\right)=-2.
+\]}
+\answer{\(-2\)}
+\method{方法二（初等变换）}
+也可把第 2、3、4 行分别减去第 1 行，再按第一列展开。分块法更快，且适合推广到更高阶。
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{1.4 例 2}
+
+\question{计算行列式
+\[
+\begin{vmatrix}
+1&1&0&0\\
+1&2&1&0\\
+1&0&3&1\\
+1&0&0&4
+\end{vmatrix}.
+\]}
+
+
+\analysis{对第 2、3、4 行作
+\[
+R_2\leftarrow R_2-R_1,\quad
+R_3\leftarrow R_3-R_1,\quad
+R_4\leftarrow R_4-R_1,
+\]
+得
+\[
+\begin{vmatrix}
+1&1&0&0\\
+0&1&1&0\\
+0&-1&3&1\\
+0&-1&0&4
+\end{vmatrix}
+=
+\begin{vmatrix}
+1&1&0\\
+-1&3&1\\
+-1&0&4
+\end{vmatrix}.
+\]
+计算三阶行列式：
+\[
+1(3\cdot4-0\cdot1)-1((-1)\cdot4-(-1)\cdot1)=12-(-3)=15.
+\]}
+\answer{\(15\)}
+\examnote{遇到第一列全为 \(1\) 的小阶行列式，常用“其余行减第一行”，把第一列化为 \(1,0,\ldots,0\)。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{1.4 例 3}
+
+\question{计算行列式
+\[
+\begin{vmatrix}
+1&1&1&1\\
+2&0&0&1\\
+3&0&1&0\\
+4&1&0&0
+\end{vmatrix}.
+\]}
+
+
+\analysis{直接计算该四阶行列式：
+\[
+D=
+\begin{vmatrix}
+1&1&1&1\\
+2&0&0&1\\
+3&0&1&0\\
+4&1&0&0
+\end{vmatrix}.
+\]
+按第一行展开也可，计算得
+\[
+D=8.
+\]
+若用初等变换，可先对第 2、3、4 行分别减去 \(2,3,4\) 倍第 1 行，再展开第一列，最终同样得到 \(8\)。}
+\answer{\(8\)}
+\examnote{小阶稀疏行列式不要硬套大公式；按零多的行列展开或先造零即可。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{1.4 例 4}
+
+\question{计算 \(n\) 阶行列式
+\[
+D_n=\begin{vmatrix}
+x&a&\cdots&a\\
+a&x&\cdots&a\\
+\vdots&\vdots&\ddots&\vdots\\
+a&a&\cdots&x
+\end{vmatrix}.
+\]}
+
+
+\analysis{该 \(n\) 阶矩阵对角线为 \(x\)，非对角线均为 \(a\)。可写成
+\[
+A=(x-a)I_n+aJ_n,
+\]
+其中 \(J_n\) 是全 \(1\) 矩阵。
+
+全 \(1\) 向量 \(\mathbf 1=(1,\ldots,1)^T\) 是 \(J_n\) 的特征向量，且
+\[
+J_n\mathbf 1=n\mathbf 1.
+\]
+所以在 \(\mathbf 1\) 方向上，\(A\) 的特征值为
+\[
+(x-a)+an=x+(n-1)a.
+\]
+而任意满足 \(v_1+\cdots+v_n=0\) 的向量 \(v\)，都有 \(J_nv=0\)，故在这个 \(n-1\) 维子空间上，\(A\) 的特征值为
+\[
+x-a.
+\]
+因此
+\[
+D_n=(x-a)^{n-1}\bigl[x+(n-1)a\bigr].
+\]}
+\answer{\(\displaystyle (x-a)^{n-1}\bigl(x+(n-1)a\bigr)\)}
+\method{方法二（初等变换）}
+也可把所有行加到第一行，再用行列式性质提出 \(x+(n-1)a\)，随后作列减法化成上三角，得到同一结果。
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{1.4 例 5}
+
+\question{计算行列式
+\[
+D=\begin{vmatrix}
+1&-1&1&a-1\\
+1&-1&a+1&-1\\
+1&a-1&1&-1\\
+a+1&-1&1&-1
+\end{vmatrix}.
+\]}
+
+
+\analysis{观察到 \(a=0\) 时四行相同，行列式必为 \(0\)。用行变换把 \(a\) 因子显出来。对第 2、3、4 行作
+\[
+R_2\leftarrow R_2-R_1,\quad
+R_3\leftarrow R_3-R_1,\quad
+R_4\leftarrow R_4-R_1,
+\]
+得
+\[
+D=
+\begin{vmatrix}
+1&-1&1&a-1\\
+0&0&a&-a\\
+0&a&0&-a\\
+a&0&0&-a
+\end{vmatrix}
+=a^3
+\begin{vmatrix}
+1&-1&1&a-1\\
+0&0&1&-1\\
+0&1&0&-1\\
+1&0&0&-1
+\end{vmatrix}.
+\]
+再对最后一个行列式作 \(R_1\leftarrow R_1-R_4\)，可得其值为 \(a\)。所以
+\[
+D=a^3\cdot a=a^4.
+\]}
+\answer{\(a^4\)}
+\examnote{含参数行列式若在某个参数值下明显降秩，通常可以通过行差/列差把该参数因子逐个提出来。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{1.4 例 6}
+
+\question{计算 \(n\) 阶行列式
+\[
+D_n=\begin{vmatrix}
+a_1+b_1&a_2&\cdots&a_n\\
+a_1&a_2+b_2&\cdots&a_n\\
+\vdots&\vdots&\ddots&\vdots\\
+a_1&a_2&\cdots&a_n+b_n
+\end{vmatrix},\quad b_i\ne0.
+\]}
+
+
+\analysis{矩阵的第 \(i,j\) 元为
+\[
+a_j+\delta_{ij}b_i.
+\]
+因此
+\[
+A=\operatorname{diag}(b_1,\ldots,b_n)+\mathbf 1\,a^T,
+\]
+其中
+\[
+\mathbf 1=(1,\ldots,1)^T,\qquad a=(a_1,\ldots,a_n)^T.
+\]
+因为 \(b_i\ne0\)，可用矩阵行列式引理：
+\[
+\det(B+uv^T)=\det B\,(1+v^TB^{-1}u).
+\]
+令 \(B=\operatorname{diag}(b_1,\ldots,b_n)\), \(u=\mathbf 1\), \(v=a\)，则
+\[
+D_n=b_1b_2\cdots b_n
+\left(1+\sum_{i=1}^n\frac{a_i}{b_i}\right).
+\]
+也可写成
+\[
+D_n=b_1b_2\cdots b_n
+\left(1+\frac{a_1}{b_1}+\frac{a_2}{b_2}+\cdots+\frac{a_n}{b_n}\right).
+\]}
+\answer{\(\displaystyle b_1b_2\cdots b_n\left(1+\sum_{i=1}^n\frac{a_i}{b_i}\right)\)}
+\examnote{“对角矩阵 + 秩一矩阵”是高频模型，结论要熟：\(\det(D+uv^T)=\det D(1+v^TD^{-1}u)\)。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{1.4 例 7}
+
+\question{计算 \(n\) 阶行列式
+\[
+D_n=\begin{vmatrix}
+a_1&-1&0&\cdots&0\\
+a_2&x&-1&\cdots&0\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+a_{n-1}&0&0&\cdots&-1\\
+a_n&0&0&\cdots&x
+\end{vmatrix}.
+\]}
+
+
+\analysis{按第一列展开。去掉第 \(i\) 行、第 \(1\) 列后，剩下的矩阵由主对角线上的 \(x\) 和上副对角线上的 \(-1\) 组成，其行列式贡献恰好为
+\[
+x^{n-i}.
+\]
+逐项展开得到
+\[
+D_n=a_1x^{n-1}+a_2x^{n-2}+\cdots+a_{n-1}x+a_n.
+\]
+用低阶情形核对：当 \(n=3\) 时
+\[
+\begin{vmatrix}
+a_1&-1&0\\
+a_2&x&-1\\
+a_3&0&x
+\end{vmatrix}
+=a_1x^2+a_2x+a_3,
+\]
+与一般公式一致。}
+\answer{\(\displaystyle D_n=\sum_{i=1}^n a_i x^{\,n-i}=a_1x^{n-1}+a_2x^{n-2}+\cdots+a_n\)}
+\examnote{这种形状本质上是“多项式系数列 + 伴随型矩阵”，答案通常是一串按 \(x\) 降幂排列的多项式。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{1.4 例 8}
+
+\question{设 \(D_n\) 为主对角线全为 \(2a\)、上副对角线全为 \(1\)、下副对角线全为 \(a^2\) 的 \(n\) 阶三对角行列式，证明 \(D_n=(n+1)a^n\)。}
+
+
+\analysis{记该三对角行列式为 \(D_n\)。按最后一行或最后一列展开，可得递推关系
+\[
+D_n=2aD_{n-1}-a^2D_{n-2}\qquad(n\ge3).
+\]
+初值为
+\[
+D_1=2a,\qquad
+D_2=
+\begin{vmatrix}
+2a&1\\
+a^2&2a
+\end{vmatrix}
+3a^2.
+\]
+下面用归纳法。假设
+\[
+D_{n-1}=na^{n-1},\qquad D_{n-2}=(n-1)a^{n-2}.
+\]
+代入递推式：
+\[
+D_n=2a\cdot na^{n-1}-a^2\cdot (n-1)a^{n-2}
+=(2n-n+1)a^n=(n+1)a^n.
+\]
+初值 \(D_1=2a=(1+1)a\)、\(D_2=3a^2=(2+1)a^2\) 也符合，故
+\[
+D_n=(n+1)a^n.
+\]}
+\answer{已证 \(\displaystyle D_n=(n+1)a^n\)。}
+\method{方法二（特征根法）}
+递推 \(D_n=2aD_{n-1}-a^2D_{n-2}\) 的特征方程为
+\[
+\lambda^2-2a\lambda+a^2=(\lambda-a)^2=0,
+\]
+故 \(D_n=(C_1+C_2n)a^n\)。由初值解得 \(D_n=(n+1)a^n\)。
+\end{solutionblock}
+
+\subsection{1.5 克拉默法则}
+
+\begin{solutionblock}
+\textbf{1.5 例 1}
+
+\question{用克拉默法则求解线性方程组 \(Ax=b\)，其中
+\[
+A=\begin{pmatrix}
+5&0&4&2\\
+1&-1&2&1\\
+4&1&2&0\\
+1&1&1&1
+\end{pmatrix},\qquad
+b=\begin{pmatrix}3\\1\\1\\0\end{pmatrix}.
+\]}
+
+
+\analysis{系数矩阵与常数列为
+\[
+A=\begin{pmatrix}
+5&0&4&2\\
+1&-1&2&1\\
+4&1&2&0\\
+1&1&1&1
+\end{pmatrix},
+\qquad
+b=\begin{pmatrix}3\\1\\1\\0\end{pmatrix}.
+\]
+先算系数行列式：
+\[
+\Delta=\det A=-7\ne0,
+\]
+所以线性方程组有唯一解，可以使用克拉默法则。
+
+把 \(A\) 的第 \(i\) 列替换为 \(b\)，所得行列式分别为
+\[
+\Delta_1=-7,\qquad
+\Delta_2=7,\qquad
+\Delta_3=7,\qquad
+\Delta_4=-7.
+\]
+由克拉默法则
+\[
+x_i=\frac{\Delta_i}{\Delta},
+\]
+得到
+\[
+x_1=1,\qquad x_2=-1,\qquad x_3=-1,\qquad x_4=1.
+\]
+代回检查：
+\[
+5\cdot1+4(-1)+2\cdot1=3,
+\]
+\[
+1-(-1)+2(-1)+1=1,
+\]
+\[
+4\cdot1+(-1)+2(-1)=1,
+\]
+\[
+1+(-1)+(-1)+1=0.
+\]
+四个方程均满足。}
+\answer{\(\displaystyle (x_1,x_2,x_3,x_4)=(1,-1,-1,1)\)}
+\examnote{克拉默法则题的标准步骤是：先判 \(\Delta\ne0\)，再求 \(\Delta_i\)。若只写最终解，容易漏掉“唯一解”的依据。}
+\end{solutionblock}

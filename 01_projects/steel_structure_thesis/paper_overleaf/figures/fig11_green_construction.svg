@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs>
+<marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#1F4E73"/>
+</marker>
+<marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#6C757D"/>
+</marker>
+<marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#D8892C"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1000" fill="#FFFFFF"/>
+<text x="800" y="62" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="40" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+装配式钢结构绿色建造优势示意图
+</text>
+<text x="800" y="108" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+绿色建造优势来自材料循环与施工方式转变
+</text>
+<line x1="100" y1="132" x2="1500" y2="132" stroke="#CBD3DA" stroke-width="2"/>
+<rect x="610" y="310" width="380" height="300" rx="18" fill="#DDECF7" stroke="#1F4E73" stroke-width="3"/>
+<line x1="650" y1="610" x2="650" y2="310" stroke="#1F4E73" stroke-width="6"/>
+<line x1="760" y1="610" x2="760" y2="310" stroke="#1F4E73" stroke-width="6"/>
+<line x1="870" y1="610" x2="870" y2="310" stroke="#1F4E73" stroke-width="6"/>
+<line x1="610" y1="360" x2="990" y2="360" stroke="#1F4E73" stroke-width="5"/>
+<line x1="610" y1="460" x2="990" y2="460" stroke="#1F4E73" stroke-width="5"/>
+<line x1="610" y1="560" x2="990" y2="560" stroke="#1F4E73" stroke-width="5"/>
+<polygon points="800,220 590,310 1010,310" fill="#EEF1F4" stroke="#1F4E73" stroke-width="4"/>
+<text x="800" y="660" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="28" fill="#1F4E73" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+装配式钢结构建筑
+</text>
+<rect x="65" y="185" width="330" height="150" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="230" y="219" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+材料可回收
+</text>
+<text x="230" y="282" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="230" dy="-13.0">钢材回收利用率高</tspan>
+<tspan x="230" dy="26">利于全寿命周期管理</tspan>
+</text>
+<line x1="230" y1="260" x2="800" y2="500" stroke="#6C757D" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<rect x="1045" y="185" width="330" height="150" rx="14" fill="#F7E5CC" stroke="#D8892C" stroke-width="3"/>
+<text x="1210" y="219" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#D8892C" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+现场污染少
+</text>
+<text x="1210" y="282" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="1210" dy="-13.0">湿作业减少</tspan>
+<tspan x="1210" dy="26">扬尘和建筑垃圾降低</tspan>
+</text>
+<line x1="1210" y1="260" x2="800" y2="500" stroke="#6C757D" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<rect x="65" y="575" width="330" height="150" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="230" y="609" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+施工周期短
+</text>
+<text x="230" y="672" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="230" dy="-13.0">工厂预制与现场并行</tspan>
+<tspan x="230" dy="26">缩短占地扰动时间</tspan>
+</text>
+<line x1="230" y1="650" x2="800" y2="500" stroke="#6C757D" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<rect x="1045" y="575" width="330" height="150" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="1210" y="609" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+质量稳定
+</text>
+<text x="1210" y="672" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="1210" dy="-13.0">标准化构件</tspan>
+<tspan x="1210" dy="26">减少返工与材料浪费</tspan>
+</text>
+<line x1="1210" y1="650" x2="800" y2="500" stroke="#6C757D" stroke-width="3" marker-end="url(#arrow-gray)"/>
+</svg>

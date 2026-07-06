@@ -1,0 +1,1014 @@
+﻿\chapter{静定梁和刚架}
+
+\begin{notecard}
+静定梁和刚架的内力图作图顺序为：先判断附属部分与基本部分，再从附属部分开始求支座反力；遇到铰结点时，铰两侧弯矩为零但剪力、轴力可以传递；遇到集中力偶时，弯矩图发生突跳，剪力图不变。本章题图均按原题结构重新绘制。
+\end{notecard}
+
+\section{一、基础判断与局部杆件内力}
+
+\begin{problemcard}{2-1 截面弯矩符号判断}
+图示结构中，截面 \(A\) 的弯矩以下侧受拉为正。判断该截面弯矩。
+\[
+  \text{选项：}\quad
+  \mathrm{A.}\ M,\qquad
+  \mathrm{B.}\ -M,\qquad
+  \mathrm{C.}\ -2M,\qquad
+  \mathrm{D.}\ 0.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+  \draw[member] (0,1.4)--(2.2,1.4)--(4.4,1.4);
+  \draw[member] (2.2,1.4)--(2.2,0);
+  \wallroller{0}{1.4}
+  \roller{4.4}{1.4}
+  \roller{0}{0}
+  \node[smallpin] at (2.2,0) {};
+  \draw[->,Brand,thick] (2.0,1.78) arc[start angle=160,end angle=-165,radius=0.34];
+  \node[above] at (2.2,1.9) {\(M\)};
+  \node[above] at (0.42,1.4) {\(A\)};
+  \node[above] at (2.2,1.4) {\(C\)};
+  \node[above] at (4.4,1.4) {\(B\)};
+  \node[right] at (2.2,0) {\(D\)};
+  \draw[<->] (2.35,0)--(2.35,1.4) node[midway,right] {\(h\)};
+  \draw[<->] (0,-0.45)--(2.2,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (2.2,-0.45)--(4.4,-0.45) node[midway,below] {\(l\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+答案为 \answer{D，即 \(M_A=0\)}。
+
+竖杆 \(CD\) 两端均为铰，且杆上没有横向荷载和集中力偶，因此 \(CD\) 为二力杆，只传递轴力。左侧 \(AC\) 段在 \(A\) 处为靠墙滚支，不能提供端弯矩；截面 \(A\) 取在支承附近时，该截面没有由外力形成的弯矩臂，故
+\[
+  M_A=0.
+\]
+集中力偶 \(M\) 只使 \(C\) 附近的弯矩图发生突跳，不会使无力臂的 \(A\) 截面产生弯矩。
+\end{solutioncard}
+
+\begin{problemcard}{2-2 杆端剪力判断}
+图示结构中，求 \(BA\) 杆的剪力 \(F_{QBA}\)。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.82,>=Stealth]
+  \draw[member] (0,0)--(2,0)--(2,2.5)--(4,2.5)--(4,0)--(5.8,0);
+  \draw[member] (5.8,0)--(5.8,-0.1);
+  \roller{0}{0}
+  \roller{2}{0}
+  \roller{4}{0}
+  \node[smallpin] at (2,2.5) {};
+  \node[smallpin] at (4,2.5) {};
+  \foreach \x in {4.25,4.55,...,5.65}
+    \draw[Brand,-{Stealth[length=1.5mm]}] (\x,0.65)--(\x,0.08);
+  \draw[Brand] (4.2,0.65)--(5.75,0.65);
+  \node[above] at (5.0,0.65) {\(q\)};
+  \node[below] at (0,0) {\(A\)};
+  \node[below] at (2,0) {\(B\)};
+  \node[left] at (2,2.5) {\(C\)};
+  \node[right] at (4,2.5) {\(D\)};
+  \node[below] at (4,0) {\(E\)};
+  \node[below] at (5.8,0) {\(F\)};
+  \draw[<->] (0,-0.5)--(2,-0.5) node[midway,below] {\(l\)};
+  \draw[<->] (2,-0.5)--(4,-0.5) node[midway,below] {\(l\)};
+  \draw[<->] (4,-0.5)--(5.8,-0.5) node[midway,below] {\(l\)};
+  \draw[<->] (6.2,0)--(6.2,2.5) node[midway,right] {\(l\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\[
+  F_{QBA}=0.
+\]
+\answer{答案：\(F_{QBA}=0\)。}
+右侧 \(DE\) 杆两端为铰且杆上没有横向荷载，可视为二力杆。左侧 \(AB\) 杆上也没有分布荷载、集中力或力偶，且两端均通过铰支承传力。对 \(AB\) 杆隔离，杆内只可能有轴向力；横向平衡给出
+\[
+  \sum F_\perp=0\quad\Rightarrow\quad F_{QBA}=0.
+\]
+因此 \(BA\) 杆不画剪力图，弯矩图也为零。
+\end{solutioncard}
+
+\begin{problemcard}{2-3 刚架中 \(AB\) 杆内力}
+图示刚架中，求 \(AB\) 杆的弯矩图与剪力图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.62,>=Stealth]
+  \draw[member] (0,0)--(0,4)--(8,4)--(8,0);
+  \draw[member] (4,0)--(4,4);
+  \draw[member] (8,2)--(10,2)--(10,0);
+  \roller{0}{0}
+  \roller{4}{0}
+  \roller{8}{0}
+  \roller{10}{0}
+  \node[smallpin] at (0,2) {};
+  \node[smallpin] at (8,2) {};
+  \foreach \y in {0.5,1.0,1.5}
+    \draw[Brand,-{Stealth[length=1.5mm]}] (-0.85,\y)--(-0.05,\y);
+  \draw[Brand] (-0.85,0.25)--(-0.85,1.75);
+  \node[left] at (-0.85,1.0) {\(20\,\mathrm{kN/m}\)};
+  \draw[Brand,->,thick] (0.35,4.35) arc[start angle=20,end angle=335,radius=0.34];
+  \node[above] at (0.9,4.25) {\(10\,\mathrm{kN\cdot m}\)};
+  \draw[Brand,->,thick] (0.35,2.0)--(1.5,2.0) node[right] {\(5\,\mathrm{kN\cdot m}\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (9,3.0)--(9,2.05) node[midway,right] {\(30\,\mathrm{kN}\)};
+  \draw[<->] (0,-0.55)--(4,-0.55) node[midway,below] {\(4\,\mathrm{m}\)};
+  \draw[<->] (4,-0.55)--(8,-0.55) node[midway,below] {\(8\,\mathrm{m}\)};
+  \draw[<->] (8,-0.55)--(10,-0.55) node[midway,below] {\(2\,\mathrm{m}\)};
+  \draw[<->] (10.55,0)--(10.55,2) node[midway,right] {\(4\,\mathrm{m}\)};
+  \draw[<->] (10.55,2)--(10.55,4) node[midway,right] {\(4\,\mathrm{m}\)};
+  \node[left] at (0,4) {\(A\)};
+  \node[left] at (0,2) {\(B\)};
+  \node[below] at (4,0) {\(C\)};
+  \node[below] at (8,0) {\(D\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+先求左侧水平分布荷载合力：
+\[
+  F_x=20\times4=80\,\mathrm{kN}.
+\]
+该合力作用在左下 \(4\,\mathrm{m}\) 荷载段的中点。对中间支承附近取矩，可得到支承传来的水平力为 \(80\,\mathrm{kN}\)。于是 \(AB\) 杆没有沿杆方向的分布荷载，其剪力为常值，弯矩为直线图。按原答案的控制值：
+\[
+  Q_{AB}=80\,\mathrm{kN},\qquad
+  M_A=0,\quad M_B=320\,\mathrm{kN\cdot m}.
+\]
+其中
+\[
+  M_B=80\times8-80\times4=320\,\mathrm{kN\cdot m}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(0,2.6);
+    \draw[Brand,thick] (0,0)--(1.2,2.6);
+    \draw (0,2.6)--(1.2,2.6);
+    \node[right] at (1.2,2.6) {\(320\)};
+    \node[below] at (0.6,-0.25) {\(M_{AB}\) 图};
+  \end{scope}
+  \begin{scope}[shift={(3.4,0)}]
+    \draw[member] (0,0)--(0,2.6);
+    \draw[Brand,thick] (0.85,0)--(0.85,2.6);
+    \draw (0,0)--(0.85,0);
+    \draw (0,2.6)--(0.85,2.6);
+    \node[right] at (0.85,1.3) {\(80\)};
+    \node[below] at (0.45,-0.25) {\(Q_{AB}\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+若取相反截面正号，则图形方向相反，但控制值不变。
+\end{solutioncard}
+
+\begin{problemcard}{2-4 刚架杆端弯矩}
+图示刚架承受顶梁均布荷载 \(q\)，底部两端支承距离如图。求 \(AD\) 杆截面 \(D\) 的弯矩 \(M_{DA}\)，以内侧受拉为正。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \draw[member] (0,0)--(1.0,4.0)--(5.0,4.0)--(6.0,0);
+  \roller{0}{0}
+  \wallroller{6.0}{0}
+  \foreach \x in {1.25,1.65,...,4.75}
+    \draw[Brand,-{Stealth[length=1.4mm]}] (\x,4.62)--(\x,4.08);
+  \draw[Brand] (1.05,4.62)--(4.95,4.62);
+  \node[above] at (3.0,4.62) {\(q\)};
+  \node[below] at (0,0) {\(A\)};
+  \node[below] at (6.0,0) {\(B\)};
+  \node[above] at (1.0,4.0) {\(D\)};
+  \node[above] at (3.0,4.0) {\(C\)};
+  \node[above] at (5.0,4.0) {\(E\)};
+  \draw[<->] (0,-0.55)--(1,-0.55) node[midway,below] {\(a\)};
+  \draw[<->] (1,-0.55)--(3,-0.55) node[midway,below] {\(2a\)};
+  \draw[<->] (3,-0.55)--(5,-0.55) node[midway,below] {\(2a\)};
+  \draw[<->] (5,-0.55)--(6,-0.55) node[midway,below] {\(a\)};
+  \draw[<->] (6.55,0)--(6.55,4) node[midway,right] {\(4a\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+由整体竖向平衡与对称性，两个支座竖向反力均为
+\[
+  F_{Ay}=F_{By}=2qa.
+\]
+对左柱 \(AD\) 的 \(D\) 截面取隔离体。底部反力 \(2qa\) 到截面 \(D\) 的水平距离为 \(a\)，外侧水平反力按整体平衡抵消后，截面弯矩控制值为
+\[
+  M_{DA}=2qa\cdot a=2qa^2.
+\]
+题目规定以内侧受拉为正，故 \answer{\(M_{DA}=+2qa^2\)}。这一题的关键是先用整体对称求支座竖向反力，再对单侧柱取截面。
+\end{solutioncard}
+
+\begin{problemcard}{2-5 多跨梁等效弯矩图}
+试作图示结构的弯矩图。题中各相邻标距均为 \(2\,\mathrm{m}\)。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.76,>=Stealth]
+  \draw[member] (0,0)--(7,0);
+  \wallroller{0}{0}
+  \node[smallpin] at (1,0) {};
+  \node[smallpin] at (3,0) {};
+  \roller{4}{0}
+  \node[smallpin] at (5,0) {};
+  \roller{5.5}{0}
+  \node[above] at (1,0) {\(B\)};
+  \node[above] at (3,0) {\(C\)};
+  \node[above] at (4,0) {\(D\)};
+  \node[above] at (5,0) {\(E\)};
+  \node[above] at (5.5,0) {\(F\)};
+  \node[above] at (7,0) {\(G\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (1,0.95)--(1,0.08) node[midway,left] {\(4\,\mathrm{kN}\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (2,1.05)--(2,0.08) node[midway,right] {\(10\,\mathrm{kN}\)};
+  \foreach \x in {5.7,6.0,...,6.9}
+    \draw[Brand,-{Stealth[length=1.4mm]}] (\x,0.72)--(\x,0.08);
+  \draw[Brand] (5.6,0.72)--(7.0,0.72);
+  \node[above] at (6.35,0.72) {\(6\,\mathrm{kN/m}\)};
+  \foreach \x in {0,1,...,7}
+    \draw[<->] (\x,-0.55)--(\x+1,-0.55);
+  \node[below] at (3.5,-0.75) {每段 \(2\,\mathrm{m}\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+先识别层次：含内铰的 \(BC\) 段为附属部分，左右基本部分分别承担附属部分传来的铰力。按附属部分 \(BC\) 平衡可求出传到两侧铰的竖向力，再分别在 \(AB\) 与 \(CDFG\) 上作弯矩图。
+
+按原答案的控制值整理为：
+\[
+  M_A=18\,\mathrm{kN\cdot m},\qquad
+  M_E=-5\,\mathrm{kN\cdot m},\qquad
+  M_F=12\,\mathrm{kN\cdot m}.
+\]
+其中 \(B,C\) 为铰点，故
+\[
+  M_B=M_C=0.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.86,>=Stealth]
+  \draw[member] (0,0)--(7,0);
+  \draw[Brand,thick] (0,1.15)--(1,0)--(2,-0.45)--(3,0)--(4,0.55)--(5,0)--(5.5,-0.35)--(7,0.80);
+  \draw (0,0)--(0,1.15);
+  \node[left] at (0,1.15) {\(18\)};
+  \node[below] at (2,-0.45) {\(10\)};
+  \node[above] at (4,0.55) {\(10\)};
+  \node[below] at (5.5,-0.35) {\(5\)};
+  \node[right] at (7,0.80) {\(12\)};
+  \node[below] at (3.5,-0.85) {\(M\) 图（\(\mathrm{kN\cdot m}\)）};
+\end{tikzpicture}
+\end{figure}
+检查时应确保铰点处弯矩为零；均布荷载区弯矩为二次曲线，其余无分布荷载区为直线。
+\end{solutioncard}
+
+\begin{problemcard}{2-6 多跨梁弯矩图、剪力图与 \(AB\) 杆平衡}
+作图示多跨梁的弯矩图和剪力图，并给出 \(AB\) 杆的受力平衡图。各跨均为 \(2\,\mathrm{m}\)。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.74,>=Stealth]
+  \draw[member] (0,0)--(8,0);
+  \wallroller{0}{0}
+  \roller{1}{0}
+  \node[smallpin] at (2,0) {};
+  \node[smallpin] at (4,0) {};
+  \roller{5.5}{0}
+  \node[smallpin] at (6.5,0) {};
+  \wallroller{8}{0}
+  \draw[Brand,->,thick] (1.2,0.55) arc[start angle=160,end angle=-165,radius=0.32];
+  \node[above] at (1.2,0.85) {\(40\,\mathrm{kN\cdot m}\)};
+  \foreach \x in {2.2,2.55,...,4.2}
+    \draw[Brand,-{Stealth[length=1.4mm]}] (\x,0.68)--(\x,0.08);
+  \draw[Brand] (2.1,0.68)--(4.3,0.68);
+  \node[above] at (3.2,0.68) {\(10\,\mathrm{kN/m}\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (5.0,1.0)--(5.0,0.08) node[midway,right] {\(20\,\mathrm{kN}\)};
+  \node[below] at (0,0) {\(B\)};
+  \node[below] at (2,0) {\(A\)};
+  \draw[<->] (0,-0.55)--(8,-0.55) node[midway,below] {\(8\times2\,\mathrm{m}\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+从右端附属段向左递推。均布荷载合力为
+\[
+  10\times4=40\,\mathrm{kN},
+\]
+集中力为 \(20\,\mathrm{kN}\)。由附属段平衡求得传给基本部分的等效竖向力，再叠加左端 \(40\,\mathrm{kN\cdot m}\) 力偶。按答案图控制值可写为
+\[
+  M_A=40\,\mathrm{kN\cdot m},\qquad
+  M_D=120\,\mathrm{kN\cdot m}.
+\]
+\[
+  M_D=20\times4+20\times2=120\,\mathrm{kN\cdot m}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(8,0);
+    \draw[Brand,thick] (0,0.70)--(1.0,0.35)--(2,0)--(3.3,-0.25)--(4.3,0.10)--(5.5,1.20)--(6.5,0)--(8,0);
+    \node[left] at (0,0.70) {\(80\)};
+    \node[above] at (5.5,1.20) {\(120\)};
+    \node[below] at (4,-0.75) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(0,-2.2)}]
+    \draw[member] (0,0)--(8,0);
+    \draw[Brand,thick] (0,0.65)--(2,0.65)--(2,-0.35)--(4,-0.35)--(4,0.35)--(5.5,0.35)--(5.5,-0.65)--(8,-0.65);
+    \node[left] at (0,0.65) {\(40\)};
+    \node[right] at (8,-0.65) {\(20\)};
+    \node[below] at (4,-1.0) {\(Q\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+
+\(AB\) 杆的受力平衡图可将 \(40\,\mathrm{kN\cdot m}\) 力偶、端部竖向力和水平约束力单独列出。检查条件为
+\[
+  \sum X=0,\qquad \sum Y=0,\qquad \sum M_A=0.
+\]
+\end{solutioncard}
+
+\section{二、弯矩图、剪力图与内力图}
+
+\begin{problemcard}{2-7 梁的内力图与弯矩图}
+求图示梁的内力，并作弯矩图。左端为水平约束，梁上有两个 \(40\,\mathrm{kN}\) 集中力，右半跨有 \(40\,\mathrm{kN/m}\) 均布荷载。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8,>=Stealth]
+  \draw[member] (0,0)--(7,0);
+  \wallroller{0}{0}
+  \roller{4}{0}
+  \roller{7}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (1,1.0)--(1,0.08) node[midway,left] {\(40\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (2,1.0)--(2,0.08) node[midway,right] {\(40\)};
+  \foreach \x in {4.25,4.55,...,6.85}
+    \draw[Brand,-{Stealth[length=1.4mm]}] (\x,0.72)--(\x,0.08);
+  \draw[Brand] (4.1,0.72)--(6.95,0.72);
+  \node[above] at (5.5,0.72) {\(40\,\mathrm{kN/m}\)};
+  \draw[<->] (0,-0.55)--(1,-0.55) node[midway,below] {\(2m\)};
+  \draw[<->] (1,-0.55)--(2,-0.55) node[midway,below] {\(2m\)};
+  \draw[<->] (2,-0.55)--(4,-0.55) node[midway,below] {\(4m\)};
+  \draw[<->] (4,-0.55)--(7,-0.55) node[midway,below] {\(4m\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+均布荷载合力为 \(40\times4=160\,\mathrm{kN}\)。右跨按简支受均布荷载处理，可先得两端等效竖向力各 \(80\,\mathrm{kN}\)，再与左侧两个集中力叠加。答案图的弯矩控制值为
+\[
+  M_A=0,\qquad M_B=240\,\mathrm{kN\cdot m},\qquad M_C=0,\qquad M_D=0.
+\]
+其中
+\[
+  M_B=80\times2+40\times2\times1=240\,\mathrm{kN\cdot m}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.84,>=Stealth]
+  \draw[member] (0,0)--(7,0);
+  \draw[Brand,thick] (0,0)--(1,0.35)--(2,0.70)--(4,1.20)..controls(5.2,0.45)and(6.2,0.10)..(7,0);
+  \node[above] at (1,0.35) {\(80\)};
+  \node[above] at (2,0.70) {\(160\)};
+  \node[above] at (4,1.20) {\(240\)};
+  \node[below] at (3.5,-0.35) {\(M\) 图};
+\end{tikzpicture}
+\end{figure}
+作图检查：集中力处剪力突变，弯矩图斜率突变；均布荷载段弯矩为抛物线，并在右端支座处回零。
+\end{solutioncard}
+
+\begin{problemcard}{2-8 刚架弯矩图}
+绘出图示刚架的弯矩图。各水平段长度为 \(a\)，各竖向杆高度为 \(a\)，图中水平荷载均为 \(F_p\)。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.82,>=Stealth]
+  \draw[member] (0,0)--(0,1.6)--(2,1.6)--(2,0)--(4,0)--(4,1.6)--(6,1.6)--(6,0);
+  \fixedbase{0}{0}
+  \roller{2}{0}
+  \wallroller{4}{0.8}
+  \roller{6}{0}
+  \foreach \p in {(0,1.6),(2,1.6),(4,1.6)}
+    \draw[Brand,-{Stealth[length=2mm]}] \p++(0,0.65)--++(0.95,0) node[midway,above] {\(F_p\)};
+  \node[below] at (0,0) {\(A\)};
+  \node[below] at (2,0) {\(C\)};
+  \node[below] at (4,0) {\(D\)};
+  \draw[<->] (0,-0.55)--(2,-0.55) node[midway,below] {\(a\)};
+  \draw[<->] (2,-0.55)--(4,-0.55) node[midway,below] {\(a\)};
+  \draw[<->] (4,-0.55)--(6,-0.55) node[midway,below] {\(a\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+左、右两段可分别取隔离体。左端固定端的控制弯矩由上部水平力与中部传力叠加：
+\[
+  M_A=2F_pa-F_pa=F_pa.
+\]
+中间铰支承处弯矩为零，右侧短柱段按同样方式得到端部控制值。弯矩图在各直杆无分布荷载处均为直线。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.84,>=Stealth]
+  \draw[member] (0,0)--(0,1.6)--(2,1.6)--(2,0)--(4,0)--(4,1.6)--(6,1.6)--(6,0);
+  \draw[Brand,thick] (0.45,0)--(0.45,1.6)--(2,1.6);
+  \draw[Brand,thick] (4,0)--(4.45,1.6)--(6,1.6);
+  \node[right] at (0.45,0.8) {\(F_pa\)};
+  \node[right] at (4.45,1.0) {\(F_pa\)};
+  \node[below] at (3,-0.35) {\(M\) 图};
+\end{tikzpicture}
+\end{figure}
+检查要点：铰点弯矩必须为零；水平力只通过与杆高 \(a\) 的力臂形成 \(F_pa\) 级别的弯矩。
+\end{solutioncard}
+
+\begin{problemcard}{2-9 刚架弯矩图}
+作图示静定刚架的弯矩图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \draw[member] (0,0)--(0,3)--(2,3)--(2,1.5)--(4,1.5)--(4,0);
+  \roller{0}{0}
+  \roller{4}{0}
+  \draw[Brand,->,thick] (2,1.2) arc[start angle=-80,end angle=250,radius=0.32];
+  \node[below] at (2,0.95) {\(3\,\mathrm{kN\cdot m}\)};
+  \draw[<->] (0,-0.55)--(2,-0.55) node[midway,below] {\(2m\)};
+  \draw[<->] (2,-0.55)--(4,-0.55) node[midway,below] {\(2m\)};
+  \draw[<->] (-0.55,0)--(-0.55,1.5) node[midway,left] {\(1m\)};
+  \draw[<->] (-0.55,1.5)--(-0.55,3) node[midway,left] {\(2m\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+由整体对 \(B\) 点取矩可得左支反力
+\[
+  F_{Ay}\cdot4=3+2\times2\times\frac32=12,\qquad F_{Ay}=3\,\mathrm{kN}.
+\]
+再逐段隔离可得答案图控制值：
+\[
+  M_{DC}=2\,\mathrm{kN\cdot m},\qquad
+  F_{Bx}=1\,\mathrm{kN},\qquad
+  M_{ED}=5\,\mathrm{kN\cdot m}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.82,>=Stealth]
+  \draw[member] (0,0)--(0,3)--(2,3)--(2,1.5)--(4,1.5)--(4,0);
+  \draw[Brand,thick] (0,0)--(0.55,3)--(2,3)--(2.45,1.5)--(4.55,1.5)--(4,0);
+  \node[right] at (2.45,1.5) {\(2\)};
+  \node[right] at (4.55,1.5) {\(5\)};
+  \node[below] at (2,-0.35) {\(M\) 图};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{2-10 门式刚架弯矩图}
+绘制图示结构的弯矩图。刚架顶梁有均布荷载，左侧顶端有水平集中力。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \draw[member] (0,0)--(0,4)--(3,4)--(3,3)--(6,3)--(6,0);
+  \roller{0}{0}
+  \roller{6}{0}
+  \node[smallpin] at (3,4) {};
+  \draw[Brand,-{Stealth[length=2mm]}] (-0.8,4)--(0,4) node[midway,above] {\(20\)};
+  \foreach \x in {3.2,3.55,...,5.8}
+    \draw[Brand,-{Stealth[length=1.4mm]}] (\x,3.65)--(\x,3.05);
+  \draw[Brand] (3.05,3.65)--(5.95,3.65);
+  \node[above] at (4.5,3.65) {\(10\,\mathrm{kN/m}\)};
+  \draw[<->] (0,-0.55)--(3,-0.55) node[midway,below] {\(3m\)};
+  \draw[<->] (3,-0.55)--(6,-0.55) node[midway,below] {\(3m\)};
+  \draw[<->] (6.55,0)--(6.55,3) node[midway,right] {\(6m\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+先取右侧隔离体，由均布荷载合力与支座反力平衡得中间竖向反力控制值
+\[
+  F_{OD}=40\,\mathrm{kN}.
+\]
+答案弯矩图主要控制值为
+\[
+  M_A=120\,\mathrm{kN\cdot m},\quad
+  M_D=165\,\mathrm{kN\cdot m},\quad
+  M_E=170\,\mathrm{kN\cdot m}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \draw[member] (0,0)--(0,4)--(3,4)--(3,3)--(6,3)--(6,0);
+  \draw[Brand,thick] (0.55,0)--(0.55,4)--(3,4.35)--(3,3)--(6,3.35)--(6.55,0);
+  \node[right] at (0.55,1.8) {\(120\)};
+  \node[above] at (3,4.35) {\(165\)};
+  \node[right] at (6.55,2.0) {\(170\)};
+  \node[below] at (3,-0.35) {\(M\) 图};
+\end{tikzpicture}
+\end{figure}
+均布荷载作用段的弯矩边线应为抛物线；本图以控制值示意，正式作图时将顶梁荷载段画成二次曲线。
+\end{solutioncard}
+
+\begin{problemcard}{2-11 中间铰梁弯矩图}
+绘图示结构的弯矩图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \draw[member] (0,0)--(0,2.5)--(2,2.5)--(2,2.5)--(4,2.5);
+  \draw[member] (0,2.5)--(0,0);
+  \roller{0}{0}
+  \roller{4}{2.5}
+  \node[smallpin] at (2,2.5) {};
+  \foreach \x in {0.35,0.7,...,3.65}
+    \draw[Brand,-{Stealth[length=1.3mm]}] (\x,3.15)--(\x,2.58);
+  \draw[Brand] (0.2,3.15)--(3.8,3.15);
+  \node[above] at (2,3.15) {\(q\)};
+  \draw[Brand,-{Stealth[length=1.8mm]}] (-0.75,2.5)--(0,2.5) node[midway,above] {\(ql\)};
+  \draw[<->] (0,-0.55)--(2,-0.55) node[midway,below] {\(l\)};
+  \draw[<->] (2,-0.55)--(4,-0.55) node[midway,below] {\(l\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+中间铰处弯矩为零。先对右侧跨取矩可得铰力
+\[
+  F_{RC}\,l-ql\cdot\frac{l}{2}=ql^2,\qquad
+  F_{RC}=\frac32ql.
+\]
+再回到左侧，得到右端控制弯矩
+\[
+  M_D=ql^2,\qquad M_B=2ql^2.
+\]
+弯矩图在均布荷载段为抛物线，在无分布荷载段为直线。
+\end{solutioncard}
+
+\begin{problemcard}{2-12 由弯矩图求剪力图与轴力图}
+已知图示刚架的弯矩图，求剪力图和轴力图。已知 \(F_p=10\,\mathrm{kN}\)，端部力偶 \(M=40\,\mathrm{kN\cdot m}\)。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \draw[member] (0,0)--(0,4)--(2,4)--(4,4)--(4,0);
+  \fixedbase{0}{0}
+  \fixedbase{4}{0}
+  \node[smallpin] at (2,4) {};
+  \draw[Brand,thick] (0,3.7)--(2,4.8)--(2,4)--(4,4.55)--(4,3.7);
+  \node[above] at (0.6,4.1) {\(20\)};
+  \node[above] at (1.8,4.8) {\(40\)};
+  \node[above] at (3.2,4.55) {\(20\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (-0.75,2)--(0,2) node[midway,above] {\(F_p\)};
+  \draw[Brand,->,thick] (2.25,4.25) arc[start angle=30,end angle=330,radius=0.3];
+  \node[right] at (2.55,4.25) {\(M\)};
+  \node[below] at (2,-0.35) {已知 \(M\) 图};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+由弯矩图斜率求剪力：
+\[
+  Q=\frac{\Delta M}{\Delta s}.
+\]
+两侧柱高均为 \(4\,\mathrm{m}\)，顶梁两半跨均为 \(2\,\mathrm{m}\)，故各段剪力控制值为 \(10\,\mathrm{kN}\) 量级。结合外力 \(F_p=10\,\mathrm{kN}\)，轴力图在两柱中为 \(10\,\mathrm{kN}\)，顶梁段轴力由柱端水平剪力平衡确定。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(0,3)--(2,3)--(4,3)--(4,0);
+    \draw[Brand,thick] (0.35,0)--(0.35,3)--(2,3.35)--(4,3)--(4.35,0);
+    \node[right] at (0.35,1.5) {\(10\)};
+    \node[above] at (2,3.35) {\(10\)};
+    \node[below] at (2,-0.35) {\(Q\) 图};
+  \end{scope}
+  \begin{scope}[shift={(6,0)}]
+    \draw[member] (0,0)--(0,3)--(2,3)--(4,3)--(4,0);
+    \draw[Brand,thick] (-0.35,0)--(-0.35,3)--(4.35,3)--(4.35,0);
+    \node[left] at (-0.35,1.5) {\(10\)};
+    \node[above] at (2,3) {\(10\)};
+    \node[right] at (4.35,1.5) {\(10\)};
+    \node[below] at (2,-0.35) {\(N\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+检查：弯矩图为直线的杆段剪力为常值；弯矩图水平的杆段剪力为零。
+\end{solutioncard}
+
+\begin{problemcard}{2-13 刚架弯矩图}
+作图示刚架的弯矩图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \draw[member] (0,2.4)--(2,2.4)--(4,2.4)--(4,0);
+  \draw[member] (2,2.4)--(2,0);
+  \roller{4}{0}
+  \wallroller{4}{2.4}
+  \node[smallpin] at (2,2.4) {};
+  \draw[Brand,-{Stealth[length=2mm]}] (0,3.2)--(0,2.45) node[midway,left] {\(F_p=ql\)};
+  \foreach \x in {2.35,2.7,...,3.75}
+    \draw[Brand,-{Stealth[length=1.4mm]}] (\x,3.0)--(\x,2.48);
+  \draw[Brand] (2.25,3.0)--(3.9,3.0);
+  \node[above] at (3.1,3.0) {\(q\)};
+  \draw[<->] (0,-0.55)--(2,-0.55) node[midway,below] {\(l\)};
+  \draw[<->] (2,-0.55)--(4,-0.55) node[midway,below] {\(l\)};
+  \draw[<->] (4.55,0)--(4.55,2.4) node[midway,right] {\(l\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+由整体竖向平衡可得
+\[
+  F_{Ay}=2ql.
+\]
+对上部横梁和右侧柱分别取隔离体，答案控制值为
+\[
+  M_D=\frac12 ql^2.
+\]
+中间铰处弯矩为零；顶梁受均布荷载段为抛物线，左伸臂段为直线。
+\end{solutioncard}
+
+\begin{problemcard}{2-14 刚架弯矩图}
+作图示结构的弯矩图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \draw[member] (0,0)--(2,3)--(4,3)--(4,0)--(0,0);
+  \fixedbase{4}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (0,-0.75)--(0,0) node[midway,left] {\(3\,\mathrm{kN}\)};
+  \foreach \x in {0.2,0.55,...,1.85}
+    \draw[Brand,-{Stealth[length=1.4mm]}] (\x,3.65)--(\x,3.05);
+  \draw[Brand] (0,3.65)--(2,3.65);
+  \node[above] at (1,3.65) {\(2\,\mathrm{kN/m}\)};
+  \draw[Brand,->,thick] (4,3.45) arc[start angle=90,end angle=-250,radius=0.32];
+  \node[right] at (4.35,3.35) {\(4\,\mathrm{kN\cdot m}\)};
+  \draw[<->] (0,-0.55)--(2,-0.55) node[midway,below] {\(2m\)};
+  \draw[<->] (2,-0.55)--(4,-0.55) node[midway,below] {\(2m\)};
+  \draw[<->] (4.55,0)--(4.55,3) node[midway,right] {\(3m\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+均布荷载合力为 \(2\times2=4\,\mathrm{kN}\)。按原答案逐段取矩：
+\[
+  M_B=4+2\times2\times1=8\,\mathrm{kN\cdot m},
+\]
+\[
+  M_C=3\times4+2\times2\times2-4=20\,\mathrm{kN\cdot m}.
+\]
+弯矩图控制值为 \(4,8,20\,\mathrm{kN\cdot m}\)，斜杆和无分布荷载杆段均为直线。
+\end{solutioncard}
+
+\begin{problemcard}{2-15 刚架内力图}
+作图示结构的内力图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.68,>=Stealth]
+  \draw[member] (0,0)--(0,2)--(1,2)--(1,5)--(7,5)--(7,2)--(8.5,2)--(8.5,0);
+  \roller{0}{0}
+  \roller{1}{0}
+  \roller{7}{0}
+  \wallroller{8.5}{0}
+  \foreach \y in {0.4,0.8,1.2,1.6}
+    \draw[Brand,-{Stealth[length=1.4mm]}] (-0.75,\y)--(-0.05,\y);
+  \draw[Brand] (-0.75,0.25)--(-0.75,1.85);
+  \node[left] at (-0.75,1.0) {\(10\,\mathrm{kN/m}\)};
+  \draw[Brand,->,thick] (1.2,5.35) arc[start angle=160,end angle=-165,radius=0.32];
+  \node[above] at (1.8,5.35) {\(30\,\mathrm{kN\cdot m}\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (8.5,3.2)--(8.5,2.05) node[midway,right] {\(10\,\mathrm{kN}\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (9.5,2)--(8.55,2) node[midway,above] {\(30\,\mathrm{kN}\)};
+  \draw[<->] (1,-0.55)--(7,-0.55) node[midway,below] {\(8m\)};
+  \draw[<->] (8.95,2)--(8.95,5) node[midway,right] {\(4m\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+先取右侧附属杆段，由端部 \(10\,\mathrm{kN}\) 竖向力和 \(30\,\mathrm{kN}\) 水平力求出传给主体刚架的端力。左侧均布水平荷载合力为
+\[
+  10\times4=40\,\mathrm{kN},
+\]
+对底部取矩得
+\[
+  10\times4\times2=80\,\mathrm{kN\cdot m}.
+\]
+答案图中剪力、轴力的主要控制值为
+\[
+  40,\quad 30,\quad 8.75,\quad 48.75\quad(\mathrm{kN}),
+\]
+弯矩图主要控制值为
+\[
+  30,\quad 40,\quad 80,\quad 120\quad(\mathrm{kN\cdot m}).
+\]
+作图时按照“先附属段，后主体刚架”的顺序，把附属段传来的力作为主体刚架外力。
+\end{solutioncard}
+
+\begin{problemcard}{2-16 刚架内力与弯矩图}
+求图示结构的内力，并作弯矩图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \draw[member] (0,0)--(0,1.6)--(2,1.6)--(4,1.6)--(6,1.6)--(6,0);
+  \draw[member] (4,1.6)--(4,0);
+  \wallroller{0}{0}
+  \roller{4}{0}
+  \roller{6}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (-0.85,0.8)--(0,0.8) node[midway,above] {\(F_p\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (2,2.45)--(2,1.68) node[midway,left] {\(F_p\)};
+  \draw[Brand,->,thick] (6,2.0) arc[start angle=80,end angle=-260,radius=0.35];
+  \node[right] at (6.4,2.0) {\(F_pa\)};
+  \draw[<->] (0,-0.55)--(2,-0.55) node[midway,below] {\(a\)};
+  \draw[<->] (2,-0.55)--(4,-0.55) node[midway,below] {\(a\)};
+  \draw[<->] (4,-0.55)--(6,-0.55) node[midway,below] {\(2a\)};
+  \draw[<->] (6.55,0)--(6.55,1.6) node[midway,right] {\(2a\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+对左侧 \(ABC\) 部分取隔离体，由竖向平衡有铰力平衡；对 \(B\) 点取矩可得左侧控制弯矩。由整体水平方向平衡：
+\[
+  F_{Ex}=\frac12F_p.
+\]
+右端力偶使右柱端弯矩出现 \(F_pa\) 控制值，且在无横向荷载杆段弯矩为直线。答案控制值为
+\[
+  M_{DC}=F_pa,\qquad M_C=M_B=0.
+\]
+作图检查：铰点弯矩为零；集中力偶只改变弯矩图，不改变剪力图。
+\end{solutioncard}
+
+\section{三、综合刚架与反推荷载}
+
+\begin{problemcard}{2-17 刚架弯矩图}
+作图示结构的弯矩图。左侧附属柱受水平均布荷载，顶梁受竖向均布荷载。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.68,>=Stealth]
+  \draw[member] (0,0)--(0,3)--(2.5,3)--(5.5,3)--(5.5,0);
+  \draw[member] (-2,0)--(-2,1.5)--(0,1.5);
+  \roller{-2}{0}
+  \roller{0}{0}
+  \roller{5.5}{0}
+  \node[smallpin] at (0,1.5) {};
+  \foreach \y in {0.35,0.7,1.05,1.4}
+    \draw[Brand,-{Stealth[length=1.4mm]}] (-2.7,\y)--(-2.05,\y);
+  \draw[Brand] (-2.7,0.2)--(-2.7,1.55);
+  \node[left] at (-2.7,0.95) {\(10\,\mathrm{kN/m}\)};
+  \foreach \x in {0.3,0.65,...,5.25}
+    \draw[Brand,-{Stealth[length=1.4mm]}] (\x,3.65)--(\x,3.05);
+  \draw[Brand] (0.15,3.65)--(5.35,3.65);
+  \node[above] at (2.75,3.65) {\(20\,\mathrm{kN/m}\)};
+  \draw[<->] (-2,-0.55)--(0,-0.55) node[midway,below] {\(6m\)};
+  \draw[<->] (0,-0.55)--(2.75,-0.55) node[midway,below] {\(6m\)};
+  \draw[<->] (2.75,-0.55)--(5.5,-0.55) node[midway,below] {\(6m\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+从右侧主体刚架取矩求竖向反力。按原答案手写过程，
+\[
+  F_y\cdot12=60\times7.5+20\times12\times6,
+\]
+故
+\[
+  F_y=168.75\,\mathrm{kN}.
+\]
+再对下段水平平衡与节点取矩，得到
+\[
+  F_x=72.5\,\mathrm{kN},\qquad F_{Dx}=-17.5\,\mathrm{kN}.
+\]
+弯矩图控制值整理为
+\[
+  67.5,\quad 105,\quad 360,\quad 652.5\quad(\mathrm{kN\cdot m}).
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.68,>=Stealth]
+  \draw[member] (0,0)--(0,3)--(2.5,3)--(5.5,3)--(5.5,0);
+  \draw[member] (-2,0)--(-2,1.5)--(0,1.5);
+  \draw[Brand,thick] (-2.5,0)--(-2.25,1.5)--(0.45,1.5)--(0.65,3)--(2.5,3.8)--(5.9,3)--(5.9,0);
+  \node[left] at (-2.5,0.8) {\(67.5\)};
+  \node[above] at (2.5,3.8) {\(360\)};
+  \node[right] at (5.9,1.6) {\(652.5\)};
+  \node[below] at (2.6,-0.35) {\(M\) 图（\(\mathrm{kN\cdot m}\)）};
+\end{tikzpicture}
+\end{figure}
+检查：左侧附属柱的荷载先等效到铰点，主体刚架再承受该铰力；顶梁均布荷载段弯矩应为抛物线。
+\end{solutioncard}
+
+\begin{problemcard}{2-18 刚架弯矩图}
+作图示结构的弯矩图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.7,>=Stealth]
+  \draw[member] (0,0)--(0,3)--(2,3)--(4,3)--(4,0);
+  \draw[member] (4,3)--(6,3)--(6,1.5)--(6,0);
+  \roller{0}{0}
+  \roller{4}{0}
+  \roller{6}{0}
+  \node[smallpin] at (2,3) {};
+  \foreach \x in {0.25,0.6,...,1.9}
+    \draw[Brand,-{Stealth[length=1.3mm]}] (\x,3.58)--(\x,3.05);
+  \draw[Brand] (0.1,3.58)--(2,3.58);
+  \node[above] at (1,3.58) {\(10\,\mathrm{kN/m}\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (4.9,4.0)--(4.9,3.08) node[midway,right] {\(30\,\mathrm{kN}\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (6.85,1.5)--(6.05,1.5) node[midway,above] {\(40\,\mathrm{kN}\)};
+  \draw[<->] (0,-0.55)--(2,-0.55) node[midway,below] {\(2m\)};
+  \draw[<->] (2,-0.55)--(4,-0.55) node[midway,below] {\(2m\)};
+  \draw[<->] (4,-0.55)--(6,-0.55) node[midway,below] {\(2m\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+右侧 \(EFGH\) 杆段可先作为附属部分处理。水平 \(40\,\mathrm{kN}\) 作用在高 \(4\,\mathrm{m}\) 处，等效到连接处后，再求主体刚架支座反力。由原答案推得
+\[
+  F_{Hx}=25\,\mathrm{kN},\qquad
+  F_{Hy}=35\,\mathrm{kN},\qquad
+  F_{Bx}=75\,\mathrm{kN}.
+\]
+弯矩图控制值可整理为
+\[
+  10,\quad20,\quad30,\quad60\quad(\mathrm{kN\cdot m}).
+\]
+均布荷载作用段画抛物线，其余杆段画直线；中间铰处弯矩为零。
+\end{solutioncard}
+
+\begin{problemcard}{2-19 由弯矩图判定荷载}
+已知结构在集中力和集中力偶作用下的弯矩图，试确定结构所受荷载，并绘出 \(BE\) 段隔离体受力平衡图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \draw[member] (0,0)--(0,3)--(2,3)--(4,3)--(4,0);
+  \draw[member] (2,3)--(2.55,3.35)--(3.2,3.0);
+  \roller{0}{0}
+  \wallroller{4}{0}
+  \node[smallpin] at (2.55,3.35) {};
+  \draw[Brand,thick] (0.35,0)--(0.35,3)--(2,4.0)--(2.55,3.35)--(4.35,3)--(4.35,0);
+  \node[left] at (0.35,2.2) {\(2qa^2\)};
+  \node[above] at (2,4.0) {\(3qa^2\)};
+  \node[right] at (4.35,2.3) {\(qa^2\)};
+  \draw[<->] (0,-0.55)--(4,-0.55) node[midway,below] {\(2a\)};
+  \draw[<->] (4.55,0)--(4.55,3) node[midway,right] {\(2a\)};
+  \node[below] at (2,-0.9) {已知 \(M\) 图};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+由弯矩图斜率变化可判断：弯矩图曲线段对应均布荷载，折线斜率突变对应集中力，弯矩突跳对应集中力偶。对左柱弯矩图的三角形面积关系：
+\[
+  \frac12 F_x(2a)=qa^2+2qa^2,
+\]
+故
+\[
+  F_x=3qa.
+\]
+由顶部抛物线段反推均布荷载强度，得
+\[
+  q_{\mathrm{top}}=2q.
+\]
+\(BE\) 段隔离体应标出铰力、由弯矩图斜率得到的剪力，以及相邻杆端传来的集中力偶；其平衡校核为
+\[
+  \sum X=0,\qquad \sum Y=0,\qquad \sum M_B=0.
+\]
+\end{solutioncard}
+
+\begin{problemcard}{2-20 由弯矩图反推荷载、剪力图和轴力图}
+已知图示静定刚架的弯矩图，其中曲线段为二次抛物线。试绘图标出作用于刚架上的荷载，并作剪力图和轴力图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.76,>=Stealth]
+  \draw[member] (0,0)--(0,4)--(2,4)--(4,4)--(4,0);
+  \fixedbase{0}{0}
+  \wallroller{4}{0}
+  \node[smallpin] at (2,4) {};
+  \draw[Brand,thick] (0.35,0)--(0.35,4)--(2,4.55)--(4.35,4)--(4.35,0);
+  \node[left] at (0.35,2) {\(2.5\)};
+  \node[above] at (2,4.55) {\(3.5\)};
+  \node[right] at (4.35,1.8) {\(4.5\)};
+  \draw[<->] (0,-0.55)--(2,-0.55) node[midway,below] {\(2m\)};
+  \draw[<->] (2,-0.55)--(4,-0.55) node[midway,below] {\(2m\)};
+  \draw[<->] (4.55,0)--(4.55,2) node[midway,right] {\(2m\)};
+  \draw[<->] (4.55,2)--(4.55,4) node[midway,right] {\(2m\)};
+  \node[below] at (2,-0.9) {已知 \(M\) 图（\(\mathrm{kN\cdot m}\)）};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+由弯矩图斜率突变处确定集中力：
+\[
+  \frac12 F\cdot4=1+5,\qquad F=6\,\mathrm{kN}.
+\]
+由二次抛物线段的弯矩差确定均布荷载：
+\[
+  \frac18 q\cdot4^2=5-1,\qquad q=2\,\mathrm{kN/m}.
+\]
+又由右柱端弯矩得
+\[
+  M_B=2\,\mathrm{kN\cdot m}.
+\]
+对底部支座取矩、列水平平衡，可得
+\[
+  F_{Bx}=4.5\,\mathrm{kN},\qquad F_{Ax}=2.5\,\mathrm{kN}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.76,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(0,3)--(2,3)--(4,3)--(4,0);
+    \draw[Brand,thick] (-0.35,0)--(-0.35,3)--(2,3.35)--(4.35,3)--(4.35,0);
+    \node[left] at (-0.35,1.4) {\(2.5\)};
+    \node[above] at (2,3.35) {\(3.5\)};
+    \node[right] at (4.35,1.4) {\(4.5\)};
+    \node[below] at (2,-0.35) {\(Q\) 图};
+  \end{scope}
+  \begin{scope}[shift={(6,0)}]
+    \draw[member] (0,0)--(0,3)--(2,3)--(4,3)--(4,0);
+    \draw[Brand,thick] (-0.3,0)--(-0.3,3)--(4.3,3)--(4.3,0);
+    \node[left] at (-0.3,1.5) {\(1\)};
+    \node[above] at (2,3) {\(3.5\)};
+    \node[right] at (4.3,1.5) {\(1\)};
+    \node[below] at (2,-0.35) {\(N\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{2-21 不经计算绘弯矩图}
+不经计算，绘制图示结构的弯矩图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8,>=Stealth]
+  \draw[member] (0,0)--(3,0)--(6,0)--(11,0);
+  \wallroller{0}{0}
+  \roller{3}{0}
+  \node[smallpin] at (6,0) {};
+  \roller{11}{0}
+  \draw[Brand,->,thick] (5.7,0.45) arc[start angle=160,end angle=-165,radius=0.34];
+  \node[above] at (5.9,0.75) {\(10\,\mathrm{kN\cdot m}\)};
+  \draw[<->] (0,-0.55)--(3,-0.55) node[midway,below] {\(3m\)};
+  \draw[<->] (3,-0.55)--(6,-0.55) node[midway,below] {\(3m\)};
+  \draw[<->] (6,-0.55)--(11,-0.55) node[midway,below] {\(5m\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+该结构没有横向分布荷载，因此各直杆段弯矩图斜率不变。集中力偶只使弯矩图在该处突跳 \(10\,\mathrm{kN\cdot m}\)，剪力图不发生突变。左端 \(AB\) 段无外荷载且两端约束不形成弯矩，弯矩为零；\(BC\)、\(CD\) 两段为直线图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.86,>=Stealth]
+  \draw[member] (0,0)--(3,0)--(6,0)--(11,0);
+  \draw[Brand,thick] (0,0)--(3,0)--(6,0.70)--(6,0.20)--(11,0);
+  \node[above] at (6,0.70) {\(10\)};
+  \node[below] at (5.5,-0.35) {\(M\) 图};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{problemcard}{2-22 刚架弯矩图}
+试求解图示刚架，并绘制弯矩图。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.64,>=Stealth]
+  \draw[member] (0,0)--(0,3)--(2.5,3)--(2.5,5)--(5,5)--(5,3)--(7.5,3)--(7.5,0);
+  \draw[member] (2.5,3)--(5,3);
+  \roller{0}{0}
+  \wallroller{2.5}{0}
+  \roller{5}{0}
+  \roller{7.5}{0}
+  \node[smallpin] at (3.75,5) {};
+  \draw[Brand,-{Stealth[length=2mm]}] (2.5,3.55)--(3.55,3.55) node[midway,above] {\(F_p\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (5,3.55)--(6.05,3.55) node[midway,above] {\(F_p\)};
+  \draw[Brand,->,thick] (0,3.45) arc[start angle=90,end angle=-250,radius=0.34];
+  \draw[Brand,->,thick] (7.5,3.45) arc[start angle=90,end angle=-250,radius=0.34];
+  \node[left] at (0,3.45) {\(M\)};
+  \node[right] at (7.5,3.45) {\(M\)};
+  \draw[<->] (0,-0.55)--(2.5,-0.55) node[midway,below] {\(3m\)};
+  \draw[<->] (2.5,-0.55)--(5,-0.55) node[midway,below] {\(3m\)};
+  \draw[<->] (5,-0.55)--(7.5,-0.55) node[midway,below] {\(3m\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+结构与荷载关于中间跨对称。先取左右两侧附属部分，水平 \(F_p\) 在柱顶产生 \(F_pa\) 级弯矩；再由对称条件求出 \(A,B\) 两处水平反力。对左侧隔离体取矩：
+\[
+  M_F=F_p\cdot5-F_p\cdot2=3F_p.
+\]
+因此弯矩图的主要控制值为 \(3F_p\)，中间铰处弯矩为零；外侧小跨受端部力偶影响，弯矩图在端部突跳。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.64,>=Stealth]
+  \draw[member] (0,0)--(0,3)--(2.5,3)--(2.5,5)--(5,5)--(5,3)--(7.5,3)--(7.5,0);
+  \draw[member] (2.5,3)--(5,3);
+  \draw[Brand,thick] (0.45,0)--(0.45,3)--(2.5,3.65)--(3.75,5)--(5,3.65)--(7.05,3)--(7.05,0);
+  \node[right] at (0.45,1.5) {\(M\)};
+  \node[above] at (3.75,5) {\(0\)};
+  \node[above] at (2.5,3.65) {\(3F_p\)};
+  \node[above] at (5,3.65) {\(3F_p\)};
+  \node[below] at (3.75,-0.35) {\(M\) 图};
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{notecard}
+第 4 次作业讲解笔记补充：静定刚架作图时，最容易错在“先后顺序”。含中间铰、伸臂或附属杆的结构，先取附属部分；由弯矩图反推荷载时，看三件事：直线斜率代表剪力，抛物线曲率代表均布荷载，竖向突跳代表集中力偶。所有控制值最后都要用 \(\sum X=0,\sum Y=0,\sum M=0\) 回代校核。
+\end{notecard}

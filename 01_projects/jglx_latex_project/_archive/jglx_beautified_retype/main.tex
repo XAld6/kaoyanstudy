@@ -1,0 +1,182 @@
+\documentclass[UTF8,zihao=-4,openany]{ctexbook}
+\usepackage[a4paper,top=2.1cm,bottom=2.2cm,left=2.2cm,right=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{eso-pic}
+\usetikzlibrary{calc,arrows.meta,patterns,decorations.pathmorphing}
+
+\definecolor{Ink}{HTML}{1F2937}
+\definecolor{Muted}{HTML}{64748B}
+\definecolor{Brand}{HTML}{0B6B62}
+\definecolor{BrandDark}{HTML}{0F3F3C}
+\definecolor{Accent}{HTML}{C57A1B}
+\definecolor{Soft}{HTML}{F2FBF8}
+\definecolor{SoftWarm}{HTML}{FFF7ED}
+\definecolor{ProblemBg}{HTML}{FBFCFE}
+\definecolor{Answer}{HTML}{B45309}
+\definecolor{Line}{HTML}{D5DEE8}
+\definecolor{TitleBand}{HTML}{E8EEF5}
+
+\hypersetup{colorlinks=true,linkcolor=BrandDark,urlcolor=BrandDark}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\headheight}{26pt}
+\setlist[enumerate]{leftmargin=2em,itemsep=0.25em,topsep=0.25em}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{结构力学作业精编}
+\fancyhead[R]{\leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{Line}\leaders\hrule height \headrulewidth\hfill}}
+
+\tcbset{
+  enhanced,
+  boxrule=0.5pt,
+  arc=1.2mm,
+  left=8pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt,
+  fonttitle=\bfseries,
+}
+\newtcolorbox{problemcard}[2][]{
+  breakable,
+  colback=ProblemBg,
+  colframe=Line,
+  colbacktitle=TitleBand,
+  title={#2},
+  coltitle=Ink,
+  borderline west={2.8pt}{0pt}{Brand},
+  attach boxed title to top left={xshift=0pt,yshift=0pt},
+  boxed title style={boxrule=0pt,arc=0pt,left=8pt,right=8pt,top=3pt,bottom=3pt},
+  #1
+}
+\newtcolorbox{solutioncard}{
+  breakable,
+  colback=Soft,
+  colframe=BrandDark,
+  colbacktitle=BrandDark,
+  coltitle=white,
+  title={答案与解析}
+}
+\newtcolorbox{notecard}{
+  breakable,
+  colback=SoftWarm,
+  colframe=Accent,
+  colbacktitle=Accent,
+  coltitle=white,
+  title={讲解要点}
+}
+\newcommand{\answer}[1]{\textcolor{Answer}{\bfseries #1}}
+\newcommand{\source}[1]{\textcolor{Muted}{\small #1}}
+\newcommand{\figtitle}[1]{%
+  \node[font=\small,text=Muted,align=center,anchor=north]
+    at ($(current bounding box.south)+(0,-0.18)$) {#1};
+}
+
+\tikzset{
+  member/.style={line width=0.85pt,draw=Ink,line cap=round,line join=round},
+  link/.style={line width=0.75pt,draw=Ink,line cap=round,line join=round},
+  pin/.style={circle,draw=Ink,fill=white,inner sep=1.4pt,line width=0.7pt},
+  smallpin/.style={circle,draw=Ink,fill=white,inner sep=1.05pt,line width=0.65pt},
+  rigid/.style={draw=Ink,pattern=north east lines,pattern color=Ink!45},
+  ground/.style={line width=0.65pt,draw=Ink},
+}
+
+\ctexset{
+  chapter={
+    format={\centering\bfseries\zihao{2}},
+    name={第,章},
+    number=\chinese{chapter},
+    aftername=\quad,
+    beforeskip=18pt,
+    afterskip=28pt
+  },
+  section={
+    format={\bfseries\zihao{3}},
+    beforeskip=1.4em,
+    afterskip=0.8em
+  }
+}
+
+\newcommand{\ground}[2]{%
+  \draw[ground] ($(#1,#2)+(-0.25,0)$)--($(#1,#2)+(0.25,0)$);
+  \foreach \x in {-0.18,-0.06,0.06,0.18}
+    \draw[ground] ($(#1,#2)+(\x,0)$)--($(#1,#2)+(\x-0.08,-0.12)$);
+}
+\newcommand{\roller}[2]{%
+  \node[smallpin] at (#1,#2) {};
+  \draw[ground] ($(#1,#2)+(-0.22,-0.17)$)--($(#1,#2)+(0.22,-0.17)$);
+  \draw[ground] ($(#1,#2)+(-0.16,-0.17)$)--($(#1,#2)+(-0.24,-0.28)$);
+  \draw[ground] ($(#1,#2)+(0,-0.17)$)--($(#1,#2)+(-0.08,-0.28)$);
+  \draw[ground] ($(#1,#2)+(0.16,-0.17)$)--($(#1,#2)+(0.08,-0.28)$);
+}
+\newcommand{\fixedbase}[2]{%
+  \draw[ground] ($(#1,#2)+(-0.26,0)$)--($(#1,#2)+(0.26,0)$);
+  \foreach \x in {-0.18,-0.06,0.06,0.18}
+    \draw[ground] ($(#1,#2)+(\x,0)$)--($(#1,#2)+(\x-0.08,-0.12)$);
+}
+\newcommand{\wallroller}[2]{%
+  \draw[ground] ($(#1,#2)+(-0.18,-0.28)$)--($(#1,#2)+(-0.18,0.28)$);
+  \foreach \y in {-0.18,-0.06,0.06,0.18}
+    \draw[ground] ($(#1,#2)+(-0.18,\y)$)--($(#1,#2)+(-0.30,\y-0.08)$);
+  \node[smallpin] at (#1,#2) {};
+}
+
+\newcommand{\makecleanfront}{%
+  \begin{titlepage}
+  \thispagestyle{empty}
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[BrandDark] (current page.north west) rectangle ([yshift=-8.1cm]current page.north east);
+    \fill[Soft] ([yshift=-8.1cm]current page.north west) rectangle (current page.south east);
+    \draw[Brand,line width=1.2pt] ([xshift=2.1cm,yshift=-8.35cm]current page.north west)--([xshift=-2.1cm,yshift=-8.35cm]current page.north east);
+    \foreach \x in {0,...,9}{
+      \draw[white,opacity=0.09,line width=0.7pt] ([xshift=-1cm+\x*2.3cm,yshift=-0.5cm]current page.north west)--([xshift=4cm+\x*2.3cm,yshift=-7.9cm]current page.north west);
+    }
+  \end{tikzpicture}
+  \vspace*{1.4cm}
+  {\color{white}\zihao{4}\bfseries 结构力学基础与技巧班}\par
+  \vspace{1.2cm}
+  {\color{white}\zihao{0}\bfseries 作业 · 答案 · 讲解笔记}\par
+  \vspace{3.4cm}
+  \begin{tcolorbox}[
+    width=0.82\textwidth,
+    colback=white,
+    colframe=Line,
+    boxrule=0.6pt,
+    arc=1mm,
+    left=14pt,right=14pt,top=13pt,bottom=13pt
+  ]
+  \large
+  本稿按题目、答案、解析和讲解要点重新编排；结构图统一使用 TikZ 绘制，公式与控制值保留为可编辑 LaTeX。
+  \end{tcolorbox}
+  \vfill
+  {\color{Muted}\small 编译方式：XeLaTeX \quad 生成日期：\today}\par
+  \end{titlepage}
+}
+
+\begin{document}
+\makecleanfront
+\frontmatter
+\chapter*{整理说明}
+本稿以可编辑 LaTeX 形式重构题目、答案和讲解要点。题图按原题结构重新绘制，答案中的关键控制值和符号约定统一整理，缺少推导处补充平衡方程与方法说明。
+\tableofcontents
+\mainmatter
+\include{sections/ch01_geometric}
+\include{sections/ch02_reactions}
+\include{sections/ch03_materials}
+\include{sections/ch04_static_beams_frames}
+\include{sections/ch05_static_trusses}
+\include{sections/ch06_composite_structures}
+\include{sections/ch07_three_hinged_arch}
+\include{sections/ch08_influence_lines}
+\end{document}

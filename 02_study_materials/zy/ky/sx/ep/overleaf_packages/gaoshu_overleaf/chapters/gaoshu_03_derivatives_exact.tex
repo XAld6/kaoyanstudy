@@ -1,0 +1,743 @@
+\chapter{高等数学：一元函数微分学}
+
+\section{导数定义、可导性与曲率}
+
+\begin{problemblock}
+\textbf{例1.} 已知函数 \(f(x)\) 在 \(x=1\) 处可导，且
+\[
+\lim_{x\to0}\frac{f(\cos x)-3f(1+\sin^2x)}{x^2}=2,
+\]
+求 \(f'(1)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{分母是 \(x^2\)，先由极限有限推出常数项必须消失，再用 \(\cos x-1\) 与 \(\sin^2x\) 的二阶主部。}
+当 \(x\to0\) 时，分子趋于 \(f(1)-3f(1)=-2f(1)\)。原极限有限，故 \(f(1)=0\)。
+由 \(f\) 在 1 处可导，
+\[
+f(\cos x)=f'(1)(\cos x-1)+o(\cos x-1),\qquad
+f(1+\sin^2x)=f'(1)\sin^2x+o(\sin^2x).
+\]
+又 \(\cos x-1\sim-\frac{x^2}{2}\)，\(\sin^2x\sim x^2\)，所以
+\[
+f(\cos x)-3f(1+\sin^2x)
+=\left(-\frac12-3\right)f'(1)x^2+o(x^2)
+=-\frac72f'(1)x^2+o(x^2).
+\]
+于是 \(-\frac72f'(1)=2\)，故
+\[
+f'(1)=-\frac47.
+\]
+\answer{\(\displaystyle f'(1)=-\frac47\)。}
+\method{方法二（换元主部法）}
+令 \(u=\cos x-1\sim-x^2/2\)，\(v=\sin^2x\sim x^2\)。因为 \(f(1)=0\)，原式等价于
+\[
+\frac{f'(1)u-3f'(1)v}{x^2}\to f'(1)\left(-\frac12-3\right),
+\]
+同样得到 \(f'(1)=-4/7\)。
+\examnote{遇到 \(f(\cos x),f(1+\sin^2x)\)，先把内层都化为“1 加小量”，再用导数定义。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例2.} 设 \(y=f(x)\) 由方程
+\[
+x=\int_1^{y-x}\sin^2\left(\frac{\pi}{4}t\right)dt
+\]
+确定，求
+\[
+\lim_{n\to\infty}n\left(f\left(\frac1n\right)-1\right).
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先求 \(f(0)\)，再对隐式方程求导。极限 \(n(f(1/n)-1)\) 本质就是 \(f'(0)\)。}
+令 \(x=0\)，有
+\[
+0=\int_1^{y} \sin^2\left(\frac{\pi}{4}t\right)dt.
+\]
+被积函数非负且在 \(t=1\) 附近为正，故 \(y=1\)，即 \(f(0)=1\)。
+设
+\[
+H(u)=\int_1^u\sin^2\left(\frac{\pi}{4}t\right)dt,
+\]
+则方程为 \(x=H(f(x)-x)\)。两边对 \(x\) 求导：
+\[
+1=H'(f(x)-x)(f'(x)-1).
+\]
+在 \(x=0\) 处，\(f(0)-0=1\)，且
+\[
+H'(1)=\sin^2\frac\pi4=\frac12.
+\]
+因此
+\[
+1=\frac12(f'(0)-1),\qquad f'(0)=3.
+\]
+于是
+\[
+\lim_{n\to\infty}n\left(f\left(\frac1n\right)-1\right)
+=\lim_{h\to0^+}\frac{f(h)-f(0)}h=f'(0)=3.
+\]
+\answer{\(3\)。}
+\examnote{隐函数给出的极限，常先识别成导数定义；本题的右端积分上限是 \(y-x\)，求导时别漏掉 \(-1\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例3.} 设函数 \(f(x)\) 在 \(x=0\) 处连续，且
+\[
+\lim_{x\to0}\frac{x f(x)-e^{2\sin x}+1}{\ln(1+x)+\ln(1-x)}=-3.
+\]
+证明 \(f(x)\) 在 \(x=0\) 处可导，并求 \(f'(0)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{分母 \(\ln(1-x^2)\sim-x^2\)。分子中先由极限有限确定 \(f(0)\)，再比较一阶差商。}
+由于
+\[
+e^{2\sin x}=1+2x+2x^2+o(x^2),
+\]
+分子为
+\[
+x f(x)-e^{2\sin x}+1=x(f(x)-2)-2x^2+o(x^2).
+\]
+分母
+\[
+\ln(1+x)+\ln(1-x)=\ln(1-x^2)=-x^2+o(x^2).
+\]
+若原极限有限，必须有 \(f(0)=2\)。于是
+\[
+\frac{x f(x)-e^{2\sin x}+1}{\ln(1+x)+\ln(1-x)}
+= -\left(\frac{f(x)-2}{x}-2\right)+o(1).
+\]
+令其极限等于 \(-3\)，得
+\[
+-\lim_{x\to0}\frac{f(x)-2}{x}+2=-3,
+\]
+所以
+\[
+\lim_{x\to0}\frac{f(x)-f(0)}x=5.
+\]
+故 \(f\) 在 0 处可导，且 \(f'(0)=5\)。
+\answer{\(f(0)=2\)，\(\displaystyle f'(0)=5\)。}
+\method{方法二（待定系数法）}
+设连续性给出 \(f(x)=A+Bx+o(x)\)。代入分子得 \((A-2)x+(B-2)x^2+o(x^2)\)。极限有限推出 \(A=2\)，再由 \(-(B-2)=-3\) 得 \(B=5\)。
+\examnote{这类题的关键是“先消掉低阶项”。没有先推出 \(f(0)=2\)，直接谈 \(f'(0)\) 很容易漏逻辑。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例4.} 设
+\[
+f(x)=\begin{cases}
+x^\alpha\sin x^\beta,&x\ne0,\\
+0,&x=0,
+\end{cases}
+\]
+其中 \(\alpha,\beta\) 为常数且 \(\beta<0\)。
+
+(1) \(f(x)\) 在 \([-1,1]\) 上可导但 \(f'(x)\) 在 \([-1,1]\) 上无界，求 \(\alpha,\beta\) 满足的条件；
+
+(2) \(f'(x)\) 在 \([-1,1]\) 上连续，求 \(\alpha,\beta\) 满足的条件。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{振荡来自 \(\sin x^\beta\)，因为 \(\beta<0\)，当 \(x\to0\) 时内层趋于无穷。先看可导性，再看导函数中的最坏项。}
+由导数定义，
+\[
+f'(0)=\lim_{x\to0}\frac{x^\alpha\sin x^\beta}{x}
+=\lim_{x\to0}x^{\alpha-1}\sin x^\beta.
+\]
+该极限存在且为 0 的条件是 \(\alpha>1\)。
+当 \(x\ne0\) 时，
+\[
+f'(x)=\alpha x^{\alpha-1}\sin x^\beta+\beta x^{\alpha+\beta-1}\cos x^\beta.
+\]
+第一项在 \(\alpha>1\) 时趋于 0；第二项决定有界性和连续性。
+
+(1) 要 \(f\) 可导，需 \(\alpha>1\)。要 \(f'\) 无界，需
+\[
+\alpha+\beta-1<0,
+\]
+即 \(\alpha+\beta<1\)。
+
+(2) 要 \(f'\) 在 0 处连续，需第二项也趋于 0，即
+\[
+\alpha+\beta-1>0.
+\]
+由于 \(\beta<0\)，这自动推出 \(\alpha>1\)。
+\answer{(1) \(\alpha>1,\ \alpha+\beta<1\)；(2) \(\alpha+\beta>1\)（且题设 \(\beta<0\)）。}
+\examnote{振荡函数 \(x^p\sin x^\beta\) 中，\(p>0\) 控制连续，\(p>1\) 控制可导；求导后要额外检查链式法则带来的 \(x^{\beta-1}\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例5.} \(f(x)\) 在 \(x=0\) 处可导，且 \(f(x)\) 为偶函数，求 \(f'(0)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{偶函数图像关于 \(y\) 轴对称，若在对称轴处可导，切线只能水平。}
+由偶函数性质 \(f(-x)=f(x)\)。于是
+\[
+f'(0)=\lim_{x\to0}\frac{f(x)-f(0)}x,
+\]
+同时令 \(x\mapsto -x\)，得
+\[
+f'(0)=\lim_{x\to0}\frac{f(-x)-f(0)}{-x}
+=-\lim_{x\to0}\frac{f(x)-f(0)}x=-f'(0).
+\]
+故 \(f'(0)=0\)。
+\answer{\(0\)。}
+\examnote{奇偶性与可导结合时，偶函数在 0 处导数为 0；奇函数若可导，则导函数为偶函数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例6.} 设
+\[
+f(x)=(x-1)\sqrt{\frac{1-\sin x}{1+\cos x}}\cdot x^{x^2},
+\]
+求 \(f'(1)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{函数含有因子 \((x-1)\)。求 \(x=1\) 处导数时，只需取其余因子在 1 处的值。}
+记
+\[
+h(x)=\sqrt{\frac{1-\sin x}{1+\cos x}}\cdot x^{x^2}.
+\]
+则 \(f(x)=(x-1)h(x)\)，且 \(h\) 在 \(x=1\) 处连续。因此
+\[
+f'(1)=h(1).
+\]
+又 \(1^{1}=1\)，所以
+\[
+f'(1)=\sqrt{\frac{1-\sin 1}{1+\cos 1}}.
+\]
+\answer{\(\displaystyle \sqrt{\frac{1-\sin1}{1+\cos1}}\)。}
+\examnote{乘积中有 \((x-a)\) 因子时，\([(x-a)h(x)]'_{x=a}=h(a)\)，这是考场快速题。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例7.} 证明：\(f(x)\) 在 \(x=x_0\) 处可导，\(g(x)\) 在 \(x=x_0\) 处连续但不可导，则
+\[
+F(x)=f(x)g(x)
+\]
+在 \(x=x_0\) 处可导当且仅当 \(f(x_0)=0\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{充分性用导数定义；必要性用反证：若 \(f(x_0)\ne0\)，则可由商 \(g=F/f\) 推出 \(g\) 可导。}
+先证充分性。若 \(f(x_0)=0\)，则
+\[
+\frac{F(x)-F(x_0)}{x-x_0}
+=\frac{f(x)g(x)}{x-x_0}
+=\frac{f(x)-f(x_0)}{x-x_0}\,g(x).
+\]
+令 \(x\to x_0\)，由 \(f\) 可导、\(g\) 连续，得极限
+\[
+f'(x_0)g(x_0),
+\]
+所以 \(F\) 可导。
+
+再证必要性。若 \(F\) 在 \(x_0\) 处可导且 \(f(x_0)\ne0\)，由于 \(f\) 可导从而连续，故 \(f\) 在 \(x_0\) 附近不为 0。于是
+\[
+g(x)=\frac{F(x)}{f(x)}.
+\]
+右端是两个在 \(x_0\) 处可导函数的商，分母非零，故 \(g\) 在 \(x_0\) 处可导，与题设矛盾。因此必须 \(f(x_0)=0\)。
+\answer{\(F\) 在 \(x_0\) 处可导 \(\Longleftrightarrow f(x_0)=0\)。}
+\examnote{“乘积可导但其中一个因子不可导”时，另一个因子必须在该点提供零因子来消掉不可导性。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例8.} 求
+\[
+F(x)=(x^2-x-2)|x^3-x|
+\]
+的不可导点。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{绝对值 \(|h(x)|\) 在 \(h\) 的单根处通常不可导；若外面还有零因子，可能把尖点消掉。}
+令
+\[
+h(x)=x^3-x=x(x-1)(x+1),
+\]
+其零点为 \(-1,0,1\)，且都是单根。外因子
+\[
+x^2-x-2=(x-2)(x+1).
+\]
+在 \(x=0,1\) 处外因子不为 0，因此 \(|h(x)|\) 的尖点保留，\(F\) 不可导。
+在 \(x=-1\) 处外因子也有因子 \((x+1)\)。局部看
+\[
+F(x)\sim C(x+1)|x+1|,
+\]
+而 \((x+1)|x+1|\) 在 \(-1\) 处导数存在且为 0，所以 \(-1\) 不是不可导点。
+\answer{不可导点为 \(x=0,1\)。}
+\method{方法二（分段法）}
+也可按 \(x^3-x\) 的符号在区间 \((-
+\infty,-1),(-1,0),(0,1),(1,+\infty)\) 上拆去绝对值，再只检查连接点 \(-1,0,1\)。
+\examnote{绝对值题不要只看到 \(|\cdot|\) 的零点就全选；还要看外因子是否把尖点乘平。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例9.} 设 \(f(x)=3x^3+x^2|x|\)，则使得 \(f^{(n)}(0)\) 存在的最高阶数为（\quad）
+
+A. 0 \qquad B. 1 \qquad C. 2 \qquad D. 3
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把含绝对值函数按 \(x\ge0\) 与 \(x<0\) 分段，比较左右高阶导数。}
+当 \(x>0\) 时，\(f(x)=3x^3+x^3=4x^3\)；当 \(x<0\) 时，\(f(x)=3x^3-x^3=2x^3\)。
+所以
+\[
+f'(0)=0,
+\]
+且左右一阶导数都趋于 0；二阶导数在 0 处也存在且为 0。
+但三阶导数：右侧三阶导为 \(24\)，左侧三阶导为 \(12\)，左右不相等，故 \(f^{(3)}(0)\) 不存在。
+\answer{C。最高阶数为 \(2\)。}
+\examnote{形如 \(x^m|x|\) 的函数，在 0 附近等于左右系数不同的幂函数；最高可导阶通常卡在幂次处。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例10.} \(f(0)=0\)，则 \(f(x)\) 在 \(x=0\) 处可导的充分必要条件为（\quad）
+
+A. \(\displaystyle\lim_{h\to0}\frac{f(1-\cos h)}{h^2}\) 存在；
+B. \(\displaystyle\lim_{h\to0}\frac{f(1-e^h)}{h}\) 存在；
+
+C. \(\displaystyle\lim_{h\to0}\frac{f(h-\sinh h)}{h^2}\) 存在；
+D. \(\displaystyle\lim_{h\to\infty}\frac{f(2h)-f(h)}h\) 存在。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{可导等价于 \(\lim_{t\to0}f(t)/t\) 存在。看每个选项中的内层变量是否能等价覆盖 \(t\to0\) 的双侧邻域。}
+因为 \(f(0)=0\)，\(f\) 在 0 处可导等价于
+\[
+\lim_{t\to0}\frac{f(t)}t
+\]
+存在。
+
+B 中令 \(t=1-e^h\)，则 \(h\to0\) 时 \(t\to0\)，且
+\[
+t=1-e^h\sim-h.
+\]
+并且该变换在 0 附近一一覆盖 0 的双侧邻域。因此
+\[
+\frac{f(1-e^h)}h
+=\frac{f(t)}t\cdot\frac{t}{h}\to -f'(0),
+\]
+存在性与 \(f'(0)\) 存在等价。
+A 只对应 \(1-
+\cos h\le0\)，主要检测单侧；C 中 \(h-\sinh h\sim-h^3/6\)，分母却是 \(h^2\)，不能等价为导数；D 与 \(x\to0\) 无关。
+\answer{B。}
+\method{方法二（反例排除）}
+A 可取左右导数不同但左导数存在的函数排除；C 可取 \(f(t)=|t|^{2/3}\) 一类使选项极限存在但导数不存在；D 只约束无穷远处，不影响 0 点可导性。
+\examnote{充分必要条件题要抓“变量替换是否双侧、同阶、可逆”。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例11.} 设函数 \(f(x)\) 连续，给出下列四个条件：
+\[
+\begin{array}{ll}
+①\ \displaystyle\lim_{x\to0}\frac{|f(x)|-f(0)}x\text{ 存在},&
+②\ \displaystyle\lim_{x\to0}\frac{f(x)-|f(0)|}x\text{ 存在},\\[2mm]
+③\ \displaystyle\lim_{x\to0}\frac{|f(x)|}x\text{ 存在},&
+④\ \displaystyle\lim_{x\to0}\frac{|f(x)|-|f(0)|}x\text{ 存在}.
+\end{array}
+\]
+能得到 \(f(x)\) 在 \(x=0\) 处可导的条件个数是（\quad）
+
+A. 1 \qquad B. 2 \qquad C. 3 \qquad D. 4
+\end{problemblock}
+\begin{solutionblock}
+\analysis{分 \(f(0)>0,f(0)=0,f(0)<0\) 讨论。绝对值在非零点附近可去掉；在零点处，双侧极限会迫使差商为 0。}
+①若极限存在，则必须 \(|f(0)|-f(0)=0\)，即 \(f(0)\ge0\)。若 \(f(0)>0\)，连续性保证 \(|f(x)|=f(x)\)，于是 \(f'(0)\) 存在；若 \(f(0)=0\)，则 \(|f(x)|/x\) 双侧极限存在，只能为 0，从而 \(|f(x)|=o(|x|)\)，故 \(f(x)/x\to0\)。①可推出可导。
+
+②若 \(f(0)>0\)，它就是 \((f(x)-f(0))/x\)；若 \(f(0)=0\)，它就是 \(f(x)/x\)；若 \(f(0)<0\)，分子极限非零，不可能有有限极限。故②可推出可导。
+
+③极限存在时，连续性迫使 \(f(0)=0\)。又 \(|f(x)|/x\) 双侧极限存在只能为 0，因此 \(f(x)/x\to0\)，可导。
+
+④若 \(f(0)\ne0\)，绝对值在 0 附近等于 \(\pm f(x)\)，可推出 \(f'(0)\) 存在；若 \(f(0)=0\)，同③。故④也可推出可导。
+\answer{D。四个条件均可推出 \(f\) 在 0 处可导。}
+\examnote{绝对值差商的双侧极限非常强：当中心值为 0 时，左右符号相反会迫使极限只能为 0。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例12.} 设
+\[
+\lim_{x\to x_0^+}f'(x)=\lim_{x\to x_0^-}f'(x)=a,
+\]
+则（\quad）
+
+A. \(f(x)\) 在 \(x=x_0\) 处必连续，但未必可导；
+B. \(f(x)\) 在 \(x=x_0\) 处必可导且 \(f'(x_0)=a\)；
+
+C. \(f(x)\) 在 \(x=x_0\) 处必有极限但未必连续；
+D. 以上结论均不对。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{导函数在去心邻域有极限，可以控制 \(f(x)\) 的去心极限；但不能控制 \(f(x_0)\) 本身是否等于该极限。}
+对 \(x\) 与 \(y\) 位于 \(x_0\) 同侧并趋于 \(x_0\)，由中值定理
+\[
+\frac{f(x)-f(y)}{x-y}=f'(\xi)	o a.
+\]
+可知 \(f(x)\) 在 \(x\to x_0^+\) 和 \(x\to x_0^-\) 时都有有限极限，且两侧极限一致，因此 \(\lim_{x\to x_0}f(x)\) 存在。
+但 \(f(x_0)\) 可以另行定义。例如
+\[
+f(x)=x\ (x\ne0),\qquad f(0)=1,
+\]
+则 \(f'(x)=1\ (x\ne0)\)，两侧导数极限都为 1，但 \(f\) 在 0 处不连续，更不可导。
+\answer{C。}
+\examnote{去心邻域的导数信息不能自动修复中心点函数值；连续性仍要单独检查。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例13.} 设函数 \(f(x)\) 在 \((-
+\infty,+\infty)\) 内有定义，在 \((-
+\infty,0)\cup(0,+\infty)\) 内可导，且 \(\lim_{x\to0}f'(x)\) 存在，则 \(f(x)\) 在 \(x=0\) 处可导的一个充分条件是（\quad）
+
+A. \(\displaystyle\lim_{x\to0}\frac{f(x)}x\) 存在；
+B. \(\displaystyle\lim_{x\to0}\frac{f'(x)}x\) 存在；
+
+C. \(f(x)\) 在 \(x=0\) 处连续；
+D. \(\displaystyle\int_0^x f(t)dt\) 在 \(x=0\) 处可导。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{若中心点连续，再配合去心导数极限存在，就能用中值定理推出导数存在。其他选项都不能保证 \(f(0)\) 与去心极限相等。}
+若 C 成立，即 \(f\) 在 0 处连续。对 \(x\ne0\)，由拉格朗日中值定理，存在 \(\xi\) 介于 0 与 \(x\) 之间，使
+\[
+\frac{f(x)-f(0)}x=f'(\xi).
+\]
+当 \(x\to0\) 时，\(\xi\to0\)，且 \(\lim_{t\to0}f'(t)\) 存在，所以差商极限存在，\(f\) 在 0 处可导。
+A、B 都无法排除人为改变 \(f(0)\) 造成的不连续；D 只是积分平均意义上的条件，也不足以推出原函数在 0 处可导。
+\answer{C。}
+\examnote{“去心可导 + 导数极限存在”还差一个中心连续性，才能推出中心可导。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例14.} 设 \(f(x)\) 在 \(x=0\) 的邻域内二阶可导，曲线 \(y=f(x)\) 在 \((0,0)\) 处的曲率圆方程为
+\[
+(x-1)^2+(y-1)^2=2,
+\]
+求 \(f''(0)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{曲率圆圆心为 \((1,1)\)，半径为 \(\sqrt2\)。半径方向与切线垂直，先由几何确定切线斜率，再用曲率公式。}
+圆心 \((1,1)\) 到切点 \((0,0)\) 的半径向量为 \((-1,-1)\)，斜率为 1，因此切线斜率为 \(-1\)，即
+\[
+f'(0)=-1.
+\]
+曲率半径 \(R=\sqrt2\)，故曲率
+\[
+\kappa=\frac1R=\frac1{\sqrt2}.
+\]
+图形的主法向从 \((0,0)\) 指向 \((1,1)\)，与图像在 \(f'(0)=-1\) 时的正法向一致，因此取正号。由
+\[
+\kappa=\frac{f''(0)}{(1+[f'(0)]^2)^{3/2}},
+\]
+得
+\[
+f''(0)=\frac1{\sqrt2}(1+1)^{3/2}=2.
+\]
+\answer{\(2\)。}
+\method{方法二（密切圆方向法）}
+也可直接用有向曲率半径：中心位于单位法向 \((1,1)/\sqrt2\) 方向，故有向半径为 \(\sqrt2\)，有向曲率为 \(1/\sqrt2\)，代入同一公式得 \(f''(0)=2\)。
+\examnote{曲率圆题要同时确定曲率大小和符号；只用半径只能得到 \(|f''(0)|\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例15.} 曲线
+\[
+e^x+6xy+y^2-1=0
+\]
+在点 \((0,0)\) 处的曲率半径为多少？
+\end{problemblock}
+\begin{solutionblock}
+\analysis{在 \((0,0)\) 处 \(F_y=0,F_x\ne0\)，曲线切线为竖直方向，宜把 \(x\) 看作 \(y\) 的函数。}
+将 \(x\) 写成 \(x=\varphi(y)\)。在 \((0,0)\) 附近设
+\[
+x=ay^2+o(y^2),
+\]
+因为切线竖直，所以没有一次项。代入
+\[
+e^x+6xy+y^2-1=0.
+\]
+由 \(e^x=1+x+o(x)\)，且 \(xy=O(y^3)\)，得
+\[
+1+ay^2+y^2-1+o(y^2)=0,
+\]
+故 \(a=-1\)。于是
+\[
+x=-y^2+o(y^2),\qquad \varphi''(0)=-2.
+\]
+对曲线 \(x=\varphi(y)\)，曲率
+\[
+\kappa=\frac{|\varphi''(0)|}{(1+[\varphi'(0)]^2)^{3/2}}=2.
+\]
+所以曲率半径
+\[
+R=\frac1\kappa=\frac12.
+\]
+\answer{\(\displaystyle \frac12\)。}
+\method{方法二（隐函数求导）}
+也可对 \(F(x,y)=0\) 视作 \(x=\varphi(y)\) 求导：\(F_x\varphi'+F_y=0\) 得 \(\varphi'(0)=0\)；再求导得 \(F_x\varphi''+F_{yy}=0\)，即 \(1\cdot\varphi''+2=0\)，故 \(\varphi''=-2\)。
+\examnote{遇到竖直切线，换成 \(x=x(y)\) 计算曲率，能避免 \(y'\) 无穷大的麻烦。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例16.} 设函数 \(f(x),g(x)\) 在 \(x=0\) 处二阶导数连续，则
+\[
+\lim_{x\to0}\frac{f(x)-g(x)}{x^2}=0
+\]
+是两曲线 \(y=f(x),y=g(x)\) 在 \(x=0\) 对应的点处相切及曲率相等的（\quad）
+
+A. 充分不必要条件 \qquad B. 充分必要条件
+
+C. 必要不充分条件 \qquad D. 既不必要也不充分条件
+\end{problemblock}
+\begin{solutionblock}
+\analysis{极限为 0 会推出函数值、一阶导数、二阶导数都相等，因此足够；但曲率是非负量，只要求二阶导数绝对意义相配，不一定要求二阶导数相等。}
+由 Taylor 展开，
+\[
+f(x)-g(x)=[f(0)-g(0)]+[f'(0)-g'(0)]x+\frac{1}{2}[f''(0)-g''(0)]x^2+o(x^2).
+\]
+若
+\[
+\frac{f(x)-g(x)}{x^2}	o0,
+\]
+则必须有
+\[
+f(0)=g(0),\quad f'(0)=g'(0),\quad f''(0)=g''(0).
+\]
+这显然推出两曲线在对应点处相切，且曲率
+\[
+\kappa=\frac{|y''|}{(1+(y')^2)^{3/2}}
+\]
+相等。因此该条件充分。
+但它不必要。例如 \(f(x)=x^2,\ g(x)=-x^2\)，两曲线在 0 处有同一点、同切线，曲率都为 2；但
+\[
+\frac{f(x)-g(x)}{x^2}=2\not\to0.
+\]
+\answer{A。充分不必要条件。}
+\examnote{“曲率相等”通常指曲率大小相等，不含凹向符号；而二阶 Taylor 主项相等比曲率相等更强。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例17.} 设曲线 \(L\) 由参数方程
+\[
+\begin{cases}
+x=\frac13t^3+t^2+t,\\
+y=t^4,
+\end{cases}\qquad (t\ge -2)
+\]
+确定，则曲线上的拐点是哪里？
+\end{problemblock}
+\begin{solutionblock}
+\analysis{参数曲线的凹向由 \(d^2y/dx^2\) 的符号判断，注意 \(x'(t)=0\) 处可能是竖直切线，也可能发生凹向改变。}
+计算
+\[
+x'(t)=t^2+2t+1=(t+1)^2,
+\quad x''(t)=2(t+1),
+\]
+\[
+y'(t)=4t^3,
+\quad y''(t)=12t^2.
+\]
+当 \(t\ne-1\) 时，
+\[
+\frac{d^2y}{dx^2}
+=\frac{x'y''-y'x''}{(x')^3}
+=\frac{4t^2(t+1)(t+3)}{(t+1)^6}
+=\frac{4t^2(t+3)}{(t+1)^5}.
+\]
+在区间 \(t\ge-2\) 内，\(t=-1\) 两侧该式符号由负变正；\(t=0\) 虽使二阶导为 0，但符号不变。因此拐点对应 \(t=-1\)。
+代回得
+\[
+x=\frac13(-1)^3+(-1)^2-1=-\frac13,
+\qquad y=(-1)^4=1.
+\]
+\answer{\(\displaystyle\left(-\frac13,1\right)\)。}
+\examnote{参数方程题不要只解 \(d^2y/dx^2=0\)，还要检查 \(x'(t)=0\) 的竖直切线点和符号变化。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例18.} 设
+\[
+e^y=3+7x-6x^2,
+\]
+求 \(y^{(n)}\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先对右端二次式因式分解，把 \(y\) 化成对数之和，再使用 \(\ln(1+ax)\) 的高阶导数公式。}
+由
+\[
+3+7x-6x^2=3(1+3x)\left(1-\frac23x\right),
+\]
+得
+\[
+y=\ln3+
+\ln(1+3x)+\ln\left(1-\frac23x\right).
+\]
+对 \(n\ge1\)，
+\[
+\frac{d^n}{dx^n}\ln(1+ax)=(-1)^{n-1}(n-1)!\frac{a^n}{(1+ax)^n},
+\]
+\[
+\frac{d^n}{dx^n}\ln(1-bx)=-(n-1)!\frac{b^n}{(1-bx)^n}.
+\]
+因此
+\[
+y^{(n)}=(n-1)!\left[(-1)^{n-1}\frac{3^n}{(1+3x)^n}
+-\frac{(2/3)^n}{\left(1-\frac{2}{3}x\right)^n}\right].
+\]
+若题目要求在 \(x=0\) 处的值，则
+\[
+y^{(n)}(0)=(n-1)!\left[(-1)^{n-1}3^n-\left(\frac23\right)^n\right].
+\]
+\answer{\(\displaystyle y^{(n)}=(n-1)!\left[(-1)^{n-1}\frac{3^n}{(1+3x)^n}-\frac{(2/3)^n}{(1-2x/3)^n}\right]\)。}
+\examnote{高阶导数题先拆成基本函数；对数型最常用的是 \(\ln(1+ax)\) 的公式。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例19.} 函数 \(y=y(x)\) 由方程
+\[
+|x|y+e^y=e
+\]
+确定，则下列关于点 \(x=0\) 的说法正确的是（\quad）
+
+A. 不可导点，\(y(0)\) 是极大值；
+B. 不可导点，\(y(0)\) 不是极值；
+
+C. 可导点，\(y(0)\) 不是极值；
+D. 可导点，\(y(0)\) 是极大值。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{绝对值使左右导数不同。先求 \(y(0)\)，再分别在 \(x>0\)、\(x<0\) 两侧求导。}
+令 \(x=0\)，得 \(e^{y(0)}=e\)，所以 \(y(0)=1\)。
+当 \(x>0\) 时，方程为
+\[
+xy+e^y=e.
+\]
+求导得
+\[
+y+xy'+e^y y'=0,
+\]
+令 \(x\to0^+\)，得
+\[
+1+e y'_+(0)=0,
+\qquad y'_+(0)=-\frac1e.
+\]
+当 \(x<0\) 时，方程为
+\[
+-xy+e^y=e.
+\]
+求导得
+\[
+-y-xy'+e^y y'=0,
+\]
+令 \(x\to0^-\)，得
+\[
+-1+e y'_-(0)=0,
+\qquad y'_-(0)=\frac1e.
+\]
+左右导数不等，故不可导。又左侧靠近 0 时 \(y\) 随 \(x\) 增大而增大，右侧靠近 0 时 \(y\) 随 \(x\) 增大而减小，所以 \(y(0)=1\) 是极大值。
+\answer{A。}
+\examnote{含 \(|x|\) 的隐函数题必须左右分开求导，不能直接把 \(|x|\) 当普通可导函数处理。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例20.} \(f(x)\) 在 \(x=0\) 的邻域内有定义，去心邻域内可导，则下列说法中正确的是（\quad）
+
+A. 若 \(\displaystyle\lim_{x\to0}\frac{f(x)}x=m\)，则 \(\displaystyle\lim_{x\to0}f(x)=0\) 且 \(f'(0)=m\)；
+
+B. 若 \(\displaystyle\lim_{x\to0}f(x)=0\) 且 \(f'(0)=m\)，则 \(\displaystyle\lim_{x\to0}\frac{f(x)}x=m\)；
+
+C. 若 \(\displaystyle\lim_{x\to0}\frac{f(x)}{x^2}=m\)，则 \(\displaystyle\lim_{x\to0}\frac{f'(x)}x=2m\)；
+
+D. 若 \(\displaystyle\lim_{x\to0}\frac{f'(x)}x=2m\)，则 \(\displaystyle\lim_{x\to0}\frac{f(x)}{x^2}=m\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{本题考查“函数极限、导数、洛必达逆命题”的逻辑强弱。只要中心函数值未被控制，很多看似自然的命题都不成立。}
+B 正确。若 \(f'(0)=m\)，则 \(f\) 在 0 处连续，所以 \(f(0)=\lim_{x\to0}f(x)=0\)。由导数定义
+\[
+\lim_{x\to0}\frac{f(x)}x
+=\lim_{x\to0}\frac{f(x)-f(0)}{x-0}=f'(0)=m.
+\]
+A 错在未给 \(f(0)=0\)。例如令 \(f(x)=mx\ (x\ne0), f(0)=1\)，则 \(f(x)/x\to m\)，但 \(f\) 在 0 处不可导。
+C 是洛必达逆命题，错误；可构造 \(f(x)=mx^2+x^3\sin(1/x^2)\) 破坏 \(f'(x)/x\) 的极限。
+D 同样缺少中心值控制。即使 \(f'(x)/x\to2m\)，也可能有非零常数项，使 \(f(x)/x^2\) 不存在。
+\answer{B。}
+\examnote{洛必达法则不能随便反用；涉及 \(f'(0)\) 时还必须核对 \(f(0)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例21.} 设函数 \(f(x)\) 二阶可导，则（\quad）
+
+A. 若 \(f(x)\) 在 \(x=x_0\) 的某邻域内严格单调递增，则 \(f'(x_0)>0\)；
+
+B. 若 \(f''(x_0)>0\)，则 \(f(x)\) 在 \(x=x_0\) 的某邻域内是凹的；
+
+C. 若 \((x_0,f(x_0))\) 是 \(f(x)\) 的拐点，则 \(x=x_0\) 是 \(f'(x)\) 的极值点；
+
+D. 若 \(x=x_0\) 是 \(f'(x)\) 的极值点，则 \((x_0,f(x_0))\) 是 \(f(x)\) 的拐点。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{按考研常用定义，拐点对应凹凸性改变，也就是 \(f'\) 的单调性在该点两侧发生由增到减或由减到增的变化。}
+A 错。例如 \(f(x)=x^3\) 在 0 附近严格递增，但 \(f'(0)=0\)。
+B 错。仅有某一点 \(f''(x_0)>0\) 不足以推出某邻域内 \(f''>0\)，除非额外给出 \(f''\) 连续。
+C 正确。拐点意味着曲线凹凸性改变；对可导函数来说，就是 \(f'\) 在该点两侧的单调性发生改变，因此 \(f'\) 在 \(x_0\) 处取得局部极值。
+D 不作为必然结论。\(f'\) 在一点有极值若缺少凹凸性改变的严格条件，不能直接推出该点一定为拐点。
+\answer{C。}
+\examnote{本题按教材型“凹凸性与导函数单调性”的对应关系判断；点值条件如 \(f''(x_0)>0\) 不能代替邻域条件。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例22.} 曲线
+\[
+y=(x-1)(x-2)^2(x-3)^3(x-4)^4
+\]
+的拐点是（\quad）
+
+A. \((1,0)\) \qquad B. \((2,0)\) \qquad C. \((3,0)\) \qquad D. \((4,0)\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{候选点都是零点，但拐点要看二阶导或凹凸性是否变号，不能只看函数是否过轴。}
+设
+\[
+y=(x-a)^m\phi(x),\qquad \phi(a)\ne0.
+\]
+若 \(m\ge3\) 为奇数，则在 \(x=a\) 附近二阶导的主部含 \((x-a)^{m-2}\)，会随 \(x-a\) 变号，通常产生拐点。
+本题各根重数分别为
+\[
+1,2,3,4.
+\]
+只有 \(x=3\) 是奇重数且重数至少为 3 的零点。直接看局部主部：
+\[
+y\sim C(x-3)^3\quad(C\ne0),
+\]
+故二阶导主部 \(6C(x-3)\) 变号，\((3,0)\) 为拐点。其他点不满足凹凸性变号。
+\answer{C。\((3,0)\)。}
+\examnote{多项式零点判拐点时，三重根、五重根等奇重高阶根最敏感；单根只是穿轴，不一定是拐点。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例23.} 设 \(y=f(x)\) 在 \((-
+\infty,\infty)\) 上连续，且其导函数 \(f'(x)\) 的图像如原图所示，其中 \(x=0\) 和 \(x=x_5\) 是 \(f'(x)\) 的铅直渐近线。求 \(y=f(x)\) 极值点的个数与拐点的个数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{极值看 \(f'\) 的符号变化；拐点看 \(f'\) 的增减变化，即 \(f''\) 的符号变化。铅直渐近线也要检查两侧符号或增减是否发生改变。}
+由图像可读出：\(f'\) 在 \(x_1\) 处由正变负，\(f\) 有极大值；在 \(x_3\) 处由负变正，\(f\) 有极小值；在 \(x=0\) 左侧 \(f'>0\)、右侧 \(f'<0\)，且 \(f\) 连续，故 \(x=0\) 也是极大值点；在 \(x_4\) 处 \(f'\) 由负变正，故有极小值。\(x_6\) 处 \(f'=0\) 但两侧符号不变，不是极值点。
+所以极值点共
+\[
+4\text{ 个}.
+\]
+拐点看 \(f'\) 的增减：左侧抛物线在 \(x_2\) 处由减变增，对应一个拐点；在 \(x=x_5\) 处，\(f'\) 左侧增至 \(+\infty\)，右侧从 \(+\infty\) 减小，凹凸性改变；在 \(x_6\) 处 \(f'\) 由减变增，又对应一个拐点。\(x=0\) 两侧 \(f'\) 都表现为递增，不产生凹凸性改变。
+故拐点共
+\[
+3\text{ 个}.
+\]
+\answer{极值点 \(4\) 个，拐点 \(3\) 个。}
+\examnote{看 \(f'\) 图像：过零且变号对应 \(f\) 极值；\(f'\) 的极值或增减性改变对应 \(f\) 拐点。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例24.} 函数 \(y=f(x)\) 在 \((-
+\infty,+\infty)\) 内连续，其二阶导函数的图像如原图所示，则 \(y=f(x)\) 的拐点个数是（\quad）
+
+A. 1 \qquad B. 2 \qquad C. 3 \qquad D. 4
+\end{problemblock}
+\begin{solutionblock}
+\analysis{直接看 \(f''\) 的符号变化。\(f''=0\) 但不变号的点不是拐点；\(f''\) 不存在但两侧变号的点也可能是拐点。}
+由图可见：在 \(x_1\) 附近，\(f''\) 从负变正，产生一个拐点；在 \(x_3\) 处，\(f''=0\) 但左右同为正，不产生拐点；在 \(x=0\) 附近，\(f''\) 左侧为正、右侧为负，凹凸性改变，产生一个拐点；在 \(x_4\) 处，\(f''\) 从负变正，产生一个拐点。
+所以拐点共有
+\[
+3\text{ 个}.
+\]
+\answer{C。}
+\examnote{拐点判定只认凹凸性变号；单纯 \(f''=0\) 或图像碰到坐标轴但不穿过，都不能算。}
+\end{solutionblock}

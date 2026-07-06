@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% from "_macros.html" import risk_badge %}
+{% block title %}识别结果{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <p class="eyebrow">Detection Result</p>
+    <h1>识别结果</h1>
+    <p class="subtle">{{ record.original_filename }} · {{ record.created_at }}</p>
+  </div>
+  {{ risk_badge(record.risk_level, record.risk_label) }}
+</section>
+
+<section class="image-compare">
+  <div class="panel">
+    <h2>原始图片</h2>
+    <img src="{{ record.image_path }}" alt="原始外墙图片">
+  </div>
+  <div class="panel">
+    <h2>AI 标注结果</h2>
+    <img src="{{ record.result_path }}" alt="AI 标注结果">
+  </div>
+</section>
+
+<section class="panel">
+  <div class="section-title">
+    <h2>隐患明细</h2>
+    <span>推理引擎：{{ record.engine }}</span>
+  </div>
+  {% if record.detections %}
+  <table>
+    <thead>
+      <tr>
+        <th>类型</th>
+        <th>置信度</th>
+        <th>面积占比</th>
+        <th>风险等级</th>
+        <th>位置框</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in record.detections %}
+      <tr>
+        <td>{{ item.label }}</td>
+        <td>{{ "%.2f"|format(item.confidence) }}</td>
+        <td>{{ "%.2f"|format(item.area_ratio * 100) }}%</td>
+        <td>{{ risk_labels.get(item.risk_level, item.risk_level) }}</td>
+        <td>{{ item.bbox }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="empty">未检测到明显外墙隐患，建议结合人工巡检复核。</p>
+  {% endif %}
+  {% if record.risk_level in ["high", "urgent"] %}
+  <p class="notice">该记录已自动生成维修工单，可在“维修工单”页面跟踪处理状态。</p>
+  {% endif %}
+</section>
+{% endblock %}

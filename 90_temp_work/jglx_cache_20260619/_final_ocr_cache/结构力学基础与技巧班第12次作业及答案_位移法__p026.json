@@ -1,0 +1,7 @@
+{
+  "source": "D:\\xm\\zy\\jglx\\6.作业&答案\\结构力学基础与技巧班第12次作业及答案（位移法）.pdf",
+  "page": 26,
+  "method": "pdf-text",
+  "text": "6-32\n解：可将支座位移分解为正对称加反对称两种情况，其中正对称下没有弯矩可不\n考虑，取反对称半结构，位移法基本体系如图（a）所示。其中竖杆为剪力静定\n杆，可不考虑线位移为基本未知量。画出\n1\nM 图和\nC\nM 图，如图（b）（c）所示。\n位移法方程为11\n1\n1C\n0\nr X\nR\n+\n=\n。各系数和自由项为：11\n13\nr\ni\n=\n,\n1C\n12i\nR\nl\n\\Delta\n=\n。将系数\n和自由项代入位移法方程，得\n1\n12\n13\n0\ni\niX\nl\n\\Delta\n+\n=\n，解方程得\n1\n12\n13\nX\nl\n\\Delta\n=\n。利用叠加公\n式M=\n1\n1\nC\nM\nM X +\n，M 图如图（d）所示。\n6-33\n解：结构有3 个独立位移，加上三个附加约束，画出基本体系[见图(a)]。画出\n1\nM 、\n2\nM 、\n3\nM 图和\nP\nM 图[见图(b)~(e)]，列出位移法方程\n\n\n\n=\n+\n+\n+\n=\n+\n+\n+\n=\n+\n+\n+\n0\n0\n0\n3\n3\n33\n2\n32\n1\n31\n2\n3\n23\n2\n22\n1\n21\n1\n3\n13\n2\n12\n1\n11\nP\nP\nP\nR\nX\nr\nX\nr\nX\nr\nR\nX\nr\nX\nr\nX\nr\nR\nX\nr\nX\nr\nX\nr\n计算刚度系数和自由项，即\nl\nEI\nr\n8\n11 =\n，\n2\n21\n12\n5\nl\nEI\nr\nr\n-\n=\n=\n，\n2\n31\n13\n6 l\nEI\nr\nr\n-\n=\n=\n，\n3\n22\n13 l\nEI\nr\n=\n，\n0\n32\n23\n=\n=r\nr\n，\n3\n33\n18 l\nEI\nr\n=\n8\n3\n2\n1\nql\nR P =\n，\n4\n5\n2\nql\nR P\n-\n=\n，\n8\n5\n3\nql\nR P\n-\n=",
+  "figure": "figures/结构力学基础与技巧班第12次作业及答案_位移法__p026.jpg"
+}

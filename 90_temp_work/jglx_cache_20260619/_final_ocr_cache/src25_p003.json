@@ -1,0 +1,7 @@
+{
+  "source": "D:\\xm\\zy\\jglx\\7.作业讲解笔记\\【第5次作业笔记】—静定桁架(1).pdf",
+  "page": 3,
+  "method": "rapidocr",
+  "text": "2 - 27\n求图2-144所示桁架中1、2杆的轴力。（西南交通大学2008）\nFIA\n2Fp\n图2-144\nZ mB2D\nFyx 4d + 2hpx 2d = hxd + Fpx 3q\n.. Fy4= 0\n.Fm-0,\n2-28\n作图2-145所示桁架中a、6、c杆轴力。（西南交通大学2010）\nFP\nFNE\nFra+ Fp*\n.. Fng=-p\n图2-145\nFrex u -Fxy - Fuax\nFP\nfux xd - Fux d=0\n\"Frb:\nFhb",
+  "figure": "figures/src25_p003.jpg"
+}

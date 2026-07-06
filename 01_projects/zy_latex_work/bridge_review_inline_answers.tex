@@ -1,0 +1,1415 @@
+\documentclass[UTF8,zihao=-4,openany]{ctexbook}
+\usepackage[a4paper,top=18mm,bottom=20mm,left=18mm,right=18mm,headheight=24pt]{geometry}
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{lastpage}
+\usepackage{needspace}
+\usepackage{tabularx}
+\usepackage{array}
+\tcbuselibrary{breakable,skins}
+
+\definecolor{ink}{HTML}{1F2937}
+\definecolor{muted}{HTML}{6B7280}
+\definecolor{line}{HTML}{D1D5DB}
+\definecolor{paper}{HTML}{F8FAFC}
+\definecolor{brand}{HTML}{0F766E}
+\definecolor{branddark}{HTML}{115E59}
+\definecolor{softbrand}{HTML}{ECFDF5}
+\definecolor{answer}{HTML}{EEF2FF}
+\definecolor{answeredge}{HTML}{4338CA}
+\definecolor{warn}{HTML}{B45309}
+
+\setmainfont{Microsoft YaHei}
+\setsansfont{Microsoft YaHei}
+\setCJKmainfont{Microsoft YaHei}
+\setCJKsansfont{Microsoft YaHei}
+\setCJKmonofont{Microsoft YaHei}
+\hypersetup{colorlinks=true,linkcolor=branddark,urlcolor=branddark,pdfauthor={Codex},pdftitle={桥梁工程期末复习题（题后答案版）}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\linespread{1.08}
+\graphicspath{{figures/}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small\color{muted} 桥梁工程期末复习}
+\rhead{\small\color{muted} \leftmark}
+\cfoot{\small\color{muted} 第 \thepage\ 页 / 共 \pageref*{LastPage} 页}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{line}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\chapter}[display]
+  {\sffamily\bfseries\Huge\color{branddark}}
+  {\large\color{brand}\chaptertitlename\ \thechapter}
+  {4pt}
+  {}
+  [\vspace{2pt}{\color{brand}\titlerule[1.2pt]}]
+\titlespacing*{\chapter}{0pt}{-14pt}{14pt}
+\titleformat{\section}{\sffamily\bfseries\Large\color{branddark}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{10pt}{6pt}
+
+\newtcolorbox{questionbox}[2][]{%
+  enhanced,
+  breakable,
+  colback=white,
+  colframe=line,
+  boxrule=0.45pt,
+  arc=2mm,
+  left=3mm,
+  right=3mm,
+  top=2.6mm,
+  bottom=2.6mm,
+  before skip=7pt,
+  after skip=7pt,
+  borderline west={1.2mm}{0pt}{brand},
+  title={#2},
+  coltitle=ink,
+  fonttitle=\sffamily\bfseries,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  boxed title style={colback=softbrand,colframe=brand,boxrule=0.35pt,arc=1.5mm,left=1.8mm,right=1.8mm,top=0.7mm,bottom=0.7mm},
+  #1
+}
+\newtcolorbox{answerbox}{%
+  enhanced,
+  breakable,
+  colback=answer,
+  colframe=answeredge,
+  boxrule=0.45pt,
+  arc=1.6mm,
+  left=2.5mm,
+  right=2.5mm,
+  top=1.6mm,
+  bottom=1.6mm,
+  before skip=5pt,
+  after skip=1pt,
+  fontupper=\small
+}
+\newtcolorbox{answerline}{%
+  enhanced,
+  breakable,
+  colback=paper,
+  colframe=line,
+  boxrule=0.35pt,
+  arc=1.2mm,
+  left=2mm,
+  right=2mm,
+  top=1.2mm,
+  bottom=1.2mm,
+  before skip=3pt,
+  after skip=3pt,
+  fontupper=\small
+}
+\newenvironment{choices}{\begin{enumerate}[label=\Alph*.,leftmargin=9mm,labelsep=3mm,itemsep=2pt,topsep=4pt]}{\end{enumerate}}
+\newcommand{\qtype}[1]{\textcolor{brand}{\sffamily\bfseries #1}}
+\newcommand{\sourcefile}[1]{\textcolor{muted}{\small\sffamily 来源：#1}}
+\newcommand{\reviewfigure}[2]{%
+  \begin{center}
+  \includegraphics[width=0.92\linewidth,height=72mm,keepaspectratio]{#1}\\[-1mm]
+  {\scriptsize\color{muted} #2}
+  \end{center}
+}
+
+\begin{document}
+\frontmatter
+\begin{titlepage}
+\pagecolor{paper}
+\vspace*{22mm}
+{\sffamily\bfseries\fontsize{30}{36}\selectfont\color{branddark} 桥梁工程期末复习题（题后答案版）\par}
+\vspace{5mm}
+{\Large\color{ink} 桥梁工程期末考试复习题整理\par}
+\vspace{10mm}
+{\color{brand}\rule{0.62\linewidth}{1.2pt}\par}
+\vspace{9mm}
+{\large\color{muted} 由 D:\textbackslash zy 原始题卡自动整理，保留原文件顺序、题目顺序、答案与内嵌图片。\par}
+\vfill
+{\sffamily\color{muted} 编译方式：XeLaTeX \quad 页面：A4 \quad 字体：微软雅黑 / Times New Roman\par}
+\end{titlepage}
+\nopagecolor
+\tableofcontents
+\mainmatter
+
+
+\chapter{作业}
+
+\sourcefile{作业\_20260618\_190343.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 1 题 · 简答题}
+\qtype{简答题}\quad 简述支座的作用与分类。
+\begin{answerbox}
+\textbf{答案：} 原题未提供答案
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练-副本-副本-副本}
+
+\sourcefile{测练-副本-副本-副本\_20260618\_190743.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 2 题 · 单选题}
+\qtype{单选题}\quad 下列选项中不属于桥面铺装层主要作用的是（ ）
+\begin{choices}
+\item 扩散车轮压力
+\item 提供耐磨性
+\item 避免雨水渗入
+\item 完全参与主梁结构受力
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. 完全参与主梁结构受力
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 3 题 · 单选题}
+\qtype{单选题}\quad 桥梁的伸缩装置设置在（ ）
+\begin{choices}
+\item 梁底，与墩顶接触处
+\item 梁顶，与路缘石接触处
+\item 桥面，在纵向相邻两梁端之间或梁端与桥台之间
+\item 桥面，在横向相邻两梁相交处
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 桥面，在纵向相邻两梁端之间或梁端与桥台之间
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 4 题 · 判断题}
+\qtype{判断题}\quad 桥面构造应该能保证主体结构的安全性、耐久性和车辆行人安全
+\begin{choices}
+\item true
+\item 错误
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. true
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练1-副本-副本-副本}
+
+\sourcefile{测练1-副本-副本-副本\_20260618\_190406.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 5 题 · 单选题}
+\qtype{单选题}\quad 桥梁建筑高度h是指( )
+\begin{choices}
+\item 行车道顶面至桥墩(台)基础底面间的距离
+\item 行车道顶面至墩(台)帽顶面间距离
+\item 行车道顶面至上部结构最低边缘间的距离
+\item 桥面上栏杆柱上端至上部结构最低,边缘间的距离
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 行车道顶面至上部结构最低边缘间的距离
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 6 题 · 单选题}
+\qtype{单选题}\quad 对于设支座的桥梁，相邻支座中心的水平距离称为( )
+\begin{choices}
+\item 计算跨径
+\item 标准跨径
+\item 净跨径
+\item 总跨径
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 计算跨径
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练1-副本-副本-副本}
+
+\sourcefile{测练1-副本-副本-副本\_20260618\_190422.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 7 题 · 单选题}
+\qtype{单选题}\quad 某高速公路一座特大桥要跨越一条天然河道。试问：下列可供选择的桥位方案中，何项方案最为经济合理？
+\begin{choices}
+\item 河道宽而浅，但有两个河叉
+\item 河道正处于急弯上
+\item 河道窄而深，且两岸岩石露头较多
+\item 河流一侧有泥石流汇入
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 河道窄而深，且两岸岩石露头较多
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练1-副本-副本-副本}
+
+\sourcefile{测练1-副本-副本-副本\_20260618\_190444.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 8 题 · 单选题}
+\qtype{单选题}\quad 在桥梁设计中，下列哪一项属于可变作用？( )
+\begin{choices}
+\item 汽车荷载
+\item 土侧压力
+\item 水浮力
+\item 基础变位作用
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 汽车荷载
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练1-副本-副本-副本}
+
+\sourcefile{测练1-副本-副本-副本\_20260618\_190551.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 9 题 · 单选题}
+\qtype{单选题}\quad 单向桥面板是指长宽比（ ）的周边支承桥面板。
+\begin{choices}
+\item 大于1
+\item 大于等于2
+\item 等于2
+\item 小于2
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 大于等于2
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练1-副本-副本-副本}
+
+\sourcefile{测练1-副本-副本-副本\_20260618\_190634.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 10 题 · 单选题}
+\qtype{单选题}\quad 横向分布系数计算中杠杆原理法的基本假定为（ ）
+\begin{choices}
+\item 桥面板在主梁上纵向断开
+\item 桥面板在主梁上横向断开
+\item 桥面板在主梁上刚性连接
+\item 桥面板一端固接，一端铰接
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 桥面板在主梁上横向断开
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练2-副本-副本-副本}
+
+\sourcefile{测练2-副本-副本-副本\_20260618\_190414.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 11 题 · 单选题}
+\qtype{单选题}\quad 某公路高架桥，主桥为三跨变截面连续钢-混凝土组合梁，跨径布置为55m+80m+55m，两端引桥各为5孔40m的预应力混凝土T形梁，高架桥总长590m。试问，其工程规模应属于下列何项？
+\begin{choices}
+\item 小桥
+\item 中桥
+\item 大桥
+\item 特大桥
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 大桥
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 12 题 · 单选题}
+\qtype{单选题}\quad 某公路高架桥，主桥为三跨变截面连续钢—混凝土组合梁，跨径布置为75m+160m+75m，两端引桥各为5孔60m的预应力混凝土T形梁。高架桥总长910m。试问，其工程规模应属于下列何项所示？( )
+\begin{choices}
+\item 特大桥
+\item 大桥
+\item 中桥
+\item 小桥
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 特大桥
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练2-副本-副本-副本}
+
+\sourcefile{测练2-副本-副本-副本\_20260618\_190431.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 13 题 · 单选题}
+\qtype{单选题}\quad 某高速公路上的一座跨越非通航河道的桥梁，洪水期有大漂浮物通过。该桥的计算水位为2.5m，支座高度为0.20m。试问，该桥的梁底最小高程（m），应为下列何项数值？
+\begin{choices}
+\item 3.4
+\item 4.0
+\item 3.2
+\item 3.0
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 4.0
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练2-副本-副本-副本}
+
+\sourcefile{测练2-副本-副本-副本\_20260618\_190508.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 14 题 · 单选题}
+\qtype{单选题}\quad 对于公路—Ⅱ级车道荷载，其均布荷载标准值qk为( )kN/m
+\begin{choices}
+\item 10.5
+\item 7.875
+\item 15
+\item 8
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 7.875
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 15 题 · 单选题}
+\qtype{单选题}\quad 某四级公路上的桥梁，桥面宽度15m，双向行驶，横向车道布载系数是（ ）
+\begin{choices}
+\item 1.00
+\item 0.78
+\item 0.67
+\item 0.60
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 0.67
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 16 题 · 单选题}
+\qtype{单选题}\quad 某四级公路上的简支梁桥，计算跨径为10m，在计算剪力效应时车道荷载的集中荷载标准值是（ ）
+\begin{choices}
+\item 280
+\item 336
+\item 252
+\item 210
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 252
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练2-副本-副本-副本}
+
+\sourcefile{测练2-副本-副本-副本\_20260618\_190626.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 17 题 · 单选题}
+\qtype{单选题}\quad 某公路梁桥标准跨径为20m，计算跨径为19.5m，桥面横截面由5片T形梁组成，其间距为1.6m，T梁宽度为180mm，高1200mm。横隔梁间距4.5m。桥面铺装层为沥青面层厚80mm，行车道板厚120mm。试问：当车辆荷载的前轴车轮作用于板的支承处时，垂直于板跨径方向的车轮荷载分布宽度（m），与下列何项最接近？
+\begin{choices}
+\item 0.36
+\item 0.48
+\item 0.68
+\item 0.87
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 0.48
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 18 题 · 单选题}
+\qtype{单选题}\quad 某公路梁桥标准跨径为20m，计算跨径为19.5m，桥面横截面由5片T形梁组成，其间距为1.6m，T梁宽度为180mm，高1200mm。横隔梁间距4.5m。桥面铺装层为沥青面层厚80mm，行车道板厚120mm。试问：当车辆荷载的前轴车轮作用于板的跨径中部时，垂直于板跨径方向的车轮荷载分布宽度（m），与下列何项最接近？
+\begin{choices}
+\item 0.87
+\item 0.96
+\item 1.03
+\item 1.10
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 1.03
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 19 题 · 单选题}
+\qtype{单选题}\quad 某公路梁桥标准跨径为20m，计算跨径为19.5m，桥面横截面由5片T形梁组成，其间距为1.6m，T梁宽度为180mm，高1200mm。横隔梁间距4.5m。桥面铺装层为沥青面层厚80mm，行车道板厚120mm。假定计算荷载为公路——Ⅱ级，经计算知每米宽度上恒载产生的板跨中弯矩标准值M0g=2.0kN.m，确定在恒载、汽车前轴车轮荷载共同作用下按承载能力极限状态计算每米宽度板的跨中弯矩基本组合值（kN.m/m）、支座弯矩基本组合值（kN.m/m），与下列何项最接近？
+\begin{choices}
+\item 7.48；-7.8
+\item 6.1；-7.8
+\item 7.48；-10.47
+\item 6.1；-8.6
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 7.48；-10.47
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练2-副本-副本-副本}
+
+\sourcefile{测练2-副本-副本-副本\_20260618\_190642.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 20 题 · 单选题}
+\qtype{单选题}\quad 下列说法正确的是（ ）
+\begin{choices}
+\item 杠杆原理法用于跨中弯矩的计算
+\item 刚性横梁法用于梁端剪力的计算
+\item 刚性横梁法用于跨中弯矩的计算
+\item 杠杆原理法用于跨中剪力的计算
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 刚性横梁法用于跨中弯矩的计算
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 21 题 · 单选题}
+\qtype{单选题}\quad 横向分布系数计算刚性横梁法的基本假定为（ ）
+\begin{choices}
+\item 横梁的刚度与主梁相同
+\item 横梁的刚度为无穷小
+\item 横梁的刚度为无穷大
+\item 横梁的刚度小于主梁的刚度
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 横梁的刚度为无穷大
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练3-副本-副本-副本}
+
+\sourcefile{测练3-副本-副本-副本\_20260618\_190516.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 22 题 · 单选题}
+\qtype{单选题}\quad 以下关于车道荷载和车辆荷载的描述，正确的是( )
+\begin{choices}
+\item 车道荷载用于桥梁结构的局部加载计算，车辆荷载用于整体加载计算；
+\item 车道荷载考虑了车辆的冲击效应，车辆荷载没有考虑冲击效应
+\item 公路—Ⅰ级和公路—Ⅱ级汽车荷载采用相同的车辆荷载标准值
+\item 车道荷载和车辆荷载的作用可以叠加
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 公路—Ⅰ级和公路—Ⅱ级汽车荷载采用相同的车辆荷载标准值
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练4-副本-副本-副本}
+
+\sourcefile{测练4-副本-副本-副本\_20260618\_190522.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 23 题 · 单选题}
+\qtype{单选题}\quad 城镇郊区行人密集地区的计算跨径为32.5m的公路桥梁，人群荷载的标准值为( )。
+\begin{choices}
+\item 3.0kN/m2
+\item 3.45kN/m2
+\item 3.73kN/m2
+\item 43.0kN/m2
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 3.45kN/m2
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练5-副本-副本-副本}
+
+\sourcefile{测练5-副本-副本-副本\_20260618\_190529.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 24 题 · 多选题}
+\qtype{多选题}\quad 下列关于荷载组合的说法正确的是（ ）
+\begin{choices}
+\item 只有在结构上可能同时出现的作用，才进行组合；
+\item 当可变作用的出现对结构或结构构件产生有利影响时，该作用应参与组合。
+\item 施工阶段的作用组合，结构上的施工人员和施工机具应作为永久作用加以考虑。
+\item 多个偶然作用不同时参与组合。
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 只有在结构上可能同时出现的作用，才进行组合；；D. 多个偶然作用不同时参与组合。
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 25 题 · 单选题}
+\qtype{单选题}\quad 某公路跨河桥，在设计钢筋混凝土柱式桥墩中永久作用需与以下可变作用进行组合：①汽车荷载，②汽车冲击力，③汽车制动力，④温度作用，⑤支座摩阻力，⑥流水压力，⑦冰压力。试判定，下列四种组合中其中何项组合符合规范的要求？( )
+\begin{choices}
+\item ①+②+③+④+⑤+⑥+⑦+永久作用
+\item ①+②+③+④+⑤+⑥+永久作用
+\item ①+②+③+④+⑤+永久作用
+\item ①+②+③+④+永久作用
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. ①+②+③+④+永久作用
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练6-副本-副本}
+
+\sourcefile{测练6-副本-副本\_20260618\_190541.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 26 题 · 附件题}
+\qtype{附件题}\quad 钢筋混凝土简支梁桥主梁在结构重力、汽车荷载（车道荷载）和人群荷载作用下，分别得到在主梁的1/4跨径处截面的弯矩标准值为：结构重力产生的弯矩MGk=552kN·m；汽车荷载（车道荷载）弯矩MQ1k=459.7kN·m（已计入冲击系数1.2）；人群荷载弯矩MQ2k=40.6kN·m，结构重要性系数γ0=1.0。进行设计时的作用效应组合计算。
+\begin{answerbox}
+\textbf{答案：} 原题未提供答案
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 27 题 · 单选题}
+\qtype{单选题}\quad 某一级公路高架桥，主桥为三跨变截面连续钢-混凝土组合梁，跨径布置为55m+160m+55m，两端引桥各为5孔40m的预应力混凝土T形梁，高架桥总长670m。该桥梁的结构重要性系数是（ ）
+\begin{choices}
+\item 1.2
+\item 1.1
+\item 1.0
+\item 0.9
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 1.1
+\end{answerbox}
+\end{questionbox}
+
+\chapter{测练}
+
+\sourcefile{测练\_20260618\_190332.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 28 题 · 单选题}
+\qtype{单选题}\quad 下列哪一项不是中国古代桥梁发展的主要特点？
+\begin{choices}
+\item A. 采用了多种材料，如木材、石材等
+\item B. 发展了多种形式的桥梁结构，如梁桥、拱桥等
+\item C. 桥梁设计注重实用性和美观性的结合
+\item D. 桥梁建设完全依赖于现代工程技术
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. D. 桥梁建设完全依赖于现代工程技术
+\end{answerbox}
+\end{questionbox}
+
+\chapter{章节测验1}
+
+\sourcefile{章节测验1\_20260618\_190251.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 29 题 · 单选题}
+\qtype{单选题}\quad 在桥梁设计中，下列哪一项不属于永久作用（ ）
+\begin{choices}
+\item 汽车荷载引起的土侧压力
+\item 预加力
+\item 水的浮力
+\item 混凝土收缩、徐变作用
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 汽车荷载引起的土侧压力
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 30 题 · 单选题}
+\qtype{单选题}\quad 桥梁的伸缩装置设置在（ ）
+\begin{choices}
+\item 梁底，与墩顶接触处
+\item 梁顶，与路缘石接触处
+\item 桥面，在纵向相邻两梁端之间或梁端与桥台之间
+\item 桥面，在横向相邻两梁相交处
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 桥面，在纵向相邻两梁端之间或梁端与桥台之间
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 31 题 · 单选题}
+\qtype{单选题}\quad 下列选项中不属于桥面铺装层主要作用的是（ ）
+\begin{choices}
+\item 扩散车轮压力
+\item 提供耐磨性
+\item 避免雨水渗入
+\item 完全参与主梁结构受力
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. 完全参与主梁结构受力
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 32 题 · 单选题}
+\qtype{单选题}\quad 某七孔一联等跨装配式公路钢筋混凝土T形梁桥，标准跨径20m，计算跨径19.50m，汽车荷载为公路-Ⅱ级。车道荷载的集中荷载标准值（kN），与下列何项最接近？（ ）
+\begin{choices}
+\item 214.2
+\item 269.1
+\item 224.3
+\item 214.2
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 224.3
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 33 题 · 单选题}
+\qtype{单选题}\quad 某七孔一联等跨装配式公路钢筋混凝土T形梁桥，标准跨径20m，计算跨径19.50m，汽车荷载为公路-Ⅱ级。当计算T型梁桥支座处剪力值时，该车道荷载的集中荷载标准值（kN），与下列何项最接近？
+\begin{choices}
+\item 285.6
+\item 269.1
+\item 244.3
+\item 214.2
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 269.1
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 34 题 · 单选题}
+\qtype{单选题}\quad 某七孔一联等跨装配式公路钢筋混凝土T形梁桥，标准跨径20m，计算跨径19.50m，汽车荷载为公路-Ⅱ级。车道荷载的均布荷载标准值（kN/m），与下列何项最接近？
+\begin{choices}
+\item 7.875
+\item 10.500
+\item 9.450
+\item 8.575
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 7.875
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 35 题 · 单选题}
+\qtype{单选题}\quad 对于公路—Ⅱ级车道荷载，其均布荷载标准值qk为( )kN/m
+\begin{choices}
+\item 10.5
+\item 7.875
+\item 15
+\item 8
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 7.875
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 36 题 · 单选题}
+\qtype{单选题}\quad 城镇郊区行人密集地区的计算跨径为32.5m的公路桥梁，人群荷载的标准值为( )。
+\begin{choices}
+\item 3.0kN/m2
+\item 3.45kN/m2
+\item 3.73kN/m2
+\item 43.0kN/m2
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 3.45kN/m2
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 37 题 · 单选题}
+\qtype{单选题}\quad 以下关于车道荷载和车辆荷载的描述，正确的是( )
+\begin{choices}
+\item 车道荷载用于桥梁结构的局部加载计算，车辆荷载用于整体加载计算；
+\item 车道荷载考虑了车辆的冲击效应，车辆荷载没有考虑冲击效应
+\item 公路—Ⅰ级和公路—Ⅱ级汽车荷载采用相同的车辆荷载标准值
+\item 车道荷载和车辆荷载的作用可以叠加
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 公路—Ⅰ级和公路—Ⅱ级汽车荷载采用相同的车辆荷载标准值
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 38 题 · 单选题}
+\qtype{单选题}\quad 下列关于桥梁分类的说法，哪一项是正确的？（ ）
+\begin{choices}
+\item 按用途分类，桥梁可以分为公路桥、铁路桥、人行桥等。
+\item 按结构形式分类，桥梁可以分为梁桥、拱桥、悬索桥、斜拉桥等。
+\item 按材料分类，桥梁可以分为钢桥、混凝土桥、木桥等。
+\item 以上说法都正确。
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. 以上说法都正确。
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 39 题 · 单选题}
+\qtype{单选题}\quad 在桥梁设计中，以下哪一项属于永久作用？
+\begin{choices}
+\item 汽车荷载
+\item 人群荷载
+\item 风荷载
+\item 结构自重
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. 结构自重
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 40 题 · 单选题}
+\qtype{单选题}\quad 某公路高架桥，主桥为三跨变截面连续钢-混凝土组合梁，跨径布置为55m+160m+55m，两端引桥各为5孔40m的预应力混凝土T形梁，高架桥总长670m。试问，其工程规模应属于下列何项？( )
+\begin{choices}
+\item 小桥
+\item 中桥
+\item 大桥
+\item 特大桥
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. 特大桥
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 41 题 · 单选题}
+\qtype{单选题}\quad 在公路桥梁中，各级汽车荷载横向布置为两车道的情况下，汽车之间两轮最小间距（m），与下列何项数值最为接近？( )
+\begin{choices}
+\item 1.3
+\item 1.0
+\item 0.6
+\item 0.5
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 1.3
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 42 题 · 单选题}
+\qtype{单选题}\quad 桥梁建筑高度h是指( )
+\begin{choices}
+\item 行车道顶面至桥墩(台)基础底面间的距离
+\item 行车道顶面至墩(台)帽顶面间距离
+\item 行车道顶面至上部结构最低边缘间的距离
+\item 桥面上栏杆柱上端至上部结构最低,边缘间的距离
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 行车道顶面至上部结构最低边缘间的距离
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 43 题 · 单选题}
+\qtype{单选题}\quad 某高速公路一座特大桥要跨越一条天然河道。试问：下列可供选择的桥位方案中，何项方案最为经济合理？
+\begin{choices}
+\item 河道宽而浅，但有两个河叉
+\item 河道正处于急弯上
+\item 河道窄而深，且两岸岩石露头较多
+\item 河流一侧有泥石流汇入
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 河道窄而深，且两岸岩石露头较多
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 44 题 · 单选题}
+\qtype{单选题}\quad 某公路高架桥，主桥为三跨变截面连续钢—混凝土组合梁，跨径布置为75m+160m+75m，两端引桥各为5孔60m的预应力混凝土T形梁。高架桥总长910m。试问，其工程规模应属于下列何项所示？( )
+\begin{choices}
+\item 特大桥
+\item 大桥
+\item 中桥
+\item 小桥
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 特大桥
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 45 题 · 单选题}
+\qtype{单选题}\quad 某高速公路上的一座跨越非通航河道的桥梁，洪水期有大漂浮物通过。该桥的计算水位为2.5m，支座高度为0.20m。试问，该桥的梁底最小高程（m），应为下列何项数值？
+\begin{choices}
+\item 3.4
+\item 4.0
+\item 3.2
+\item 3.0
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 4.0
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 46 题 · 单选题}
+\qtype{单选题}\quad 对于设支座的桥梁，相邻支座中心的水平距离称为( )
+\begin{choices}
+\item 计算跨径
+\item 标准跨径
+\item 净跨径
+\item 总跨径
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 计算跨径
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 47 题 · 单选题}
+\qtype{单选题}\quad 在桥梁设计中，下列哪一项属于可变作用？( )
+\begin{choices}
+\item 汽车荷载
+\item 土侧压力
+\item 水浮力
+\item 基础变位作用
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 汽车荷载
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 48 题 · 单选题}
+\qtype{单选题}\quad 某公路跨河桥，在设计钢筋混凝土柱式桥墩中永久作用需与以下可变作用进行组合：①汽车荷载，②汽车冲击力，③汽车制动力，④温度作用，⑤支座摩阻力，⑥流水压力，⑦冰压力。试判定，下列四种组合中其中何项组合符合规范的要求？( )
+\begin{choices}
+\item ①+②+③+④+⑤+⑥+⑦+永久作用
+\item ①+②+③+④+⑤+⑥+永久作用
+\item ①+②+③+④+⑤+永久作用
+\item ①+②+③+④+永久作用
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. ①+②+③+④+永久作用
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 49 题 · 单选题}
+\qtype{单选题}\quad 下列关于桥梁分类的说法，哪一项是正确的？( )
+\begin{choices}
+\item 按用途分类，桥梁可以分为公路桥、铁路桥、人行桥等；
+\item 按结构形式分类，桥梁可以分为梁桥、拱桥、悬索桥、斜拉桥等；
+\item 按材料分类，桥梁可以分为钢桥、混凝土桥、木桥等；
+\item 以上说法都正确。
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. 以上说法都正确。
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 50 题 · 单选题}
+\qtype{单选题}\quad 某公路桥梁桥面车道宽度为15m，双向行驶，由汽车荷载产生的效应考虑横向车道布载系数，其值与下列何项数值最接近？( )
+\begin{choices}
+\item 1.00
+\item 0.78
+\item 0.67
+\item 0.60
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 0.67
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 51 题 · 单选题}
+\qtype{单选题}\quad 某公路桥梁的计算跨径为58m，标准跨径为60m，位于城镇郊区行人密集地区，其人群荷载标准值（kN/m2），与下列何项最接近？( )
+\begin{choices}
+\item 3.50
+\item 3.40
+\item 3.45
+\item 2.96
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 3.40
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 52 题 · 单选题}
+\qtype{单选题}\quad 某重要大型城市桥梁为等高度预应力混凝土箱形梁结构，其设计安全等级为一级。该梁某截面的结构重力弯矩标准值为Mg，汽车作用的弯矩标准值为Mk。该桥在承载能力极限状态下的作用基本组合的效应设计值，应为下列何项所示？( )
+\begin{choices}
+\item \reviewfigure{章节测验1\_20260618\_190251\_img\_01.png}{[图片]}
+\item \reviewfigure{章节测验1\_20260618\_190251\_img\_02.png}{[图片]}
+\item \reviewfigure{章节测验1\_20260618\_190251\_img\_03.png}{[图片]}
+\item \reviewfigure{章节测验1\_20260618\_190251\_img\_04.png}{[图片]}
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. [图片]
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 53 题 · 单选题}
+\qtype{单选题}\quad 某跨越一条650m宽河面的高速公路桥梁，设计方案中其主跨为145m的系杆拱桥，边跨为30m的简支梁桥。试问，该桥梁结构的设计安全等级，应为下列何项？( )
+\begin{choices}
+\item 一级
+\item 二级
+\item 三级
+\item 由业主确定
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 一级
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 54 题 · 单选题}
+\qtype{单选题}\quad 梁式桥与拱式桥在受力特征上最大的区别在于( )
+\begin{choices}
+\item 在竖向荷载作用下，梁式桥有水平反力产生，拱式桥有水平反力产生
+\item 在竖向荷载作用下，梁式桥有水平反力产生，拱式桥无水平反力产生
+\item 在竖向荷载作用下，梁式桥无水平反力产生，拱式桥有水平反力产生
+\item 在竖向荷载作用下，梁式桥无水平反力产生，拱式桥无水平反力产生
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 在竖向荷载作用下，梁式桥无水平反力产生，拱式桥有水平反力产生
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 55 题 · 单选题}
+\qtype{单选题}\quad 我国现行规范中，将桥梁设计荷载分为( )
+\begin{choices}
+\item 结构自重、车辆荷载、偶然荷载、地震作用
+\item 永久荷载、基本可变荷载、其他可变荷载
+\item 恒载、可变荷载、地震力
+\item 永久作用、可变作用、偶然作用、地震作用
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. 永久作用、可变作用、偶然作用、地震作用
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 56 题 · 单选题}
+\qtype{单选题}\quad 桥梁的( )反映了其泄洪能力。
+\begin{choices}
+\item 计算跨径
+\item 总跨径
+\item 桥梁高度
+\item 净跨径
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 总跨径
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 57 题 · 单选题}
+\qtype{单选题}\quad 桥梁两个桥台侧墙或八字墙后端点之间的距离称为( )
+\begin{choices}
+\item 桥梁跨度
+\item 桥梁总长
+\item 桥梁全长
+\item 桥梁标准跨径
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 桥梁全长
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 58 题 · 单选题}
+\qtype{单选题}\quad 桥梁按体系划分可分为？（ ）
+\begin{choices}
+\item 梁桥、拱桥、刚构桥、缆索承重桥以及组合体系桥
+\item 简支梁桥、悬臂梁桥、连续梁桥和连续刚构桥
+\item 木桥、钢桥、圬工桥、钢筋混凝土桥和预应力混凝土桥
+\item 公路桥、铁路桥、人行桥和农用桥
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 梁桥、拱桥、刚构桥、缆索承重桥以及组合体系桥
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 59 题 · 单选题}
+\qtype{单选题}\quad 某跨越一条650m宽河面的高速公路桥梁，设计方案中其主跨为145m的系杆拱，边跨为30m的简支梁桥，试问，该桥梁结构的设计安全等级，应为下列何项？
+\begin{choices}
+\item 一级
+\item 二级
+\item 三级
+\item 由业主确定
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 一级
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 60 题 · 单选题}
+\qtype{单选题}\quad 题目条件同31题，该桥梁结构按承载能力极限状况设计时，其结构重要性系数应取下列何项？
+\begin{choices}
+\item 0.9
+\item 1.0
+\item 1.1
+\item 1.2
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 1.1
+\end{answerbox}
+\end{questionbox}
+
+\chapter{章节测验2}
+
+\sourcefile{章节测验2\_20260618\_190322.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 61 题 · 单选题}
+\qtype{单选题}\quad 某公路梁桥横桥向两侧为悬臂结构，桥面铺装层厚度为0.07m，在计算悬臂板根部的弯矩时，按照最不利情况考虑，后轮对应的压力面宽度为（ ）
+\begin{choices}
+\item 0.67
+\item 0.57
+\item 0.47
+\item 0.37
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 0.67
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 62 题 · 单选题}
+\qtype{单选题}\quad 关于荷载横向分布系数的说法正确的是( )
+\begin{choices}
+\item 对于仅有一根中横隔梁的情况，跨中部分需用不变化的mc，从内横隔梁起向支点的m0直线过渡；
+\item 对于有多根中横隔梁的情况，跨中部分需用不变化的mc，从离支点l/4处起至支点的区段内呈直线过渡至m0；
+\item 计算简支梁跨内各截面的最大弯矩时，可按不变化的mc计算；
+\item 在计算主梁梁端截面的最大剪力时，可按不变化的mc计算，不考虑荷载横向分布系数变化的影响。
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 计算简支梁跨内各截面的最大弯矩时，可按不变化的mc计算；
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 63 题 · 单选题}
+\qtype{单选题}\quad 梁桥主梁的翼缘板按铰接悬臂板计算时，在计算汽车荷载作用下板根部最大弯矩时，可近似地把汽车车轮荷载按( )
+\begin{choices}
+\item 整个车轮布置在翼缘板内
+\item 车轮靠板边缘布置
+\item 车轮靠主梁肋边缘布置
+\item 对称布置在铰接处
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. 对称布置在铰接处
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 64 题 · 单选题}
+\qtype{单选题}\quad 单向桥面板是指长宽比（ ）的周边支承桥面板。
+\begin{choices}
+\item 大于1
+\item 大于等于2
+\item 等于2
+\item 小于2
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 大于等于2
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 65 题 · 单选题}
+\qtype{单选题}\quad 横向分布系数计算中杠杆原理法的基本假定为（ ）
+\begin{choices}
+\item 桥面板在主梁上纵向断开
+\item 桥面板在主梁上横向断开
+\item 桥面板在主梁上刚性连接
+\item 桥面板一端固接，一端铰接
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 桥面板在主梁上横向断开
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 66 题 · 单选题}
+\qtype{单选题}\quad 横向分布系数计算刚性横梁法的基本假定为（ ）
+\begin{choices}
+\item 横梁的刚度与主梁相同
+\item 横梁的刚度为无穷小
+\item 横梁的刚度为无穷大
+\item 横梁的刚度小于主梁的刚度
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 横梁的刚度为无穷大
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 67 题 · 单选题}
+\qtype{单选题}\quad 下列说法正确的是（ ）
+\begin{choices}
+\item 杠杆原理法用于跨中弯矩的计算
+\item 刚性横梁法用于梁端剪力的计算
+\item 刚性横梁法用于跨中弯矩的计算
+\item 杠杆原理法用于跨中剪力的计算
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 刚性横梁法用于跨中弯矩的计算
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 68 题 · 单选题}
+\qtype{单选题}\quad 某座跨径为80m+120m+80m、桥宽17m的预应力混凝土连续梁桥，采用刚性墩台，梁下设置支座。试判断下列哪个选项图中布置的平面约束条件是正确的？
+\reviewfigure{章节测验2\_20260618\_190322\_img\_01.png}{[图片]}
+\begin{choices}
+\item \reviewfigure{章节测验2\_20260618\_190322\_img\_02.png}{[图片]}
+\item \reviewfigure{章节测验2\_20260618\_190322\_img\_03.png}{[图片]}
+\item \reviewfigure{章节测验2\_20260618\_190322\_img\_04.png}{[图片]}
+\item \reviewfigure{章节测验2\_20260618\_190322\_img\_05.png}{[图片]}
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. [图片]
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 69 题 · 单选题}
+\qtype{单选题}\quad 汽车外侧车轮的中线离人行道或安全带边缘的距离不得小于( )。
+\begin{choices}
+\item 1.0m
+\item 0.7m
+\item 0.5m
+\item 0.25m
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 0.5m
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 70 题 · 单选题}
+\qtype{单选题}\quad 梁桥主梁的翼缘板按外挑悬臂板计算，在计算汽车荷载作用下板根部最大弯矩时，可近似地把汽车车轮荷载按( )
+\begin{choices}
+\item 对称布置在铰接处
+\item 车轮靠板边缘布置
+\item 车轮靠主梁肋边缘布置
+\item 整个车轮布置在翼缘板内
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 车轮靠板边缘布置
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 71 题 · 单选题}
+\qtype{单选题}\quad 由《公路桥规》知：公路桥梁上的汽车荷载由车道荷载和车辆荷载组成，在计算下列的桥梁构件时，取值不一样。在计算以下构件时：①主梁整体，②主梁桥面板，③桥台，④涵洞，应各采用下列何项汽车荷载模式，才符合《公桥通规》的规定要求？( )
+\begin{choices}
+\item ①、②、③、④均采用车道荷载；
+\item ①、③采用车道荷载，②、④均采用车辆荷载;
+\item ①、②采用车道荷载，③、④均采用车辆荷载；
+\item ①采用车道荷载，②、③、④均采用车辆荷载；
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. ①采用车道荷载，②、③、④均采用车辆荷载；
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 72 题 · 单选题}
+\qtype{单选题}\quad 装配式钢筋混凝土T形梁桥按杠杆法计算荷载横向分布系数计算模型为( )。
+\begin{choices}
+\item 将横梁(或桥面板)视为支承在主梁上的连续梁
+\item 将横梁(或桥面板)视为两端搁置在主梁上的简支梁
+\item 将横梁(或桥面板)视为弹性嵌固在主梁上的刚架
+\item 将梁(或桥面板)视为固结于主梁的超静定梁
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 将横梁(或桥面板)视为两端搁置在主梁上的简支梁
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 73 题 · 单选题}
+\qtype{单选题}\quad 已知某桥梁板的计算跨径为2m，车辆荷载位于单向板的跨中，桥面铺装层的厚度为15cm，对于后轮而言，板的有效工作宽度为( )。
+\begin{choices}
+\item 1.33m
+\item 2.17
+\item 3.2m
+\item 5m
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 1.33m
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 74 题 · 单选题}
+\qtype{单选题}\quad 车轮荷载在桥面铺装层扩散到行车道板上的角度是( )。
+\begin{choices}
+\item 30°
+\item 45°
+\item 60°
+\item 90°
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 45°
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 75 题 · 单选题}
+\qtype{单选题}\quad 装配式钢筋混凝土T形梁桥按偏心受压法计算荷载横向分布系数,其计算模型是( )。
+\begin{choices}
+\item 视主梁为强度极大的梁
+\item 视主梁为刚度极大的梁
+\item 视横梁为强度极大的梁
+\item 视横梁为刚度极大的梁
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. 视横梁为刚度极大的梁
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 76 题 · 单选题}
+\qtype{单选题}\quad 对于有多片主梁的简支梁桥的横向分布计算，“杠杆原理法”适用于( )。
+\begin{choices}
+\item L/4截面
+\item 所有截面
+\item 支点截面
+\item 跨中截面
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 支点截面
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 77 题 · 单选题}
+\qtype{单选题}\quad 在计算荷载位于靠近主梁支点时的横向分布系数m时，可偏安全的采用？( )
+\begin{choices}
+\item 杠杆法
+\item 偏心压力法
+\item 铰接板法
+\item 修正偏心压力法
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 杠杆法
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 78 题 · 单选题}
+\qtype{单选题}\quad 用刚性横梁法计算出的某梁荷载横向分布影响线的形状是( )
+\begin{choices}
+\item 一根直线
+\item 一根折线
+\item 一根曲线
+\item 一根抛物线
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 一根直线
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 79 题 · 单选题}
+\qtype{单选题}\quad 下列不属于梁式桥的主要截面类型的是( )。
+\begin{choices}
+\item 板桥
+\item 肋板式梁桥
+\item 箱形梁桥
+\item T型梁桥
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} D. T型梁桥
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 80 题 · 单选题}
+\qtype{单选题}\quad 通常把边长比或长宽比大于或等于2的周边支承的板看作( )
+\begin{choices}
+\item 双向板
+\item 单向板
+\item 车道板
+\item 横隔板
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 单向板
+\end{answerbox}
+\end{questionbox}
+
+\chapter{练习}
+
+\sourcefile{练习\_20260618\_190309.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 81 题 · 单选题}
+\qtype{单选题}\quad 车道荷载的均布荷载标准值（kN/m），与下列何项最接近？
+\begin{choices}
+\item 7.875
+\item 10.500
+\item 9.450
+\item 8.575
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 7.875
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 82 题 · 单选题}
+\qtype{单选题}\quad 车道荷载的集中荷载标准值（kN），与下列何项最接近？
+\begin{choices}
+\item 214.2
+\item 238.1
+\item 224.3
+\item 214.2
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 224.3
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 83 题 · 单选题}
+\qtype{单选题}\quad 当计算T型梁桥支座处剪力值时，该车道荷载的集中荷载标准值（kN），与下列何项最接近？
+\begin{choices}
+\item 285.6
+\item 269.1
+\item 244.3
+\item 214.2
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. 244.3
+\end{answerbox}
+\end{questionbox}
+
+\chapter{随堂练习-副本-副本-副本}
+
+\sourcefile{随堂练习-副本-副本-副本\_20260618\_190715.doc}\quad \textcolor{muted}{\small\sffamily 课程：桥梁工程}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 84 题 · 单选题}
+\qtype{单选题}\quad 某座跨径为80m+120m+80m、桥宽17m的预应力混凝土连续梁桥，采用刚性墩台，梁下设置支座。试判断下列哪个选项图中布置的平面约束条件是正确的？
+\reviewfigure{随堂练习-副本-副本-副本\_20260618\_190715\_img\_01.png}{[图片]}
+\begin{choices}
+\item \reviewfigure{随堂练习-副本-副本-副本\_20260618\_190715\_img\_02.png}{[图片]}
+\item \reviewfigure{随堂练习-副本-副本-副本\_20260618\_190715\_img\_03.png}{[图片]}
+\item \reviewfigure{随堂练习-副本-副本-副本\_20260618\_190715\_img\_04.png}{[图片]}
+\item \reviewfigure{随堂练习-副本-副本-副本\_20260618\_190715\_img\_05.png}{[图片]}
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} C. [图片]
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 85 题 · 单选题}
+\qtype{单选题}\quad 在桥梁工程中，根据传力方式的不同，支座可以分为哪几类？
+\begin{choices}
+\item 固定支座、活动支座
+\item 刚性支座、柔性支座
+\item 钢支座、橡胶支座
+\item 平面支座、曲面支座
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} A. 固定支座、活动支座
+\end{answerbox}
+\end{questionbox}
+
+\Needspace{7\baselineskip}
+\begin{questionbox}{第 86 题 · 单选题}
+\qtype{单选题}\quad 在桥梁工程中，板式橡胶支座是一种常见的支座类型。下列关于板式橡胶支座的描述，哪一项是正确的？
+\begin{choices}
+\item 板式橡胶支座主要用于承受竖向荷载，不适用于水平力。
+\item 板式橡胶支座可以通过变形来适应桥梁的位移和转动。
+\item 板式橡胶支座不能承受剪切力。
+\item 板式橡胶支座的使用寿命与温度无关。
+\end{choices}
+\begin{answerbox}
+\textbf{答案：} B. 板式橡胶支座可以通过变形来适应桥梁的位移和转动。
+\end{answerbox}
+\end{questionbox}
+
+\end{document}

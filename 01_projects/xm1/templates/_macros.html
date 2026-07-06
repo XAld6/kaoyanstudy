@@ -1,0 +1,16 @@
+{# 公共 Jinja2 宏 #}
+
+{% macro record_card(record) %}
+<article class="record-card">
+  <img src="{{ record.result_path }}" alt="识别结果图">
+  <div>
+    <strong>{{ record.original_filename }}</strong>
+    <p>{{ record.risk_label }} · {{ record.detections | length }} 个隐患</p>
+    <p>{{ record.created_at }} · {{ record.engine }}</p>
+  </div>
+</article>
+{% endmacro %}
+
+{% macro risk_badge(level, label) %}
+<span class="risk-badge {{ level }}">{{ label }}</span>
+{% endmacro %}

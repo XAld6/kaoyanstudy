@@ -1,0 +1,2182 @@
+\chapter{函数、极限、连续}
+
+\section{原题页索引}
+本章原题对应做题本第 2--18 页。遇到抽取公式不清楚时，以本项目中的原题页图片为准。
+
+\begin{center}
+\includegraphics[width=.92\textwidth]{figures/original_pages/page_002.png}
+\end{center}
+
+\section{选择题}
+
+\begin{problemblock}
+\textbf{1.} 函数
+\[
+f(x)=x\tan x\,e^{\sin x}
+\]
+是（\quad）
+
+A. 单调函数 \qquad B. 周期函数 \qquad C. 偶函数 \qquad D. 无界函数
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{本题考查函数性质判断。考研选择题中遇到“单调、周期、奇偶、有界”四个性质并列时，优先检查最容易被破坏的性质：含有因子 \(x\) 通常破坏周期性；含有 \(\tan x\) 通常带来无界性与间断点；含有 \(e^{\sin x}\) 通常破坏奇偶性。}
+
+\method{方法一：直接抓无界性}
+在定义域内取
+\[
+x_n=\frac{\pi}{2}-\frac{1}{n}\quad (n\to\infty).
+\]
+则 \(\tan x_n\to+\infty\)，且 \(x_n\to \frac{\pi}{2}\)，\(e^{\sin x_n}\to e\)。因此
+\[
+f(x_n)=x_n\tan x_n e^{\sin x_n}\to+\infty,
+\]
+函数无界。
+
+\method{方法二：排除其他选项}
+由于存在 \(\tan x\)，函数在 \(\frac{\pi}{2}+k\pi\) 附近趋于无穷，不可能在整个定义域上单调有界。又因乘有 \(x\)，即使 \(\tan x\) 与 \(e^{\sin x}\)具有周期特征，整体也不满足周期函数定义。奇偶性方面，
+\[
+f(-x)=(-x)\tan(-x)e^{\sin(-x)}=x\tan x e^{-\sin x},
+\]
+一般既不等于 \(f(x)\)，也不等于 \(-f(x)\)。故只能选无界。
+
+\answer{D}
+\examnote{考研选择题不必把每个性质都严格证明到底；先用特殊点列击中“无界”，是最快路线。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{2.} 下列四个函数中
+\[
+\text{① }x\sin\frac1x,\qquad
+\text{② }\frac1x\sin\frac1x,\qquad
+\text{③ }\frac{\sin x}{x},\qquad
+\text{④ }x\sin x,
+\]
+在区间 \((0,+\infty)\) 上有界的共有（\quad）
+
+A. 1 个 \qquad B. 2 个 \qquad C. 3 个 \qquad D. 4 个
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{本题核心是分别检查 \(x\to0^+\) 与 \(x\to+\infty\) 两端。区间是 \((0,+\infty)\)，所以两个端点都可能导致无界。}
+
+① 对 \(x\sin\frac1x\)，当 \(0<x\le 1\) 时
+\[
+\left|x\sin\frac1x\right|\le x\le 1;
+\]
+当 \(x\ge1\) 时令 \(t=1/x\)，利用 \(|\sin t|\le |t|\)，得
+\[
+\left|x\sin\frac1x\right|\le x\cdot\frac1x=1.
+\]
+故①有界。
+
+② 对 \(\frac1x\sin\frac1x\)，取
+\[
+x_n=\frac{1}{\frac{\pi}{2}+2n\pi},
+\]
+则 \(x_n\to0^+\)，且 \(\sin\frac1{x_n}=1\)，于是
+\[
+\frac1{x_n}\sin\frac1{x_n}=\frac1{x_n}\to+\infty.
+\]
+故②无界。
+
+③ 对 \(\frac{\sin x}{x}\)，当 \(0<x\le1\) 时由 \(\lim_{x\to0}\frac{\sin x}{x}=1\)，在右邻域有界；当 \(x\ge1\) 时
+\[
+\left|\frac{\sin x}{x}\right|\le \frac1x\le1.
+\]
+故③有界。
+
+④ 对 \(x\sin x\)，取 \(x_n=\frac{\pi}{2}+2n\pi\)，则 \(\sin x_n=1\)，
+\[
+x_n\sin x_n=x_n\to+\infty,
+\]
+故④无界。
+
+所以有界的只有①③，共 2 个。
+
+\answer{B}
+\examnote{这类题常用“端点分治”：\(0^+\) 看振荡是否被 \(x\) 压住，\(+\infty\) 看是否有线性增长因子。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{3.} 设有数列 \(\{x_n\}\) 与 \(\{y_n\}\)，以下结论正确的是（\quad）
+
+A. 若 \(\lim_{n\to\infty}x_ny_n=0\)，则必有 \(\lim_{n\to\infty}x_n=0\) 或 \(\lim_{n\to\infty}y_n=0\)。
+
+B. 若 \(\lim_{n\to\infty}x_ny_n=\infty\)，则必有 \(\lim_{n\to\infty}x_n=\infty\) 或 \(\lim_{n\to\infty}y_n=\infty\)。
+
+C. 若 \(\{x_ny_n\}\) 有界，则必有 \(\{x_n\}\) 与 \(\{y_n\}\) 都有界。
+
+D. 若 \(\{x_ny_n\}\) 无界，则必有 \(\{x_n\}\) 无界或 \(\{y_n\}\) 无界。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{本题是数列乘积与因子性质的逻辑判断。考研中应特别注意：乘积收敛或有界，通常不能反推每个因子；但若两个因子都有限制，则可推出乘积有限制。}
+
+\method{排除法}
+A 错。取 \(x_n=n,\ y_n=\frac1{n^2}\)，则
+\[
+x_ny_n=\frac1n\to0,
+\]
+但 \(x_n\not\to0\)，而 \(y_n\to0\)。这个例子仍有一个趋零；若要否定“极限存在且等于 0”的严谨版本，可取 \(x_n=(-1)^n,\ y_n=0\)，此时 \(x_n\) 极限不存在，不能说 \(\lim x_n=0\)。命题中的“必有极限等于 0”不成立。
+
+B 错。取 \(x_n=y_n=(-1)^n n\)，则
+\[
+x_ny_n=n^2\to+\infty,
+\]
+但 \(x_n,y_n\) 均不趋于 \(+\infty\)，因为它们符号振荡。
+
+C 错。取 \(x_n=n,\ y_n=\frac1n\)，则
+\[
+x_ny_n=1
+\]
+有界，但 \(x_n\) 无界。
+
+D 对。用反证法：若 \(\{x_n\}\) 与 \(\{y_n\}\) 都有界，则存在 \(M,N>0\)，使
+\[
+|x_n|\le M,\qquad |y_n|\le N.
+\]
+于是
+\[
+|x_ny_n|\le MN,
+\]
+即 \(\{x_ny_n\}\) 有界。这与“\(\{x_ny_n\}\) 无界”矛盾。因此乘积无界时，至少有一个因子数列无界。
+
+\answer{D}
+\examnote{“乘积有界不能推出因子有界；乘积无界能推出至少一个因子无界”，这是常考逻辑。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{4.} 设
+\[
+\lim_{n\to\infty}x_ny_n=\infty,
+\]
+则下列结论错误的是（\quad）
+
+A. \(\lim_{n\to\infty}x_n=\infty\) 与 \(\lim_{n\to\infty}y_n=\infty\) 至少有一个成立。
+
+B. \(\{x_n\}\) 与 \(\{y_n\}\) 中至少有一个为无界变量。
+
+C. 若 \(\{x_n\}\) 是无穷小量，则 \(\{y_n\}\) 必为无界变量。
+
+D. 若 \(\lim_{n\to\infty}x_n=a\ne\infty\)，则 \(\{y_n\}\) 必为无穷大量。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{题干给出的是乘积趋于无穷。考研中要区分“乘积趋于无穷”与“每个因子趋于无穷”：后者不能由前者直接推出，因为符号振荡、一个因子有界但不收敛等情况都会破坏结论。}
+
+\method{反例判断 A}
+取
+\[
+x_n=(-1)^n n,\qquad y_n=(-1)^n.
+\]
+则
+\[
+x_ny_n=n\to+\infty,
+\]
+但 \(x_n\) 由于正负振荡，不趋于 \(+\infty\)；\(y_n\) 也不趋于 \(+\infty\)。因此 A 的“至少有一个极限为 \(+\infty\)”不成立，A 错。
+
+\method{验证其余选项}
+B 正确。若 \(\{x_n\}\)、\(\{y_n\}\) 都有界，则 \(\{x_ny_n\}\) 必有界，矛盾。
+
+C 正确。若 \(x_n\to0\) 而 \(\{y_n\}\) 有界，则 \(x_ny_n\to0\)，不可能趋于无穷。
+
+D 正确。若 \(x_n\to a\) 且 \(a\) 为有限数，当 \(a\ne0\) 时 \(y_n=\frac{x_ny_n}{x_n}\) 的绝对值趋于无穷；当 \(a=0\) 时，如果 \(y_n\) 不为无穷大量，则乘积不可能趋于无穷。故 \(\{y_n\}\) 必为无穷大量。
+
+\answer{A}
+\examnote{这类题常用“反例优先”。A 中的错误在于把乘积的正无穷误认为某个因子必须正无穷。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{5.} 设函数 \(f(x)\) 连续，则下列函数中，必为偶函数的是（\quad）
+\[
+\text{A. }\int_0^x f(t^2)\,dt,\qquad
+\text{B. }\int_0^x f^2(t)\,dt,
+\]
+\[
+\text{C. }\int_0^x t\bigl[f(t)-f(-t)\bigr]\,dt,\qquad
+\text{D. }\int_0^x t\bigl[f(t)+f(-t)\bigr]\,dt.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{本题考查“变上限积分函数的奇偶性”。核心规律是：若 \(g(t)\) 为奇函数，则 \(G(x)=\int_0^x g(t)\,dt\) 为偶函数；若 \(g(t)\) 为偶函数，则 \(G(x)\) 为奇函数。}
+
+\method{方法一：判断被积函数奇偶性}
+对 D，令
+\[
+g(t)=t\bigl[f(t)+f(-t)\bigr].
+\]
+其中 \(f(t)+f(-t)\) 是偶函数，乘以 \(t\) 后 \(g(t)\) 是奇函数。于是
+\[
+G(x)=\int_0^x g(t)\,dt.
+\]
+验证：
+\[
+G(-x)=\int_0^{-x}g(t)\,dt
+=-\int_0^x g(-u)\,du
+=-\int_0^x[-g(u)]\,du
+=G(x).
+\]
+故 D 必为偶函数。
+
+\method{方法二：排除其他选项}
+A 中 \(f(t^2)\) 是偶函数，因此积分函数通常为奇函数，例如 \(f\equiv1\) 时得到 \(x\)，不是偶函数。
+
+B 中 \(f^2(t)\) 不一定是偶函数，例如 \(f(t)=t+1\)，则 \((t+1)^2\) 不是偶函数，积分函数不必为偶函数。
+
+C 中 \(f(t)-f(-t)\) 是奇函数，乘以 \(t\) 后为偶函数，积分函数通常为奇函数，例如取 \(f(t)=t\)，被积函数为 \(2t^2\)，积分为 \(\frac23x^3\)，不是偶函数。
+
+\answer{D}
+\examnote{记住一句话：从 \(0\) 到 \(x\) 的变上限积分会让奇偶性“反转”：奇被积函数积分成偶函数，偶被积函数积分成奇函数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{6.} 设数列 \(\{a_n\},\{b_n\}\) 对任意正整数 \(n\) 满足
+\[
+a_n\le b_n\le a_{n+1},
+\]
+则（\quad）
+
+A. 数列 \(\{a_n\},\{b_n\}\) 均收敛，且 \(\lim a_n=\lim b_n\)。
+
+B. 数列 \(\{a_n\},\{b_n\}\) 均发散，且 \(\lim a_n=\lim b_n=+\infty\)。
+
+C. 数列 \(\{a_n\},\{b_n\}\) 具有相同的敛散性。
+
+D. 数列 \(\{a_n\},\{b_n\}\) 具有不同的敛散性。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{由 \(a_n\le b_n\le a_{n+1}\) 可立即得到 \(a_n\le a_{n+1}\)，所以 \(\{a_n\}\) 单调递增。单调数列只有两种情况：收敛到有限极限，或发散到 \(+\infty\)。}
+
+\method{情况一：\(\{a_n\}\) 收敛}
+设 \(a_n\to A\)。因为 \(a_{n+1}\to A\)，且
+\[
+a_n\le b_n\le a_{n+1},
+\]
+由夹逼准则，
+\[
+b_n\to A.
+\]
+此时两数列均收敛，且极限相同。
+
+\method{情况二：\(\{a_n\}\) 发散}
+由于 \(\{a_n\}\) 单调递增，若不收敛，则必有
+\[
+a_n\to+\infty.
+\]
+又 \(b_n\ge a_n\)，故
+\[
+b_n\to+\infty.
+\]
+此时两数列均发散。
+
+两种情况合起来说明 \(\{a_n\}\) 与 \(\{b_n\}\) 具有相同的敛散性。
+
+\answer{C}
+\examnote{从不等式链中先抽出 \(a_n\le a_{n+1}\) 是破题关键；之后就是单调数列定理加夹逼准则。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{7.} 设 \(\lim_{x\to0}\varphi(x)=0\)，则下列命题中正确的个数为（\quad）
+\[
+\text{① }\lim_{x\to0}\frac{\sin\varphi(x)}{\varphi(x)}=1,
+\qquad
+\text{② }\lim_{x\to0}\bigl(1+\varphi(x)\bigr)^{1/\varphi(x)}=e,
+\]
+\[
+\text{③ 若 }f'(x_0)=A,\text{ 则 }
+\lim_{x\to0}\frac{f(x_0+\varphi(x))-f(x_0)}{\varphi(x)}=A,
+\]
+\[
+\text{④ 若 }\lim_{u\to0}f(u)=A,\text{ 则 }
+\lim_{x\to0}f(\varphi(x))=A.
+\]
+
+A. 0 个 \qquad B. 2 个 \qquad C. 3 个 \qquad D. 4 个
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{本题考查复合极限。前三个命题本质上是把 \(\varphi(x)\) 当作新的无穷小代入标准极限或导数定义；第四个命题则涉及复合极限定理的附加条件，是本题陷阱。}
+
+① 因为 \(\varphi(x)\to0\)，由标准极限
+\[
+\lim_{u\to0}\frac{\sin u}{u}=1
+\]
+可得
+\[
+\lim_{x\to0}\frac{\sin\varphi(x)}{\varphi(x)}=1.
+\]
+
+② 同理，由
+\[
+\lim_{u\to0}(1+u)^{1/u}=e
+\]
+可得
+\[
+\lim_{x\to0}(1+\varphi(x))^{1/\varphi(x)}=e.
+\]
+
+③ 由 \(f'(x_0)=A\)，有
+\[
+\lim_{\Delta x\to0}
+\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}=A.
+\]
+令 \(\Delta x=\varphi(x)\)，且 \(\varphi(x)\to0\)，便得到③成立。
+
+④ 不一定成立。复合极限定理通常要求当 \(x\to0\) 时，内层 \(\varphi(x)\) 在去心邻域内不恒等于外层极限点 \(0\)，或者外层函数在 \(0\) 处连续。反例：令
+\[
+\varphi(x)\equiv0,\qquad
+f(u)=
+\begin{cases}
+1,&u=0,\\
+0,&u\ne0.
+\end{cases}
+\]
+则
+\[
+\lim_{u\to0}f(u)=0,
+\]
+但
+\[
+f(\varphi(x))=f(0)=1,
+\]
+所以 \(\lim_{x\to0}f(\varphi(x))\ne0\)。④错误。
+
+因此正确的是①②③，共 3 个。
+
+\answer{C}
+\examnote{考研中“复合极限”最常考的坑：外函数极限存在，不代表随便代入内函数都行；要注意内函数是否可能总取到外层极限点。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{8.} 极限
+\[
+\lim_{x\to\infty}
+\frac{e^{\sin(1/x)}-1}
+{(1+1/x)^\alpha-(1+1/x)}
+=A\ne0
+\]
+的充要条件是（\quad）
+
+A. \(\alpha>1\) \qquad B. \(\alpha\ne1\) \qquad C. \(\alpha>0\) \qquad D. 与 \(\alpha\) 无关
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{这是无穷远处的等价无穷小题。令 \(t=1/x\)，则 \(x\to\infty\) 等价于 \(t\to0^+\)，题目转化为比较分子、分母的一阶主部。}
+
+令 \(t=\frac1x\)，原极限为
+\[
+\lim_{t\to0^+}
+\frac{e^{\sin t}-1}{(1+t)^\alpha-(1+t)}.
+\]
+分子：
+\[
+\sin t\sim t,\qquad e^{\sin t}-1\sim \sin t\sim t.
+\]
+分母用二项展开：
+\[
+(1+t)^\alpha=1+\alpha t+\frac{\alpha(\alpha-1)}2t^2+o(t^2),
+\]
+所以
+\[
+(1+t)^\alpha-(1+t)
+=(\alpha-1)t+\frac{\alpha(\alpha-1)}2t^2+o(t^2).
+\]
+若 \(\alpha\ne1\)，分母主部为 \((\alpha-1)t\)，于是
+\[
+\lim_{t\to0^+}
+\frac{e^{\sin t}-1}{(1+t)^\alpha-(1+t)}
+=\frac{1}{\alpha-1},
+\]
+这是非零有限常数。
+
+若 \(\alpha=1\)，分母恒为
+\[
+(1+t)-(1+t)=0,
+\]
+原式无意义，不可能等于非零常数 \(A\)。因此充要条件为 \(\alpha\ne1\)。
+
+\answer{B}
+\examnote{题干写 \(A\ne0\) 时，重点不是求 \(A\)，而是保证分子分母同阶且分母主系数不为零。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{9.} 已知
+\[
+\lim_{x\to0}\frac{\ln(1+2x)+xf(x)}{x^2}=1,
+\]
+则
+\[
+\lim_{x\to0}\frac{2+f(x)}{x}=
+\]
+（\quad）
+
+A. 1 \qquad B. 2 \qquad C. 3 \qquad D. 4
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{题目要求 \(\frac{2+f(x)}x\)，而已知式中有 \(xf(x)\)。应先把分子整理成 \(x[2+f(x)]\) 的形式，再用 \(\ln(1+2x)\) 的 Taylor 展开。}
+
+由 Taylor 公式，
+\[
+\ln(1+2x)=2x-2x^2+o(x^2).
+\]
+代入已知分子：
+\[
+\ln(1+2x)+xf(x)
+=2x-2x^2+xf(x)+o(x^2)
+=x\bigl(2+f(x)\bigr)-2x^2+o(x^2).
+\]
+于是
+\[
+\frac{\ln(1+2x)+xf(x)}{x^2}
+=\frac{2+f(x)}x-2+o(1).
+\]
+已知左端极限为 1，所以
+\[
+\lim_{x\to0}\left(\frac{2+f(x)}x-2\right)=1,
+\]
+从而
+\[
+\lim_{x\to0}\frac{2+f(x)}x=3.
+\]
+
+\method{另解：设主部}
+由已知式有限可知分子中一阶项必须相消，因此
+\[
+f(x)=-2+O(x).
+\]
+设 \(f(x)=-2+kx+o(x)\)，则
+\[
+\ln(1+2x)+xf(x)
+=(2x-2x^2)+x(-2+kx)+o(x^2)
+=(k-2)x^2+o(x^2).
+\]
+已知极限为 1，故 \(k-2=1\)，即 \(k=3\)。而
+\[
+\frac{2+f(x)}x\to k=3.
+\]
+
+\answer{C}
+\examnote{遇到“已知极限反求函数主部”，可直接设 \(f(x)\) 的低阶展开，效率很高。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{10.} 设 \(f(x)\) 连续，
+\[
+\lim_{x\to0}\frac{f(x)}{1-\cos x}=2,
+\]
+且当 \(x\to0\) 时
+\[
+\int_0^{\sin^2x} f(t)\,dt
+\]
+是 \(x\) 的 \(n\) 阶无穷小，则 \(n\) 等于（\quad）
+
+A. 3 \qquad B. 4 \qquad C. 5 \qquad D. 6
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{由已知极限先确定 \(f(x)\) 在 0 附近的主部，再代入变上限积分。}
+因为
+\[
+1-\cos x\sim \frac{x^2}{2},
+\qquad
+\frac{f(x)}{1-\cos x}\to2,
+\]
+所以
+\[
+f(x)\sim2(1-\cos x)\sim x^2.
+\]
+于是 \(t\to0\) 时 \(f(t)\sim t^2\)。又 \(\sin^2x\sim x^2\)，故
+\[
+\int_0^{\sin^2x}f(t)\,dt
+\sim\int_0^{\sin^2x}t^2\,dt
+=\frac{(\sin^2x)^3}{3}
+\sim\frac{x^6}{3}.
+\]
+因此它是 \(x\) 的 6 阶无穷小。
+
+\answer{D}
+\examnote{变上限积分的阶数可用公式记忆：若 \(f(t)\sim Ct^p\)，上限 \(u(x)\sim x^q\)，则 \(\int_0^{u(x)}f(t)dt\) 的阶数是 \(q(p+1)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{11.} 已知当 \(x\to0\) 时，
+\[
+f(x)=\arctan x-\sin ax,\qquad
+g(x)=bx\ln\sqrt{a+x^2}
+\]
+是等价无穷小，则（\quad）
+
+A. \(a=b=1\) \qquad B. \(a=2,b=\frac13\) \qquad C. \(a=1,b=\frac12\) \qquad D. \(a=1,b=-\frac13\)
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{等价无穷小要求二者同阶且主系数相等。先看一次项能否相消。}
+展开
+\[
+\arctan x=x-\frac{x^3}{3}+o(x^3),\qquad
+\sin ax=ax-\frac{a^3x^3}{6}+o(x^3).
+\]
+所以
+\[
+f(x)=(1-a)x+\left(\frac{a^3}{6}-\frac13\right)x^3+o(x^3).
+\]
+另一方面
+\[
+g(x)=\frac{b}{2}x\ln(a+x^2).
+\]
+若 \(a\ne1\)，则 \(g(x)\sim \frac{b}{2}\ln a\cdot x\)。结合选项，只有 \(a=1\) 时才可能匹配高阶主部。令 \(a=1\)，则
+\[
+f(x)=\arctan x-\sin x
+=-\frac{x^3}{6}+o(x^3),
+\]
+且
+\[
+g(x)=bx\ln\sqrt{1+x^2}
+=\frac{b}{2}x\ln(1+x^2)
+\sim\frac{b}{2}x^3.
+\]
+等价要求 \(\frac{b}{2}=-\frac16\)，故
+\[
+b=-\frac13.
+\]
+
+\answer{D}
+\examnote{此题的关键是先让一次项消失，即 \(a=1\)，否则阶数很难与选项中的 \(g(x)\) 匹配。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{12.} 已知当 \(x\to0\) 时，函数
+\[
+f(x)=3\sin x-\sin3x
+\]
+与 \(cx^k\) 是等价无穷小，则（\quad）
+
+A. \(k=1,c=4\) \qquad B. \(k=1,c=-4\) \qquad C. \(k=3,c=4\) \qquad D. \(k=3,c=-4\)
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{本题可用三倍角公式迅速降阶，也可用 Taylor 展开。}
+
+\method{方法一：三倍角公式}
+\[
+\sin3x=3\sin x-4\sin^3x,
+\]
+所以
+\[
+3\sin x-\sin3x=4\sin^3x\sim4x^3.
+\]
+因此 \(k=3,c=4\)。
+
+\method{方法二：Taylor 展开}
+\[
+3\sin x=3x-\frac{x^3}{2}+o(x^3),
+\quad
+\sin3x=3x-\frac{27x^3}{6}+o(x^3).
+\]
+两式相减得
+\[
+3\sin x-\sin3x=4x^3+o(x^3).
+\]
+
+\answer{C}
+\examnote{含 \(\sin3x\) 的题优先想到三倍角公式，通常比展开更快。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{13.} 当 \(x\to0^+\) 时，下列无穷小量中最高阶的是（\quad）
+\[
+\text{A. }\sqrt{1+x^4}-e^{x^2/2},\quad
+\text{B. }\tan x-\sin x,
+\]
+\[
+\text{C. }\int_0^{\sin x}\sin t^2\,dt,\quad
+\text{D. }\int_0^{1-\cos x}\sin^{3/2}t\,dt.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{“最高阶”就是趋零最快，比较各选项的主部阶数即可。}
+\[
+\sqrt{1+x^4}=1+\frac{x^4}{2}+o(x^4),\qquad
+e^{x^2/2}=1+\frac{x^2}{2}+O(x^4),
+\]
+故 A 为 2 阶无穷小。
+\[
+\tan x-\sin x
+=\left(x+\frac{x^3}{3}+o(x^3)\right)
+-\left(x-\frac{x^3}{6}+o(x^3)\right)
+=\frac{x^3}{2}+o(x^3),
+\]
+故 B 为 3 阶。
+对 C，
+\[
+\sin t^2\sim t^2,\qquad \sin x\sim x,
+\]
+所以
+\[
+\int_0^{\sin x}\sin t^2\,dt
+\sim\int_0^x t^2\,dt=\frac{x^3}{3},
+\]
+为 3 阶。
+对 D，
+\[
+\sin^{3/2}t\sim t^{3/2},\qquad 1-\cos x\sim\frac{x^2}{2},
+\]
+于是
+\[
+\int_0^{1-\cos x}\sin^{3/2}t\,dt
+\sim\int_0^{x^2/2}t^{3/2}\,dt
+=C x^5\quad(C>0),
+\]
+为 5 阶，阶数最高。
+
+\answer{D}
+\examnote{积分上限本身也是无穷小，比较阶数时不要漏掉上限带来的复合阶数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{14.} 函数
+\[
+f(x)=\frac{(e^{1/x}+e)\tan x}{x(e^{1/x}-e)}
+\]
+在 \([-\pi,\pi]\) 上的第一类间断点是 \(x=\)（\quad）
+
+A. \(0\) \qquad B. \(1\) \qquad C. \(-\frac{\pi}{2}\) \qquad D. \(\frac{\pi}{2}\)
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{第一类间断点要求左右极限都存在且有限。逐个考察可能出问题的点：\(x=0\)、\(x=1\)、\(x=\pm\frac{\pi}{2}\)。}
+当 \(x\to0^+\) 时，\(e^{1/x}\to+\infty\)，故
+\[
+\frac{e^{1/x}+e}{e^{1/x}-e}\to1,\qquad \frac{\tan x}{x}\to1,
+\]
+从而右极限为 1。
+当 \(x\to0^-\) 时，\(e^{1/x}\to0\)，故
+\[
+\frac{e^{1/x}+e}{e^{1/x}-e}\to -1,\qquad \frac{\tan x}{x}\to1,
+\]
+左极限为 \(-1\)。左右极限有限但不相等，因此 \(x=0\) 是跳跃间断点，属于第一类间断点。
+
+当 \(x=1\) 时，\(e^{1/x}-e=0\)，而 \(\tan1\ne0\)，为无穷间断点。\(x=\pm\frac{\pi}{2}\) 处 \(\tan x\) 无界，也不是第一类间断点。
+
+\answer{A}
+\examnote{第一类间断点包括可去与跳跃；无穷间断点、振荡间断点都属于第二类。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{15.} 函数
+\[
+f(x)=\frac{x^2-x}{x^2-1}\sqrt{1+\frac1{x^2}}
+\]
+的无穷间断点的个数为（\quad）
+
+A. 0 \qquad B. 1 \qquad C. 2 \qquad D. 3
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先找定义域中的可疑点：\(x=0,\pm1\)。再分别判断极限类型。}
+对 \(x\ne1\)，
+\[
+\frac{x^2-x}{x^2-1}
+=\frac{x(x-1)}{(x-1)(x+1)}
+=\frac{x}{x+1}.
+\]
+在 \(x=1\) 处约去后极限有限，故为可去间断点，不是无穷间断点。
+
+当 \(x\to0^\pm\) 时，
+\[
+\sqrt{1+\frac1{x^2}}=\frac{\sqrt{x^2+1}}{|x|},
+\]
+所以
+\[
+f(x)\sim \frac{x}{x+1}\cdot\frac1{|x|}
+\to
+\begin{cases}
+1,&x\to0^+,\\
+-1,&x\to0^-.
+\end{cases}
+\]
+这是跳跃间断点，不是无穷间断点。
+
+当 \(x\to-1\) 时，分母 \(x^2-1\to0\)，而 \(x^2-x\to2\)，根号因子有限且非零，因此函数趋于无穷。故无穷间断点只有 \(x=-1\) 一个。
+
+\answer{B}
+\examnote{根号中的 \(1/x^2\) 看似会在 0 处爆掉，但前面的 \(x\) 会抵消一个阶；要算左右极限，不能只凭直觉。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{16.} 函数
+\[
+f(x)=\frac{|x|^2-1}{x(x+1)\ln|x|}
+\]
+的可去间断点的个数为（\quad）
+
+A. 0 \qquad B. 1 \qquad C. 2 \qquad D. 3
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{因为 \(|x|^2=x^2\)，先因式分解并检查 \(x=0,\pm1\)。}
+有
+\[
+|x|^2-1=x^2-1=(x-1)(x+1).
+\]
+当 \(x\ne-1\) 时可约去 \(x+1\)，得
+\[
+f(x)=\frac{x-1}{x\ln|x|}.
+\]
+在 \(x=1\) 处，
+\[
+\lim_{x\to1}\frac{x-1}{x\ln x}=1,
+\]
+所以 \(x=1\) 是可去间断点。
+
+在 \(x=-1\) 处，约去后分母 \(x\ln|x|\to0\)，而分子 \(x-1\to-2\)，故为无穷间断点。\(x=0\) 处原式分母趋于 0 而分子趋于 \(-1\)，也不是可去间断点。
+
+\answer{B}
+\examnote{可去间断点必须“极限有限”。出现 \(0/0\) 只是候选，不等于一定可去。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{17.} 已知函数
+\[
+f(x)=\frac{(x^2+a^2)(x-1)}{e^{1/x}+b}
+\]
+在 \((-\infty,+\infty)\) 上有一个可去间断点和一个跳跃间断点，则（\quad）
+
+A. \(a=1,b=-1\) \qquad B. \(a=0,b=1\) \qquad C. \(a\ne0,b=-e\) \qquad D. \(a=0,b=-e\)
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{间断点来自两处：一是 \(x=0\) 处的 \(e^{1/x}\)，二是分母 \(e^{1/x}+b=0\) 的点。}
+若 \(b=-e\)，则
+\[
+e^{1/x}+b=0
+\iff e^{1/x}=e
+\iff x=1.
+\]
+此时分子含有因子 \(x-1\)，所以 \(x=1\) 是可去间断点。
+
+再看 \(x=0\)。当 \(x\to0^+\) 时，\(e^{1/x}\to+\infty\)，故
+\[
+f(x)\to0.
+\]
+当 \(x\to0^-\) 时，\(e^{1/x}\to0\)，若 \(b=-e\)，则
+\[
+f(x)\to\frac{a^2(-1)}{-e}=\frac{a^2}{e}.
+\]
+若 \(a\ne0\)，左右极限有限但不相等，故 \(x=0\) 是跳跃间断点。于是 \(b=-e,a\ne0\) 符合要求。
+
+若 \(a=0,b=-e\)，则 \(x=0\) 左右极限都为 0，会变成可去间断点，从而不是“一可去一跳跃”。
+
+\answer{C}
+\examnote{含 \(e^{1/x}\) 的间断点，几乎总要分别看 \(0^+\) 和 \(0^-\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{18.} 设
+\[
+f(x)=\lim_{n\to\infty}
+\frac{2e^{(n+1)x}+1}{e^{nx}+x^n+1},
+\]
+则 \(f(x)\)（\quad）
+
+A. 仅有一个可去间断点 \qquad B. 仅有一个跳跃间断点
+
+C. 有两个可去间断点 \qquad D. 有两个跳跃间断点
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先按 \(x\) 的范围求极限函数，再判断间断点。关键比较 \(e^{nx}\) 与 \(x^n\) 的增长或衰减。}
+当 \(x>0\) 时，因为 \(e^x>x\)，所以 \(e^{nx}\) 支配 \(x^n\)，
+\[
+f(x)=\lim_{n\to\infty}
+\frac{2e^x e^{nx}+1}{e^{nx}+x^n+1}
+=2e^x.
+\]
+当 \(-1<x<0\) 时，\(e^{nx}\to0,\ x^n\to0\)，故
+\[
+f(x)=1.
+\]
+当 \(x<-1\) 时，\(|x^n|\to\infty\)，分母由 \(x^n\) 支配，而分子趋于 1，故
+\[
+f(x)=0.
+\]
+当 \(x=0\) 时，
+\[
+f(0)=\frac{2e^0+1}{e^0+0^n+1}=\frac32.
+\]
+当 \(x=-1\) 时，分母中 \(x^n=(-1)^n\) 振荡，使原数列极限不存在，因此 \(f(-1)\) 不存在。
+
+于是
+\[
+f(x)=
+\begin{cases}
+0,&x<-1,\\
+1,&-1<x<0,\\
+\frac32,&x=0,\\
+2e^x,&x>0.
+\end{cases}
+\]
+在 \(x=-1\) 处，左极限为 0，右极限为 1，是跳跃间断点；在 \(x=0\) 处，左极限为 1，右极限为 2，也是跳跃间断点。因此共有两个跳跃间断点。
+
+\answer{D}
+\examnote{先求极限函数再谈连续性。不要只盯着 \(x=0\)，这里 \(x=-1\) 由 \(x^n\) 的振荡造成另一个间断点。}
+\end{solutionblock}
+
+\section{填空题与计算题}
+
+\begin{problemblock}
+\textbf{19.}
+\[
+\lim_{x\to0}\frac{x-\arcsin x}{(\arcsin x)^3}= \underline{\qquad}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{本题考查反三角函数的 Taylor 展开。}
+由
+\[
+\arcsin x=x+\frac{x^3}{6}+o(x^3)
+\]
+得
+\[
+x-\arcsin x=-\frac{x^3}{6}+o(x^3),
+\qquad
+(\arcsin x)^3\sim x^3.
+\]
+所以
+\[
+\lim_{x\to0}\frac{x-\arcsin x}{(\arcsin x)^3}
+=-\frac16.
+\]
+\answer{\(-\frac16\)}
+\examnote{\(\arcsin x\) 的三阶项是 \(+\frac{x^3}{6}\)，符号很容易写反。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{20.} 已知
+\[
+\lim_{x\to0}
+\frac{\alpha x^\alpha}
+{\sqrt{1+x\arctan x}-\sqrt{\cos x}}
+=\frac83,
+\]
+则 \(\alpha=\underline{\qquad}\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先求分母最低阶主部，再让分子同阶。}
+当 \(x\to0\) 时，
+\[
+x\arctan x=x^2+o(x^2),
+\]
+故
+\[
+\sqrt{1+x\arctan x}=1+\frac{x^2}{2}+o(x^2).
+\]
+又
+\[
+\cos x=1-\frac{x^2}{2}+o(x^2),
+\]
+所以
+\[
+\sqrt{\cos x}=1-\frac{x^2}{4}+o(x^2).
+\]
+分母为
+\[
+\sqrt{1+x\arctan x}-\sqrt{\cos x}
+=\frac{3}{4}x^2+o(x^2).
+\]
+极限为非零常数，必须有 \(\alpha=2\)。此时
+\[
+\frac{\alpha x^\alpha}{\frac34x^2}
+=\frac{2}{3/4}=\frac83,
+\]
+满足题意。
+\answer{2}
+\examnote{“非零有限极限”通常先锁定同阶，再比较主系数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{21.} 已知曲线 \(y=f(x)\) 在点 \((0,0)\) 处的切线过点 \((1,2)\)，则
+\[
+\lim_{x\to0}\left(\cos x+\int_0^x f(t)\,dt\right)^{1/x^2}
+=\underline{\qquad}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{切线过 \((0,0)\) 与 \((1,2)\)，斜率为 2，所以 \(f(0)=0,\ f'(0)=2\)。}
+由可导性，
+\[
+f(t)=2t+o(t).
+\]
+于是
+\[
+\int_0^x f(t)\,dt
+=\int_0^x(2t+o(t))\,dt
+=x^2+o(x^2).
+\]
+又
+\[
+\cos x=1-\frac{x^2}{2}+o(x^2),
+\]
+故底数
+\[
+\cos x+\int_0^x f(t)\,dt
+=1+\frac{x^2}{2}+o(x^2).
+\]
+因此
+\[
+\lim_{x\to0}\left(1+\frac{x^2}{2}+o(x^2)\right)^{1/x^2}
+=e^{1/2}.
+\]
+\answer{\(\sqrt e\)}
+\examnote{看到 \(1/x^2\) 型指数，目标是把底数化为 \(1+Cx^2+o(x^2)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{22.}
+\[
+\lim_{x\to0}
+\left[
+\frac1{\ln\left(x+\sqrt{1+x^2}\right)}
+-\frac1{\ln(1+x)}
+\right]
+=\underline{\qquad}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{利用 \(\ln(x+\sqrt{1+x^2})=\operatorname{arsinh}x\) 的展开。}
+有
+\[
+\ln\left(x+\sqrt{1+x^2}\right)
+=x-\frac{x^3}{6}+o(x^3),
+\]
+而
+\[
+\ln(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}+o(x^3).
+\]
+记
+\[
+A=\ln\left(x+\sqrt{1+x^2}\right),\qquad B=\ln(1+x).
+\]
+则
+\[
+\frac1A-\frac1B=\frac{B-A}{AB}.
+\]
+其中
+\[
+B-A=-\frac{x^2}{2}+O(x^3),\qquad AB\sim x^2.
+\]
+故极限为
+\[
+-\frac12.
+\]
+\answer{\(-\frac12\)}
+\examnote{两个倒数相减，不要分别展开成很长的倒数级数；先通分更稳。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{23.} 设 \(n\) 为正整数，则
+\[
+\lim_{x\to\infty}
+\left[
+\frac{x^n}{(x-1)(x-2)\cdots(x-n)}
+\right]^x
+=\underline{\qquad}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{这是 \(1^\infty\) 型极限，取对数处理。}
+令原式为 \(L\)。则
+\[
+\ln L
+=\lim_{x\to\infty}
+x\ln\left[
+\prod_{k=1}^n\frac1{1-k/x}
+\right]
+=-\lim_{x\to\infty}x\sum_{k=1}^n\ln\left(1-\frac{k}{x}\right).
+\]
+因为
+\[
+\ln(1-u)=-u+o(u),
+\]
+所以
+\[
+\ln L
+=\lim_{x\to\infty}x\sum_{k=1}^n\left(\frac{k}{x}+o\left(\frac1x\right)\right)
+=\sum_{k=1}^n k
+=\frac{n(n+1)}2.
+\]
+故
+\[
+L=e^{n(n+1)/2}.
+\]
+\answer{\(e^{\frac{n(n+1)}2}\)}
+\examnote{有限个因子连乘，取对数后可以逐项用 \(\ln(1+u)\sim u\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{24.}
+\[
+\lim_{x\to0}
+\left(
+\frac{\ln\left(x+\sqrt{1+x^2}\right)}{x}
+\right)^{1/x^2}
+=\underline{\qquad}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{同样使用 \(\operatorname{arsinh}x\) 展开，并化成 \(1^\infty\) 型。}
+\[
+\ln\left(x+\sqrt{1+x^2}\right)
+=x-\frac{x^3}{6}+o(x^3).
+\]
+因此
+\[
+\frac{\ln\left(x+\sqrt{1+x^2}\right)}{x}
+=1-\frac{x^2}{6}+o(x^2).
+\]
+于是
+\[
+\lim_{x\to0}
+\left(1-\frac{x^2}{6}+o(x^2)\right)^{1/x^2}
+=e^{-1/6}.
+\]
+\answer{\(e^{-1/6}\)}
+\examnote{\((1+Cx^2+o(x^2))^{1/x^2}\to e^C\)，这里 \(C=-\frac16\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{25.} 设
+\[
+x_n=\left(1+\frac1{n^2}\right)
+\left(1+\frac2{n^2}\right)\cdots
+\left(1+\frac n{n^2}\right),
+\]
+则
+\[
+\lim_{n\to\infty}x_n=\underline{\qquad}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{连乘极限优先取对数，把乘积变成求和。}
+\[
+\ln x_n=\sum_{k=1}^n\ln\left(1+\frac{k}{n^2}\right).
+\]
+因为 \(0\le k/n^2\le1/n\to0\)，可一致使用
+\[
+\ln(1+u)=u+O(u^2).
+\]
+于是
+\[
+\ln x_n
+=\sum_{k=1}^n\frac{k}{n^2}
+O\left(\sum_{k=1}^n\frac{k^2}{n^4}\right).
+\]
+其中
+\[
+\sum_{k=1}^n\frac{k}{n^2}
+=\frac{n(n+1)}{2n^2}\to\frac12,
+\qquad
+\sum_{k=1}^n\frac{k^2}{n^4}=O\left(\frac1n\right)\to0.
+\]
+所以 \(\ln x_n\to\frac12\)，从而
+\[
+x_n\to e^{1/2}=\sqrt e.
+\]
+\answer{\(\sqrt e\)}
+\examnote{乘积中每一项都趋于 1 时，通常是“取对数 + 等价求和”。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{26.}
+\[
+\lim_{n\to\infty}
+\frac{\sqrt1+\sqrt2+\cdots+\sqrt n}
+{\sqrt{n(1+2+\cdots+n)}}
+=\underline{\qquad}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{分子是幂和，分母可直接化简。}
+分母
+\[
+\sqrt{n(1+2+\cdots+n)}
+=\sqrt{n\cdot\frac{n(n+1)}2}
+\sim\frac{n^{3/2}}{\sqrt2}.
+\]
+分子用 Riemann 和：
+\[
+\sqrt1+\sqrt2+\cdots+\sqrt n
+=n^{1/2}\sum_{k=1}^n\sqrt{\frac{k}{n}}
+\sim n^{1/2}\cdot n\int_0^1\sqrt t\,dt
+=n^{3/2}\cdot\frac23.
+\]
+因此极限为
+\[
+\frac{2/3}{1/\sqrt2}
+=\frac{2\sqrt2}{3}.
+\]
+\answer{\(\frac{2\sqrt2}{3}\)}
+\examnote{\(\sum_{k=1}^n k^\alpha\sim \frac{n^{\alpha+1}}{\alpha+1}\) 是考研常用结论。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{27.} 确定常数 \(a,b\)，使 \(x\to0\) 时
+\[
+f(x)=e^x-\frac{1+ax}{1+bx}
+\]
+为 \(x\) 的三阶无穷小。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{要成为三阶无穷小，常数项、一次项、二次项都要相消，三次项不为零。}
+展开
+\[
+e^x=1+x+\frac{x^2}{2}+\frac{x^3}{6}+o(x^3).
+\]
+又
+\[
+\frac{1+ax}{1+bx}
+=(1+ax)(1-bx+b^2x^2-b^3x^3+o(x^3)),
+\]
+即
+\[
+\frac{1+ax}{1+bx}
+=1+(a-b)x+(b^2-ab)x^2+(ab^2-b^3)x^3+o(x^3).
+\]
+令 \(f(x)\) 的一次、二次项系数为 0：
+\[
+1-(a-b)=0,
+\]
+\[
+\frac12-(b^2-ab)=0.
+\]
+由第一式 \(a-b=1\)。于是
+\[
+b^2-ab=b(b-a)=-b(a-b)=-b.
+\]
+代入第二式得
+\[
+\frac12+b=0,\qquad b=-\frac12.
+\]
+因此
+\[
+a=b+1=\frac12.
+\]
+此时三次项系数为
+\[
+\frac16-(ab^2-b^3)
+=\frac16-b^2(a-b)
+=\frac16-\frac14
+=-\frac1{12}\ne0,
+\]
+故确为三阶无穷小。
+
+\answer{\(a=\frac12,\ b=-\frac12\)}
+\examnote{“三阶无穷小”不是只让一阶项消失，而是要消到二阶，三阶项保留。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{28.} 当 \(x\to0\) 时，
+\[
+1-\cos x\cos2x\cos3x
+\]
+与 \(ax^n\) 为等价无穷小，求 \(n\) 与 \(a\) 的值。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{多个余弦相乘时，只需保留到 \(x^2\) 项。}
+\[
+\cos kx=1-\frac{k^2x^2}{2}+o(x^2).
+\]
+因此
+\[
+\cos x\cos2x\cos3x
+=\left(1-\frac{x^2}{2}\right)
+\left(1-2x^2\right)
+\left(1-\frac{9x^2}{2}\right)+o(x^2).
+\]
+乘积的一阶主部为
+\[
+1-\frac{1+4+9}{2}x^2+o(x^2)
+=1-7x^2+o(x^2).
+\]
+故
+\[
+1-\cos x\cos2x\cos3x
+=7x^2+o(x^2).
+\]
+\answer{\(n=2,\ a=7\)}
+\examnote{\(\prod(1+u_k)=1+\sum u_k+o(u)\)，保留同阶项即可，不必完全展开。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{29.} 已知
+\[
+\lim_{x\to0}
+\frac{(1+\sin2x^2)^{1/x^2}-e^2}{x^n}
+=a\quad(a\ne0),
+\]
+求 \(a\) 和 \(n\) 的值。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{这是指数型函数与常数 \(e^2\) 的差值，先展开指数的对数。}
+设
+\[
+H(x)=(1+\sin2x^2)^{1/x^2}.
+\]
+则
+\[
+\ln H(x)=\frac1{x^2}\ln(1+\sin2x^2).
+\]
+因为
+\[
+\sin2x^2=2x^2+o(x^4),
+\]
+且
+\[
+\ln(1+u)=u-\frac{u^2}{2}+o(u^2),
+\]
+所以
+\[
+\ln(1+\sin2x^2)
+=2x^2-\frac{(2x^2)^2}{2}+o(x^4)
+=2x^2-2x^4+o(x^4).
+\]
+从而
+\[
+\ln H(x)=2-2x^2+o(x^2),
+\]
+\[
+H(x)=e^2e^{-2x^2+o(x^2)}
+=e^2\bigl(1-2x^2+o(x^2)\bigr).
+\]
+于是
+\[
+H(x)-e^2=-2e^2x^2+o(x^2).
+\]
+因此
+\[
+n=2,\qquad a=-2e^2.
+\]
+\answer{\(n=2,\ a=-2e^2\)}
+\examnote{指数型差值 \(e^{A+\varepsilon}-e^A\sim e^A\varepsilon\)，这里 \(\varepsilon=-2x^2\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{30.} 确定常数 \(a,b,c\) 的值，使
+\[
+\lim_{x\to0}
+\frac{ax-\sin x}
+{\displaystyle\int_b^x\frac{\ln(1+t^3)}{t}\,dt}
+=c\quad(c\ne0).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{要使极限为非零有限数，分子和分母必须同阶趋于 0。}
+若 \(b\ne0\)，则当 \(x\to0\) 时分母趋于常数
+\[
+\int_b^0\frac{\ln(1+t^3)}{t}\,dt,
+\]
+而分子趋于 0，极限不可能为非零常数。因此必须
+\[
+b=0.
+\]
+此时
+\[
+\frac{\ln(1+t^3)}{t}\sim\frac{t^3}{t}=t^2,
+\]
+所以
+\[
+\int_0^x\frac{\ln(1+t^3)}{t}\,dt
+\sim\int_0^x t^2\,dt=\frac{x^3}{3}.
+\]
+分子
+\[
+ax-\sin x=(a-1)x+\frac{x^3}{6}+o(x^3).
+\]
+为了与分母同为三阶，必须
+\[
+a=1.
+\]
+于是
+\[
+ax-\sin x=x-\sin x\sim\frac{x^3}{6}.
+\]
+故
+\[
+c=\frac{1/6}{1/3}=\frac12.
+\]
+\answer{\(a=1,\ b=0,\ c=\frac12\)}
+\examnote{含参数积分下限时，先判断分母是否趋于 0；否则不可能得到非零有限极限。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{31.}
+\[
+\lim_{x\to0}
+\left[
+\frac1{\ln(1+x^2)}-\frac1{\sin^2x}
+\right].
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{两个倒数相减，通分后比较四阶主部。}
+通分得
+\[
+\frac1{\ln(1+x^2)}-\frac1{\sin^2x}
+=\frac{\sin^2x-\ln(1+x^2)}
+{\ln(1+x^2)\sin^2x}.
+\]
+展开
+\[
+\sin^2x=x^2-\frac{x^4}{3}+o(x^4),
+\]
+\[
+\ln(1+x^2)=x^2-\frac{x^4}{2}+o(x^4).
+\]
+所以
+\[
+\sin^2x-\ln(1+x^2)
+=\frac{x^4}{6}+o(x^4),
+\]
+而分母
+\[
+\ln(1+x^2)\sin^2x\sim x^4.
+\]
+故极限为
+\[
+\frac16.
+\]
+\answer{\(\frac16\)}
+\examnote{这里二阶项相同，必须展开到四阶。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{32.}
+\[
+\lim_{x\to0^+}
+\frac{x^x-(\sin x)^x}{x^2\ln(1+x)}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{幂函数底数和指数都含 \(x\)，先写成指数形式。}
+\[
+x^x=e^{x\ln x},\qquad
+(\sin x)^x=e^{x\ln(\sin x)}.
+\]
+又
+\[
+\ln(\sin x)=\ln x+\ln\frac{\sin x}{x}.
+\]
+当 \(x\to0^+\) 时，
+\[
+\frac{\sin x}{x}=1-\frac{x^2}{6}+o(x^2),
+\]
+所以
+\[
+\ln\frac{\sin x}{x}=-\frac{x^2}{6}+o(x^2).
+\]
+因此
+\[
+x\ln(\sin x)
+=x\ln x-\frac{x^3}{6}+o(x^3).
+\]
+于是
+\[
+x^x-(\sin x)^x
+=e^{x\ln x}\left(1-e^{-x^3/6+o(x^3)}\right)
+\sim \frac{x^3}{6},
+\]
+因为 \(e^{x\ln x}\to1\)。分母
+\[
+x^2\ln(1+x)\sim x^3.
+\]
+故极限为
+\[
+\frac16.
+\]
+\answer{\(\frac16\)}
+\examnote{本题的细节在 \(x\ln x\to0\)，所以 \(e^{x\ln x}\to1\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{33.}
+\[
+\lim_{x\to0}
+\frac{\ln(1+x^2)-\ln(1+\sin^2x)}
+{x\sin^3x}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{分子是两个对数之差，可先看内部变量 \(x^2\) 与 \(\sin^2x\) 的差。}
+由
+\[
+\sin x=x-\frac{x^3}{6}+o(x^3)
+\]
+可得
+\[
+\sin^2x=x^2-\frac{x^4}{3}+o(x^4).
+\]
+因此
+\[
+x^2-\sin^2x=\frac{x^4}{3}+o(x^4).
+\]
+利用
+\[
+\ln(1+u)-\ln(1+v)\sim u-v
+\]
+在 \(u,v\to0\) 且 \(u-v\) 为主部时成立，得
+\[
+\ln(1+x^2)-\ln(1+\sin^2x)
+\sim\frac{x^4}{3}.
+\]
+分母
+\[
+x\sin^3x\sim x\cdot x^3=x^4.
+\]
+故极限为
+\[
+\frac13.
+\]
+\answer{\(\frac13\)}
+\examnote{差值型对数题常用 \(\ln(1+u)-\ln(1+v)=\ln\left(1+\frac{u-v}{1+v}\right)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{34.}
+\[
+\lim_{x\to+\infty}
+\frac{\displaystyle\int_1^x\left[t^2\left(e^{1/t}-1\right)-t\right]\,dt}
+{x^2\ln\left(1+\frac1x\right)}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先求被积函数在 \(t\to+\infty\) 时的主部。}
+\[
+e^{1/t}-1=\frac1t+\frac1{2t^2}+\frac1{6t^3}+O\left(\frac1{t^4}\right).
+\]
+所以
+\[
+t^2(e^{1/t}-1)-t
+=t+\frac12+\frac1{6t}+O\left(\frac1{t^2}\right)-t
+=\frac12+O\left(\frac1t\right).
+\]
+因此分子
+\[
+\int_1^x\left[t^2(e^{1/t}-1)-t\right]dt
+=\frac{x}{2}+O(\ln x).
+\]
+分母
+\[
+x^2\ln\left(1+\frac1x\right)\sim x^2\cdot\frac1x=x.
+\]
+故极限为
+\[
+\frac12.
+\]
+\answer{\(\frac12\)}
+\examnote{积分上限趋于无穷时，先判断被积函数主部，再积分。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{35.} 求下列极限：
+\[
+(1)\ \lim_{x\to0}\left(\frac{\ln(1+x)}x\right)^{1/(e^x-1)};
+\]
+\[
+(2)\ \lim_{x\to0}\left(\frac{e^x+e^{2x}+\cdots+e^{nx}}n\right)^{1/x};
+\]
+\[
+(3)\ \lim_{n\to\infty}\left(n\tan\frac1n\right)^{n^2};
+\qquad
+(4)\ \lim_{n\to\infty}\tan^n\left(\frac\pi4+\frac2n\right).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{四个都是 \(1^\infty\) 型，统一取对数。}
+(1) 设极限为 \(L_1\)，则
+\[
+\ln L_1
+=\lim_{x\to0}\frac{\ln\left(\frac{\ln(1+x)}x\right)}{e^x-1}.
+\]
+因为
+\[
+\frac{\ln(1+x)}x=1-\frac{x}{2}+o(x),
+\]
+所以分子 \(\sim-\frac{x}{2}\)，分母 \(\sim x\)，故
+\[
+L_1=e^{-1/2}.
+\]
+
+(2) 平均值展开为
+\[
+\frac{e^x+e^{2x}+\cdots+e^{nx}}n
+=1+\frac{1+2+\cdots+n}{n}x+o(x)
+=1+\frac{n+1}{2}x+o(x).
+\]
+故极限为
+\[
+e^{(n+1)/2}.
+\]
+
+(3) 因为
+\[
+\tan\frac1n=\frac1n+\frac1{3n^3}+O\left(\frac1{n^5}\right),
+\]
+所以
+\[
+n\tan\frac1n=1+\frac1{3n^2}+O\left(\frac1{n^4}\right),
+\]
+极限为
+\[
+e^{1/3}.
+\]
+
+(4) 令 \(u=\frac2n\)。在 \(x=\frac\pi4\) 处，
+\[
+\left(\ln\tan x\right)'=\frac{\sec^2x}{\tan x}=2.
+\]
+因此
+\[
+\ln\tan\left(\frac\pi4+\frac2n\right)
+=2\cdot\frac2n+o\left(\frac1n\right)=\frac4n+o\left(\frac1n\right).
+\]
+所以极限为
+\[
+e^4.
+\]
+
+\answer{(1) \(e^{-1/2}\)；(2) \(e^{(n+1)/2}\)；(3) \(e^{1/3}\)；(4) \(e^4\)}
+\examnote{\(1^\infty\) 型不要硬算原式，取对数后只保留一阶主部。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{36.} 求下列极限：
+\[
+(1)\ \lim_{x\to+\infty}\left(x+\sqrt{1+x^2}\right)^{1/x};
+\qquad
+(2)\ \lim_{x\to+\infty}\left(x^{1/x}-1\right)^{1/\ln x}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{仍然取对数。}
+(1)
+\[
+\frac1x\ln\left(x+\sqrt{1+x^2}\right)
+\sim\frac{\ln(2x)}x\to0,
+\]
+故极限为 \(e^0=1\)。
+
+(2) 令 \(y=\frac{\ln x}{x}\)，则 \(y\to0^+\)，
+\[
+x^{1/x}-1=e^y-1\sim y=\frac{\ln x}{x}.
+\]
+于是
+\[
+\ln\left[\left(x^{1/x}-1\right)^{1/\ln x}\right]
+=\frac{\ln(x^{1/x}-1)}{\ln x}
+\sim\frac{\ln(\ln x)-\ln x}{\ln x}\to-1.
+\]
+故极限为 \(e^{-1}\)。
+
+\answer{(1) \(1\)；(2) \(e^{-1}\)}
+\examnote{第二题的底数趋于 0，不是 \(1^\infty\)，但取对数仍是最稳路线。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{37.} 已知函数 \(f(x)\) 在 \(x=0\) 的某邻域内可导，且
+\[
+\lim_{x\to0}\left(\frac{\sin x}{x^2}+\frac{f(x)}x\right)=2,
+\]
+求 \(f(0),f'(0)\) 及
+\[
+\lim_{x\to0}\frac{x}{f(x)+e^x}.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{要让极限有限，\(\frac1x\) 型发散项必须相消。}
+设
+\[
+f(x)=f(0)+f'(0)x+o(x).
+\]
+又
+\[
+\frac{\sin x}{x^2}=\frac1x-\frac{x}{6}+o(x).
+\]
+因此
+\[
+\frac{\sin x}{x^2}+\frac{f(x)}x
+=\frac{1+f(0)}x+f'(0)+o(1).
+\]
+极限有限，必须
+\[
+1+f(0)=0,\qquad f(0)=-1.
+\]
+此时极限等于 \(f'(0)\)，所以
+\[
+f'(0)=2.
+\]
+于是
+\[
+f(x)=-1+2x+o(x),\qquad e^x=1+x+o(x),
+\]
+故
+\[
+f(x)+e^x=3x+o(x),
+\]
+从而
+\[
+\lim_{x\to0}\frac{x}{f(x)+e^x}=\frac13.
+\]
+\answer{\(f(0)=-1,\ f'(0)=2,\ \lim=\frac13\)}
+\examnote{有限极限常常来自发散项相消，这是反求函数值的高频技巧。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{38.}
+\[
+\lim_{n\to\infty}
+\left(
+\frac1{\sqrt{n^6+n}}+
+\frac{2^2}{\sqrt{n^6+2n}}+\cdots+
+\frac{n^2}{\sqrt{n^6+n^2}}
+\right).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{分母统一提取 \(n^3\)。}
+第 \(k\) 项为
+\[
+\frac{k^2}{\sqrt{n^6+kn}}
+=\frac{k^2}{n^3\sqrt{1+k/n^5}}.
+\]
+因为 \(1\le k\le n\)，有 \(k/n^5\to0\)，故
+\[
+\frac{k^2}{\sqrt{n^6+kn}}\sim\frac{k^2}{n^3}.
+\]
+于是
+\[
+\sum_{k=1}^n\frac{k^2}{\sqrt{n^6+kn}}
+\sim\frac1{n^3}\sum_{k=1}^n k^2
+\to\frac13.
+\]
+\answer{\(\frac13\)}
+\examnote{\(\sum k^2\sim n^3/3\)，这是数列极限中最常用的幂和主部。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{39.}
+\[
+\lim_{n\to\infty}
+\left(
+\frac1{\sqrt{n^2}}+
+\frac1{\sqrt{n^2-1^2}}+\cdots+
+\frac1{\sqrt{n^2-(n-1)^2}}
+\right).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{化成 Riemann 和，注意右端点是 1 附近的广义积分。}
+\[
+\frac1{\sqrt{n^2-k^2}}
+=\frac1n\cdot\frac1{\sqrt{1-(k/n)^2}}.
+\]
+因此原和为
+\[
+\frac1n\sum_{k=0}^{n-1}
+\frac1{\sqrt{1-(k/n)^2}}
+\to\int_0^1\frac{dt}{\sqrt{1-t^2}}
+=\frac\pi2.
+\]
+\answer{\(\frac\pi2\)}
+\examnote{虽然 \(t=1\) 处被积函数无界，但广义积分收敛，Riemann 和仍可对应。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{40.}
+\[
+\lim_{n\to\infty}
+\left(
+\frac{n+1}{1^2+n^2}+
+\frac{n+\frac12}{2^2+n^2}+\cdots+
+\frac{n+\frac1n}{n^2+n^2}
+\right).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{把分子拆成 \(n\) 与 \(1/k\) 两部分。}
+原和等于
+\[
+\sum_{k=1}^n\frac{n}{k^2+n^2}
++\sum_{k=1}^n\frac{1/k}{k^2+n^2}.
+\]
+第一部分
+\[
+\sum_{k=1}^n\frac{n}{k^2+n^2}
+=\frac1n\sum_{k=1}^n\frac1{1+(k/n)^2}
+\to\int_0^1\frac{dt}{1+t^2}
+=\frac\pi4.
+\]
+第二部分估计为
+\[
+0\le
+\sum_{k=1}^n\frac{1/k}{k^2+n^2}
+\le \frac1{n^2}\sum_{k=1}^n\frac1k
+\to0.
+\]
+故极限为
+\[
+\frac\pi4.
+\]
+\answer{\(\frac\pi4\)}
+\examnote{复杂分子先拆项，主要部分做 Riemann 和，次要部分用估计压掉。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{41.} 求函数
+\[
+f(x)=
+\begin{cases}
+\dfrac{x|x|+1}{\ln|x|},&x\ne0,\\
+1,&x=0
+\end{cases}
+\]
+的间断点并指出类型。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{可疑点来自 \(x=0\)、\(\ln|x|=0\) 以及绝对值表达式的分段点，即 \(x=-1,0,1\)。}
+当 \(x\to0\) 时，
+\[
+\frac{x|x|+1}{\ln|x|}\to0,
+\]
+但 \(f(0)=1\)，故 \(x=0\) 为可去间断点。
+
+当 \(x\to1\) 时，分子趋于 2，分母 \(\ln|x|\to0\)，故 \(x=1\) 为无穷间断点。
+
+当 \(x\to-1\) 时，附近 \(x<0\)，故 \(|x|=-x\)，于是
+\[
+x|x|+1=1-x^2=(1-x)(1+x).
+\]
+令 \(h=x+1\)，则 \(x=-1+h\)，
+\[
+\ln|x|=\ln|1-h|\sim-h.
+\]
+同时
+\[
+1-x^2=1-(-1+h)^2=2h-h^2\sim2h.
+\]
+故
+\[
+\lim_{x\to-1}\frac{x|x|+1}{\ln|x|}
+=\lim_{h\to0}\frac{2h-h^2}{-h}=-2.
+\]
+极限存在且有限，但原函数在 \(x=-1\) 无定义，所以 \(x=-1\) 为可去间断点。
+
+\answer{\(x=-1\) 与 \(x=0\) 为可去间断点；\(x=1\) 为无穷间断点。}
+\examnote{绝对值题一定分左右，尤其在绝对值零点处。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{42.} 设
+\[
+f(x)=\lim_{n\to\infty}
+\frac{x^{2n-1}+ax^2+bx}{x^{2n}+1}
+\]
+在 \((-\infty,+\infty)\) 内连续，试确定常数 \(a\) 和 \(b\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先求极限函数，再在分界点 \(x=\pm1\) 处拼接连续。}
+当 \(|x|<1\) 时，\(x^{2n}\to0,\ x^{2n-1}\to0\)，
+\[
+f(x)=ax^2+bx.
+\]
+当 \(|x|>1\) 时，分子分母同除以 \(x^{2n}\)，
+\[
+f(x)=\frac1x.
+\]
+在 \(x=1\) 处，
+\[
+f(1)=\frac{1+a+b}{2},
+\]
+连续要求左右极限相同，即
+\[
+a+b=1.
+\]
+在 \(x=-1\) 处，
+\[
+f(-1)=\frac{a-b-1}{2},
+\]
+连续要求
+\[
+a-b=-1.
+\]
+解方程组
+\[
+\begin{cases}
+a+b=1,\\
+a-b=-1
+\end{cases}
+\]
+得
+\[
+a=0,\qquad b=1.
+\]
+\answer{\(a=0,\ b=1\)}
+\examnote{含 \(x^{2n}\) 的极限函数通常按 \(|x|<1, |x|>1, x=\pm1\) 分段。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{43.} 设 \(f(x)\) 是区间 \([0,+\infty)\) 上单调减且非负的连续函数，
+\[
+a_n=\sum_{k=1}^n f(k)-\int_1^n f(x)\,dx\quad(n=1,2,\cdots),
+\]
+证明数列 \(\{a_n\}\) 的极限存在。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{证明极限存在，常用“单调有界”。}
+先看单调性：
+\[
+a_{n+1}-a_n
+=f(n+1)-\int_n^{n+1}f(x)\,dx.
+\]
+由于 \(f\) 单调减，\(x\in[n,n+1]\) 时
+\[
+f(x)\ge f(n+1),
+\]
+所以
+\[
+\int_n^{n+1}f(x)\,dx\ge f(n+1).
+\]
+因此
+\[
+a_{n+1}-a_n\le0,
+\]
+即 \(\{a_n\}\) 单调递减。
+
+再证有下界。对 \(k=1,\dots,n-1\)，由单调减知
+\[
+\int_k^{k+1}f(x)\,dx\le f(k).
+\]
+于是
+\[
+\int_1^n f(x)\,dx
+\le\sum_{k=1}^{n-1}f(k).
+\]
+故
+\[
+a_n=\sum_{k=1}^n f(k)-\int_1^n f(x)\,dx
+\ge f(n)\ge0.
+\]
+所以 \(\{a_n\}\) 单调递减且有下界，极限存在。
+\examnote{单调函数与积分比较，是考研证明数列收敛的经典套路。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{44.} 设
+\[
+x_1=\sqrt2,\qquad x_{n+1}=\sqrt{3+2x_n}\quad(n=1,2,\cdots),
+\]
+证明数列 \(\{x_n\}\) 收敛并求它的极限。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{递推根式题通常先猜极限，再证单调有界。}
+若极限为 \(L\)，则
+\[
+L=\sqrt{3+2L},
+\]
+即
+\[
+L^2-2L-3=0.
+\]
+因 \(x_n>0\)，故 \(L=3\)。
+
+证明收敛：先证 \(x_n<3\)。\(x_1=\sqrt2<3\)，若 \(x_n<3\)，则
+\[
+x_{n+1}=\sqrt{3+2x_n}<\sqrt9=3.
+\]
+再证单调递增。当 \(0<x_n<3\) 时，
+\[
+x_{n+1}>x_n
+\iff 3+2x_n>x_n^2
+\iff (3-x_n)(x_n+1)>0,
+\]
+成立。因此 \(\{x_n\}\) 单调递增且有上界 3，必收敛，极限为 3。
+\answer{收敛，极限为 \(3\)}
+\examnote{根式递推题的标准链条：正性、上界、单调、代入求极限。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{45.} 设数列 \(\{x_n\}\) 满足
+\[
+x_1=1,\qquad x_{n+1}=\frac{x_n+2}{x_n+1}\quad(n=1,2,\cdots),
+\]
+试证
+\[
+\lim_{n\to\infty}x_n=\sqrt2.
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{递推函数的不动点为 \(\sqrt2\)，用误差压缩最简洁。}
+显然 \(x_n>0\)。计算误差：
+\[
+x_{n+1}-\sqrt2
+=\frac{x_n+2}{x_n+1}-\sqrt2
+=\frac{x_n+2-\sqrt2(x_n+1)}{x_n+1}.
+\]
+分子可化为
+\[
+x_n+2-\sqrt2x_n-\sqrt2
+=(1-\sqrt2)x_n+(2-\sqrt2)
+=-(\sqrt2-1)(x_n-\sqrt2).
+\]
+所以
+\[
+|x_{n+1}-\sqrt2|
+=\frac{\sqrt2-1}{x_n+1}|x_n-\sqrt2|
+\le(\sqrt2-1)|x_n-\sqrt2|.
+\]
+由于 \(0<\sqrt2-1<1\)，反复迭代得
+\[
+|x_n-\sqrt2|\le(\sqrt2-1)^{n-1}|x_1-\sqrt2|\to0.
+\]
+因此
+\[
+\lim_{n\to\infty}x_n=\sqrt2.
+\]
+\examnote{分式递推证明收敛时，误差压缩法往往比单调有界更干净。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{46.} 设函数
+\[
+f(x)=\ln x+\frac1x.
+\]
+(1) 求 \(f(x)\) 的最小值；
+
+(2) 设数列 \(\{x_n\}\) 满足
+\[
+\ln x_n+\frac1{x_{n+1}}<1,
+\]
+证明 \(\lim_{n\to\infty}x_n\) 存在，并求此极限。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先用函数最小值建立数列不等式。}
+(1) 定义域为 \(x>0\)，
+\[
+f'(x)=\frac1x-\frac1{x^2}=\frac{x-1}{x^2}.
+\]
+所以 \(f(x)\) 在 \((0,1)\) 上递减，在 \((1,+\infty)\) 上递增，最小值为
+\[
+f(1)=1.
+\]
+
+(2) 由 (1) 知对任意 \(x_n>0\)，
+\[
+\ln x_n+\frac1{x_n}\ge1.
+\]
+又已知
+\[
+\ln x_n+\frac1{x_{n+1}}<1,
+\]
+两式比较得
+\[
+\frac1{x_n}>\frac1{x_{n+1}},
+\]
+故
+\[
+x_{n+1}>x_n.
+\]
+此外由已知式有 \(\ln x_n<1\)，即
+\[
+x_n<e.
+\]
+所以 \(\{x_n\}\) 单调递增且有上界，极限存在。设极限为 \(L\)，则 \(L>0\)。由
+\[
+\ln x_n+\frac1{x_{n+1}}<1
+\]
+取极限得
+\[
+\ln L+\frac1L\le1.
+\]
+但由 (1) 又有
+\[
+\ln L+\frac1L\ge1.
+\]
+故
+\[
+\ln L+\frac1L=1.
+\]
+等号只在 \(L=1\) 处取得，所以
+\[
+\lim_{n\to\infty}x_n=1.
+\]
+\answer{(1) 最小值为 \(1\)；(2) 极限存在且为 \(1\)。}
+\examnote{函数最值与数列单调有界结合，是考研证明题常见设计。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{47.} 设
+\[
+x_1>0,\qquad x_{n+1}=\ln(1+x_n)\quad(n=1,2,\cdots).
+\]
+证明：(1) \(\{x_n\}\) 收敛并求极限；
+
+(2) 计算
+\[
+\lim_{n\to\infty}\left(\frac{x_{n+1}}{x_n}\right)^{1/x_n}
+\quad\text{及}\quad
+\lim_{n\to\infty}\left(\frac1{x_n}-\frac1{x_{n+1}}\right).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先由递推式证明 \(x_n\to0\)，再把两个极限转成 \(x_n\to0\) 的函数极限。}
+当 \(x>0\) 时，
+\[
+0<\ln(1+x)<x.
+\]
+因此
+\[
+0<x_{n+1}<x_n,
+\]
+数列单调递减且有下界 0，故收敛。设极限为 \(L\ge0\)，由递推式取极限得
+\[
+L=\ln(1+L).
+\]
+该方程在 \(L\ge0\) 上唯一解为 \(L=0\)，所以
+\[
+x_n\to0.
+\]
+
+对第一个极限，
+\[
+\frac{x_{n+1}}{x_n}
+=\frac{\ln(1+x_n)}{x_n}
+=1-\frac{x_n}{2}+o(x_n).
+\]
+故
+\[
+\left(\frac{x_{n+1}}{x_n}\right)^{1/x_n}\to e^{-1/2}.
+\]
+
+对第二个极限，
+\[
+\frac1{x_n}-\frac1{x_{n+1}}
+=\frac{x_{n+1}-x_n}{x_nx_{n+1}}.
+\]
+而
+\[
+x_{n+1}=x_n-\frac{x_n^2}{2}+o(x_n^2),
+\]
+且 \(x_{n+1}\sim x_n\)，所以
+\[
+\frac{x_{n+1}-x_n}{x_nx_{n+1}}
+\to -\frac12.
+\]
+\answer{(1) 收敛，极限为 \(0\)；(2) 两个极限分别为 \(e^{-1/2}\)、\(-\frac12\)。}
+\examnote{递推数列极限题，先证明趋向 0，再用标准展开处理后续极限。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{48.} 设 \(f(x)\) 在 \([0,2a]\ (a>0)\) 上连续，且
+\[
+f(0)=f(2a).
+\]
+求证存在 \(\xi\in[0,a]\)，使
+\[
+f(\xi)=f(\xi+a).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{构造差函数，把结论变成零点存在问题。}
+令
+\[
+g(x)=f(x)-f(x+a),\qquad x\in[0,a].
+\]
+由于 \(f\) 连续，\(g\) 在 \([0,a]\) 上连续。并且
+\[
+g(0)=f(0)-f(a),
+\]
+\[
+g(a)=f(a)-f(2a)=f(a)-f(0)=-g(0).
+\]
+若 \(g(0)=0\)，取 \(\xi=0\) 即可。若 \(g(0)\ne0\)，则 \(g(0)\) 与 \(g(a)\) 异号，由零点定理，存在 \(\xi\in(0,a)\)，使
+\[
+g(\xi)=0.
+\]
+即
+\[
+f(\xi)=f(\xi+a).
+\]
+\examnote{端点条件呈对称形式时，优先构造 \(f(x)-f(x+a)\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{49.} 设 \(f(x)\) 在 \([a,b]\) 上连续，\(x_i\in[a,b]\)，\(t_i>0\ (i=1,2,\cdots,n)\)，且
+\[
+\sum_{i=1}^n t_i=1.
+\]
+试证至少存在一点 \(\xi\in[a,b]\)，使
+\[
+f(\xi)=t_1f(x_1)+t_2f(x_2)+\cdots+t_nf(x_n).
+\]
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{这是连续函数介值定理与加权平均的结合。}
+因为 \(f\) 在闭区间 \([a,b]\) 上连续，所以存在最小值 \(m\) 与最大值 \(M\)，使
+\[
+m\le f(x)\le M,\qquad x\in[a,b].
+\]
+于是对每个 \(i\)，
+\[
+m\le f(x_i)\le M.
+\]
+由 \(t_i>0\) 且 \(\sum t_i=1\)，加权求和得
+\[
+m\le \sum_{i=1}^n t_if(x_i)\le M.
+\]
+记
+\[
+S=\sum_{i=1}^n t_if(x_i).
+\]
+由于 \(S\in[m,M]\)，而连续函数 \(f\) 在 \([a,b]\) 上能取遍 \([m,M]\) 中的每个值，由介值定理，存在 \(\xi\in[a,b]\)，使
+\[
+f(\xi)=S.
+\]
+即结论成立。
+\examnote{“权重为正且和为 1”意味着加权平均不会超出最小值和最大值之间。}
+\end{solutionblock}
+

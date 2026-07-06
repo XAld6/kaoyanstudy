@@ -1,0 +1,1356 @@
+\chapter{向量与方程组}
+
+\section{逐题解析}
+
+\subsection{4.1 向量的基本概念}
+
+\begin{solutionblock}
+\textbf{4.1 例 1}
+
+\question{已知 \(\alpha_1=(\frac12,0,x)^T\) 与 \(\alpha_2=(\frac{\sqrt3}{2},y,\frac12)^T\) 均为单位向量，且二者正交，求 \(x,y\)。}
+
+
+\analysis{由 \(\alpha_1=(\frac12,0,x)^T\) 为单位向量得
+\[
+\frac14+x^2=1,\qquad x=\pm\frac{\sqrt3}{2}.
+\]
+由 \(\alpha_2=(\frac{\sqrt3}{2},y,\frac12)^T\) 为单位向量得
+\[
+\frac34+y^2+\frac14=1,\qquad y=0.
+\]
+再由两向量正交，
+\[
+\alpha_1^T\alpha_2=\frac12\cdot\frac{\sqrt3}{2}+x\cdot\frac12
+=\frac{\sqrt3}{4}+\frac{x}{2}=0,
+\]
+所以
+\[
+x=-\frac{\sqrt3}{2}.
+\]}
+\answer{\[
+x=-\frac{\sqrt3}{2},\qquad y=0.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.1 例 2}
+
+\question{设
+\[
+\alpha=(a,0,\ldots,0,a)^T,
+\qquad a<0,\qquad A=E-\alpha\alpha^T.
+\]
+若
+\[
+A^{-1}=E+a^{-1}\alpha\alpha^T,
+\]
+求 \(a\)。}
+
+
+\analysis{题设
+\[
+\alpha=(a,0,\ldots,0,a)^T,\qquad a<0,\qquad A=E-\alpha\alpha^T.
+\]
+对秩一修正矩阵，用 Sherman-Morrison 公式：
+\[
+(E-\alpha\alpha^T)^{-1}
+=E+\frac{\alpha\alpha^T}{1-\alpha^T\alpha}.
+\]
+题中又给出
+\[
+A^{-1}=E+a^{-1}\alpha\alpha^T,
+\]
+故
+\[
+\frac1{1-\alpha^T\alpha}=\frac1a,
+\qquad a=1-\alpha^T\alpha.
+\]
+而
+\[
+\alpha^T\alpha=2a^2.
+\]
+于是
+\[
+a=1-2a^2,\qquad 2a^2+a-1=0.
+\]
+解得
+\[
+a=\frac12\quad\text{或}\quad a=-1.
+\]
+由 \(a<0\)，取
+\[
+a=-1.
+\]}
+\answer{\(-1\)}
+\examnote{秩一修正 \(E-uv^T\) 的逆是考研常见模型；本题也可直接利用 \(\alpha\alpha^T\alpha=(\alpha^T\alpha)\alpha\) 验证。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.1 例 3}
+
+\question{已知
+\[
+\alpha\beta^T=
+\begin{pmatrix}
+1&-1&2\\
+-2&2&-4\\
+3&-3&6
+\end{pmatrix}.
+\]
+求 \(\alpha^T\beta\)。}
+
+
+\analysis{矩阵 \(\alpha\beta^T\) 的迹为
+\[
+\operatorname{tr}(\alpha\beta^T)=\beta^T\alpha=\alpha^T\beta.
+\]
+题中
+\[
+\alpha\beta^T=
+\begin{pmatrix}
+1&-1&2\\
+-2&2&-4\\
+3&-3&6
+\end{pmatrix},
+\]
+所以
+\[
+\alpha^T\beta=1+2+6=9.
+\]}
+\answer{\(9\)}
+\end{solutionblock}
+
+\subsection{4.3 线性相关、线性无关与线性表示}
+
+\begin{solutionblock}
+\textbf{4.3 例 1}
+
+\question{证明：单个非零向量线性无关；两个不成比例的向量线性无关。}
+
+
+\analysis{单个非零向量 \(\alpha\) 若线性相关，则存在数 \(k\ne0\)，使
+\[
+k\alpha=0.
+\]
+这推出 \(\alpha=0\)，与非零矛盾，所以单个非零向量线性无关。
+
+若两个向量 \(\alpha,\beta\) 不成比例而线性相关，则存在不全为零的 \(k,l\)，使
+\[
+k\alpha+l\beta=0.
+\]
+若 \(k\ne0\)，则 \(\alpha=-\frac{l}{k}\beta\)；若 \(l\ne0\)，则 \(\beta=-\frac{k}{l}\alpha\)。两种情况都推出二者成比例，矛盾。因此两个不成比例的向量线性无关。}
+\answer{结论成立。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 2}
+
+\question{现有四个向量组：
+\[
+\begin{array}{ll}
+\text{(1)}\ (1,2,1)^T,\ (2,1,2)^T,\ (0,0,0)^T,
+&
+\text{(2)}\ (1,2,3)^T,\ (0,1,2)^T,\ (0,0,1)^T,\\[3pt]
+\text{(3)}\ (1,2,1)^T,\ (2,4,2)^T,
+&
+\text{(4)}\ (1,2,1)^T,\ (2,4,2)^T,\ (1,6,9)^T.
+\end{array}
+\]
+其中线性相关的向量组有多少个？
+\[
+\text{A. }1\text{ 个}\qquad
+\text{B. }2\text{ 个}\qquad
+\text{C. }3\text{ 个}\qquad
+\text{D. }4\text{ 个}.
+\]}
+
+
+\analysis{逐组判断。
+
+第 1 组含零向量，必线性相关。
+
+第 2 组
+\[
+(1,2,3)^T,\ (0,1,2)^T,\ (0,0,1)^T
+\]
+组成的矩阵为上三角型，行列式为 \(1\ne0\)，故线性无关。
+
+第 3 组中
+\[
+(2,4,2)^T=2(1,2,1)^T,
+\]
+故线性相关。
+
+第 4 组前两个向量
+\[
+(2,4,2)^T=2(1,2,1)^T,
+\]
+已经成比例，所以整组线性相关。}
+\answer{线性相关的向量组有 \(3\) 个，选 C。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 3}
+
+\question{设原向量组 \(\alpha_1,\alpha_2,\alpha_3\) 线性无关。选项中的新向量组均可写成
+\[
+(\alpha_1,\alpha_2,\alpha_3)P.
+\]
+新向量组线性无关的充要条件是系数矩阵 \(P\) 可逆，即 \(|P|\ne0\)。
+
+对四个选项计算系数矩阵行列式，只有选项 C 的系数矩阵
+\[
+P_C=
+\begin{pmatrix}
+1&0&1\\
+2&2&0\\
+0&3&3
+\end{pmatrix}
+\]
+满足
+\[
+|P_C|=12\ne0.
+\]
+其他选项的系数矩阵行列式均为 \(0\)。}
+
+
+\analysis{设原向量组 \(\alpha_1,\alpha_2,\alpha_3\) 线性无关。选项中的新向量组均可写成
+\[
+(\alpha_1,\alpha_2,\alpha_3)P.
+\]
+新向量组线性无关的充要条件是系数矩阵 \(P\) 可逆，即 \(|P|\ne0\)。
+
+对四个选项计算系数矩阵行列式，只有选项 C 的系数矩阵
+\[
+P_C=
+\begin{pmatrix}
+1&0&1\\
+2&2&0\\
+0&3&3
+\end{pmatrix}
+\]
+满足
+\[
+|P_C|=12\ne0.
+\]
+其他选项的系数矩阵行列式均为 \(0\)。}
+\answer{选 C。}
+\examnote{原向量组无关时，“线性组合后的向量组是否无关”转化为“线性组合系数矩阵是否可逆”。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 4}
+
+\question{设 \(\alpha_1,\ldots,\alpha_s\) 线性无关，令
+\[
+\beta_1=\alpha_1,\quad
+\beta_2=\alpha_1+\alpha_2,\quad
+\ldots,\quad
+\beta_s=\alpha_1+\cdots+\alpha_s.
+\]
+证明 \(\beta_1,\ldots,\beta_s\) 线性无关。}
+
+
+\analysis{设
+\[
+\beta_1=\alpha_1,\quad
+\beta_2=\alpha_1+\alpha_2,\quad \ldots,\quad
+\beta_s=\alpha_1+\cdots+\alpha_s.
+\]
+若
+\[
+k_1\beta_1+k_2\beta_2+\cdots+k_s\beta_s=0,
+\]
+则整理为
+\[
+(k_1+\cdots+k_s)\alpha_1+(k_2+\cdots+k_s)\alpha_2+\cdots+k_s\alpha_s=0.
+\]
+由于 \(\alpha_1,\ldots,\alpha_s\) 线性无关，所以
+\[
+k_s=0,\quad k_{s-1}+k_s=0,\quad \ldots,\quad k_1+\cdots+k_s=0.
+\]
+逆推得
+\[
+k_s=k_{s-1}=\cdots=k_1=0.
+\]
+故 \(\beta_1,\ldots,\beta_s\) 线性无关。}
+\answer{向量组 \(\alpha_1,\alpha_1+\alpha_2,\ldots,\alpha_1+\cdots+\alpha_s\) 线性无关。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 5}
+
+\question{设
+\[
+A\alpha_1=\alpha_1,\quad
+A\alpha_2=\alpha_1+\alpha_2,\quad
+A\alpha_3=\alpha_2+\alpha_3.
+\]
+证明 \(\alpha_1,\alpha_2,\alpha_3\) 线性无关。}
+
+
+\analysis{记 \(T=A-E\)。由题设
+\[
+A\alpha_1=\alpha_1,\quad A\alpha_2=\alpha_1+\alpha_2,\quad A\alpha_3=\alpha_2+\alpha_3
+\]
+可得
+\[
+T\alpha_1=0,\qquad T\alpha_2=\alpha_1,\qquad T\alpha_3=\alpha_2.
+\]
+设
+\[
+c_1\alpha_1+c_2\alpha_2+c_3\alpha_3=0.
+\]
+对等式两边作用 \(T^2\)，得
+\[
+c_3\alpha_1=0.
+\]
+因为 \(\alpha_1\ne0\)，所以 \(c_3=0\)。原式化为
+\[
+c_1\alpha_1+c_2\alpha_2=0.
+\]
+再作用 \(T\)，得
+\[
+c_2\alpha_1=0,
+\]
+故 \(c_2=0\)，进而 \(c_1=0\)。因此三向量线性无关。}
+\answer{\(\alpha_1,\alpha_2,\alpha_3\) 线性无关。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 6}
+
+\question{设 \(A^k\alpha=0\)，且 \(A^{k-1}\alpha\ne0\)。证明向量组
+\[
+\alpha,A\alpha,\ldots,A^{k-1}\alpha
+\]
+线性无关。}
+
+
+\analysis{设存在
+\[
+c_0\alpha+c_1A\alpha+\cdots+c_{k-1}A^{k-1}\alpha=0.
+\]
+两边左乘 \(A^{k-1}\)，因 \(A^k\alpha=0\)，只剩
+\[
+c_0A^{k-1}\alpha=0.
+\]
+题设 \(A^{k-1}\alpha\ne0\)，故 \(c_0=0\)。再对剩余等式左乘 \(A^{k-2}\)，得
+\[
+c_1A^{k-1}\alpha=0,
+\]
+故 \(c_1=0\)。依次进行，最终得到
+\[
+c_0=c_1=\cdots=c_{k-1}=0.
+\]
+所以
+\[
+\alpha,A\alpha,\ldots,A^{k-1}\alpha
+\]
+线性无关。}
+\answer{结论成立。}
+\examnote{这类题的关键是用高次幂逐步“杀掉”后面的项，只留下一个最高阶非零向量。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 7}
+
+\question{设
+\[
+\alpha_1=(1,2,-1,5)^T,\quad
+\alpha_2=(2,-1,1,1)^T.
+\]
+判断 \(\beta_1=(4,3,-1,11)^T\)、\(\beta_2=(4,3,0,11)^T\) 是否可由 \(\alpha_1,\alpha_2\) 线性表示；若可以，写出表示式。}
+
+
+\analysis{设
+\[
+\alpha_1=(1,2,-1,5)^T,\quad \alpha_2=(2,-1,1,1)^T.
+\]
+先判断 \(\beta_1=(4,3,-1,11)^T\)。令
+\[
+\beta_1=x\alpha_1+y\alpha_2.
+\]
+解得
+\[
+x=2,\qquad y=1,
+\]
+即
+\[
+\beta_1=2\alpha_1+\alpha_2.
+\]
+
+再判断 \(\beta_2=(4,3,0,11)^T\)。若
+\[
+\beta_2=x\alpha_1+y\alpha_2,
+\]
+由前两行可解出 \(x=2,y=1\)，但第三行给出
+\[
+-2+1=-1\ne0,
+\]
+矛盾。所以 \(\beta_2\) 不能由 \(\alpha_1,\alpha_2\) 线性表示。}
+\answer{\[
+\beta_1=2\alpha_1+\alpha_2,\qquad \beta_2\text{ 不能由 }\alpha_1,\alpha_2\text{ 线性表示}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 8}
+
+\question{设向量组 \((I):\alpha_1,\alpha_2,\alpha_3\) 与 \((II):\beta_1,\beta_2,\beta_3\)，其中
+\[
+\alpha_1=\begin{pmatrix}0\\1\\2\\3\end{pmatrix},\quad
+\alpha_2=\begin{pmatrix}3\\0\\1\\2\end{pmatrix},\quad
+\alpha_3=\begin{pmatrix}2\\3\\0\\1\end{pmatrix}.
+\]
+判断 \((II)\) 是否可由 \((I)\) 线性表示。}
+
+
+\analysis{记
+\[
+A=(\alpha_1,\alpha_2,\alpha_3),\qquad
+B=(\beta_1,\beta_2,\beta_3).
+\]
+其中
+\[
+\alpha_1=\begin{pmatrix}0\\1\\2\\3\end{pmatrix},\ 
+\alpha_2=\begin{pmatrix}3\\0\\1\\2\end{pmatrix},\ 
+\alpha_3=\begin{pmatrix}2\\3\\0\\1\end{pmatrix}.
+\]
+对每个 \(\beta_i\) 解方程 \(Ax=\beta_i\)，得到
+\[
+\beta_1=\frac14\alpha_1+\frac12\alpha_2+\frac14\alpha_3,
+\]
+\[
+\beta_2=\frac14\alpha_1+\frac12\alpha_2-\frac34\alpha_3,
+\]
+\[
+\beta_3=\frac14\alpha_1+\frac12\alpha_2+\frac54\alpha_3.
+\]
+故 \((II)\) 中每个向量均可由 \((I)\) 线性表示。}
+\answer{\((II)\) 可由 \((I)\) 线性表示。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 9}
+
+\question{判断向量组线性相关与“某个向量可由其余向量线性表示”之间的等价关系，并选择正确选项。}
+
+
+\analysis{向量组线性相关的充要条件是：存在一个向量可以由其余向量线性表示。
+
+若某个向量可由其余向量线性表示，则把等式移到一边，就得到一个系数不全为零的线性关系，所以线性相关。
+
+反过来，若向量组线性相关，则存在不全为零的 \(k_i\)，使
+\[
+k_1\alpha_1+\cdots+k_s\alpha_s=0.
+\]
+取一个非零系数 \(k_j\)，即可把 \(\alpha_j\) 表成其余向量的线性组合。}
+\answer{选 C。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 10}
+
+\question{判断向量组线性无关与“任一向量都不能由其余向量线性表示”之间的等价关系，并选择正确选项。}
+
+
+\analysis{向量组线性无关的充要条件是：其中每一个向量都不能由其余 \(s-1\) 个向量线性表示。
+
+若某个向量能由其余向量表示，则整组线性相关；若整组线性相关，则由例 9 的结论，必存在一个向量能由其余向量表示。因此“不存在这种向量”正是线性无关的等价刻画。}
+\answer{选 D。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 11}
+
+\question{设 \[
+\alpha_1=(6,a+1,3)^T,\quad
+\alpha_2=(a,2,-2)^T,\quad
+\alpha_3=(a,1,0)^T.
+\]
+求：
+\[
+\begin{aligned}
+&\text{(1) }a\text{ 为何值时，}\alpha_1,\alpha_2\text{ 线性相关？}
+&&a\text{ 为何值时，}\alpha_1,\alpha_2\text{ 线性无关？}\\
+&\text{(2) }a\text{ 为何值时，}\alpha_1,\alpha_2,\alpha_3\text{ 线性相关？}
+&&a\text{ 为何值时，}\alpha_1,\alpha_2,\alpha_3\text{ 线性无关？}
+\end{aligned}
+\]}
+
+
+\analysis{题中
+\[
+\alpha_1=(6,a+1,3)^T,\quad
+\alpha_2=(a,2,-2)^T,\quad
+\alpha_3=(a,1,0)^T.
+\]
+第 (1) 问，两个向量线性相关等价于成比例。考察 \(\alpha_1,\alpha_2\) 的所有二阶子式，可得共同条件
+\[
+a=-4.
+\]
+因此
+\[
+a=-4\text{ 时 }\alpha_1,\alpha_2\text{ 线性相关};\qquad
+a\ne-4\text{ 时线性无关}.
+\]
+
+第 (2) 问，三个三维向量线性相关等价于行列式为零：
+\[
+\det(\alpha_1,\alpha_2,\alpha_3)=-(a+4)(2a-3).
+\]
+故
+\[
+a=-4\quad\text{或}\quad a=\frac32
+\]
+时三向量线性相关；其余 \(a\) 值时三向量线性无关。}
+\answer{\[
+\alpha_1,\alpha_2\text{ 相关}\Longleftrightarrow a=-4;
+\]
+\[
+\alpha_1,\alpha_2,\alpha_3\text{ 相关}\Longleftrightarrow a=-4\text{ 或 }a=\frac32.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 12}
+
+\question{设 \(A=(\alpha_1,\alpha_2,\alpha_3,\alpha_4)\) 为 \(3\times4\) 矩阵，\(\beta_1,\beta_2,\beta_3\) 为其行向量。已知
+\[
+\begin{vmatrix}a_{12}&a_{14}\\a_{22}&a_{24}\end{vmatrix}\ne0.
+\]
+判断题给命题中哪些正确。}
+
+
+\analysis{矩阵 \(A=(\alpha_1,\alpha_2,\alpha_3,\alpha_4)\) 为 \(3\times4\) 矩阵，\(\beta_1,\beta_2,\beta_3\) 为其行向量。
+
+由
+\[
+\begin{vmatrix}
+a_{12}&a_{14}\\
+a_{22}&a_{24}
+\end{vmatrix}\ne0
+\]
+可知第 2 列与第 4 列线性无关，即 \(\alpha_2,\alpha_4\) 线性无关，故第 2 条正确。
+
+又
+\[
+\begin{vmatrix}
+a_{11}&a_{12}&a_{13}\\
+a_{21}&a_{22}&a_{23}\\
+a_{31}&a_{32}&a_{33}
+\end{vmatrix}=0
+\]
+说明第 1、2、3 列线性相关，即 \(\alpha_1,\alpha_2,\alpha_3\) 线性相关，故第 4 条正确。
+
+第 1 条 \(r(A)=2\) 不一定成立，因为 \(\alpha_4\) 可能使矩阵秩达到 \(3\)。第 3 条“行向量线性相关”也不一定成立，只有当 \(r(A)<3\) 时才成立。}
+\answer{正确的是第 2、4 条，选 D。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 13}
+
+\question{设
+\[
+A=\begin{pmatrix}
+1&1&\cdots&1\\
+a_1&a_2&\cdots&a_s\\
+\vdots&\vdots&&\vdots\\
+a_1^{n-1}&a_2^{n-1}&\cdots&a_s^{n-1}
+\end{pmatrix},
+\qquad a_i\ne a_j\ (i\ne j).
+\]
+讨论列向量组 \(\alpha_1,\ldots,\alpha_s\) 的线性相关性。}
+
+
+\analysis{该矩阵是 \(n\times s\) 的 Vandermonde 型矩阵：
+\[
+A=\begin{pmatrix}
+1&1&\cdots&1\\
+a_1&a_2&\cdots&a_s\\
+\vdots&\vdots&&\vdots\\
+a_1^{n-1}&a_2^{n-1}&\cdots&a_s^{n-1}
+\end{pmatrix},
+\qquad a_i\ne a_j.
+\]
+任取不超过 \(n\) 列，得到的方阵或高矩阵含有非零 Vandermonde 子式，故这些列线性无关；而若 \(s>n\)，在 \(n\) 维空间中有 \(s\) 个列向量，必线性相关。
+
+因此
+\[
+r(A)=\min\{n,s\}.
+\]}
+\answer{\[
+\alpha_1,\ldots,\alpha_s
+\begin{cases}
+\text{线性无关},& s\le n,\\
+\text{线性相关},& s>n.
+\end{cases}
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 14}
+
+\question{设 \(\alpha_1,\alpha_2,\alpha_3\) 线性相关，而 \(\alpha_2,\alpha_3,\alpha_4\) 线性无关。回答：\(\alpha_1\) 能否由 \(\alpha_2,\alpha_3\) 线性表示？\(\alpha_4\) 能否由 \(\alpha_1,\alpha_2,\alpha_3\) 线性表示？}
+
+
+\analysis{已知 \(\alpha_1,\alpha_2,\alpha_3\) 线性相关，而 \(\alpha_2,\alpha_3,\alpha_4\) 线性无关。
+
+第 (1) 问：由于 \(\alpha_2,\alpha_3,\alpha_4\) 线性无关，所以其子组 \(\alpha_2,\alpha_3\) 线性无关。又 \(\alpha_1,\alpha_2,\alpha_3\) 线性相关，因此 \(\alpha_1\) 必能由 \(\alpha_2,\alpha_3\) 线性表示。
+
+第 (2) 问：若 \(\alpha_4\) 能由 \(\alpha_1,\alpha_2,\alpha_3\) 线性表示，而 \(\alpha_1\) 又能由 \(\alpha_2,\alpha_3\) 表示，则 \(\alpha_4\) 能由 \(\alpha_2,\alpha_3\) 表示。这与 \(\alpha_2,\alpha_3,\alpha_4\) 线性无关矛盾。}
+\answer{(1) 能；(2) 不能。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.3 例 15}
+
+\question{设向量组 \((I)\) 有 \(t\) 个向量，向量组 \((II)\) 有 \(s\) 个向量。判断关于“一个向量组可由另一个向量组线性表示”与线性相关性的四个命题中哪些正确。}
+
+
+\analysis{记向量组 \((I)\) 有 \(t\) 个向量，\((II)\) 有 \(s\) 个向量。
+
+第 1 条：若 \((I)\) 可由 \((II)\) 线性表示，且 \(s<t\)，则 \((I)\) 的 \(t\) 个向量都落在维数不超过 \(s\) 的线性空间中，故 \((I)\) 线性相关，正确。
+
+第 2 条：若 \((II)\) 可由 \((I)\) 表示，且 \(s<t\)，不能推出 \((I)\) 相关。例如 \((I)\) 本身可线性无关，错误。
+
+第 3 条：若 \((I)\) 可由 \((II)\) 表示，且 \((I)\) 线性无关，则 \(t\) 个无关向量落在 \((II)\) 张成的空间中，故 \(t\le s\)，即 \(s\ge t\)，正确。
+
+第 4 条：若 \((II)\) 可由 \((I)\) 表示，且 \((I)\) 线性无关，不能推出 \(s\ge t\)，错误。}
+\answer{正确的是第 1、3 条，选 B。}
+\end{solutionblock}
+
+\subsection{4.4 向量组的极大线性无关组、秩}
+
+\begin{solutionblock}
+\textbf{4.4 例 1}
+
+\question{设向量组的秩为 \(r\)。判断关于任取 \(r+1\) 个向量的线性相关性的正确选项。}
+
+
+\analysis{向量组的秩为 \(r\)，表示其中最多只能取出 \(r\) 个线性无关的向量。因此任取 \(r+1\) 个向量，必定线性相关。}
+\answer{选 D。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.4 例 2}
+
+\question{设向量组 \(\alpha_1,\ldots,\alpha_s\) 的秩为 \(s-1\)。判断关于其子组秩和线性表示的四个命题中哪一个正确。}
+
+
+\analysis{向量组 \(\alpha_1,\ldots,\alpha_s\) 的秩为 \(s-1\)。对任意 \(1<r<s\)，其前 \(r\) 个向量的秩满足
+\[
+r(\alpha_1,\ldots,\alpha_r)\ge (s-1)-(s-r)=r-1.
+\]
+这是因为后面 \(s-r\) 个向量最多只能使秩增加 \(s-r\)。
+
+A 项“有两个向量成比例”不一定；B 项“任一向量都可由其余向量表示”不一定，例如零向量的情形会破坏该结论；D 项要求任意前 \(r\) 个都满秩，也不一定。}
+\answer{选 C。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.4 例 3}
+
+\question{设矩阵经初等行变换化为
+\[
+B=\begin{pmatrix}
+1&2&2&1\\
+0&1&2&2\\
+0&0&0&1\\
+0&0&0&0
+\end{pmatrix}.
+\]
+判断原矩阵列向量组的极大无关组及线性表示关系，并选择不正确的选项。}
+
+
+\analysis{初等行变换等价于左乘可逆矩阵，不改变列向量之间的线性关系。化简后的矩阵列向量记为 \(b_1,b_2,b_3,b_4\)，其中
+\[
+B=\begin{pmatrix}
+1&2&2&1\\
+0&1&2&2\\
+0&0&0&1\\
+0&0&0&0
+\end{pmatrix}.
+\]
+可见 \(b_1,b_2,b_4\) 为主元列，线性无关；且
+\[
+b_3=-2b_1+2b_2.
+\]
+所以 \(\alpha_1,\alpha_3,\alpha_4\) 线性无关，\(\alpha_2\) 可由 \(\alpha_1,\alpha_3\) 线性表示，\(\alpha_4\) 不能由 \(\alpha_1,\alpha_2,\alpha_3\) 线性表示。}
+\answer{不正确的是 D。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.4 例 4}
+
+\question{设五个向量 \(\alpha_1,\ldots,\alpha_5\) 的秩为 \(3\)。求一个包含 \(\alpha_1,\alpha_3\) 的极大线性无关组，并将其余向量由该组线性表示。}
+
+
+\analysis{把五个向量作列组成矩阵。行化简得秩为
+\[
+r(\alpha_1,\alpha_2,\alpha_3,\alpha_4,\alpha_5)=3.
+\]
+题目要求极大无关组包含 \(\alpha_1,\alpha_3\)。可取
+\[
+\alpha_1,\alpha_3,\alpha_4
+\]
+为一个极大线性无关组。解线性表示方程得到
+\[
+\alpha_2=-3\alpha_1+\alpha_3,
+\]
+\[
+\alpha_5=2\alpha_1-\alpha_3+\alpha_4.
+\]}
+\answer{秩为 \(3\)。一个包含 \(\alpha_1,\alpha_3\) 的极大线性无关组为
+\[
+\alpha_1,\alpha_3,\alpha_4.
+\]
+其余向量表示为
+\[
+\alpha_2=-3\alpha_1+\alpha_3,\qquad
+\alpha_5=2\alpha_1-\alpha_3+\alpha_4.
+\]}
+\method{方法二}
+也可取 \(\alpha_1,\alpha_3,\alpha_5\) 为极大无关组，此时
+\[
+\alpha_2=-3\alpha_1+\alpha_3,\qquad
+\alpha_4=-2\alpha_1+\alpha_3+\alpha_5.
+\]
+\end{solutionblock}
+
+\subsection{4.5 向量组等价}
+
+\begin{solutionblock}
+\textbf{4.5 例 1}
+
+\question{已知向量组 \((I)\) 与 \((II)\) 均由三个三维向量组成，且
+\[
+\det(\alpha_1,\alpha_2,\alpha_3)=a+1,\qquad
+\det(\beta_1,\beta_2,\beta_3)=6.
+\]
+判断两向量组何时等价。}
+
+
+\analysis{向量组 \((I)\) 的矩阵行列式为
+\[
+\det(\alpha_1,\alpha_2,\alpha_3)=a+1.
+\]
+向量组 \((II)\) 的矩阵行列式为
+\[
+\det(\beta_1,\beta_2,\beta_3)=6\ne0.
+\]
+因此 \((II)\) 总是 \(\mathbb{R}^3\) 的一组基。
+
+当 \(a\ne-1\) 时，\((I)\) 也是 \(\mathbb{R}^3\) 的一组基，所以两向量组等价。
+
+当 \(a=-1\) 时，\((I)\) 的秩为 \(2\)，而 \((II)\) 的秩为 \(3\)，二者不等价。}
+\answer{\[
+a\ne-1\text{ 时等价};\qquad a=-1\text{ 时不等价}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.5 例 2}
+
+\question{设
+\[
+k\alpha+l\beta+m\gamma=0,\qquad km\ne0.
+\]
+判断 \(\alpha,\beta,\gamma\) 之间的线性表示关系，并选择正确选项。}
+
+
+\analysis{已知
+\[
+k\alpha+l\beta+m\gamma=0,\qquad km\ne0.
+\]
+因为 \(m\ne0\)，所以
+\[
+\gamma=-\frac{k}{m}\alpha-\frac{l}{m}\beta,
+\]
+即 \(\gamma\) 可由 \(\alpha,\beta\) 线性表示。
+因为 \(k\ne0\)，所以
+\[
+\alpha=-\frac{l}{k}\beta-\frac{m}{k}\gamma,
+\]
+即 \(\alpha\) 可由 \(\beta,\gamma\) 线性表示。
+因此
+\[
+\operatorname{span}\{\alpha,\beta\}
+=\operatorname{span}\{\beta,\gamma\}.
+\]}
+\answer{选 B。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.5 例 3}
+
+\question{设向量组 \((I)\) 有 \(k\) 个 \(n\) 维向量且线性无关。判断向量组 \((II)\) 线性无关与 \((I),(II)\) 等价之间的关系，并选择正确选项。}
+
+
+\analysis{向量组 \((I)\) 有 \(k\) 个 \(n\) 维向量且线性无关，所以矩阵
+\[
+(\alpha_1,\ldots,\alpha_k)
+\]
+的秩为 \(k\)。要使 \((II)\) 也线性无关，充要条件是
+\[
+r(\beta_1,\ldots,\beta_k)=k.
+\]
+两个同型矩阵等价的充要条件是秩相等。因此
+\[
+(\alpha_1,\ldots,\alpha_k)\text{ 与 }(\beta_1,\ldots,\beta_k)\text{ 等价}
+\]
+正好等价于 \((II)\) 的秩也是 \(k\)。}
+\answer{选 D。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.5 例 4}
+
+\question{设 \(AB=C\)，且 \(B\) 可逆。判断矩阵 \(A\) 与 \(C\) 的列向量组是否等价，并选择正确选项。}
+
+
+\analysis{由
+\[
+AB=C,\qquad B\text{ 可逆}
+\]
+可知
+\[
+C=A B.
+\]
+右乘可逆矩阵只对列向量组作可逆线性组合，因此不改变列向量组张成的空间，也不改变列向量组的等价性。故矩阵 \(C\) 的列向量组与矩阵 \(A\) 的列向量组等价。}
+\answer{选 B。}
+\end{solutionblock}
+
+\subsection{4.6 基础解系与解的结构}
+
+\begin{solutionblock}
+\textbf{4.6 例 1}
+
+\question{求齐次线性方程组的基础解系和通解，其系数矩阵为
+\[
+\begin{pmatrix}
+1&1&1&1&1\\
+1&2&1&1&-1\\
+1&3&1&1&-3\\
+3&4&3&3&1
+\end{pmatrix}.
+\]}
+
+
+\analysis{齐次方程组的系数矩阵行化简为
+\[
+\begin{pmatrix}
+1&1&1&1&1\\
+1&2&1&1&-1\\
+1&3&1&1&-3\\
+3&4&3&3&1
+\end{pmatrix}
+\sim
+\begin{pmatrix}
+1&0&1&1&3\\
+0&1&0&0&-2\\
+0&0&0&0&0\\
+0&0&0&0&0
+\end{pmatrix}.
+\]
+故
+\[
+x_1+x_3+x_4+3x_5=0,\qquad x_2-2x_5=0.
+\]
+令 \(x_3=s,\ x_4=t,\ x_5=u\)，则
+\[
+x=(-s-t-3u,\,2u,\,s,\,t,\,u)^T.
+\]}
+\answer{一个基础解系为
+\[
+\eta_1=(-1,0,1,0,0)^T,\quad
+\eta_2=(-1,0,0,1,0)^T,\quad
+\eta_3=(-3,2,0,0,1)^T.
+\]
+通解为
+\[
+x=c_1\eta_1+c_2\eta_2+c_3\eta_3.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.6 例 2}
+
+\question{设 \(\alpha_1,\alpha_2,\alpha_3\) 是齐次方程组的一个基础解系。判断题给四个向量组中哪一个仍是基础解系。}
+
+
+\analysis{基础解系必须满足两个条件：线性无关；张成齐次方程组的解空间。
+
+选项 D 中向量组
+\[
+\alpha_1,\quad \alpha_1+\alpha_2,\quad \alpha_1+\alpha_2+\alpha_3
+\]
+相对于原基础解系 \(\alpha_1,\alpha_2,\alpha_3\) 的系数矩阵为
+\[
+\begin{pmatrix}
+1&1&1\\
+0&1&1\\
+0&0&1
+\end{pmatrix},
+\]
+行列式为 \(1\ne0\)，所以它与原基础解系等价且线性无关，仍是基础解系。
+
+选项 B 的系数矩阵行列式为 \(0\)，不是基础解系；A、C 的描述过宽，不足以保证“向量个数正确且线性无关”。}
+\answer{选 D。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.6 例 3}
+
+\question{设 \(A=(\alpha_1,\alpha_2,\alpha_3)\)，其中 \(\alpha_3=-\alpha_1+2\alpha_2\)，且 \(\alpha_1,\alpha_2\) 线性无关。求齐次方程组 \(Ax=0\) 的通解。}
+
+
+\analysis{由
+\[
+A=(\alpha_1,\alpha_2,\alpha_3),\qquad \alpha_3=-\alpha_1+2\alpha_2,
+\]
+且 \(\alpha_1,\alpha_2\) 线性无关。方程 \(Ax=0\) 即
+\[
+x_1\alpha_1+x_2\alpha_2+x_3\alpha_3=0.
+\]
+代入 \(\alpha_3\)，得
+\[
+(x_1-x_3)\alpha_1+(x_2+2x_3)\alpha_2=0.
+\]
+由 \(\alpha_1,\alpha_2\) 无关，
+\[
+x_1=x_3,\qquad x_2=-2x_3.
+\]}
+\answer{\[
+x=t(1,-2,1)^T,\qquad t\in\mathbb{R}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.6 例 4}
+
+\question{设 \(r(B)=2\)，\(r(AB)=1\)。结合题给矩阵条件，求参数 \(a\) 及对应齐次方程组的通解。}
+
+
+\analysis{由 \(r(B)=2\) 且 \(r(AB)=1\)，利用 Sylvester 不等式：
+\[
+r(AB)\ge r(A)+r(B)-3=r(A)-1.
+\]
+所以
+\[
+1\ge r(A)-1,\qquad r(A)\le2.
+\]
+又 \(r(AB)=1\)，故 \(r(A)\ge1\)。对题中
+\[
+A=\begin{pmatrix}
+1&0&1\\
+3&a&1\\
+1&1&-1
+\end{pmatrix},
+\]
+计算行列式：
+\[
+|A|=-2(a-1).
+\]
+要使 \(r(A)\le2\)，必须
+\[
+a=1.
+\]
+此时 \(r(A)=2\)，齐次方程 \(Ax=0\) 有一维非零解空间。代入 \(a=1\) 行化简，得
+\[
+x=t(-1,2,1)^T.
+\]}
+\answer{\[
+a=1,\qquad x=t(-1,2,1)^T.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.6 例 5}
+
+\question{求非齐次线性方程组的通解，其增广矩阵为
+\[
+\left(
+\begin{array}{cccc|c}
+1&1&1&1&-1\\
+4&3&5&-1&-1\\
+2&1&3&-3&1
+\end{array}
+\right).
+\]}
+
+
+\analysis{非齐次方程组增广矩阵行化简为
+\[
+\left(
+\begin{array}{cccc|c}
+1&1&1&1&-1\\
+4&3&5&-1&-1\\
+2&1&3&-3&1
+\end{array}
+\right)
+\sim
+\left(
+\begin{array}{cccc|c}
+1&0&2&-4&2\\
+0&1&-1&5&-3\\
+0&0&0&0&0
+\end{array}
+\right).
+\]
+所以
+\[
+x_1+2x_3-4x_4=2,\qquad x_2-x_3+5x_4=-3.
+\]
+令 \(x_3=s,\ x_4=t\)，得
+\[
+x_1=-2s+4t+2,\qquad x_2=s-5t-3.
+\]}
+\answer{\[
+x=(-2s+4t+2,\ s-5t-3,\ s,\ t)^T,\qquad s,t\in\mathbb{R}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.6 例 6}
+
+\question{已知非齐次线性方程组有特解 \(x_0=(1,-1,1,-1)^T\)。求参数 \(\lambda,\mu\) 的关系及方程组通解。}
+
+
+\analysis{把题给特解
+\[
+x_0=(1,-1,1,-1)^T
+\]
+代入方程组。第一、三式均给出
+\[
+-\lambda+\mu=0,
+\]
+故
+\[
+\lambda=\mu.
+\]
+在 \(\lambda=\mu\) 时，行化简可得解集为
+\[
+x=(-t,\frac{t-1}{2},\frac{1-t}{2},t)^T.
+\]
+取 \(t=-1\) 得题给特解 \(x_0\)。相应导出组的基础解向量可取
+\[
+(-2,1,-1,2)^T.
+\]}
+\answer{\[
+\lambda=\mu,\qquad
+x=(1,-1,1,-1)^T+c(-2,1,-1,2)^T.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.6 例 7}
+
+\question{设
+\[
+A=\begin{pmatrix}a&1\\1&0\end{pmatrix},
+\qquad
+B=\begin{pmatrix}0&1\\1&b\end{pmatrix}.
+\]
+讨论矩阵方程 \(AC-CA=B\) 何时有解，并求通解 \(C\)。}
+
+
+\analysis{设
+\[
+C=\begin{pmatrix}x&y\\z&w\end{pmatrix}.
+\]
+由
+\[
+AC-CA=B
+\]
+逐项比较，得到线性方程组：
+\[
+az-y=0,\quad -ax+aw+y=1,
+\]
+\[
+x-z-w=1,\quad -az-y=b.
+\]
+由第一式和第四式相减得
+\[
+b=0.
+\]
+再联立其余方程可得一致条件
+\[
+a=-1.
+\]
+当 \(a=-1,b=0\) 时，令 \(z=s,\ w=t\)，则
+\[
+x=s+t+1,\qquad y=-s.
+\]}
+\answer{存在这样的矩阵 \(C\) 当且仅当
+\[
+a=-1,\qquad b=0.
+\]
+此时
+\[
+C=\begin{pmatrix}
+s+t+1&-s\\
+s&t
+\end{pmatrix},\qquad s,t\in\mathbb{R}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.6 例 8}
+
+\question{已知 \(\beta_1,\beta_2\) 是非齐次方程组 \(Ax=b\) 的两个不同解，\(\alpha_1,\alpha_2\) 是导出组 \(Ax=0\) 的基础解系。判断题给通解形式中哪一个正确。}
+
+
+\analysis{非齐次方程两个解 \(\beta_1,\beta_2\) 的平均
+\[
+\frac{\beta_1+\beta_2}{2}
+\]
+仍是非齐次方程 \(Ax=b\) 的一个特解；差
+\[
+\beta_1-\beta_2
+\]
+是对应齐次方程的解。
+
+已知 \(\alpha_1,\alpha_2\) 是齐次方程的基础解系，所以非齐次方程通解应为
+\[
+\text{一个特解}+\text{齐次通解}.
+\]
+选项 B 中
+\[
+\frac{\beta_1+\beta_2}{2}+k_1\alpha_1+k_2(\alpha_1-\alpha_2)
+\]
+正是这种形式，且 \(\alpha_1,\alpha_1-\alpha_2\) 仍为齐次解空间的一组基。}
+\answer{选 B。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.6 例 9}
+
+\question{设三元非齐次线性方程组 \(Ax=\beta\) 有三个线性无关的解 \(\eta_1,\eta_2,\eta_3\)。判断其通解的正确表达式。}
+
+
+\analysis{非齐次方程 \(Ax=\beta\) 的任意两个解之差都是导出组 \(Ax=0\) 的解。故
+\[
+\eta_1-\eta_2,\qquad \eta_3-\eta_1
+\]
+都是齐次方程的解。
+
+题设 \(\eta_1,\eta_2,\eta_3\) 线性无关，而未知量个数为 \(3\)。非齐次方程有解且为非齐次方程，故导出组解空间维数为 \(2\)。于是通解可以写成
+\[
+\frac{\eta_2+\eta_3}{2}
++k_1(\eta_3-\eta_1)+k_2(\eta_2-\eta_1).
+\]
+其中 \((\eta_2+\eta_3)/2\) 是特解，后两项张成齐次解空间。}
+\answer{选 C。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.6 例 10}
+
+\question{已知 \(Ax=\beta\) 的通解为
+\[
+x=k(1,0,-3,2)^T+(1,-1,0,1)^T.
+\]
+令 \(B=(\alpha_2+\beta,\alpha_4,\alpha_3,\alpha_2,\alpha_1)\)，其中 \(A=(\alpha_1,\alpha_2,\alpha_3,\alpha_4)\)。求 \(Bx=\beta\) 的通解。}
+
+
+\analysis{已知
+\[
+Ax=\beta
+\]
+的通解为
+\[
+x=k(1,0,-3,2)^T+(1,-1,0,1)^T.
+\]
+因此
+\[
+\beta=A(1,-1,0,1)^T=\alpha_1-\alpha_2+\alpha_4,
+\]
+且
+\[
+A(1,0,-3,2)^T=0.
+\]
+令
+\[
+B=(\alpha_2+\beta,\alpha_4,\alpha_3,\alpha_2,\alpha_1).
+\]
+注意
+\[
+\alpha_2+\beta=\alpha_1+\alpha_4.
+\]
+设 \(Bx=\beta\)，其中 \(x=(x_1,x_2,x_3,x_4,x_5)^T\)。按 \(A\) 的列向量收集系数，得到
+\[
+A(x_1+x_5,\ x_4,\ x_3,\ x_1+x_2)^T=\beta.
+\]
+故存在参数 \(k\)，使
+\[
+(x_1+x_5,\ x_4,\ x_3,\ x_1+x_2)^T
+=(1,-1,0,1)^T+k(1,0,-3,2)^T.
+\]
+于是
+\[
+x_4=-1,\quad x_3=-3k,\quad x_1+x_5=1+k,\quad x_1+x_2=1+2k.
+\]
+令 \(x_1=s,\ k=t\)，得通解。}
+\answer{\[
+x=(s,\ 1+2t-s,\ -3t,\ -1,\ 1+t-s)^T,\qquad s,t\in\mathbb{R}.
+\]}
+\end{solutionblock}
+
+\subsection{4.7 向量空间（仅数学一）}
+
+\begin{solutionblock}
+\textbf{4.7 例 1}
+
+\question{设
+\[
+\alpha_1=(1,2,-1,0)^T,\quad
+\alpha_2=(1,1,0,2)^T,\quad
+\alpha_3=(2,1,1,a)^T.
+\]
+若 \(\alpha_1,\alpha_2,\alpha_3\) 张成空间维数为 \(2\)，求 \(a\)。}
+
+
+\analysis{题中
+\[
+\alpha_1=(1,2,-1,0)^T,\quad
+\alpha_2=(1,1,0,2)^T,\quad
+\alpha_3=(2,1,1,a)^T.
+\]
+\(\alpha_1,\alpha_2\) 不成比例，所以二者线性无关。若三向量张成空间维数为 \(2\)，则必须有
+\[
+\alpha_3=x\alpha_1+y\alpha_2.
+\]
+由前三个分量：
+\[
+x+y=2,\quad 2x+y=1,\quad -x=1.
+\]
+解得
+\[
+x=-1,\qquad y=3.
+\]
+再看第四个分量：
+\[
+a=0\cdot x+2y=6.
+\]}
+\answer{\(a=6\)}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.7 例 2}
+
+\question{设向量 \(u=(2,0,0)^T\) 在基
+\[
+\alpha_1=(1,1,0)^T,\quad \alpha_2=(1,0,1)^T,\quad \alpha_3=(0,1,1)^T
+\]
+下的坐标为 \((x_1,x_2,x_3)^T\)。则
+\[
+x_1\alpha_1+x_2\alpha_2+x_3\alpha_3=u.
+\]
+解得
+\[
+x_1=1,\qquad x_2=1,\qquad x_3=-1.
+\]}
+
+
+\analysis{设向量 \(u=(2,0,0)^T\) 在基
+\[
+\alpha_1=(1,1,0)^T,\quad \alpha_2=(1,0,1)^T,\quad \alpha_3=(0,1,1)^T
+\]
+下的坐标为 \((x_1,x_2,x_3)^T\)。则
+\[
+x_1\alpha_1+x_2\alpha_2+x_3\alpha_3=u.
+\]
+解得
+\[
+x_1=1,\qquad x_2=1,\qquad x_3=-1.
+\]}
+\answer{\[
+[u]_{\alpha}=(1,1,-1)^T.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.7 例 3}
+
+\question{设 \[
+P_\alpha=(\alpha_1,\alpha_2)=
+\begin{pmatrix}1&1\\0&-1\end{pmatrix},\qquad
+P_\beta=(\beta_1,\beta_2)=
+\begin{pmatrix}1&1\\1&2\end{pmatrix}.
+\]
+从基 \(\alpha\) 到基 \(\beta\) 的过渡矩阵 \(C\) 满足
+\[
+P_\beta=P_\alpha C.
+\]}
+
+
+\analysis{记
+\[
+P_\alpha=(\alpha_1,\alpha_2)=
+\begin{pmatrix}1&1\\0&-1\end{pmatrix},\qquad
+P_\beta=(\beta_1,\beta_2)=
+\begin{pmatrix}1&1\\1&2\end{pmatrix}.
+\]
+从基 \(\alpha\) 到基 \(\beta\) 的过渡矩阵 \(C\) 满足
+\[
+P_\beta=P_\alpha C.
+\]
+因此
+\[
+C=P_\alpha^{-1}P_\beta
+=\begin{pmatrix}
+2&3\\
+-1&-2
+\end{pmatrix}.
+\]}
+\answer{\[
+\begin{pmatrix}
+2&3\\
+-1&-2
+\end{pmatrix}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{4.7 例 4}
+
+\question{设 \(B\) 为秩为 \(2\) 的 \(5\times4\) 矩阵，且齐次方程 \(Bx=0\) 的解空间由 \(\alpha_1=(1,1,2,3)^T\)、\(\alpha_2=(-1,1,4,-1)^T\) 张成。求 \(Bx=0\) 的一组标准正交基础解系。}
+
+
+\analysis{因为 \(B\) 是秩为 \(2\) 的 \(5\times4\) 矩阵，所以齐次方程 \(Bx=0\) 的解空间维数为
+\[
+4-r(B)=2.
+\]
+题中给出的三个解向量张成该解空间，其中
+\[
+\alpha_1=(1,1,2,3)^T,\qquad
+\alpha_2=(-1,1,4,-1)^T
+\]
+线性无关，可先取为一组基。作 Gram-Schmidt 正交化：
+\[
+v_1=\alpha_1,
+\]
+\[
+v_2=\alpha_2-\frac{\alpha_2^T\alpha_1}{\alpha_1^T\alpha_1}\alpha_1
+=\alpha_2-\frac13\alpha_1.
+\]
+将 \(v_2\) 放大为整数向量，可取
+\[
+v_2=(-2,1,5,-3)^T.
+\]
+此时
+\[
+v_1^Tv_2=-2+1+10-9=0.
+\]
+再单位化：
+\[
+\|v_1\|=\sqrt{15},\qquad \|v_2\|=\sqrt{39}.
+\]}
+\answer{一个标准正交基为
+\[
+e_1=\frac1{\sqrt{15}}(1,1,2,3)^T,\qquad
+e_2=\frac1{\sqrt{39}}(-2,1,5,-3)^T.
+\]}
+\end{solutionblock}

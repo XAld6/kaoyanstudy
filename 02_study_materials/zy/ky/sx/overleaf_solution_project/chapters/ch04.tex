@@ -1,0 +1,1694 @@
+\chapter{常微分方程}
+
+\section{原题页索引}
+本章原题对应做题本第 \(63\)--\(75\) 页。本节先完成第 \(1\)--\(15\) 题详细解析。
+
+\begin{center}
+\includegraphics[width=.92\textwidth]{figures/original_pages/page_063.png}
+\end{center}
+
+\section{详细解析}
+
+\begin{problemblock}
+\textbf{1.} 已知函数 \(y=y(x)\) 在任意点处的增量
+\[
+\Delta y=\frac{y\Delta x}{1+x^2}+\alpha,
+\]
+且当 \(\Delta x\to0\) 时，\(\alpha\) 是 \(\Delta x\) 的高阶无穷小，\(y(0)=\pi\)，求 \(y(1)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{由增量式取极限可得到微分方程。}
+由题设
+\[
+\frac{\Delta y}{\Delta x}=\frac{y}{1+x^2}+\frac{\alpha}{\Delta x}.
+\]
+令 \(\Delta x\to0\)，由于 \(\alpha=o(\Delta x)\)，得
+\[
+y'=\frac{y}{1+x^2}.
+\]
+分离变量：
+\[
+\frac{dy}{y}=\frac{dx}{1+x^2}.
+\]
+积分得
+\[
+\ln|y|=\arctan x+C,
+\qquad y=Ce^{\arctan x}.
+\]
+由 \(y(0)=\pi\)，得 \(C=\pi\)。所以
+\[
+y(1)=\pi e^{\arctan1}=\boxed{\pi e^{\pi/4}}.
+\]
+\[
+\boxed{\text{D}}
+\]
+\examnote{增量式中“高阶无穷小”就是在提示你两边除以 \(\Delta x\) 后取极限。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{2.} 方程
+\[
+y''+2y'+y=3xe^{-x}
+\]
+的特解形式为哪一项？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{左端特征方程为 \((r+1)^2=0\)，右端是一次多项式乘 \(e^{-x}\)，且 \(-1\) 是二重根。}
+因为
+\[
+r^2+2r+1=(r+1)^2,
+\]
+所以 \(-1\) 是二重特征根。右端为
+\[
+3xe^{-x}.
+\]
+按待定系数法，若 \(\lambda=-1\) 是二重根，特解应乘 \(x^2\)，且多项式次数为 \(1\)。故可设
+\[
+y^*=(Ax+B)x^2e^{-x}.
+\]
+\[
+\boxed{\text{D}}
+\]
+\examnote{右端 \(P_m(x)e^{\lambda x}\)，若 \(\lambda\) 是 \(s\) 重特征根，特解前乘 \(x^s\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{3.} 具有特解
+\[
+y_1=e^{-x},\qquad y_2=2xe^{-x},\qquad y_3=3e^x
+\]
+的三阶常系数齐次线性微分方程是哪一个？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{\(e^{-x}\) 与 \(xe^{-x}\) 表明 \(-1\) 是二重根，\(e^x\) 表明 \(1\) 是一重根。}
+特征根为
+\[
+r=-1\quad(\text{二重}),\qquad r=1.
+\]
+特征多项式
+\[
+(r+1)^2(r-1)=r^3+r^2-r-1.
+\]
+故微分方程为
+\[
+y'''+y''-y'-y=0.
+\]
+\[
+\boxed{\text{B}}
+\]
+\examnote{出现 \(xe^{\lambda x}\) 时，说明 \(\lambda\) 至少是二重根。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{4.} 微分方程
+\[
+y''-4y'+8y=e^{2x}(1+\cos2x)
+\]
+的特解可设为何种形式？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{分别处理 \(e^{2x}\) 与 \(e^{2x}\cos2x\)。特征根为 \(2\pm2i\)。}
+特征方程
+\[
+r^2-4r+8=0
+\]
+的根为
+\[
+r=2\pm2i.
+\]
+右端第一项 \(e^{2x}\) 中 \(\lambda=2\) 不是特征根，故对应特解可设 \(Ae^{2x}\)。
+
+右端第二项 \(e^{2x}\cos2x\) 对应复指数 \(e^{(2+2i)x}\)，正好与特征根重合一次，故应乘 \(x\)。所以特解可设
+\[
+y^*=Ae^{2x}+xe^{2x}(B\cos2x+C\sin2x).
+\]
+\[
+\boxed{\text{C}}
+\]
+\examnote{三角非齐次项要看复根 \(\alpha\pm i\beta\) 是否与特征根重合。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{5.} 函数
+\[
+y=C_1e^x+C_2e^{-2x}+xe^x
+\]
+满足的一个微分方程是哪一个？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{齐次部分给出特征根 \(1,-2\)，所以左端算子是 \(D^2+D-2\)。再代入 \(xe^x\) 求右端。}
+由齐次部分可知特征多项式为
+\[
+(r-1)(r+2)=r^2+r-2.
+\]
+故左端为
+\[
+y''+y'-2y.
+\]
+对特解 \(y_p=xe^x\)，有
+\[
+(D^2+D-2)(xe^x)=3e^x.
+\]
+因此满足
+\[
+y''+y'-2y=3e^x.
+\]
+\[
+\boxed{\text{D}}
+\]
+\examnote{由通解反推方程时，先从齐次通解确定特征多项式。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{6.} 下列微分方程中，以
+\[
+y=C_1e^x+C_2\cos2x+C_3\sin2x
+\]
+为通解的是哪一个？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{通解对应特征根 \(1,2i,-2i\)。}
+特征多项式为
+\[
+(r-1)(r^2+4)=r^3-r^2+4r-4.
+\]
+故方程为
+\[
+y'''-y''+4y'-4y=0.
+\]
+\[
+\boxed{\text{D}}
+\]
+\examnote{\(\cos\beta x,\sin\beta x\) 对应特征根 \(\pm i\beta\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{7.} 微分方程
+\[
+y''-\lambda^2y=e^{\lambda x}+e^{-\lambda x}\qquad(\lambda>0)
+\]
+的特解形式为哪一项？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{齐次特征根为 \(\pm\lambda\)，右端两个指数项均与齐次解重复。}
+特征方程为
+\[
+r^2-\lambda^2=0,
+\]
+故
+\[
+r=\lambda,\ -\lambda.
+\]
+右端 \(e^{\lambda x}\) 和 \(e^{-\lambda x}\) 都对应齐次解中的指数项，所以特解都要乘 \(x\)。因此可设
+\[
+y^*=x(ae^{\lambda x}+be^{-\lambda x}).
+\]
+\[
+\boxed{\text{C}}
+\]
+\examnote{若右端每一项都共振，每一项都要按自己的重数乘 \(x\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{8.} 方程
+\[
+x\ln x\,dy+(y-\ln x)\,dx=0
+\]
+满足初始条件 \(y|_{x=e}=1\) 的特解为多少？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{化为一阶线性方程 \(y'+P(x)y=Q(x)\)。}
+原方程化为
+\[
+x\ln x\,y'+y-\ln x=0,
+\]
+即
+\[
+y'+\frac{1}{x\ln x}y=\frac1x.
+\]
+积分因子为
+\[
+\mu(x)=e^{\int\frac{dx}{x\ln x}}=\ln x.
+\]
+于是
+\[
+(y\ln x)'=\frac{\ln x}{x}.
+\]
+积分得
+\[
+y\ln x=\frac12(\ln x)^2+C.
+\]
+由 \(y(e)=1\)，得
+\[
+1=\frac12+C,\qquad C=\frac12.
+\]
+故
+\[
+\boxed{y=\frac{(\ln x)^2+1}{2\ln x}}.
+\]
+\examnote{一阶线性方程的积分因子是 \(e^{\int P(x)dx}\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{9.} 微分方程
+\[
+(y+x^3)\,dx-2x\,dy=0
+\]
+满足 \(y|_{x=1}=6/5\) 的特解为多少？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{整理为一阶线性方程。}
+由题设
+\[
+2x y'=y+x^3,
+\]
+即
+\[
+y'-\frac{1}{2x}y=\frac{x^2}{2}.
+\]
+积分因子
+\[
+\mu(x)=e^{\int-\frac{1}{2x}dx}=x^{-1/2}.
+\]
+于是
+\[
+(yx^{-1/2})'=\frac12x^{3/2}.
+\]
+积分得
+\[
+yx^{-1/2}=\frac15x^{5/2}+C.
+\]
+所以
+\[
+y=\frac{x^3}{5}+C\sqrt{x}.
+\]
+由 \(y(1)=6/5\)，得 \(C=1\)。故
+\[
+\boxed{y=\frac{x^3}{5}+\sqrt{x}}.
+\]
+\examnote{含 \(dy\) 的微分方程先化为 \(dy/dx\) 形式，再判断类型。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{10.} 方程
+\[
+\left(1+e^{-x/y}\right)y\,dx+(y-x)\,dy=0
+\]
+的通解为多少？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{这是齐次型方程，令 \(x=vy\)，把 \(x/y\) 化为 \(v\)。}
+令
+\[
+x=vy,\qquad dx=v\,dy+y\,dv.
+\]
+代入原方程：
+\[
+y(1+e^{-v})(v\,dy+y\,dv)+y(1-v)\,dy=0.
+\]
+整理得
+\[
+y(1+e^{-v})\,dv+(1+ve^{-v})\,dy=0.
+\]
+因此
+\[
+\frac{dy}{y}=-\frac{1+e^{-v}}{1+ve^{-v}}\,dv
+=-\frac{e^v+1}{e^v+v}\,dv.
+\]
+积分得
+\[
+\ln y+\ln(e^v+v)=C.
+\]
+即
+\[
+y(e^{x/y}+x/y)=C.
+\]
+故通解可写为
+\[
+\boxed{x+ye^{x/y}=C}.
+\]
+\examnote{出现 \(x/y\) 的微分方程，优先尝试齐次换元 \(x=vy\) 或 \(y=vx\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{11.} 已知方程
+\[
+y''+ay'+by=0
+\]
+的通解为
+\[
+y=C_1e^x+C_2e^{-x}.
+\]
+求方程
+\[
+y''+ay'+by=e^2
+\]
+满足初始条件
+\[
+y(0)=0,\qquad y'(0)=\frac32
+\]
+的特解。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{齐次根为 \(\pm1\)，所以 \(a=0,b=-1\)。右端是常数。}
+由通解得特征根为 \(1,-1\)，故齐次方程为
+\[
+y''-y=0.
+\]
+非齐次方程为
+\[
+y''-y=e^2.
+\]
+取常数特解 \(y_p=-e^2\)。故
+\[
+y=C_1e^x+C_2e^{-x}-e^2.
+\]
+由 \(y(0)=0\)，得
+\[
+C_1+C_2=e^2.
+\]
+由 \(y'(0)=3/2\)，得
+\[
+C_1-C_2=\frac32.
+\]
+解得
+\[
+C_1=\frac{e^2}{2}+\frac34,\qquad
+C_2=\frac{e^2}{2}-\frac34.
+\]
+所以
+\[
+\boxed{
+y=\left(\frac{e^2}{2}+\frac34\right)e^x
+\left(\frac{e^2}{2}-\frac34\right)e^{-x}
+-e^2 }.
+\]
+\examnote{先由齐次通解还原 \(a,b\)，再求非齐次特解。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{12.} 方程
+\[
+y''+y=x+\cos x
+\]
+的通解为多少？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{右端分成 \(x\) 和 \(\cos x\)。其中 \(\cos x\) 与齐次解共振。}
+齐次方程
+\[
+y''+y=0
+\]
+的通解为
+\[
+y_h=C_1\cos x+C_2\sin x.
+\]
+对右端 \(x\)，可取特解
+\[
+y_{p1}=x.
+\]
+对右端 \(\cos x\)，由于 \(\cos x\) 是齐次解，取
+\[
+y_{p2}=Ax\sin x.
+\]
+代入 \(y''+y=\cos x\) 得
+\[
+2A\cos x=\cos x,
+\qquad A=\frac12.
+\]
+故通解为
+\[
+\boxed{y=C_1\cos x+C_2\sin x+x+\frac{x}{2}\sin x}.
+\]
+\examnote{右端与齐次解重复时，特解乘 \(x\) 消重。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{13.} 设函数 \(y(x)\) 满足
+\[
+y''+(x-1)y'+x^2y=e^x,\qquad y'(0)=1.
+\]
+若
+\[
+\lim_{x\to0}\frac{y(x)-x}{x^2}=a,
+\]
+求 \(a\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{极限存在说明 \(y(0)=0\)，且二阶系数就是 \(y''(0)/2\)。}
+由
+\[
+\frac{y(x)-x}{x^2}
+\]
+极限存在，必须有
+\[
+y(0)=0.
+\]
+又题设给出 \(y'(0)=1\)。把 \(x=0\) 代入微分方程：
+\[
+y''(0)+(0-1)y'(0)+0=e^0.
+\]
+即
+\[
+y''(0)-1=1,
+\qquad y''(0)=2.
+\]
+而
+\[
+y(x)=y(0)+y'(0)x+\frac12y''(0)x^2+o(x^2)
+=x+x^2+o(x^2).
+\]
+因此
+\[
+a=\boxed{1}.
+\]
+\examnote{含 \(\lim (y-x)/x^2\) 的题，实质是在问泰勒展开的二阶系数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{14.} 二阶常系数非齐次线性微分方程
+\[
+y''-4y'+3y=2e^{2x}
+\]
+的通解为多少？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先求齐次通解，再用待定系数法求指数特解。}
+特征方程
+\[
+r^2-4r+3=0
+\]
+有根
+\[
+r=1,\quad r=3.
+\]
+故
+\[
+y_h=C_1e^x+C_2e^{3x}.
+\]
+设特解
+\[
+y_p=Ae^{2x}.
+\]
+代入得
+\[
+(4-8+3)Ae^{2x}=2e^{2x},
+\]
+即
+\[
+-A=2,\qquad A=-2.
+\]
+所以通解为
+\[
+\boxed{y=C_1e^x+C_2e^{3x}-2e^{2x}}.
+\]
+\examnote{若 \(2\) 不是特征根，指数特解直接设 \(Ae^{2x}\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{15.} 三阶常系数线性齐次微分方程
+\[
+y'''-2y''+y'-2y=0
+\]
+的通解为多少？
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{分解特征多项式。}
+特征方程为
+\[
+r^3-2r^2+r-2=0.
+\]
+分组分解：
+\[
+r^3-2r^2+r-2
+=r^2(r-2)+(r-2)
+=(r^2+1)(r-2).
+\]
+故特征根为
+\[
+r=2,\quad r=\pm i.
+\]
+所以通解为
+\[
+\boxed{y=C_1e^{2x}+C_2\cos x+C_3\sin x}.
+\]
+\examnote{三阶常系数齐次方程，核心就是特征多项式分解。}
+\end{solutionblock}
+
+\section{编号说明}
+原书第四章页图中第 \(15\) 题后直接接第 \(18\) 题，未出现第 \(16,17\) 题。以下按原书编号继续。
+
+\begin{problemblock}
+\textbf{18.} 设函数 \(y=y(x)\) 满足微分方程
+\[
+y''-3y'+2y=2e^x,
+\]
+且其图形在点 \((0,1)\) 处的切线与曲线
+\[
+y=x^2-x+1
+\]
+在该点的切线重合，求函数 \(y=y(x)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{切线重合给出初值 \(y(0)=1,\ y'(0)=-1\)。再解二阶常系数非齐次方程。}
+曲线 \(y=x^2-x+1\) 在 \(x=0\) 处导数为
+\[
+y'=2x-1,\qquad y'(0)=-1.
+\]
+故所求函数满足
+\[
+y(0)=1,\qquad y'(0)=-1.
+\]
+齐次方程
+\[
+y''-3y'+2y=0
+\]
+的特征根为
+\[
+r=1,\quad r=2.
+\]
+右端 \(2e^x\) 与根 \(r=1\) 共振，设特解
+\[
+y_p=Axe^x.
+\]
+代入得
+\[
+(D^2-3D+2)(Axe^x)=-Ae^x=2e^x,
+\]
+所以
+\[
+A=-2.
+\]
+通解为
+\[
+y=C_1e^x+C_2e^{2x}-2xe^x.
+\]
+由 \(y(0)=1\)，得
+\[
+C_1+C_2=1.
+\]
+由
+\[
+y'=C_1e^x+2C_2e^{2x}-2e^x-2xe^x,
+\]
+代入 \(x=0\) 得
+\[
+C_1+2C_2-2=-1,
+\]
+即
+\[
+C_1+2C_2=1.
+\]
+解得
+\[
+C_2=0,\qquad C_1=1.
+\]
+故
+\[
+\boxed{y=(1-2x)e^x}.
+\]
+\examnote{“切线重合”通常同时给函数值和导数值两个初始条件。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{19.} 已知
+\[
+y_1=3,\qquad y_2=3+x^2,\qquad y_3=3+e^x
+\]
+是某二阶线性非齐次方程的三个特解，求该微分方程及通解。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{非齐次方程任意两个特解之差是对应齐次方程的解。因此 \(x^2,e^x\) 是齐次方程的两个线性无关解。}
+设齐次方程为
+\[
+y''+P(x)y'+Q(x)y=0.
+\]
+因为
+\[
+y_2-y_1=x^2,\qquad y_3-y_1=e^x,
+\]
+所以 \(x^2\) 和 \(e^x\) 是齐次方程的两个解。
+
+代入 \(y=x^2\)：
+\[
+2+2xP+x^2Q=0.
+\]
+代入 \(y=e^x\)：
+\[
+1+P+Q=0.
+\]
+解得
+\[
+P(x)=\frac{x^2-2}{x(2-x)},\qquad
+Q(x)=\frac{2(1-x)}{x(2-x)}.
+\]
+由于 \(y=3\) 是非齐次方程的一个特解，右端为
+\[
+3Q(x)=\frac{6(1-x)}{x(2-x)}.
+\]
+故一个微分方程可写为
+\[
+y''+\frac{x^2-2}{x(2-x)}y'
++\frac{2(1-x)}{x(2-x)}y
+=\frac{6(1-x)}{x(2-x)}.
+\]
+等价地，两边乘 \(x(2-x)\)，得
+\[
+\boxed{x(2-x)y''+(x^2-2)y'+2(1-x)y=6(1-x)}.
+\]
+其通解为
+\[
+\boxed{y=3+C_1x^2+C_2e^x}.
+\]
+\examnote{“多个非齐次特解”题的核心：特解之差属于齐次解空间。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{20.} 求微分方程
+\[
+y''+(x+e^{2y})(y')^3=0
+\]
+的通解。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{方程中 \(x\) 和 \(y\) 的位置提示把 \(x\) 看成 \(y\) 的函数。利用
+\[
+\frac{d^2x}{dy^2}=-\frac{y''}{(y')^3}.
+\]}
+设 \(x=x(y)\)。则
+\[
+\frac{d^2x}{dy^2}=-\frac{y''}{(y')^3}.
+\]
+由原方程
+\[
+y''=-(x+e^{2y})(y')^3,
+\]
+得
+\[
+\frac{d^2x}{dy^2}=x+e^{2y}.
+\]
+即
+\[
+x''-x=e^{2y}.
+\]
+这是关于 \(x(y)\) 的二阶常系数非齐次方程。齐次解为
+\[
+x_h=C_1e^y+C_2e^{-y}.
+\]
+设特解
+\[
+x_p=Ae^{2y}.
+\]
+代入得
+\[
+(4-1)Ae^{2y}=e^{2y},
+\]
+所以
+\[
+A=\frac13.
+\]
+故通解为
+\[
+\boxed{x=C_1e^y+C_2e^{-y}+\frac13e^{2y}}.
+\]
+\examnote{含 \((y')^3\) 与 \(y''\) 的方程，常尝试把 \(x\) 反过来看成 \(y\) 的函数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{21.} 设函数 \(f(x)\) 具有连续的一阶导数，且满足
+\[
+f(x)=\int_0^x(x^2-t^2)f'(t)\,dt+x^2.
+\]
+求 \(f(x)\) 的表达式。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{对积分方程求导，利用变上限处 \(x^2-x^2=0\) 消去边界项。}
+令 \(x=0\)，得
+\[
+f(0)=0.
+\]
+对原式求导：
+\[
+f'(x)=\int_0^x2x f'(t)\,dt+2x.
+\]
+由于
+\[
+\int_0^x f'(t)\,dt=f(x)-f(0)=f(x),
+\]
+所以
+\[
+f'(x)=2xf(x)+2x.
+\]
+即
+\[
+f'-2xf=2x.
+\]
+积分因子为
+\[
+e^{-x^2}.
+\]
+于是
+\[
+(fe^{-x^2})'=2xe^{-x^2}.
+\]
+积分得
+\[
+fe^{-x^2}=-e^{-x^2}+C.
+\]
+由 \(f(0)=0\)，得 \(C=1\)。故
+\[
+\boxed{f(x)=e^{x^2}-1}.
+\]
+\examnote{变限积分方程通常通过求导化为微分方程。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{22.} 设 \(f(x)\) 连续，且满足
+\[
+\int_0^x f(t)\,dt=x+\int_0^x t f(x-t)\,dt.
+\]
+求 \(f(x)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{把卷积项换元，设 \(F(x)=\int_0^xf(t)dt\)。}
+令
+\[
+F(x)=\int_0^xf(t)\,dt.
+\]
+则
+\[
+\int_0^x t f(x-t)\,dt
+=\int_0^x (x-u)f(u)\,du
+=xF(x)-\int_0^x u f(u)\,du.
+\]
+原式为
+\[
+F(x)=x+xF(x)-\int_0^x u f(u)\,du.
+\]
+两边求导：
+\[
+F'(x)=1+F(x)+xF'(x)-xF'(x)=1+F(x).
+\]
+又 \(F(0)=0\)，故
+\[
+F'=F+1.
+\]
+解得
+\[
+F(x)=e^x-1.
+\]
+所以
+\[
+\boxed{f(x)=F'(x)=e^x}.
+\]
+\examnote{卷积 \(\int_0^x t f(x-t)dt\) 换元后往往能转成 \(F\) 与另一个积分的组合。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{23.} 设 \(f(x)\) 为连续函数，且满足
+\[
+f(x)=e^x+e^x\int_0^x[f(t)]^2\,dt.
+\]
+试求 \(f(x)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{设 \(u=e^{-x}f(x)\)，可把积分方程化为可分离微分方程。}
+由题设
+\[
+e^{-x}f(x)=1+\int_0^x[f(t)]^2\,dt.
+\]
+令
+\[
+u(x)=e^{-x}f(x).
+\]
+则
+\[
+u(0)=f(0)=1,
+\]
+且
+\[
+u'(x)=f^2(x)=e^{2x}u^2(x).
+\]
+分离变量：
+\[
+\frac{du}{u^2}=e^{2x}\,dx.
+\]
+积分得
+\[
+-\frac1u=\frac12e^{2x}+C.
+\]
+由 \(u(0)=1\)，得
+\[
+-1=\frac12+C,\qquad C=-\frac32.
+\]
+因此
+\[
+\frac1u=\frac{3-e^{2x}}{2},
+\qquad
+u=\frac{2}{3-e^{2x}}.
+\]
+故
+\[
+\boxed{f(x)=\frac{2e^x}{3-e^{2x}}}.
+\]
+\examnote{等式两边都有 \(e^x\) 时，先除以 \(e^x\) 通常能简化结构。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{24.} 函数 \(f(x)\) 在 \([0,+\infty)\) 上可导，\(f(0)=1\)，且满足
+\[
+f'(x)+f(x)-\frac{1}{x+1}\int_0^x f(t)\,dt=0.
+\]
+\begin{enumerate}
+\item 求导数 \(f'(x)\)；
+\item 证明：当 \(x\ge0\) 时，
+\[
+e^{-x}\le f(x)\le1.
+\]
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{设 \(F(x)=\int_0^xf(t)dt\)，先把原式写成 \(f'+f=F/(x+1)\)，再求导得到关于 \(f'\) 的一阶方程。}
+令
+\[
+F(x)=\int_0^xf(t)\,dt.
+\]
+题设为
+\[
+f'(x)+f(x)=\frac{F(x)}{x+1}.
+\]
+令 \(x=0\)，得
+\[
+f'(0)+f(0)=0,\qquad f'(0)=-1.
+\]
+对
+\[
+f'+f=\frac{F}{x+1}
+\]
+两边求导：
+\[
+f''+f'=\frac{(x+1)f-F}{(x+1)^2}.
+\]
+又
+\[
+F=(x+1)(f'+f),
+\]
+故
+\[
+f''+f'=-\frac{f'}{x+1}.
+\]
+令 \(g=f'\)，则
+\[
+g'+\left(1+\frac{1}{x+1}\right)g=0.
+\]
+解得
+\[
+g=\frac{Ce^{-x}}{x+1}.
+\]
+由 \(g(0)=f'(0)=-1\)，得 \(C=-1\)。所以
+\[
+\boxed{f'(x)=-\frac{e^{-x}}{x+1}}.
+\]
+
+由 \(f'(x)\le0\)，知 \(f\) 单调不增，所以
+\[
+f(x)\le f(0)=1.
+\]
+再令
+\[
+h(x)=f(x)-e^{-x}.
+\]
+则
+\[
+h(0)=0,
+\]
+且
+\[
+h'(x)=f'(x)+e^{-x}
+=-\frac{e^{-x}}{x+1}+e^{-x}
+=\frac{x}{x+1}e^{-x}\ge0.
+\]
+所以 \(h(x)\ge0\)，即
+\[
+f(x)\ge e^{-x}.
+\]
+综上
+\[
+\boxed{e^{-x}\le f(x)\le1\quad(x\ge0)}.
+\]
+\examnote{含 \(\int_0^x f\) 的方程设 \(F\) 后，常通过再求导降为常微分方程。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{25.} 设 \(f(x)\) 连续，且
+\[
+f(t)=\iint_{x^2+y^2\le t} f(x^2+y^2)\,dxdy+t^4\qquad(t\ge0).
+\]
+求 \(f(x)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{圆域积分改用极坐标，令 \(u=r^2\)，可转化为一阶线性微分方程。}
+用极坐标：
+\[
+\iint_{x^2+y^2\le t} f(x^2+y^2)\,dxdy
+=2\pi\int_0^{\sqrt t}f(r^2)r\,dr.
+\]
+令 \(u=r^2\)，得
+\[
+2\pi\int_0^{\sqrt t}f(r^2)r\,dr
+=\pi\int_0^t f(u)\,du.
+\]
+所以
+\[
+f(t)=\pi\int_0^t f(u)\,du+t^4.
+\]
+令 \(t=0\)，得 \(f(0)=0\)。两边求导：
+\[
+f'(t)=\pi f(t)+4t^3.
+\]
+即
+\[
+f'-\pi f=4t^3,\qquad f(0)=0.
+\]
+解得
+\[
+f(t)=\frac{24}{\pi^4}\left(e^{\pi t}-1-\pi t-\frac{\pi^2t^2}{2}-\frac{\pi^3t^3}{6}\right).
+\]
+因此
+\[
+\boxed{
+f(x)=\frac{24}{\pi^4}\left(e^{\pi x}-1-\pi x-\frac{\pi^2x^2}{2}-\frac{\pi^3x^3}{6}\right)}.
+\]
+\examnote{二重积分中被积函数只含 \(x^2+y^2\)，通常立刻转极坐标。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{26.} 设 \(f(x)\) 在 \((-\infty,+\infty)\) 上有定义，\(f'(0)=2\)，对任意 \(x,y\) 有
+\[
+f(x+y)=e^x f(y)+e^y f(x).
+\]
+求 \(f(x)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先令 \(y=0\) 得 \(f(0)=0\)，再对 \(y\) 在 \(0\) 处求导。}
+令 \(y=0\)，得
+\[
+f(x)=e^x f(0)+f(x),
+\]
+故
+\[
+f(0)=0.
+\]
+对恒等式关于 \(y\) 在 \(y=0\) 处求导：
+\[
+f'(x)=e^x f'(0)+e^0 f(x).
+\]
+由 \(f'(0)=2\)，得
+\[
+f'=f+2e^x.
+\]
+即
+\[
+f'-f=2e^x,\qquad f(0)=0.
+\]
+乘积分因子 \(e^{-x}\)：
+\[
+(fe^{-x})'=2.
+\]
+积分得
+\[
+fe^{-x}=2x+C.
+\]
+由 \(f(0)=0\)，得 \(C=0\)。故
+\[
+\boxed{f(x)=2xe^x}.
+\]
+\examnote{函数方程含任意 \(x,y\)，常令一个变量为 \(0\)，再对另一个变量在特殊点求导。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{27.} 设 \(f(x)\) 在 \([1,+\infty)\) 上有连续二阶导数，\(f(1)=0,\ f'(1)=1\)，且
+\[
+z=(x^2+y^2)f(x^2+y^2)
+\]
+满足
+\[
+\frac{\partial^2z}{\partial x^2}+\frac{\partial^2z}{\partial y^2}=0.
+\]
+求 \(f(x)\) 在 \([1,+\infty)\) 上的最大值。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{令 \(s=x^2+y^2\)，把 \(z\) 看成径向函数 \(\phi(s)=sf(s)\)。二维拉普拉斯算子给出 \(s\phi''+\phi'=0\)。}
+令
+\[
+s=x^2+y^2,\qquad \phi(s)=sf(s).
+\]
+对径向函数 \(z=\phi(s)\)，有
+\[
+\frac{\partial^2z}{\partial x^2}+\frac{\partial^2z}{\partial y^2}
+=4[s\phi''(s)+\phi'(s)].
+\]
+题设给出
+\[
+s\phi''(s)+\phi'(s)=0,
+\]
+即
+\[
+(s\phi'(s))'=0.
+\]
+所以
+\[
+\phi'(s)=\frac{C}{s},
+\qquad
+\phi(s)=C\ln s+D.
+\]
+由
+\[
+\phi(1)=1\cdot f(1)=0
+\]
+得 \(D=0\)。又
+\[
+\phi'(s)=f(s)+sf'(s),
+\]
+故
+\[
+\phi'(1)=f(1)+f'(1)=1.
+\]
+于是 \(C=1\)，
+\[
+\phi(s)=\ln s.
+\]
+因此
+\[
+f(s)=\frac{\ln s}{s}.
+\]
+令
+\[
+F(s)=\frac{\ln s}{s}\qquad(s\ge1).
+\]
+则
+\[
+F'(s)=\frac{1-\ln s}{s^2}.
+\]
+最大值在
+\[
+\ln s=1,\qquad s=e
+\]
+处取得，最大值为
+\[
+\boxed{\frac1e}.
+\]
+\examnote{径向调和函数题，记住 \(u=\phi(r^2)\) 时 \(\Delta u=4(s\phi''+\phi')\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{28.} 设函数 \(u(x,y)\) 的全微分
+\[
+du=\bigl(e^x+f''(x)y\bigr)\,dx+f(x)\,dy,
+\]
+其中 \(f\) 具有二阶连续导数，且
+\[
+f(0)=4,\qquad f'(0)=3.
+\]
+求 \(f(x)\) 及 \(u(x,y)\)。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{全微分存在要求混合偏导相等，即 \(\partial M/\partial y=\partial N/\partial x\)。}
+记
+\[
+M=e^x+f''(x)y,\qquad N=f(x).
+\]
+因为 \(du=Mdx+Ndy\) 是全微分，所以
+\[
+\frac{\partial M}{\partial y}=\frac{\partial N}{\partial x}.
+\]
+即
+\[
+f''(x)=f'(x).
+\]
+解得
+\[
+f'(x)=Ce^x,\qquad f(x)=Ce^x+D.
+\]
+由
+\[
+f'(0)=3
+\]
+得 \(C=3\)。由
+\[
+f(0)=4
+\]
+得 \(3+D=4\)，故 \(D=1\)。所以
+\[
+\boxed{f(x)=3e^x+1}.
+\]
+此时
+\[
+du=(e^x+3e^xy)\,dx+(3e^x+1)\,dy.
+\]
+先对 \(y\) 积分：
+\[
+u=(3e^x+1)y+\varphi(x).
+\]
+再对 \(x\) 求偏导：
+\[
+u_x=3e^xy+\varphi'(x).
+\]
+与 \(M=e^x+3e^xy\) 比较，得
+\[
+\varphi'(x)=e^x,\qquad \varphi(x)=e^x+C.
+\]
+故
+\[
+\boxed{u(x,y)=(3e^x+1)y+e^x+C}.
+\]
+\examnote{全微分题先用 \(\partial M/\partial y=\partial N/\partial x\)，再积分还原势函数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{29.} 求过点 \((0,2)\) 的曲线 \(y=y(x)\)，使曲线上任一点 \(P\) 的法线段 \(PQ\) 的中点位于抛物线
+\[
+2y^2=x
+\]
+上，其中 \(Q\) 是过 \(P\) 点作曲线法线与 \(x\) 轴的交点。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{设 \(P(x,y)\)，切线斜率为 \(y'\)。法线与 \(x\) 轴交点可由法线方程求出。}
+法线斜率为 \(-1/y'\)。法线方程为
+\[
+Y-y=-\frac1{y'}(X-x).
+\]
+令 \(Y=0\)，得
+\[
+X_Q=x+yy'.
+\]
+所以 \(Q=(x+yy',0)\)。中点为
+\[
+\left(x+\frac{yy'}2,\frac y2\right).
+\]
+该点在 \(2y^2=x\) 上，即
+\[
+x+\frac{yy'}2=2\left(\frac y2\right)^2=\frac{y^2}{2}.
+\]
+故
+\[
+yy'=y^2-2x.
+\]
+令 \(z=y^2\)，则
+\[
+z'=2yy'=2z-4x.
+\]
+即
+\[
+z'-2z=-4x.
+\]
+解得
+\[
+z=Ce^{2x}+2x+1.
+\]
+由曲线过 \((0,2)\)，得
+\[
+4=C+1,\qquad C=3.
+\]
+因此
+\[
+\boxed{y^2=3e^{2x}+2x+1}.
+\]
+若取过点 \((0,2)\) 的上支，则
+\[
+\boxed{y=\sqrt{3e^{2x}+2x+1}}.
+\]
+\examnote{法线与坐标轴交点题，第一步通常是写出法线方程。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{30.} 设函数 \(f(x)\) 在 \([0,1]\) 上连续，在 \((0,1)\) 内大于零，且满足微分方程
+\[
+xf'(x)=f(x)+\frac32ax^2.
+\]
+曲线 \(y=f(x)\) 与直线 \(x=1,\ y=0\) 所围成区域 \(D\) 的面积为 \(2\)，求：
+\begin{enumerate}
+\item \(f(x)\)；
+\item 使 \(D\) 绕 \(x\) 轴旋转一周而成旋转体体积最小的 \(a\)。
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{先解一阶线性方程，再用面积条件确定积分常数，最后把旋转体体积写成 \(a\) 的二次函数。}
+由
+\[
+xf'-f=\frac32ax^2
+\]
+得
+\[
+\left(\frac{f}{x}\right)'=\frac{xf'-f}{x^2}=\frac32a.
+\]
+因此
+\[
+\frac{f}{x}=\frac32ax+C,
+\]
+即
+\[
+f(x)=Cx+\frac32ax^2.
+\]
+区域面积为
+\[
+\int_0^1f(x)\,dx=2.
+\]
+所以
+\[
+\frac C2+\frac a2=2,\qquad C=4-a.
+\]
+故
+\[
+\boxed{f(x)=(4-a)x+\frac32ax^2}.
+\]
+旋转体体积
+\[
+V(a)=\pi\int_0^1 f^2(x)\,dx.
+\]
+代入 \(f(x)=(4-a)x+\frac32ax^2\)，得
+\[
+\frac{V(a)}{\pi}
+=\frac{(4-a)^2}{3}+\frac{3a(4-a)}{4}+\frac{9a^2}{20}
+=\frac{a^2+10a+160}{30}.
+\]
+这是开口向上的二次函数，其最小值在
+\[
+2a+10=0
+\]
+处取得，故
+\[
+\boxed{a=-5}.
+\]
+此时
+\[
+f(x)=9x-\frac{15}{2}x^2>0\qquad(0<x<1).
+\]
+\examnote{面积条件用于确定通解常数；体积最值通常转为参数二次函数最值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{31.} 设曲线 \(L\) 位于 \(xOy\) 平面的第一象限内，\(L\) 上任一点 \(M\) 处的切线与 \(y\) 轴总相交，交点记为 \(A\)。已知
+\[
+|MA|=|OA|,
+\]
+且 \(L\) 过点 \((3/2,3/2)\)，求 \(L\) 的方程。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{设 \(M(x,y)\)，切线斜率为 \(y'\)。切线在 \(y\) 轴上的截距为 \(y-xy'\)。}
+切线方程为
+\[
+Y-y=y'(X-x).
+\]
+令 \(X=0\)，得
+\[
+A=(0,y-xy').
+\]
+于是
+\[
+|OA|=y-xy',
+\]
+而
+\[
+|MA|=\sqrt{x^2+(xy')^2}=x\sqrt{1+(y')^2}.
+\]
+题设给出
+\[
+x\sqrt{1+(y')^2}=y-xy'.
+\]
+两边平方并化简：
+\[
+x^2=y^2-2xyy',
+\]
+所以
+\[
+y'=\frac{y^2-x^2}{2xy}.
+\]
+令 \(v=y/x\)，则 \(y=vx,\ y'=v+xv'\)。代入得
+\[
+v+xv'=\frac{v^2-1}{2v},
+\]
+即
+\[
+\frac{2v}{v^2+1}\,dv=-\frac{dx}{x}.
+\]
+积分：
+\[
+\ln(v^2+1)=-\ln x+C.
+\]
+故
+\[
+x\left(1+\frac{y^2}{x^2}\right)=C,
+\]
+即
+\[
+x^2+y^2=Cx.
+\]
+代入点 \((3/2,3/2)\)，得
+\[
+\frac94+\frac94=\frac32C,\qquad C=3.
+\]
+所以
+\[
+\boxed{x^2+y^2=3x}.
+\]
+\examnote{切线截距条件常能转成齐次微分方程，令 \(y=vx\) 处理。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{32.}（数学三不要求）在上半平面一条向下凸的曲线，其上任一点 \(P(x,y)\) 处的曲率等于此曲线在该点的法线段 \(PQ\) 长度的倒数，其中 \(Q\) 是法线与 \(x\) 轴的交点，且曲线在点 \((1,1)\) 处的切线与 \(x\) 轴平行。求该曲线。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{向下凸说明曲率 \(\kappa=-y''/(1+y'^2)^{3/2}\)。法线段长度为 \(y\sqrt{1+y'^2}\)。}
+法线段
+\[
+PQ=y\sqrt{1+(y')^2}.
+\]
+曲率条件为
+\[
+\frac{-y''}{[1+(y')^2]^{3/2}}
+=\frac{1}{y\sqrt{1+(y')^2}}.
+\]
+整理得
+\[
+yy''+1+(y')^2=0.
+\]
+即
+\[
+(yy')'+1=0.
+\]
+积分：
+\[
+yy'=-x+C.
+\]
+在点 \((1,1)\) 处切线与 \(x\) 轴平行，所以 \(y'(1)=0\)，代入得
+\[
+0=-1+C,\qquad C=1.
+\]
+于是
+\[
+yy'=1-x.
+\]
+再积分：
+\[
+\frac12y^2=x-\frac{x^2}{2}+C_1.
+\]
+代入 \((1,1)\)，得 \(C_1=0\)。所以
+\[
+y^2=2x-x^2.
+\]
+上半平面取正支：
+\[
+\boxed{y=\sqrt{2x-x^2}}.
+\]
+\examnote{曲率题先写曲率公式，再把法线长度用 \(y,y'\) 表示。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{33.} 设 \(L\) 是一条平面曲线，其上任意一点 \(P(x,y)\ (x>0)\) 到坐标原点的距离，恒等于该点处切线在 \(y\) 轴上的截距，且 \(L\) 经过点 \((1/2,0)\)。
+\begin{enumerate}
+\item 求曲线 \(L\) 的方程；
+\item 设 \(L\) 位于第一象限部分的一条切线，使该切线与 \(L\) 以及两坐标轴所围图形的面积最小，求此切线。
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{切线在 \(y\) 轴上的截距为 \(y-xy'\)，距离原点为 \(\sqrt{x^2+y^2}\)。}
+\textbf{(1)} 由题意
+\[
+y-xy'=\sqrt{x^2+y^2}.
+\]
+所以
+\[
+y'=\frac{y-\sqrt{x^2+y^2}}{x}.
+\]
+令 \(v=y/x\)，则
+\[
+v+xv'=v-\sqrt{1+v^2},
+\]
+即
+\[
+\frac{dv}{\sqrt{1+v^2}}=-\frac{dx}{x}.
+\]
+积分：
+\[
+\operatorname{arsinh}v=-\ln x+C.
+\]
+由 \(L\) 过 \((1/2,0)\)，得 \(C=\ln(1/2)\)。故
+\[
+\operatorname{arsinh}\frac{y}{x}=\ln\frac{1}{2x}.
+\]
+于是
+\[
+\frac{y}{x}=\sinh\left(\ln\frac1{2x}\right)
+=\frac{1}{4x}-x.
+\]
+故
+\[
+\boxed{y=\frac14-x^2}.
+\]
+
+\textbf{(2)} 第一象限部分为 \(0<x<1/2\)。设切点横坐标为 \(t\)，则
+\[
+y=\frac14-x^2,\qquad y'=-2x.
+\]
+切线为
+\[
+Y=-2t(X-t)+\frac14-t^2=-2tX+t^2+\frac14.
+\]
+其 \(y\) 轴截距为
+\[
+B=t^2+\frac14,
+\]
+\(x\) 轴截距为
+\[
+A=\frac{B}{2t}.
+\]
+切线与两坐标轴围成三角形面积为
+\[
+S_{\triangle}=\frac12AB=\frac{B^2}{4t}
+=\frac{(t^2+1/4)^2}{4t}.
+\]
+与曲线 \(L\) 以及两坐标轴围成的面积只是在此基础上减去固定的曲线下方面积，故最小化等价于最小化 \(S_{\triangle}\)。
+令导数为零，得
+\[
+3t^2=\frac14,\qquad t=\frac{1}{2\sqrt3}.
+\]
+此时
+\[
+B=t^2+\frac14=\frac13,
+\]
+切线为
+\[
+\boxed{y=-\frac{x}{\sqrt3}+\frac13}.
+\]
+\examnote{含“切线与坐标轴所围面积最小”，通常先用切点参数表示两个截距。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{34.} 设 \(y=y(x)\) 是区间 \((-\pi,\pi)\) 内过点 \((-\pi/2,\pi/2)\) 的光滑曲线。当 \(-\pi<x<0\) 时，曲线上任一点处的法线都过原点；当 \(0\le x<\pi\) 时，函数 \(y(x)\) 满足
+\[
+y''+y+x=0.
+\]
+求函数 \(y(x)\) 的表达式。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{左半段由“法线过原点”得到 \(yy'=-x\)，再用光滑性给出右半段初值。}
+当 \(-\pi<x<0\) 时，法线过原点。切线斜率为 \(y'\)，法线斜率为 \(-1/y'\)。原点与点 \((x,y)\) 连线斜率为 \(y/x\)，故
+\[
+-\frac1{y'}=\frac{y}{x},
+\]
+即
+\[
+yy'=-x.
+\]
+积分得
+\[
+x^2+y^2=C.
+\]
+代入点 \((-\pi/2,\pi/2)\)，得
+\[
+C=\frac{\pi^2}{2}.
+\]
+左半段位于上方，故
+\[
+y=\sqrt{\frac{\pi^2}{2}-x^2}\qquad(-\pi<x<0).
+\]
+于是
+\[
+y(0^-)=\frac{\pi}{\sqrt2},\qquad y'(0^-)=0.
+\]
+光滑性给出右半段初值
+\[
+y(0)=\frac{\pi}{\sqrt2},\qquad y'(0)=0.
+\]
+当 \(0\le x<\pi\) 时，
+\[
+y''+y=-x.
+\]
+通解为
+\[
+y=C_1\cos x+C_2\sin x-x.
+\]
+代入初值：
+\[
+C_1=\frac{\pi}{\sqrt2},\qquad C_2-1=0.
+\]
+所以
+\[
+y=\frac{\pi}{\sqrt2}\cos x+\sin x-x\qquad(0\le x<\pi).
+\]
+综上
+\[
+\boxed{
+y(x)=
+\begin{cases}
+\sqrt{\dfrac{\pi^2}{2}-x^2},&-\pi<x<0,\\[6pt]
+\dfrac{\pi}{\sqrt2}\cos x+\sin x-x,&0\le x<\pi.
+\end{cases}}
+\]
+\examnote{分段微分方程要用“光滑曲线”在分界点处衔接函数值和导数值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{35.}（数学三不要求）已知曲线
+\[
+L:\quad x=f(t),\quad y=\cos t,\qquad 0\le t<\frac{\pi}{2},
+\]
+其中 \(f(0)=0,\ f'(t)>0\)。若曲线 \(L\) 的切线与 \(x\) 轴的交点到切点的距离恒为 \(1\)，求 \(f(t)\)，并求以曲线 \(L\) 及 \(x\) 轴和 \(y\) 轴为边界的区域面积。
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{参数曲线切线斜率为 \(\frac{dy/dt}{dx/dt}=-\sin t/f'(t)\)。切点到 \(x\) 轴切线交点的距离由直角三角形给出。}
+切线斜率
+\[
+m=\frac{dy/dt}{dx/dt}=-\frac{\sin t}{f'(t)}.
+\]
+切点纵坐标为 \(\cos t\)。沿切线下降到 \(x\) 轴的距离为
+\[
+\cos t\frac{\sqrt{1+m^2}}{|m|}.
+\]
+题设该距离恒为 \(1\)，故
+\[
+\cos t\frac{\sqrt{f'^2(t)+\sin^2t}}{\sin t}=1.
+\]
+于是
+\[
+f'^2(t)+\sin^2t=\tan^2t,
+\]
+从而
+\[
+f'(t)=\frac{\sin^2t}{\cos t}\qquad(f'(t)>0).
+\]
+积分：
+\[
+f(t)=\int_0^t\frac{\sin^2u}{\cos u}\,du
+=\int_0^t(\sec u-\cos u)\,du.
+\]
+所以
+\[
+\boxed{f(t)=\ln(\sec t+\tan t)-\sin t}.
+\]
+区域面积
+\[
+S=\int y\,dx
+=\int_0^{\pi/2}\cos t\,f'(t)\,dt
+=\int_0^{\pi/2}\sin^2t\,dt
+=\boxed{\frac{\pi}{4}}.
+\]
+\examnote{参数曲线面积常用 \(S=\int y\,dx=\int y(t)x'(t)dt\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{36.} 在 \(xOy\) 坐标平面上，连续曲线 \(L\) 过点 \(M(1,0)\)，其上任意点 \(P(x,y)\ (x\ne0)\) 处的切线斜率与直线 \(OP\) 的斜率之差等于 \(ax\)，其中常数 \(a>0\)。
+\begin{enumerate}
+\item 求 \(L\) 的方程；
+\item 当 \(L\) 与直线 \(y=ax\) 所围成平面图形的面积为 \(8/3\) 时，确定 \(a\) 的值。
+\end{enumerate}
+\end{problemblock}
+
+\begin{solutionblock}
+\analysis{切线斜率是 \(y'\)，直线 \(OP\) 的斜率是 \(y/x\)。}
+\textbf{(1)} 由题意
+\[
+y'-\frac{y}{x}=ax.
+\]
+这是线性方程。注意
+\[
+\left(\frac{y}{x}\right)'=\frac{xy'-y}{x^2}.
+\]
+两边等价于
+\[
+\left(\frac{y}{x}\right)'=a.
+\]
+积分得
+\[
+\frac{y}{x}=ax+C,
+\]
+即
+\[
+y=ax^2+Cx.
+\]
+由 \(L\) 过 \((1,0)\)，得
+\[
+0=a+C,\qquad C=-a.
+\]
+所以
+\[
+\boxed{y=ax^2-ax}.
+\]
+
+\textbf{(2)} 曲线 \(y=ax^2-ax\) 与直线 \(y=ax\) 的交点满足
+\[
+ax^2-ax=ax,
+\]
+即
+\[
+ax(x-2)=0.
+\]
+故交点横坐标为 \(0,2\)。在 \([0,2]\) 上，直线 \(y=ax\) 位于曲线上方，面积为
+\[
+S=\int_0^2\left[ax-(ax^2-ax)\right]dx
+=a\int_0^2(2x-x^2)\,dx
+=\frac{4a}{3}.
+\]
+由 \(S=8/3\)，得
+\[
+\boxed{a=2}.
+\]
+\examnote{“切线斜率与 OP 斜率之差”直接翻译为 \(y'-y/x\)。}
+\end{solutionblock}
+
+\section{第四章完成说明}
+第四章除原书未出现的第 \(16,17\) 题外，其余第 \(1\)--\(15\)、\(18\)--\(36\) 题已按“题目解析、完整推导、答案、考研提示”的格式整理完毕。

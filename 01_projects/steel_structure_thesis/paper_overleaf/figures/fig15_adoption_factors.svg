@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs>
+<marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#1F4E73"/>
+</marker>
+<marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#6C757D"/>
+</marker>
+<marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#D8892C"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1000" fill="#FFFFFF"/>
+<text x="800" y="62" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="40" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+装配式钢结构推广影响因素权重示意图
+</text>
+<text x="800" y="108" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+概念性权重：体现影响因素的重要性排序
+</text>
+<line x1="100" y1="132" x2="1500" y2="132" stroke="#CBD3DA" stroke-width="2"/>
+<text x="290" y="269" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" fill="#222222" text-anchor="end" dominant-baseline="middle">
+综合成本
+</text>
+<rect x="420" y="245" width="820" height="46" rx="8" fill="#EEF1F4" stroke="#CBD3DA" stroke-width="2"/>
+<rect x="420" y="245" width="721" height="46" rx="8" fill="#D8892C" stroke="#D8892C" stroke-width="2"/>
+<text x="1196" y="268" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#D8892C" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+88
+</text>
+<text x="290" y="351" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" fill="#222222" text-anchor="end" dominant-baseline="middle">
+标准化程度
+</text>
+<rect x="420" y="327" width="820" height="46" rx="8" fill="#EEF1F4" stroke="#CBD3DA" stroke-width="2"/>
+<rect x="420" y="327" width="656" height="46" rx="8" fill="#2F6FA3" stroke="#2F6FA3" stroke-width="2"/>
+<text x="1131" y="350" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+80
+</text>
+<text x="290" y="433" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" fill="#222222" text-anchor="end" dominant-baseline="middle">
+产业链配套
+</text>
+<rect x="420" y="409" width="820" height="46" rx="8" fill="#EEF1F4" stroke="#CBD3DA" stroke-width="2"/>
+<rect x="420" y="409" width="606" height="46" rx="8" fill="#4F8F5B" stroke="#4F8F5B" stroke-width="2"/>
+<text x="1081" y="432" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+74
+</text>
+<text x="290" y="515" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" fill="#222222" text-anchor="end" dominant-baseline="middle">
+设计施工协同
+</text>
+<rect x="420" y="491" width="820" height="46" rx="8" fill="#EEF1F4" stroke="#CBD3DA" stroke-width="2"/>
+<rect x="420" y="491" width="557" height="46" rx="8" fill="#2F6FA3" stroke="#2F6FA3" stroke-width="2"/>
+<text x="1032" y="514" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+68
+</text>
+<text x="290" y="597" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" fill="#222222" text-anchor="end" dominant-baseline="middle">
+质量验收能力
+</text>
+<rect x="420" y="573" width="820" height="46" rx="8" fill="#EEF1F4" stroke="#CBD3DA" stroke-width="2"/>
+<rect x="420" y="573" width="492" height="46" rx="8" fill="#D8892C" stroke="#D8892C" stroke-width="2"/>
+<text x="967" y="596" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#D8892C" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+60
+</text>
+<text x="290" y="679" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" fill="#222222" text-anchor="end" dominant-baseline="middle">
+专业人才储备
+</text>
+<rect x="420" y="655" width="820" height="46" rx="8" fill="#EEF1F4" stroke="#CBD3DA" stroke-width="2"/>
+<rect x="420" y="655" width="426" height="46" rx="8" fill="#4F8F5B" stroke="#4F8F5B" stroke-width="2"/>
+<text x="901" y="678" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+52
+</text>
+<text x="290" y="761" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" fill="#222222" text-anchor="end" dominant-baseline="middle">
+政策与市场认知
+</text>
+<rect x="420" y="737" width="820" height="46" rx="8" fill="#EEF1F4" stroke="#CBD3DA" stroke-width="2"/>
+<rect x="420" y="737" width="377" height="46" rx="8" fill="#6C757D" stroke="#6C757D" stroke-width="2"/>
+<text x="852" y="760" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+46
+</text>
+<line x1="420" y1="850" x2="1240" y2="850" stroke="#6C757D" stroke-width="3"/>
+<line x1="420" y1="842" x2="420" y2="858" stroke="#6C757D" stroke-width="2"/>
+<text x="420" y="885" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+0
+</text>
+<line x1="584" y1="842" x2="584" y2="858" stroke="#6C757D" stroke-width="2"/>
+<text x="584" y="885" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+20
+</text>
+<line x1="748" y1="842" x2="748" y2="858" stroke="#6C757D" stroke-width="2"/>
+<text x="748" y="885" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+40
+</text>
+<line x1="912" y1="842" x2="912" y2="858" stroke="#6C757D" stroke-width="2"/>
+<text x="912" y="885" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+60
+</text>
+<line x1="1076" y1="842" x2="1076" y2="858" stroke="#6C757D" stroke-width="2"/>
+<text x="1076" y="885" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+80
+</text>
+<line x1="1240" y1="842" x2="1240" y2="858" stroke="#6C757D" stroke-width="2"/>
+<text x="1240" y="885" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+100
+</text>
+<text x="830" y="925" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+相对影响强度（概念性）
+</text>
+<rect x="1120" y="625" width="300" height="150" rx="14" fill="#F7E5CC" stroke="#D8892C" stroke-width="3"/>
+<text x="1270" y="659" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#D8892C" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+使用说明
+</text>
+<text x="1270" y="722" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="1270" dy="-39.0">用于论文归纳分析，</tspan>
+<tspan x="1270" dy="26">不表示实测统计权重</tspan>
+<tspan x="1270" dy="26">；正式论文中应注明</tspan>
+<tspan x="1270" dy="26">为概念性整理。</tspan>
+</text>
+</svg>

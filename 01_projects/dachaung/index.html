@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>结构设计竞赛成绩自动计算</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #667085;
+      --line: #d5dce7;
+      --head: #eaf0f7;
+      --first: #e6f4f1;
+      --second: #fff0e5;
+      --final: #e9efff;
+      --accent: #0f766e;
+      --accent-soft: #dff3ee;
+      --warm: #b45309;
+      --warm-soft: #fff4df;
+      --bad: #b42318;
+      --bad-soft: #fff1f0;
+      --ok: #047857;
+      --ok-soft: #e8f7ef;
+      --best: #1d4ed8;
+      --best-soft: #eef4ff;
+      --shadow: 0 14px 34px rgba(31, 41, 55, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, #eef6f4 0, #f5f7fb 240px),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+
+    .bar {
+      max-width: 1680px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: grid;
+      grid-template-columns: minmax(300px, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 21px;
+      letter-spacing: 0;
+    }
+
+    .title-line {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      height: 24px;
+      border-radius: 999px;
+      padding: 0 10px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .sub {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .toolbar label {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      color: #475467;
+      font-size: 13px;
+    }
+
+    button, select {
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0 10px;
+      font: inherit;
+    }
+
+    button { cursor: pointer; }
+    button.primary { border-color: var(--accent); background: var(--accent); color: #fff; }
+    button.danger { border-color: #fecaca; color: var(--bad); }
+    button:hover, select:hover { border-color: #98a2b3; }
+    button.primary:hover { background: #0b655e; }
+    button.danger:hover { background: var(--bad-soft); }
+
+    main {
+      max-width: 1680px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-head {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0, #f8fafc 100%);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+
+    .formula {
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+      max-width: 860px;
+    }
+
+    .summary {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 14px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 3px;
+      background: var(--accent);
+    }
+
+    .metric:nth-child(2)::before { background: var(--warm); }
+    .metric:nth-child(3)::before { background: var(--best); }
+    .metric:nth-child(4)::before { background: #7c3aed; }
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .metric b {
+      display: block;
+      margin-top: 2px;
+      font-size: 20px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .notes {
+      margin: 0 16px 16px;
+      padding: 10px 12px;
+      color: #475467;
+      font-size: 13px;
+      line-height: 1.55;
+      background: #f8fafc;
+      border: 1px solid #e7ecf3;
+      border-radius: 8px;
+    }
+
+    .notes p { margin: 5px 0; }
+
+    .table-wrap {
+      width: 100%;
+      overflow: auto;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1900px;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    th, td {
+      height: 44px;
+      padding: 7px 6px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: var(--head);
+      color: #344054;
+      font-size: 12px;
+      font-weight: 650;
+      white-space: nowrap;
+      line-height: 1.25;
+    }
+
+    tbody tr:nth-child(even) td { background: #fbfcfe; }
+    tbody tr:hover td { background: #fff8ed; }
+    tbody tr:hover .sticky-left,
+    tbody tr:hover .sticky-left-2,
+    tbody tr:hover .final-sticky { background: #fff8ed; }
+
+    .sticky-left {
+      position: sticky;
+      left: 0;
+      z-index: 10;
+      background: #fff;
+      box-shadow: 1px 0 0 var(--line);
+    }
+
+    th.sticky-left { background: #dfe7f1; }
+
+    .sticky-left-2 {
+      position: sticky;
+      left: 70px;
+      z-index: 10;
+      background: #fff;
+      box-shadow: 1px 0 0 var(--line);
+    }
+
+    th.sticky-left-2 { background: #dfe7f1; }
+
+    .head-first { background: var(--first); }
+    .head-second { background: var(--second); }
+    .head-final { background: var(--final); }
+
+    .final-sticky {
+      position: sticky;
+      z-index: 9;
+      background: #fff;
+      box-shadow: -1px 0 0 var(--line);
+    }
+
+    th.final-sticky {
+      z-index: 14;
+      background: var(--final);
+    }
+
+    .final-attempt { right: 272px; min-width: 86px; }
+    .final-score { right: 184px; min-width: 88px; }
+    .final-rank { right: 104px; min-width: 80px; }
+    .final-status { right: 0; min-width: 104px; }
+
+    input {
+      width: 78px;
+      height: 30px;
+      border: 1px solid #cfd6df;
+      border-radius: 5px;
+      background: #fff;
+      padding: 4px 6px;
+      text-align: center;
+      font: inherit;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.14);
+      background: #fbfffe;
+    }
+
+    input.name {
+      width: 120px;
+      text-align: left;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--bad);
+      cursor: pointer;
+    }
+
+    .score {
+      min-width: 58px;
+      font-weight: 650;
+      font-variant-numeric: tabular-nums;
+      color: #344054;
+    }
+
+    .best {
+      color: var(--best);
+      font-weight: 750;
+      background: var(--best-soft);
+    }
+
+    td.best,
+    td.final-sticky.best {
+      background: var(--best-soft);
+    }
+
+    .status {
+      min-width: 90px;
+      font-size: 12px;
+      color: var(--ok);
+      font-weight: 650;
+    }
+
+    .status.bad { color: var(--bad); }
+
+    .status::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      vertical-align: 1px;
+    }
+
+    @media (max-width: 900px) {
+      .bar {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar {
+        justify-content: flex-start;
+      }
+
+      .summary {
+        grid-template-columns: repeat(2, minmax(160px, 1fr));
+      }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .formula {
+        text-align: left;
+      }
+    }
+
+    @media print {
+      header, .data-section { display: none; }
+      main { padding: 0; }
+      section { border: 0; }
+      table { min-width: 0; font-size: 11px; }
+      th, td { padding: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <div>
+        <div class="title-line">
+          <h1>结构设计竞赛成绩自动计算</h1>
+          <span class="badge">两次取最高</span>
+          <span class="badge">实时排名</span>
+        </div>
+        <div class="sub">16 个小组，两次比赛机会，实时计算每次成绩、取最高成绩并排名</div>
+      </div>
+      <div class="toolbar">
+        <label>
+          计算基准：
+          <select id="basisMode">
+            <option value="all">全部已录入有效赛次</option>
+            <option value="best">各组当前最佳赛次</option>
+          </select>
+        </label>
+        <button class="primary" id="exportCsv">导出排名</button>
+        <button id="printRank">打印排名</button>
+        <button class="danger" id="resetAll">清空数据</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="section-head">
+        <h2>自动计算规则</h2>
+        <div class="formula">效率得分D = 最短时间 / 运输时间 × 30；完成得分E = (20%布袋数量 - 无效数量) / 20%布袋数量 × 10；成本得分F = 荷载比 / 最大荷载比 × 40</div>
+      </div>
+      <div class="summary">
+        <div class="metric"><span>当前最短时间</span><b id="metricMinTime">-</b></div>
+        <div class="metric"><span>当前最大运输质量</span><b id="metricMaxCargo">-</b></div>
+        <div class="metric"><span>当前最大荷载比</span><b id="metricMaxRatio">-</b></div>
+        <div class="metric"><span>当前最高总分</span><b id="metricTop">-</b></div>
+      </div>
+      <div class="notes">
+        <p>只需要填写白色输入框：模型质量、运输时间、布袋数量、无效数量；如该次成绩需人工作废，勾选“成绩无效”。其他列会自动计算。运输质量按“有效布袋数量 × 500g”计算，即运输质量 = (布袋数量 - 无效数量) × 500。</p>
+        <p>无效数量超过布袋数量的 20%、勾选成绩无效，或模型质量、运输时间、布袋数量没有填完整时，该次比赛暂不参与最短时间、最大荷载比和排名计算。排名会随着已录入的有效数据实时更新，不需要等 16 组全部填完。</p>
+      </div>
+    </section>
+
+    <section class="data-section">
+      <div class="section-head">
+        <h2>成绩录入与计算</h2>
+        <div class="formula">总分S = 效率得分D + 完成得分E + 成本得分F；最终成绩取两次比赛中较高的总分S</div>
+      </div>
+      <div class="table-wrap">
+        <table id="scoreTable">
+          <thead>
+            <tr>
+              <th class="sticky-left" rowspan="2">组号</th>
+              <th class="sticky-left-2" rowspan="2">小组名称</th>
+              <th class="head-first" colspan="14">第 1 次比赛</th>
+              <th class="head-second" colspan="14">第 2 次比赛</th>
+              <th class="head-final" colspan="4">最终结果</th>
+            </tr>
+            <tr>
+              <th class="head-first">模型质量 M(g)</th>
+              <th class="head-first">运输时间 t(s)</th>
+              <th class="head-first">最短时间 tmin(s)</th>
+              <th class="head-first">布袋数量 N(个)</th>
+              <th class="head-first">无效数量 n(个)</th>
+              <th class="head-first">成绩无效</th>
+              <th class="head-first">运输质量 G(g)</th>
+              <th class="head-first">最大运输质量 Gmax(g)</th>
+              <th class="head-first">荷载比 K=G/M</th>
+              <th class="head-first">最大荷载比 Kmax</th>
+              <th class="head-first">效率得分 D</th>
+              <th class="head-first">完成得分 E</th>
+              <th class="head-first">成本得分 F</th>
+              <th class="head-first">总分 S</th>
+              <th class="head-second">模型质量 M(g)</th>
+              <th class="head-second">运输时间 t(s)</th>
+              <th class="head-second">最短时间 tmin(s)</th>
+              <th class="head-second">布袋数量 N(个)</th>
+              <th class="head-second">无效数量 n(个)</th>
+              <th class="head-second">成绩无效</th>
+              <th class="head-second">运输质量 G(g)</th>
+              <th class="head-second">最大运输质量 Gmax(g)</th>
+              <th class="head-second">荷载比 K=G/M</th>
+              <th class="head-second">最大荷载比 Kmax</th>
+              <th class="head-second">效率得分 D</th>
+              <th class="head-second">完成得分 E</th>
+              <th class="head-second">成本得分 F</th>
+              <th class="head-second">总分 S</th>
+              <th class="head-final final-sticky final-attempt">取用赛次</th>
+              <th class="head-final final-sticky final-score">最终成绩</th>
+              <th class="head-final final-sticky final-rank">实时排名</th>
+              <th class="head-final final-sticky final-status">状态</th>
+            </tr>
+          </thead>
+          <tbody id="scoreBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>实时排名</h2>
+        <div class="formula">按最终成绩降序，分数相同则并列排名</div>
+      </div>
+      <div class="table-wrap">
+        <table id="rankTable">
+          <thead>
+            <tr>
+              <th>排名</th>
+              <th>组号</th>
+              <th>小组名称</th>
+              <th>最终成绩</th>
+              <th>取用赛次</th>
+              <th>模型质量 M(g)</th>
+              <th>运输时间 t(s)</th>
+              <th>布袋数量 N(个)</th>
+              <th>无效数量 n(个)</th>
+              <th>运输质量 G(g)</th>
+              <th>荷载比 K</th>
+              <th>效率得分 D</th>
+              <th>完成得分 E</th>
+              <th>成本得分 F</th>
+            </tr>
+          </thead>
+          <tbody id="rankBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "structural-contest-score-simple-v1";
+    const TEAM_COUNT = 16;
+    const BAG_WEIGHT = 500;
+
+    function blankAttempt() {
+      return { modelMass: "", transportTime: "", bagCount: "", invalidCount: "", manualInvalid: false };
+    }
+
+    function defaultTeams() {
+      return Array.from({ length: TEAM_COUNT }, (_, i) => ({
+        id: i + 1,
+        name: `第${i + 1}组`,
+        attempts: [blankAttempt(), blankAttempt()]
+      }));
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+        if (saved && Array.isArray(saved.teams)) return saved;
+      } catch (err) {
+        console.warn(err);
+      }
+      return { basisMode: "all", teams: defaultTeams() };
+    }
+
+    let state = loadState();
+
+    function toNum(value) {
+      if (value === "" || value === null || value === undefined) return 0;
+      const n = Number(value);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function hasNum(value) {
+      return value !== "" && value !== null && value !== undefined && Number.isFinite(Number(value));
+    }
+
+    function fmt(value, digits = 2) {
+      if (!Number.isFinite(value)) return "-";
+      return value.toFixed(digits);
+    }
+
+    function attemptBase(team, attempt, attemptNo) {
+      const modelMass = toNum(attempt.modelMass);
+      const transportTime = toNum(attempt.transportTime);
+      const bagCount = toNum(attempt.bagCount);
+      const invalidCount = toNum(attempt.invalidCount);
+      const manualInvalid = Boolean(attempt.manualInvalid);
+      const cargoMass = (bagCount - invalidCount) * BAG_WEIGHT;
+      const loadRatio = modelMass > 0 && cargoMass > 0 ? cargoMass / modelMass : NaN;
+      const complete = hasNum(attempt.modelMass) && hasNum(attempt.transportTime) && hasNum(attempt.bagCount) && hasNum(attempt.invalidCount);
+      const valid = complete && !manualInvalid && modelMass > 0 && transportTime > 0 && bagCount > 0 && invalidCount >= 0 && invalidCount <= bagCount * 0.2;
+      let status = "未填完整";
+
+      if (complete) {
+        if (manualInvalid) status = "人工判定无效";
+        else if (modelMass <= 0) status = "模型质量需大于0";
+        else if (transportTime <= 0) status = "运输时间需大于0";
+        else if (bagCount <= 0) status = "布袋数量需大于0";
+        else if (invalidCount < 0) status = "无效数量不能小于0";
+        else if (invalidCount > bagCount * 0.2) status = "无效数量超20%";
+        else status = "有效";
+      }
+
+      return {
+        teamId: team.id,
+        teamName: team.name,
+        attemptNo,
+        modelMass,
+        transportTime,
+        bagCount,
+        invalidCount,
+        manualInvalid,
+        cargoMass,
+        loadRatio,
+        complete,
+        valid,
+        status
+      };
+    }
+
+    function collectBases() {
+      return state.teams.flatMap(team => team.attempts.map((attempt, index) => attemptBase(team, attempt, index + 1)));
+    }
+
+    function scoreAttempt(base, minTime, maxCargoMass, maxLoadRatio) {
+      let efficiencyScore = 0;
+      let completionScore = 0;
+      let costScore = 0;
+
+      if (base.valid) {
+        efficiencyScore = minTime > 0 ? (minTime / base.transportTime) * 30 : 0;
+        completionScore = ((base.bagCount * 0.2 - base.invalidCount) / (base.bagCount * 0.2)) * 10;
+        costScore = maxLoadRatio > 0 ? (base.loadRatio / maxLoadRatio) * 40 : 0;
+        efficiencyScore = Math.max(0, Math.min(30, efficiencyScore));
+        completionScore = Math.max(0, Math.min(10, completionScore));
+        costScore = Math.max(0, Math.min(40, costScore));
+      }
+
+      const totalScore = efficiencyScore + completionScore + costScore;
+
+      return {
+        ...base,
+        minTime,
+        maxCargoMass,
+        maxLoadRatio,
+        efficiencyScore,
+        completionScore,
+        costScore,
+        totalScore
+      };
+    }
+
+    function chooseBest(attempts) {
+      return attempts
+        .slice()
+        .sort((a, b) => b.totalScore - a.totalScore || a.attemptNo - b.attemptNo)[0] || null;
+    }
+
+    function computeAll() {
+      const bases = collectBases();
+      let reference = bases.filter(item => item.valid);
+      let minTime = Math.min(...reference.map(item => item.transportTime));
+      let maxCargoMass = Math.max(...reference.map(item => item.cargoMass));
+      let maxLoadRatio = Math.max(...reference.map(item => item.loadRatio));
+
+      if (!Number.isFinite(minTime)) minTime = 0;
+      if (!Number.isFinite(maxCargoMass)) maxCargoMass = 0;
+      if (!Number.isFinite(maxLoadRatio)) maxLoadRatio = 0;
+
+      let scored = bases.map(base => scoreAttempt(base, minTime, maxCargoMass, maxLoadRatio));
+
+      if (state.basisMode === "best") {
+        reference = state.teams
+          .map(team => chooseBest(scored.filter(item => item.teamId === team.id)))
+          .filter(item => item && item.valid);
+        minTime = Math.min(...reference.map(item => item.transportTime));
+        maxCargoMass = Math.max(...reference.map(item => item.cargoMass));
+        maxLoadRatio = Math.max(...reference.map(item => item.loadRatio));
+        if (!Number.isFinite(minTime)) minTime = 0;
+        if (!Number.isFinite(maxCargoMass)) maxCargoMass = 0;
+        if (!Number.isFinite(maxLoadRatio)) maxLoadRatio = 0;
+        scored = bases.map(base => scoreAttempt(base, minTime, maxCargoMass, maxLoadRatio));
+      }
+
+      const byTeam = state.teams.map(team => {
+        const attempts = scored.filter(item => item.teamId === team.id);
+        return { team, attempts, best: chooseBest(attempts) };
+      });
+
+      const ranked = byTeam
+        .map(item => ({ ...item, finalScore: item.best ? item.best.totalScore : 0 }))
+        .sort((a, b) => b.finalScore - a.finalScore || a.team.id - b.team.id);
+
+      let lastScore = null;
+      let lastRank = 0;
+      ranked.forEach((item, index) => {
+        if (lastScore === null || Math.abs(item.finalScore - lastScore) > 0.0001) {
+          lastRank = index + 1;
+          lastScore = item.finalScore;
+        }
+        item.rank = lastRank;
+      });
+
+      return { minTime, maxCargoMass, maxLoadRatio, scored, byTeam, ranked };
+    }
+
+    function save() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function inputCell(teamIndex, path, value, type = "number") {
+      const dataPath = [teamIndex, ...path].join(".");
+      if (type === "checkbox") {
+        return `<input type="checkbox" data-path="${dataPath}" ${value ? "checked" : ""}>`;
+      }
+      const cls = type === "text" ? "name" : "";
+      const attrs = type === "number" ? 'min="0" step="0.01"' : "";
+      return `<input class="${cls}" type="${type}" data-path="${dataPath}" value="${value ?? ""}" ${attrs}>`;
+    }
+
+    function buildTable() {
+      const body = document.getElementById("scoreBody");
+      body.innerHTML = state.teams.map((team, teamIndex) => {
+        const attempts = [0, 1].map(attemptIndex => {
+          const attempt = team.attempts[attemptIndex];
+          return `
+            <td>${inputCell(teamIndex, ["attempts", attemptIndex, "modelMass"], attempt.modelMass)}</td>
+            <td>${inputCell(teamIndex, ["attempts", attemptIndex, "transportTime"], attempt.transportTime)}</td>
+            <td class="score" data-out="${team.id}.${attemptIndex}.minTime">-</td>
+            <td>${inputCell(teamIndex, ["attempts", attemptIndex, "bagCount"], attempt.bagCount)}</td>
+            <td>${inputCell(teamIndex, ["attempts", attemptIndex, "invalidCount"], attempt.invalidCount)}</td>
+            <td>${inputCell(teamIndex, ["attempts", attemptIndex, "manualInvalid"], attempt.manualInvalid, "checkbox")}</td>
+            <td class="score" data-out="${team.id}.${attemptIndex}.cargoMass">-</td>
+            <td class="score" data-out="${team.id}.${attemptIndex}.maxCargoMass">-</td>
+            <td class="score" data-out="${team.id}.${attemptIndex}.loadRatio">-</td>
+            <td class="score" data-out="${team.id}.${attemptIndex}.maxLoadRatio">-</td>
+            <td class="score" data-out="${team.id}.${attemptIndex}.efficiencyScore">-</td>
+            <td class="score" data-out="${team.id}.${attemptIndex}.completionScore">-</td>
+            <td class="score" data-out="${team.id}.${attemptIndex}.costScore">-</td>
+            <td class="score" data-out="${team.id}.${attemptIndex}.totalScore">-</td>
+          `;
+        }).join("");
+
+        return `
+          <tr>
+            <td class="sticky-left">${team.id}</td>
+            <td class="sticky-left-2">${inputCell(teamIndex, ["name"], team.name, "text")}</td>
+            ${attempts}
+            <td class="score best final-sticky final-attempt" data-final="${team.id}.attempt">-</td>
+            <td class="score best final-sticky final-score" data-final="${team.id}.score">-</td>
+            <td class="score best final-sticky final-rank" data-final="${team.id}.rank">-</td>
+            <td class="status final-sticky final-status" data-final="${team.id}.status">未填完整</td>
+          </tr>
+        `;
+      }).join("");
+
+      body.oninput = handleInput;
+      body.onchange = handleInput;
+    }
+
+    function setDeep(target, path, value) {
+      let obj = target;
+      for (let i = 0; i < path.length - 1; i++) obj = obj[path[i]];
+      obj[path[path.length - 1]] = value;
+    }
+
+    function handleInput(event) {
+      const el = event.target;
+      if (!el.matches("[data-path]")) return;
+      const parts = el.dataset.path.split(".");
+      const teamIndex = Number(parts.shift());
+      setDeep(state.teams[teamIndex], parts, el.type === "checkbox" ? el.checked : el.value);
+      save();
+      recalc();
+    }
+
+    function setText(selector, text, bad = false) {
+      const el = document.querySelector(selector);
+      if (!el) return;
+      el.textContent = text;
+      el.classList.toggle("bad", bad);
+    }
+
+    function recalc() {
+      const result = computeAll();
+      document.getElementById("metricMinTime").textContent = result.minTime ? `${fmt(result.minTime, 2)} 秒` : "-";
+      document.getElementById("metricMaxCargo").textContent = result.maxCargoMass ? `${fmt(result.maxCargoMass, 0)} g` : "-";
+      document.getElementById("metricMaxRatio").textContent = result.maxLoadRatio ? fmt(result.maxLoadRatio, 4) : "-";
+      document.getElementById("metricTop").textContent = result.ranked[0] ? fmt(result.ranked[0].finalScore, 2) : "-";
+
+      result.scored.forEach(item => {
+        const index = item.attemptNo - 1;
+        setText(`[data-out="${item.teamId}.${index}.minTime"]`, item.minTime ? fmt(item.minTime, 2) : "-");
+        setText(`[data-out="${item.teamId}.${index}.cargoMass"]`, item.complete ? fmt(item.cargoMass, 0) : "-");
+        setText(`[data-out="${item.teamId}.${index}.maxCargoMass"]`, item.maxCargoMass ? fmt(item.maxCargoMass, 0) : "-");
+        setText(`[data-out="${item.teamId}.${index}.loadRatio"]`, Number.isFinite(item.loadRatio) ? fmt(item.loadRatio, 4) : "-");
+        setText(`[data-out="${item.teamId}.${index}.maxLoadRatio"]`, item.maxLoadRatio ? fmt(item.maxLoadRatio, 4) : "-");
+        setText(`[data-out="${item.teamId}.${index}.efficiencyScore"]`, fmt(item.efficiencyScore, 2));
+        setText(`[data-out="${item.teamId}.${index}.completionScore"]`, fmt(item.completionScore, 2));
+        setText(`[data-out="${item.teamId}.${index}.costScore"]`, fmt(item.costScore, 2));
+        setText(`[data-out="${item.teamId}.${index}.totalScore"]`, fmt(item.totalScore, 2));
+      });
+
+      const rankMap = new Map(result.ranked.map(item => [item.team.id, item]));
+      result.byTeam.forEach(item => {
+        const best = item.best;
+        const ranked = rankMap.get(item.team.id);
+        setText(`[data-final="${item.team.id}.attempt"]`, best && best.valid ? `第${best.attemptNo}次` : "-");
+        setText(`[data-final="${item.team.id}.score"]`, best && best.valid ? fmt(best.totalScore, 2) : "-");
+        setText(`[data-final="${item.team.id}.rank"]`, best && best.valid && ranked ? ranked.rank : "-");
+        setText(`[data-final="${item.team.id}.status"]`, best ? best.status : "未填完整", best ? best.complete && !best.valid : false);
+      });
+
+      renderRank(result.ranked);
+    }
+
+    function escapeHtml(text) {
+      return String(text).replace(/[&<>"']/g, ch => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[ch]));
+    }
+
+    function renderRank(ranked) {
+      const body = document.getElementById("rankBody");
+      body.innerHTML = ranked.map(item => {
+        const best = item.best;
+        const active = best && best.valid;
+        return `
+          <tr>
+            <td class="score">${active ? item.rank : "-"}</td>
+            <td>${item.team.id}</td>
+            <td>${escapeHtml(item.team.name || "")}</td>
+            <td class="score best">${active ? fmt(item.finalScore, 2) : "-"}</td>
+            <td>${active ? `第${best.attemptNo}次` : "-"}</td>
+            <td>${active ? fmt(best.modelMass, 2) : "-"}</td>
+            <td>${active ? fmt(best.transportTime, 2) : "-"}</td>
+            <td>${active ? fmt(best.bagCount, 0) : "-"}</td>
+            <td>${active ? fmt(best.invalidCount, 0) : "-"}</td>
+            <td>${active ? fmt(best.cargoMass, 0) : "-"}</td>
+            <td>${active ? fmt(best.loadRatio, 4) : "-"}</td>
+            <td>${active ? fmt(best.efficiencyScore, 2) : "-"}</td>
+            <td>${active ? fmt(best.completionScore, 2) : "-"}</td>
+            <td>${active ? fmt(best.costScore, 2) : "-"}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function exportCsv() {
+      const result = computeAll();
+      const rows = [["排名", "组号", "小组名称", "最终成绩", "取用赛次", "模型质量M(g)", "运输时间t(s)", "布袋数量N", "无效数量n", "运输质量G(g)", "荷载比K", "效率得分D", "完成得分E", "成本得分F"]];
+      result.ranked.forEach(item => {
+        const best = item.best;
+        if (!best || !best.valid) return;
+        rows.push([
+          item.rank,
+          item.team.id,
+          item.team.name || "",
+          fmt(item.finalScore, 2),
+          `第${best.attemptNo}次`,
+          fmt(best.modelMass, 2),
+          fmt(best.transportTime, 2),
+          fmt(best.bagCount, 0),
+          fmt(best.invalidCount, 0),
+          fmt(best.cargoMass, 0),
+          fmt(best.loadRatio, 4),
+          fmt(best.efficiencyScore, 2),
+          fmt(best.completionScore, 2),
+          fmt(best.costScore, 2)
+        ]);
+      });
+
+      const csv = rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n");
+      const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "结构设计竞赛实时排名.csv";
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById("basisMode").value = state.basisMode || "all";
+    document.getElementById("basisMode").addEventListener("change", event => {
+      state.basisMode = event.target.value;
+      save();
+      recalc();
+    });
+    document.getElementById("exportCsv").addEventListener("click", exportCsv);
+    document.getElementById("printRank").addEventListener("click", () => window.print());
+    document.getElementById("resetAll").addEventListener("click", () => {
+      if (!confirm("确定清空所有已录入数据吗？")) return;
+      state = { basisMode: "all", teams: defaultTeams() };
+      save();
+      document.getElementById("basisMode").value = "all";
+      buildTable();
+      recalc();
+    });
+
+    buildTable();
+    recalc();
+  </script>
+</body>
+</html>

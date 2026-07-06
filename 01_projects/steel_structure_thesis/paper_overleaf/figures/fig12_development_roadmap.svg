@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs>
+<marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#1F4E73"/>
+</marker>
+<marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#6C757D"/>
+</marker>
+<marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#D8892C"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1000" fill="#FFFFFF"/>
+<text x="800" y="62" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="40" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+装配式钢结构未来发展趋势路线图
+</text>
+<text x="800" y="108" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+标准化、数字化、智能化和低碳化逐步融合
+</text>
+<line x1="100" y1="132" x2="1500" y2="132" stroke="#CBD3DA" stroke-width="2"/>
+<line x1="170" y1="520" x2="1430" y2="520" stroke="#1F4E73" stroke-width="6" marker-end="url(#arrow-blue)"/>
+<circle cx="220" cy="520" r="28" fill="#F7E5CC" stroke="#D8892C" stroke-width="4"/>
+<rect x="105" y="300" width="230" height="135" rx="14" fill="#EEF1F4" stroke="#6C757D" stroke-width="3"/>
+<text x="220" y="334" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+标准化构件
+</text>
+<text x="220" y="389" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="220" dy="-13.0">统一模数</tspan>
+<tspan x="220" dy="26">通用节点</tspan>
+</text>
+<line x1="220" y1="520" x2="220" y2="435" stroke="#6C757D" stroke-width="3"/>
+<circle cx="480" cy="520" r="28" fill="#F7E5CC" stroke="#D8892C" stroke-width="4"/>
+<rect x="365" y="650" width="230" height="135" rx="14" fill="#EEF1F4" stroke="#6C757D" stroke-width="3"/>
+<text x="480" y="684" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+数字化设计
+</text>
+<text x="480" y="739" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="480" dy="-13.0">BIM深化</tspan>
+<tspan x="480" dy="26">碰撞检查</tspan>
+</text>
+<line x1="480" y1="520" x2="480" y2="650" stroke="#6C757D" stroke-width="3"/>
+<circle cx="740" cy="520" r="28" fill="#F7E5CC" stroke="#D8892C" stroke-width="4"/>
+<rect x="625" y="300" width="230" height="135" rx="14" fill="#EEF1F4" stroke="#6C757D" stroke-width="3"/>
+<text x="740" y="334" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+智能制造
+</text>
+<text x="740" y="389" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="740" dy="-13.0">数控加工</tspan>
+<tspan x="740" dy="26">自动焊接</tspan>
+</text>
+<line x1="740" y1="520" x2="740" y2="435" stroke="#6C757D" stroke-width="3"/>
+<circle cx="1000" cy="520" r="28" fill="#F7E5CC" stroke="#D8892C" stroke-width="4"/>
+<rect x="885" y="650" width="230" height="135" rx="14" fill="#EEF1F4" stroke="#6C757D" stroke-width="3"/>
+<text x="1000" y="684" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+智慧施工
+</text>
+<text x="1000" y="739" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="1000" dy="-13.0">进度仿真</tspan>
+<tspan x="1000" dy="26">质量追溯</tspan>
+</text>
+<line x1="1000" y1="520" x2="1000" y2="650" stroke="#6C757D" stroke-width="3"/>
+<circle cx="1260" cy="520" r="28" fill="#F7E5CC" stroke="#D8892C" stroke-width="4"/>
+<rect x="1145" y="300" width="230" height="135" rx="14" fill="#EEF1F4" stroke="#6C757D" stroke-width="3"/>
+<text x="1260" y="334" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+低碳运维
+</text>
+<text x="1260" y="389" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="1260" dy="-13.0">循环利用</tspan>
+<tspan x="1260" dy="26">碳排核算</tspan>
+</text>
+<line x1="1260" y1="520" x2="1260" y2="435" stroke="#6C757D" stroke-width="3"/>
+<text x="220" y="570" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#1F4E73" text-anchor="middle" dominant-baseline="middle">
+近期
+</text>
+<text x="740" y="570" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#1F4E73" text-anchor="middle" dominant-baseline="middle">
+中期
+</text>
+<text x="1260" y="570" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#1F4E73" text-anchor="middle" dominant-baseline="middle">
+远期
+</text>
+</svg>

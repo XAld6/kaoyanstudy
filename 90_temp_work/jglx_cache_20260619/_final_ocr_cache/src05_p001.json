@@ -1,0 +1,7 @@
+{
+  "source": "D:\\xm\\zy\\jglx\\6.作业&答案\\结构力学基础与技巧班第3次作业答案（材料力学回顾）.pdf",
+  "page": 1,
+  "method": "pdf-text",
+  "text": "一、\n（a）解：取整体隔离体竖向力平衡，可得B处竖向支反力\n\n0\n0\n1\n1\n2\n2\nBy\nF\nl\nq\nq l\n=\n\\times \\times\n=\n\n对B点取矩得B处支座反力矩\n2\n0\n0\n1\n1\n1\n2\n3\n6\nB\nM\nl\nq\nl\nq l\n=-\n\\times \\times\n\\times\n=-\n（上侧受拉）\n画出原结构弯矩图和剪力图如图（a）（b）所示。\n（b ）解：取整体隔离体竖向力平衡，可得A 处竖向支反力\n15 1 30\nAy\nF\n=\n\\times +\n=\n\n45KN \n，对A 点取矩得A 处支座反力矩\n15 1 2.5\n30 3\nA\nM\n=-\n\\times \\times\n-\n\\times =\n127.5KN m\n-\n\n（上侧受拉）。弯矩图如图（a）所示。\n（c）解：取整体隔离体对C点取矩，由\n3 30 40 1.5 0\nB\nF \\times +\n-\n\\times\n=\n，可得B点竖向支\n反力\n10\nB\nF\nKN\n=\n，竖向力平衡得\n30\nC\nF\nKN\n=\n。画出弯矩图如图（b）（c）所示。",
+  "figure": "figures/src05_p001.jpg"
+}

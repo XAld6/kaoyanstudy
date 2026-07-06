@@ -1,0 +1,38 @@
+27EP 数学一例题做题本解析 - Overleaf 工程清单
+
+编译入口：
+- main.tex：高等数学 + 线性代数合并版。
+- gaoshu_main.tex：高等数学单独版。
+- xiandai_main.tex：线性代数单独版。
+
+核心源码：
+- chapters/gaoshu_01_limits_functions_exact.tex
+- chapters/gaoshu_02_limits_sequences_exact.tex
+- chapters/gaoshu_03_derivatives_exact.tex
+- chapters/gaoshu_04_roots_exact.tex
+- chapters/gaoshu_05_mvt_exact.tex
+- chapters/gaoshu_06_taylor_exact.tex
+- chapters/gaoshu_07_convexity_exact.tex
+- chapters/gaoshu_08_integrals_exact.tex
+- chapters/gaoshu_09_integral_ineq_exact.tex
+- chapters/gaoshu_10_multivar_diff_exact.tex
+- chapters/gaoshu_11_double_integrals_exact.tex
+- chapters/gaoshu_12_ode_exact.tex
+- chapters/gaoshu_13_sign_exact.tex
+- chapters/gaoshu_14_applications_exact.tex
+- chapters/gaoshu_15_series_exact.tex
+- chapters/gaoshu_16_triple_integrals_exact.tex
+- chapters/gaoshu_17_line_surface_exact.tex
+- chapters/xiandai_01_det_matrix_exact.tex
+- chapters/xiandai_02_vectors_systems_exact.tex
+- chapters/xiandai_03_similarity_exact.tex
+- chapters/xiandai_04_quadratic_forms_exact.tex
+
+资源与说明：
+- figures/gaoshu/page_028_graph.png：高数第 4 章例 1 题图。
+- figures/gaoshu/page_050_graph.png：高数第 7 章例 1 题图。
+- README.md：编译入口与工程说明。
+- review_audit.md：逐题复核与渲染抽检记录。
+- main.pdf、gaoshu_main.pdf、xiandai_main.pdf：本地编译生成的预览 PDF。
+
+推荐在 Overleaf 中使用 XeLaTeX 编译。

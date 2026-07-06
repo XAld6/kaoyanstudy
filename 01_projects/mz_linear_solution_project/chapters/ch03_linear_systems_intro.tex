@@ -1,0 +1,546 @@
+\chapter{线性方程组（初步认识）}
+
+\section{逐题解析}
+
+\subsection{3.2 解方程原理及高斯消元法}
+
+\begin{solutionblock}
+\textbf{3.2 例 1}
+
+\question{求解线性方程组
+\[
+\begin{cases}
+3x_1+x_2+x_3=2,\\
+x_1+2x_2+2x_3=-1,\\
+-x_1+2x_2+x_3=-5.
+\end{cases}
+\]}
+
+
+\analysis{方程组为
+\[
+\begin{cases}
+3x_1+x_2+x_3=2,\\
+x_1+2x_2+2x_3=-1,\\
+-x_1+2x_2+x_3=-5.
+\end{cases}
+\]
+写出增广矩阵并作初等行变换：
+\[
+\left(
+\begin{array}{ccc|c}
+3&1&1&2\\
+1&2&2&-1\\
+-1&2&1&-5
+\end{array}
+\right)
+\sim
+\left(
+\begin{array}{ccc|c}
+1&0&0&1\\
+0&1&0&-3\\
+0&0&1&2
+\end{array}
+\right).
+\]
+所以
+\[
+x_1=1,\qquad x_2=-3,\qquad x_3=2.
+\]}
+\answer{\((x_1,x_2,x_3)=(1,-3,2)\)。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{3.2 例 2}
+
+\question{判断增广矩阵
+\[
+\left(
+\begin{array}{ccc|c}
+1&-2&3&4\\
+4&-2&-4&1\\
+3&0&-7&5
+\end{array}
+\right)
+\]
+对应的线性方程组是否有解。}
+
+
+\analysis{增广矩阵为
+\[
+\left(
+\begin{array}{ccc|c}
+1&-2&3&4\\
+4&-2&-4&1\\
+3&0&-7&5
+\end{array}
+\right).
+\]
+行化简得
+\[
+\left(
+\begin{array}{ccc|c}
+1&0&-\dfrac73&0\\
+0&1&-\dfrac83&0\\
+0&0&0&1
+\end{array}
+\right).
+\]
+最后一行表示
+\[
+0=1,
+\]
+矛盾，因此方程组无解。}
+\answer{无解。}
+\examnote{增广矩阵出现 \((0,\ldots,0\mid c)\)、\(c\ne0\) 的行，立即判定无解。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{3.2 例 3}
+
+\question{求齐次线性方程组 \(Ax=0\) 的通解，其中
+\[
+A=\begin{pmatrix}
+2&1&-1\\
+1&-1&1\\
+4&5&-5
+\end{pmatrix}.
+\]}
+
+
+\analysis{齐次方程组的系数矩阵为
+\[
+A=\begin{pmatrix}
+2&1&-1\\
+1&-1&1\\
+4&5&-5
+\end{pmatrix}.
+\]
+行化简：
+\[
+\left(
+\begin{array}{ccc|c}
+2&1&-1&0\\
+1&-1&1&0\\
+4&5&-5&0
+\end{array}
+\right)
+\sim
+\left(
+\begin{array}{ccc|c}
+1&0&0&0\\
+0&1&-1&0\\
+0&0&0&0
+\end{array}
+\right).
+\]
+于是
+\[
+x_1=0,\qquad x_2=x_3.
+\]
+令 \(x_3=t\)，则 \(x_2=t\)。}
+\answer{\[
+(x_1,x_2,x_3)=(0,t,t),\qquad t\in\mathbb{R}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{3.2 例 4}
+
+\question{求非齐次线性方程组 \(Ax=b\) 的通解，其增广矩阵为
+\[
+\left(
+\begin{array}{ccc|c}
+2&1&-1&1\\
+1&-1&1&2\\
+4&5&-5&-1
+\end{array}
+\right).
+\]}
+
+
+\analysis{本题与例 3 的系数矩阵相同，但常数项不同。增广矩阵化简为
+\[
+\left(
+\begin{array}{ccc|c}
+2&1&-1&1\\
+1&-1&1&2\\
+4&5&-5&-1
+\end{array}
+\right)
+\sim
+\left(
+\begin{array}{ccc|c}
+1&0&0&1\\
+0&1&-1&-1\\
+0&0&0&0
+\end{array}
+\right).
+\]
+所以
+\[
+x_1=1,\qquad x_2-x_3=-1.
+\]
+令 \(x_3=t\)，则 \(x_2=t-1\)。}
+\answer{\[
+(x_1,x_2,x_3)=(1,t-1,t),\qquad t\in\mathbb{R}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{3.2 例 5}
+
+\question{求齐次线性方程组的通解，其系数矩阵为
+\[
+\begin{pmatrix}
+1&3&5&1\\
+2&3&4&2\\
+1&2&3&1
+\end{pmatrix}.
+\]}
+
+
+\analysis{齐次方程组对应增广矩阵化简为
+\[
+\left(
+\begin{array}{cccc|c}
+1&3&5&1&0\\
+2&3&4&2&0\\
+1&2&3&1&0
+\end{array}
+\right)
+\sim
+\left(
+\begin{array}{cccc|c}
+1&0&-1&1&0\\
+0&1&2&0&0\\
+0&0&0&0&0
+\end{array}
+\right).
+\]
+主元变量为 \(x_1,x_2\)，自由变量可取 \(x_3,x_4\)。由化简矩阵得
+\[
+x_1-x_3+x_4=0,\qquad x_2+2x_3=0.
+\]
+令 \(x_3=s,\ x_4=t\)，则
+\[
+x_1=s-t,\qquad x_2=-2s.
+\]}
+\answer{\[
+(x_1,x_2,x_3,x_4)=(s-t,-2s,s,t),\qquad s,t\in\mathbb{R}.
+\]}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{3.2 例 6}
+
+\question{求非齐次线性方程组的通解，其增广矩阵为
+\[
+\left(
+\begin{array}{cccc|c}
+1&3&5&1&2\\
+2&3&4&2&1\\
+1&2&3&1&1
+\end{array}
+\right).
+\]}
+
+
+\analysis{非齐次方程组的增广矩阵化简为
+\[
+\left(
+\begin{array}{cccc|c}
+1&3&5&1&2\\
+2&3&4&2&1\\
+1&2&3&1&1
+\end{array}
+\right)
+\sim
+\left(
+\begin{array}{cccc|c}
+1&0&-1&1&-1\\
+0&1&2&0&1\\
+0&0&0&0&0
+\end{array}
+\right).
+\]
+因此
+\[
+x_1-x_3+x_4=-1,\qquad x_2+2x_3=1.
+\]
+令 \(x_3=s,\ x_4=t\)，则
+\[
+x_1=s-t-1,\qquad x_2=1-2s.
+\]}
+\answer{\[
+(x_1,x_2,x_3,x_4)=(s-t-1,1-2s,s,t),\qquad s,t\in\mathbb{R}.
+\]}
+\end{solutionblock}
+
+\subsection{3.3 方程组解的判定}
+
+\begin{solutionblock}
+\textbf{3.3 例 1}
+
+\question{设齐次方程组的阶梯形系数矩阵为
+\[
+\begin{pmatrix}
+1&-1&0&-2&5\\
+0&0&1&3&0\\
+0&0&0&0&1
+\end{pmatrix}.
+\]
+判断题给四组选项中哪一组可以作为自由变量。}
+
+
+\analysis{阶梯形系数矩阵为
+\[
+\begin{pmatrix}
+1&-1&0&-2&5\\
+0&0&1&3&0\\
+0&0&0&0&1
+\end{pmatrix}.
+\]
+主元列为第 \(1,3,5\) 列，对应主元变量为 \(x_1,x_3,x_5\)。因此自由变量只能从非主元变量
+\[
+x_2,\ x_4
+\]
+中选取。
+
+题目给出的四个选项分别为 \(x_2,x_3\)、\(x_2,x_5\)、\(x_1,x_4\)、\(x_1,x_2\)，每一组都含有主元变量，所以按扫描件现有题面看，四个选项都不能作为完整的自由变量组。}
+\answer{自由变量应取 \(x_2,x_4\)。按现有四个选项，A、B、C、D 均不能取；疑似选项漏印 \(x_2,x_4\)。}
+\examnote{阶梯形矩阵中，每个非零行的首非零元所在列为主元列；自由变量只能从非主元列中选。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{3.3 例 2}
+
+\question{设 \(A\) 为 \(m\times n\) 矩阵，\(B\) 为 \(n\times m\) 矩阵。若 \(m>n\)，判断齐次方程组 \((AB)x=0\) 的解的情况及正确选项。}
+
+
+\analysis{\(A\) 为 \(m\times n\)，\(B\) 为 \(n\times m\)，所以 \(AB\) 为 \(m\times m\) 矩阵。齐次方程组 \((AB)x=0\) 的未知量个数为 \(m\)。
+
+若 \(m>n\)，则
+\[
+r(AB)\le n<m,
+\]
+所以系数矩阵 \(AB\) 不满秩，齐次方程组必有非零解。
+
+若 \(n>m\)，\(AB\) 可能可逆。例如可取
+\[
+A=(E_m\ O),\qquad B=\begin{pmatrix}E_m\\O\end{pmatrix},
+\]
+则 \(AB=E_m\)，此时只有零解。因此 \(n>m\) 不能推出必有非零解。}
+\answer{选 D。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{3.3 例 3}
+
+\question{设非齐次线性方程组为 \(Ax=b\)，其中 \(A\) 为 \(m\times n\) 矩阵。判断关于 \(r(A)\) 与方程组解的四个命题中哪一个正确。}
+
+
+\analysis{非齐次方程组 \(Ax=b\) 中，\(A\) 为 \(m\times n\) 矩阵。
+
+A 项正确。若 \(r(A)=m\)，说明 \(A\) 的列空间维数等于 \(\mathbb{R}^m\) 的维数，即列空间就是整个 \(\mathbb{R}^m\)，因此任意 \(b\) 都可由 \(A\) 的列向量线性表示，方程 \(Ax=b\) 有解。
+
+B 项错误。若 \(r(A)=m\)，不一定有 \(Ax=0\) 的非零解。例如 \(m=n\) 且 \(A\) 可逆时，齐次方程只有零解。
+
+C 项错误。\(r(A)=n\) 只说明齐次方程只有零解；非齐次方程若有解则唯一，但不保证一定有解。
+
+D 项错误。\(r(A)<n\) 说明齐次方程有非零解；非齐次方程可能无解，也可能有无穷多解。}
+\answer{选 A。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{3.3 例 4}
+
+\question{设
+\[
+A=\begin{pmatrix}
+1&1&1\\
+1&2&a\\
+1&4&a^2
+\end{pmatrix}.
+\]
+若方程组 \(Ax=b\) 有无穷多解，判断参数 \(a,b\) 与集合 \(\Omega=\{1,2\}\) 的关系。}
+
+
+\analysis{矩阵
+\[
+A=\begin{pmatrix}
+1&1&1\\
+1&2&a\\
+1&4&a^2
+\end{pmatrix}
+\]
+的行列式为
+\[
+|A|=(a-1)(a-2).
+\]
+若方程组 \(Ax=b\) 有无穷多解，必须有 \(|A|=0\)，即
+\[
+a\in\{1,2\}=\Omega.
+\]
+再看相容性。常数列为
+\[
+\begin{pmatrix}1\\b\\b^2\end{pmatrix}.
+\]
+当 \(a=1\) 或 \(a=2\) 时，系数矩阵秩为 \(2\)。要有无穷多解，需要增广矩阵秩也为 \(2\)。计算三阶子式可得条件
+\[
+(b-1)(b-2)=0,
+\]
+即
+\[
+b\in\{1,2\}=\Omega.
+\]
+此时 \(r(A)=r(A\mid b)=2<3\)，所以确有无穷多解。}
+\answer{\(a\in\Omega,\ b\in\Omega\)，选 D。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{3.3 例 5}
+
+\question{设 \(Ax=0\) 是非齐次线性方程组 \(Ax=b\) 的导出组。判断关于导出组和非齐次方程组解的四个命题中哪一个正确。}
+
+
+\analysis{设 \(Ax=0\) 是非齐次方程组 \(Ax=b\) 的导出组。
+
+A 项错误。若 \(Ax=0\) 只有零解，则 \(r(A)=n\)。非齐次方程若有解则唯一，但它不一定有解。
+
+B 项错误。若 \(Ax=0\) 有非零解，则 \(r(A)<n\)。此时非齐次方程若有解，则必有无穷多解，但仍可能无解。
+
+C 项正确。若 \(Ax=b\) 有无穷多解，则两个不同解之差是导出组 \(Ax=0\) 的非零解，因此导出组必有非零解。
+
+D 项错误。若 \(Ax=b\) 有无穷多解，则导出组不可能只有零解。}
+\answer{选 C。}
+\examnote{非齐次方程的解集若非空，则为“一个特解 \(+\) 齐次方程通解”。有无穷多解等价于导出组有非零解。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{3.3 例 6}
+
+\question{设线性方程组的系数矩阵为
+\[
+A=(a-b)E+bJ,
+\]
+其中 \(J\) 为 \(n\) 阶全 \(1\) 矩阵。讨论齐次方程组 \(Ax=0\) 的通解。}
+
+
+\analysis{系数矩阵为
+\[
+A=(a-b)E+bJ,
+\]
+其中 \(J\) 是 \(n\) 阶全 \(1\) 矩阵。矩阵 \(J\) 的特征值为 \(n,0,\ldots,0\)，所以 \(A\) 的特征值为
+\[
+a+(n-1)b,\qquad a-b\quad(\text{\(n-1\) 重}).
+\]
+因此
+\[
+|A|=(a-b)^{n-1}\bigl(a+(n-1)b\bigr).
+\]
+
+齐次方程组只有零解的充要条件是 \(|A|\ne0\)，故
+\[
+a\ne b,\qquad a+(n-1)b\ne0.
+\]
+
+有无穷多解的充要条件是 \(|A|=0\)，即
+\[
+a=b\quad\text{或}\quad a=-(n-1)b.
+\]
+若 \(a=b\ne0\)，方程组每个方程都化为
+\[
+b(x_1+x_2+\cdots+x_n)=0,
+\]
+所以全部解为
+\[
+x_1+x_2+\cdots+x_n=0.
+\]
+可写成
+\[
+(x_1,\ldots,x_n)=(t_1,\ldots,t_{n-1},-t_1-\cdots-t_{n-1}).
+\]
+
+若 \(a=-(n-1)b\)，零特征向量方向为 \((1,1,\ldots,1)^T\)，全部解为
+\[
+(x_1,\ldots,x_n)=t(1,1,\ldots,1).
+\]}
+\answer{只有零解：
+\[
+a\ne b,\quad a+(n-1)b\ne0.
+\]
+无穷多解：
+\[
+a=b\quad\text{或}\quad a=-(n-1)b.
+\]
+对应通解如上。}
+\end{solutionblock}
+
+\begin{solutionblock}
+\textbf{3.3 例 7}
+
+\question{设线性方程组的系数矩阵为
+\[
+A=\begin{pmatrix}
+1&1&1&1\\
+0&1&0&2\\
+0&-1&a-3&-2\\
+3&2&1&a
+\end{pmatrix}.
+\]
+讨论方程组的解的情况，并在有无穷多解时写出通解。}
+
+
+\analysis{系数矩阵为
+\[
+A=\begin{pmatrix}
+1&1&1&1\\
+0&1&0&2\\
+0&-1&a-3&-2\\
+3&2&1&a
+\end{pmatrix}.
+\]
+其行列式为
+\[
+|A|=(a-1)(a-3).
+\]
+因此当
+\[
+a\ne1,\quad a\ne3
+\]
+时，方程组有唯一解。此时直接行化简可得
+\[
+x_1=-\frac{a+b}{a-1},\quad
+x_2=\frac{a^2-4a-4b-1}{(a-1)(a-3)},\quad
+x_3=\frac{b+1}{a-3},\quad
+x_4=\frac{2(b+1)}{(a-1)(a-3)}.
+\]
+
+当 \(a=1\) 或 \(a=3\) 时，系数矩阵秩为 \(3\)。进一步检查增广矩阵，均得到相容条件
+\[
+b=-1.
+\]
+所以：
+
+若 \(a=1,b\ne-1\)，或 \(a=3,b\ne-1\)，方程组无解。
+
+若 \(a=1,b=-1\)，方程组有无穷多解，通解为
+\[
+(x_1,x_2,x_3,x_4)=(t-1,1-2t,0,t).
+\]
+
+若 \(a=3,b=-1\)，方程组有无穷多解，通解为
+\[
+(x_1,x_2,x_3,x_4)=(-1,1-2t,t,t).
+\]}
+\answer{\[
+\begin{array}{ll}
+a\ne1,3: & \text{唯一解};\\[1mm]
+a=1\text{ 或 }3,\ b\ne-1: & \text{无解};\\[1mm]
+(a,b)=(1,-1)\text{ 或 }(3,-1): & \text{无穷多解}.
+\end{array}
+\]
+无穷多解时通解如上。}
+\examnote{含参数非齐次方程组先看 \(|A|\)。若 \(|A|\ne0\)，必唯一；若 \(|A|=0\)，再比较 \(r(A)\) 与 \(r(A\mid b)\)。}
+\end{solutionblock}

@@ -1,0 +1,7 @@
+{
+  "source": "D:\\xm\\zy\\jglx\\7.作业讲解笔记\\【第9次作业笔记】—位移计算(1).pdf",
+  "page": 1,
+  "method": "rapidocr",
+  "text": "EA\n【例4-49】图4-42（a）所示结构AB杆件EI,=oo，其余受弯杆件EI=常数，二力\n杆抗拉刚度为EA，弹簧刚度k=3EI/256，试求C点的竖向位移。（北京交通大学2012）\nAQ\n120kN-m\nAB：Jopdy\np-o\n(*+\n20kN\n一创(二× 4x 40x 43)\n4m\n4m\n2m\n2m\n4m\n2m\n4m\n2m\n4-1\n图4-43所示结构中截面A转角（设顺时针为正）为（C）。（哈尔滨工业大学\n2009)\nA.2Fpa/EI\nB. -Fpa?/EI\nC.5Fpa²/(4EI)\nD.-5Fpa²/(4EI)\n图4-44所示悬臂梁，B点的竖向位移为\n4-2\n（合肥工业大学2010）\nFp=ql\n2E1\nEI\n图4-43\n图4-44\n2EI\n(2)\n[1x(59 +]0x]单 +(1 4 *)",
+  "figure": "figures/src29_p001.jpg"
+}

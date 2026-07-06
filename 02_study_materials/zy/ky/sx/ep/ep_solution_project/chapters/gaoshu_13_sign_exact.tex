@@ -1,0 +1,889 @@
+\chapter{高等数学：保号性}
+
+\section{数列与函数的最终保号}
+
+\begin{problemblock}
+\textbf{例1.} 设 \(x_1>0\)，数列 \(\{x_n\}\) 满足
+\[
+\lim_{n\to\infty}\frac{x_{n+1}}{x_n}=\frac12,
+\]
+证明：
+\[
+\lim_{n\to\infty}x_n=0.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{比值极限小于 \(1\)，就能推出从某一项开始按几何级数衰减。}
+由
+\[
+\lim_{n\to\infty}\frac{x_{n+1}}{x_n}=\frac12
+\]
+可知，取 \(\frac34\) 作为上界，存在 \(N\)，使得当 \(n\ge N\) 时
+\[
+\left|\frac{x_{n+1}}{x_n}\right|<\frac34.
+\]
+于是
+\[
+|x_{n+1}|<\frac34|x_n|,\qquad n\ge N.
+\]
+递推得
+\[
+|x_n|\le |x_N|\left(\frac34\right)^{n-N},\qquad n\ge N.
+\]
+由于
+\[
+\left(\frac34\right)^{n-N}\to0,
+\]
+由夹逼定理得
+\[
+\lim_{n\to\infty}x_n=0.
+\]
+\answer{已证 \(\displaystyle \lim_{n\to\infty}x_n=0\)}
+\examnote{比值极限为 \(q\) 且 \(|q|<1\)，通常直接取一个介于 \(|q|\) 与 \(1\) 之间的数做最终控制。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例2.} 设数列 \(\{x_n\},\{y_n\}\) 满足
+\[
+x_1=y_1=\frac12,\qquad x_{n+1}=\sin x_n,\qquad y_{n+1}=y_n^2.
+\]
+当 \(n\to\infty\) 时，证明：\(y_n\) 是 \(x_n\) 的高阶无穷小。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这里要证 \(y_n=o(x_n)\)。其中 \(y_n\) 是双指数衰减，而 \(x_{n+1}/x_n\to1\)，所以 \(x_n\) 衰减得远慢于 \(y_n\)。}
+先看 \(x_n\)。由于 \(0<x_1<1\)，且当 \(0<x<1\) 时
+\[
+0<\sin x<x,
+\]
+所以 \(x_n>0\)、单调递减，且存在极限。设极限为 \(l\ge0\)，由递推式得
+\[
+l=\sin l,
+\]
+故 \(l=0\)。
+
+又
+\[
+\lim_{n\to\infty}\frac{x_{n+1}}{x_n}
+=\lim_{n\to\infty}\frac{\sin x_n}{x_n}=1.
+\]
+因此存在 \(N\)，使得 \(n\ge N\) 时
+\[
+x_{n+1}>\frac12x_n.
+\]
+于是对 \(n\ge N\)，有
+\[
+x_n\ge x_N\left(\frac12\right)^{n-N}.
+\]
+另一方面
+\[
+y_n=\left(\frac12\right)^{2^{n-1}}.
+\]
+故
+\[
+0\le \frac{y_n}{x_n}
+\le \frac{2^N}{x_N}\left(\frac12\right)^{2^{n-1}-n}\to0.
+\]
+所以
+\[
+y_n=o(x_n).
+\]
+\answer{\(\displaystyle y_n=o(x_n)\)}
+\examnote{\(\sin x\sim x\) 给的是普通几何级别衰减，而 \(y_{n+1}=y_n^2\) 给的是双指数衰减，后者远快于前者。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例3.} 已知数列 \(\{x_n\},\{y_n\}\) 满足
+\[
+x_1=y_1=\frac12,\qquad x_{n+1}=1-\cos x_n,\qquad y_{n+1}=y_n^2
+\quad (n=1,2,\cdots).
+\]
+则当 \(n\to\infty\) 时，（\quad）
+
+A. \(\displaystyle \lim_{n\to\infty}\frac{x_n-y_n}{y_n}=0\)
+\quad
+B. \(\displaystyle \lim_{n\to\infty}\frac{x_n+y_n}{y_n}=1\)
+
+C. \(\displaystyle \lim_{n\to\infty}\frac{x_n-y_n}{x_n}=0\)
+\quad
+D. \(\displaystyle \lim_{n\to\infty}\frac{x_n+y_n}{x_n}=1\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{比较 \(x_n\) 与 \(y_n\) 的大小。因为 \(1-\cos x\le x^2/2\)，所以 \(x_n\) 比 \(y_n\) 还要小一个迭代量级。}
+令
+\[
+r_n=\frac{x_n}{y_n}.
+\]
+因为 \(x_1=y_1=1/2\)，所以 \(r_1=1\)。又
+\[
+1-\cos x\le \frac{x^2}{2},
+\]
+故
+\[
+r_{n+1}
+=\frac{x_{n+1}}{y_{n+1}}
+=\frac{1-\cos x_n}{y_n^2}
+\le \frac{x_n^2}{2y_n^2}
+=\frac12 r_n^2.
+\]
+由 \(r_1=1\) 得
+\[
+r_2\le\frac12,\qquad r_3\le\frac12\left(\frac12\right)^2,
+\]
+递推可知
+\[
+r_n\to0.
+\]
+即
+\[
+x_n=o(y_n).
+\]
+于是
+\[
+\frac{x_n+y_n}{y_n}=1+\frac{x_n}{y_n}\to1.
+\]
+\answer{B}
+\examnote{遇到 \(1-\cos x_n\) 的递推，核心等价是 \(1-\cos x\sim x^2/2\)，但证明不等式时用 \(1-\cos x\le x^2/2\) 更稳。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例4.} 定义在实数域上的连续函数 \(f(x)\) 满足
+\[
+f(2-x)=f(x),
+\]
+且 \(x_0=2\) 为 \(f(x)\) 在 \((1,+\infty)\) 上的唯一零点，\(f'(0)<0\)。
+设
+\[
+F(x)=\int_0^x f(t)\,dt,
+\]
+则 \(F(x)\) 的严格单调递减区间为（\quad）
+
+A. \((0,2)\)
+\quad B. \((2,+\infty)\)
+\quad C. \((-\infty,0)\)
+\quad D. 无法确定
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(F'(x)=f(x)\)，所以要找 \(f(x)<0\) 的区间。题中的对称性 \(f(2-x)=f(x)\) 是关于 \(x=1\) 对称。}
+由 \(x_0=2\) 为零点，得
+\[
+f(2)=0.
+\]
+又
+\[
+f(2-x)=f(x),
+\]
+令 \(x=0\)，得
+\[
+f(2)=f(0),
+\]
+所以
+\[
+f(0)=0.
+\]
+由于
+\[
+f'(0)<0,
+\]
+故在 \(0\) 的右邻域内 \(f(x)<0\)，在 \(0\) 的左邻域内 \(f(x)>0\)。
+
+对称性给出
+\[
+f(2-h)=f(h),\qquad f(2+h)=f(-h).
+\]
+因此在 \(2\) 的左邻域内 \(f<0\)，在 \(2\) 的右邻域内 \(f>0\)。
+又 \(2\) 是 \((1,+\infty)\) 上唯一零点，所以
+\[
+f(x)<0\quad (1<x<2),\qquad f(x)>0\quad (x>2).
+\]
+再由对称性可得
+\[
+f(x)<0\quad (0<x<1),\qquad f(x)>0\quad (x<0).
+\]
+于是
+\[
+f(x)<0\quad (0<x<2).
+\]
+因为
+\[
+F'(x)=f(x),
+\]
+所以 \(F\) 的严格单调递减区间为
+\[
+(0,2).
+\]
+\answer{A}
+\examnote{积分函数单调性先看导函数符号；本题真正的工作是借对称性和唯一零点确定 \(f\) 的符号。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例5.} 设函数 \(f(x)\) 在 \([0,+\infty)\) 上具有一阶连续导数，
+\[
+f(0)=0,\qquad \lim_{x\to+\infty}\bigl[f(x)+f'(x)\bigr]=a>0.
+\]
+证明：存在 \(x_0>0\)，使得当 \(x>x_0\) 时
+\[
+f(x)>\frac a2.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把 \(f+f'\) 看成 \((e^xf)'\) 的核心部分。极限为正意味着从某处开始 \((e^xf)'\) 至少像正的 \(e^x\) 那样增长。}
+由
+\[
+\lim_{x\to+\infty}\bigl[f(x)+f'(x)\bigr]=a>0,
+\]
+取 \(\frac{3a}{4}\)，存在 \(X>0\)，当 \(x>X\) 时
+\[
+f(x)+f'(x)>\frac{3a}{4}.
+\]
+注意
+\[
+(e^xf(x))'=e^x(f(x)+f'(x)).
+\]
+故当 \(x>X\) 时，
+\[
+(e^xf(x))'>\frac{3a}{4}e^x.
+\]
+从 \(X\) 到 \(x\) 积分，得
+\[
+e^xf(x)-e^Xf(X)
+>\frac{3a}{4}(e^x-e^X).
+\]
+两边除以 \(e^x\)，
+\[
+f(x)>\frac{3a}{4}
++e^{X-x}\left(f(X)-\frac{3a}{4}\right).
+\]
+令 \(x\to+\infty\)，右端趋于 \(3a/4\)。因此存在 \(x_0>X\)，当 \(x>x_0\) 时
+\[
+f(x)>\frac a2.
+\]
+\answer{已证存在 \(x_0>0\)，使 \(x>x_0\) 时 \(f(x)>a/2\)}
+\examnote{看到 \(f+f'\) 的最终符号，优先乘以积分因子 \(e^x\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例6.} 已知 \(f(x)\) 为 \((0,+\infty)\) 上连续的有界函数，且满足
+\[
+\lim_{x\to0^+}\frac{f(x)}{x-\tan x}=6.
+\]
+证明：方程
+\[
+f(x)+x^3=0
+\]
+在 \((0,+\infty)\) 上必有一实根。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先用 \(x-\tan x\sim -x^3/3\) 判断 \(f(x)+x^3\) 在 \(0^+\) 附近为负，再用有界性判断它在充分大时为正。}
+当 \(x\to0^+\) 时，
+\[
+\tan x=x+\frac{x^3}{3}+o(x^3),
+\]
+所以
+\[
+x-\tan x=-\frac{x^3}{3}+o(x^3).
+\]
+由题设极限，
+\[
+f(x)\sim 6(x-\tan x)\sim -2x^3.
+\]
+因此
+\[
+f(x)+x^3\sim -x^3<0\qquad (x\to0^+).
+\]
+故存在 \(\delta>0\)，使得
+\[
+0<x<\delta
+\]
+时
+\[
+f(x)+x^3<0.
+\]
+又因为 \(f\) 有界，存在 \(M>0\)，使得
+\[
+|f(x)|\le M.
+\]
+当 \(x>\sqrt[3]{M}\) 时，
+\[
+f(x)+x^3\ge -M+x^3>0.
+\]
+函数 \(f(x)+x^3\) 在 \((0,+\infty)\) 上连续，故由介值定理，方程
+\[
+f(x)+x^3=0
+\]
+在 \((0,+\infty)\) 上至少有一个实根。
+\answer{已证方程在 \((0,+\infty)\) 上必有实根}
+\examnote{存在根问题常用“近端一个符号、远端一个符号”。这里近端靠等价无穷小，远端靠有界性。}
+\end{solutionblock}
+
+\section{导数极限、极值与拐点}
+
+\begin{problemblock}
+\textbf{例7.} \(f(x)\) 在 \([0,+\infty)\) 上连续可导，且
+\[
+\lim_{x\to+\infty}f'(x)
+\]
+存在。若 \(f(x)\) 在 \([0,+\infty)\) 上有界，证明：
+\[
+\lim_{x\to+\infty}f'(x)=0.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{若导数极限不是 \(0\)，则导数最终保持同号且绝对值有正下界，从而函数必然单调发散，这与有界矛盾。}
+设
+\[
+\lim_{x\to+\infty}f'(x)=A.
+\]
+若 \(A>0\)，则存在 \(X>0\)，使得当 \(x>X\) 时
+\[
+f'(x)>\frac A2.
+\]
+于是
+\[
+f(x)-f(X)=\int_X^x f'(t)\,dt>\frac A2(x-X)\to+\infty,
+\]
+与 \(f\) 有界矛盾。
+
+若 \(A<0\)，同理存在 \(X>0\)，使得当 \(x>X\) 时
+\[
+f'(x)<\frac A2<0,
+\]
+从而 \(f(x)\to-\infty\)，仍与有界矛盾。
+
+因此只能有
+\[
+A=0.
+\]
+\answer{\(\displaystyle \lim_{x\to+\infty}f'(x)=0\)}
+\examnote{“有界 + 导数极限存在”常用反证：导数若最终离开 0，函数就会线性发散。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例8.} 设函数 \(f(x)\) 在区间 \((0,+\infty)\) 内有界且存在二阶导数，则下列说法正确的是（\quad）
+
+A. 若 \(\displaystyle \lim_{x\to+\infty}f(x)\) 存在，则 \(\displaystyle \lim_{x\to+\infty}f''(x)\) 存在。
+
+B. 若 \(\displaystyle \lim_{x\to+\infty}f''(x)\) 存在，则 \(\displaystyle \lim_{x\to+\infty}f(x)\) 存在。
+
+C. 若 \(\displaystyle \lim_{x\to+\infty}f''(x)\) 存在，则 \(\displaystyle \lim_{x\to+\infty}f''(x)=0\)。
+
+D. 若 \(\displaystyle \lim_{x\to+\infty}f'(x)=0\) 存在，则 \(\displaystyle \lim_{x\to+\infty}f''(x)=0\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{有界性只能排除 \(f''\) 有非零极限；不能保证 \(f\)、\(f'\)、\(f''\) 的其他极限都存在。}
+设
+\[
+\lim_{x\to+\infty}f''(x)=A.
+\]
+若 \(A>0\)，则存在 \(X\)，使得 \(x>X\) 时
+\[
+f''(x)>\frac A2.
+\]
+积分一次得 \(f'(x)\) 至少线性增长，再积分一次得 \(f(x)\) 至少二次增长，这与 \(f\) 有界矛盾。
+
+若 \(A<0\)，同理 \(f(x)\) 会向 \(-\infty\) 方向二次发散，也与有界矛盾。
+故只能
+\[
+A=0.
+\]
+所以 C 正确。
+
+其余选项不正确：例如
+\[
+f(x)=\sin(\ln x)
+\]
+有界且 \(f''(x)\to0\)，但 \(f(x)\) 无极限，排除 B；
+\[
+f(x)=\frac{\sin x^2}{x}
+\]
+在 \((0,+\infty)\) 上有界且 \(f(x)\to0\)，但 \(f''(x)\) 无极限，排除 A；再取
+\[
+f(x)=\int_1^x\frac{\sin t^2}{t}\,dt,
+\]
+则 \(f\) 有界，\(f'(x)=\sin x^2/x\to0\)，但
+\[
+f''(x)=2\cos x^2-\frac{\sin x^2}{x^2}
+\]
+无极限，排除 D。
+\answer{C}
+\examnote{本题只需要证明“若 \(f''\) 极限存在，则不能非零”。其他更强结论都容易被振荡函数反例推翻。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例9.} 已知
+\[
+a_n=\frac{\sin n}{n}\qquad (n=1,2,\cdots),
+\]
+则数列 \(\{a_n\}\)（\quad）
+
+A. 有最大值，有最小值。
+\quad B. 有最大值，没有最小值。
+
+C. 没有最大值，有最小值。
+\quad D. 没有最大值，没有最小值。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{数列 \(\sin n/n\to0\)。只要能找到正项和负项，就可把极值问题压缩到有限项中处理。}
+显然
+\[
+\lim_{n\to\infty}\frac{\sin n}{n}=0.
+\]
+又
+\[
+a_1=\sin1>0,
+\]
+而例如
+\[
+a_4=\frac{\sin4}{4}<0.
+\]
+由于 \(a_n\to0\)，存在 \(N\)，使得 \(n>N\) 时
+\[
+|a_n|<\frac{a_1}{2},
+\]
+所以最大值只能在有限集合
+\[
+\{a_1,a_2,\cdots,a_N\}
+\]
+中取得。
+
+同理，因为 \(a_4<0\)，又 \(a_n\to0\)，可取 \(N_1\)，使得 \(n>N_1\) 时
+\[
+a_n>\frac{a_4}{2}.
+\]
+注意 \(a_4/2<0\) 且 \(a_4<a_4/2\)，所以最小值也只能在有限集合
+\[
+\{a_1,a_2,\cdots,a_{N_1}\}
+\]
+中取得。
+
+因此数列既有最大值，也有最小值。
+\answer{A}
+\examnote{收敛数列的最大最小不一定都存在；本题能存在，是因为极限为 \(0\)，同时已经出现正项和负项，可把极值锁定在有限前段。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例10.} 设函数 \(f(x)\) 连续，给出下列四个条件：
+\[
+\begin{array}{ll}
+(1)&\displaystyle \lim_{x\to0}\frac{|f(x)|-f(0)}{x}\ \text{存在};\\[0.8em]
+(2)&\displaystyle \lim_{x\to0}\frac{f(x)-|f(0)|}{x}\ \text{存在};\\[0.8em]
+(3)&\displaystyle \lim_{x\to0}\frac{|f(x)|}{x}\ \text{存在};\\[0.8em]
+(4)&\displaystyle \lim_{x\to0}\frac{|f(x)|-|f(0)|}{x}\ \text{存在}.
+\end{array}
+\]
+能得到“\(f(x)\) 在 \(x=0\) 处可导”的条件个数是（\quad）
+
+A. 1
+\quad B. 2
+\quad C. 3
+\quad D. 4
+\end{problemblock}
+\begin{solutionblock}
+\analysis{逐个讨论 \(f(0)\) 的符号。若 \(f(0)\ne0\)，连续性保证 \(f\) 在 0 附近不变号；若 \(f(0)=0\)，两侧极限的符号会迫使绝对值商的极限为 0。}
+(1) 若 \(f(0)>0\)，则 \(0\) 附近 \(|f(x)|=f(x)\)，条件 (1) 就是
+\[
+\lim_{x\to0}\frac{f(x)-f(0)}x
+\]
+存在。若 \(f(0)<0\)，则 \(|f(x)|-f(0)\to -2f(0)\ne0\)，商不可能有有限极限。若 \(f(0)=0\)，条件 (1) 变为
+\[
+\lim_{x\to0}\frac{|f(x)|}{x}
+\]
+存在；由于 \(x>0\) 时该商非负，\(x<0\) 时该商非正，两侧极限若相等只能为 \(0\)，从而
+\[
+\frac{f(x)}x\to0.
+\]
+故 (1) 能推出可导。
+
+(2) 若 \(f(0)\ge0\)，则 \(|f(0)|=f(0)\)，条件 (2) 正是可导定义；若 \(f(0)<0\)，分子趋于 \(2f(0)\ne0\)，极限不可能存在。因此 (2) 也能推出可导。
+
+(3) 若
+\[
+\lim_{x\to0}\frac{|f(x)|}{x}
+\]
+存在，则首先必须有 \(f(0)=0\)。同样由左右符号可知该极限只能为 \(0\)，于是
+\[
+\left|\frac{f(x)}x\right|\to0,
+\]
+故 \(f'(0)=0\)。所以 (3) 能推出可导。
+
+(4) 若 \(f(0)\ne0\)，则 \(f\) 在 0 附近不变号，\(|f|\) 可导等价于 \(f\) 可导；若 \(f(0)=0\)，则退化为 (3)。所以 (4) 也能推出可导。
+
+四个条件均可推出 \(f\) 在 \(0\) 处可导。
+\answer{D}
+\examnote{绝对值问题的分界点是 \(f(0)=0\)。若 \(f(0)\ne0\)，连续性给出局部保号；若 \(f(0)=0\)，必须利用左右极限符号。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例11.} 设 \(f(x)\) 具有二阶连续导数，且
+\[
+f'(1)=0,\qquad
+\lim_{x\to1}\frac{f''(x)}{(x-1)^2}=\frac12,
+\]
+则（\quad）
+
+A. \(f(1)\) 是 \(f(x)\) 的极大值。
+
+B. \(f(1)\) 是 \(f(x)\) 的极小值。
+
+C. \((1,f(1))\) 是曲线 \(y=f(x)\) 的拐点。
+
+D. \(f(1)\) 不是 \(f(x)\) 的极值，\((1,f(1))\) 也不是曲线 \(y=f(x)\) 的拐点。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由极限可知 \(f''(x)\) 在 \(x=1\) 两侧都为正，因此 \(f'\) 左负右正，得到极小值；二阶导不变号，所以不是拐点。}
+由
+\[
+\lim_{x\to1}\frac{f''(x)}{(x-1)^2}=\frac12>0
+\]
+可知，存在 \(\delta>0\)，当 \(0<|x-1|<\delta\) 时
+\[
+f''(x)>0.
+\]
+因为 \(f'(1)=0\)，所以当 \(x>1\) 且接近 \(1\) 时，
+\[
+f'(x)=\int_1^x f''(t)\,dt>0;
+\]
+当 \(x<1\) 且接近 \(1\) 时，
+\[
+f'(x)=\int_1^x f''(t)\,dt<0.
+\]
+因此 \(f\) 在 \(1\) 左侧递减、右侧递增，故 \(f(1)\) 是极小值。
+
+同时 \(f''(x)\) 在 \(1\) 两侧同为正，不发生凹凸性改变，所以 \((1,f(1))\) 不是拐点。
+\answer{B}
+\examnote{判断极值看 \(f'\) 变号；判断拐点看 \(f''\) 是否变号。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例12.} 设函数 \(f(x)\) 二阶可导，满足
+\[
+f'(a)=0,\qquad
+\lim_{x\to a}\frac{f''(x)}{x-a}=1,
+\]
+则（\quad）
+
+A. \(x=a\) 是 \(f(x)\) 的极小值点。
+
+B. \(x=a\) 是 \(f(x)\) 的极大值点。
+
+C. \((a,f(a))\) 是曲线 \(y=f(x)\) 的拐点。
+
+D. \(x=a\) 不是 \(f(x)\) 的极值点，\((a,f(a))\) 也不是曲线 \(y=f(x)\) 的拐点。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这里 \(f''(x)\sim x-a\)，所以二阶导在 \(a\) 两侧变号；但 \(f'(x)\sim (x-a)^2/2\)，一阶导两侧同号。}
+由
+\[
+\frac{f''(x)}{x-a}\to1
+\]
+可知，\(x\) 充分接近 \(a\) 时，
+\[
+f''(x)
+\]
+与 \(x-a\) 同号。因此 \(f''\) 在 \(a\) 左侧为负、右侧为正，曲线凹凸性发生改变，所以
+\[
+(a,f(a))
+\]
+是拐点。
+
+再看极值。由 \(f'(a)=0\)，且
+\[
+f'(x)-f'(a)=\int_a^x f''(t)\,dt.
+\]
+由于 \(f''(t)\sim t-a\)，故
+\[
+f'(x)\sim \int_a^x (t-a)\,dt=\frac{(x-a)^2}{2}>0
+\]
+在 \(a\) 两侧同号。故 \(x=a\) 不是极值点。
+\answer{C}
+\examnote{\(f''\) 变号给拐点，不一定给极值；极值还要看 \(f'\) 是否变号。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例13.} 设 \(f(x)\) 在 \([a,b]\) 上可导，且在 \(x=a\) 处取最小值，在 \(x=b\) 处取最大值，则（\quad）
+
+A. \(f'_+(a)\le0,\ f'_-(b)\le0\)
+\quad B. \(f'_+(a)\le0,\ f'_-(b)\ge0\)
+
+C. \(f'_+(a)>0,\ f'_-(b)>0\)
+\quad D. \(f'_+(a)\ge0,\ f'_-(b)\ge0\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{端点极值只看单侧导数。左端点取最小值，向右的函数增量非负；右端点取最大值，从左逼近时分子和分母都非正。}
+因为 \(x=a\) 处取最小值，所以当 \(x>a\) 时
+\[
+f(x)-f(a)\ge0,\qquad x-a>0.
+\]
+因此
+\[
+f'_+(a)=\lim_{x\to a^+}\frac{f(x)-f(a)}{x-a}\ge0.
+\]
+因为 \(x=b\) 处取最大值，所以当 \(x<b\) 时
+\[
+f(x)-f(b)\le0,\qquad x-b<0.
+\]
+故
+\[
+\frac{f(x)-f(b)}{x-b}\ge0,
+\]
+从而
+\[
+f'_-(b)\ge0.
+\]
+\answer{D}
+\examnote{端点处没有双侧邻域，不能套内部极值 \(f'=0\)，只能看单侧差商符号。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例14.} 设
+\[
+\lim_{x\to a}\frac{f(x)-f(a)}{(x-a)^n}=-1,
+\]
+其中 \(n\in\mathbb N^+\)，\(n>1\)。则在 \(x=a\) 处（\quad）
+
+A. \(f(x)\) 的导数存在，且 \(f'(a)\ne0\)。
+
+B. \(f(x)\) 取得极大值。
+
+C. \(f(x)\) 取得极小值。
+
+D. \(f(x)\) 是否取得极值与 \(n\) 的取值有关。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由极限可知 \(f(x)-f(a)\sim-(x-a)^n\)。当 \(n\) 为偶数时两侧同负，有极大值；当 \(n\) 为奇数时两侧异号，无极值。}
+由题设，
+\[
+f(x)-f(a)\sim -(x-a)^n.
+\]
+若 \(n\) 为偶数，则
+\[
+(x-a)^n>0\quad (x\ne a),
+\]
+所以
+\[
+f(x)-f(a)<0
+\]
+在 \(a\) 附近两侧成立，故 \(f(a)\) 为极大值。
+
+若 \(n\) 为奇数，则 \(x<a\) 时 \((x-a)^n<0\)，从而
+\[
+f(x)-f(a)>0;
+\]
+而 \(x>a\) 时
+\[
+f(x)-f(a)<0.
+\]
+函数值穿过 \(f(a)\)，不取得极值。
+
+因此是否取得极值与 \(n\) 的奇偶有关。
+\answer{D}
+\examnote{高阶主部判断极值时，偶次看系数正负，奇次通常不是极值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例15.} 设 \(f(x)\) 在 \(x=0\) 的邻域内有定义，且
+\[
+\lim_{x\to0}\frac{f(x)}{x-\ln(1+x)}=1,
+\]
+则（\quad）
+
+A. \(f(0)=0\)
+\quad B. \(f'(0)=0\)
+\quad C. \(x=0\) 是 \(f(x)\) 的极小值点
+\quad D. 以上说法均不正确。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{极限只控制 \(x\ne0\) 时的函数值，并没有给出 \(f\) 在 0 处连续。不能把去心极限直接当成 \(f(0)\)。}
+当 \(x\to0\) 时，
+\[
+\ln(1+x)=x-\frac{x^2}{2}+o(x^2),
+\]
+所以
+\[
+x-\ln(1+x)=\frac{x^2}{2}+o(x^2)>0
+\]
+在 \(0\) 的去心邻域内成立。因此题设说明
+\[
+f(x)\sim \frac{x^2}{2}\qquad (x\to0,\ x\ne0).
+\]
+这只能推出去心极限
+\[
+\lim_{x\to0,\ x\ne0}f(x)=0,
+\]
+不能推出 \(f(0)=0\)，因为题目没有给 \(f\) 在 \(0\) 处连续。
+
+例如可令 \(x\ne0\) 时
+\[
+f(x)=x-\ln(1+x),
+\]
+但任意指定 \(f(0)=1\)。此时题设极限仍为 \(1\)，但 A、B、C 均不成立。
+\answer{D}
+\examnote{涉及极值、导数、函数值时，必须区分“去心极限”与“点处函数值”。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例16.} 设函数 \(f(x)\) 在 \(x=0\) 处连续，在 \(x=0\) 的某个去心邻域内可导，且
+\[
+\lim_{x\to0}\frac{f(x)}x
+\]
+存在，则下列命题中，错误的是（\quad）
+
+A. \(f(0)=0\)。
+
+B. \(f'(0)\) 存在。
+
+C. \(\displaystyle \lim_{x\to0}f'(x)=0\)。
+
+D. 在 \(x=0\) 的某个去心邻域内，存在常数 \(C>0\)，使得
+\[
+|f(x)|<C|x|.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{极限 \(f(x)/x\) 存在，加上 \(f\) 在 0 连续，可推出 \(f(0)=0\) 和 \(f'(0)\) 存在；但不能推出去心导数极限为 0。}
+设
+\[
+\lim_{x\to0}\frac{f(x)}x=L.
+\]
+因为 \(x\to0\) 时 \(x\to0\)，所以
+\[
+f(x)=x\cdot\frac{f(x)}x\to0.
+\]
+又 \(f\) 在 \(0\) 处连续，故
+\[
+f(0)=0,
+\]
+A 正确。
+
+于是
+\[
+f'(0)=\lim_{x\to0}\frac{f(x)-f(0)}x
+=\lim_{x\to0}\frac{f(x)}x=L,
+\]
+所以 B 正确。
+
+由 \(f(x)/x\) 有极限可知该商在 0 的去心邻域内有界，因此存在 \(C>0\)，使
+\[
+|f(x)|<C|x|,
+\]
+D 正确。
+
+C 错误。例如
+\[
+f(x)=x
+\]
+满足题设，但
+\[
+f'(x)=1,
+\]
+所以
+\[
+\lim_{x\to0}f'(x)=1\ne0.
+\]
+\answer{C}
+\examnote{函数在一点可导，不代表去心邻域内的导函数极限等于该点导数，更不代表等于 0。}
+\end{solutionblock}
+
+\section{凸性与级数保号估计}
+
+\begin{problemblock}
+\textbf{例17.} 设函数 \(f(x)\) 在 \(x=x_0\) 的某邻域 \(U\) 内存在连续的二阶导数。
+
+\begin{enumerate}[label=(\arabic*)]
+\item 设当 \(h>0,\ x_0-h\in U,\ x_0+h\in U\) 时，恒有
+\[
+f(x_0)<\frac12\bigl[f(x_0+h)+f(x_0-h)\bigr],\tag{*}
+\]
+证明 \(f''(x_0)\ge0\)。
+\item 如果 \(f''(x_0)>0\)，证明必存在 \(h>0,\ x_0-h\in U,\ x_0+h\in U\)，使 \((*)\) 式成立。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是用中心二阶差分刻画二阶导数。中心平均大于中点函数值，说明二阶差分非负。}
+(1) 由 \((*)\) 得
+\[
+f(x_0+h)-2f(x_0)+f(x_0-h)>0.
+\]
+两边除以 \(h^2>0\)，有
+\[
+\frac{f(x_0+h)-2f(x_0)+f(x_0-h)}{h^2}>0.
+\]
+令 \(h\to0^+\)。由于 \(f\) 二阶可导，
+\[
+\lim_{h\to0}
+\frac{f(x_0+h)-2f(x_0)+f(x_0-h)}{h^2}
+=f''(x_0).
+\]
+因此
+\[
+f''(x_0)\ge0.
+\]
+
+(2) 若 \(f''(x_0)>0\)，由 \(f''\) 连续，存在 \(\delta>0\)，使得当
+\[
+|x-x_0|<\delta
+\]
+时
+\[
+f''(x)>0.
+\]
+取 \(0<h<\delta\)，且 \(x_0\pm h\in U\)。由 Taylor 公式，
+\[
+f(x_0+h)=f(x_0)+f'(x_0)h+\frac12f''(\xi_1)h^2,
+\]
+\[
+f(x_0-h)=f(x_0)-f'(x_0)h+\frac12f''(\xi_2)h^2,
+\]
+其中 \(\xi_1\in(x_0,x_0+h)\)，\(\xi_2\in(x_0-h,x_0)\)。
+两式相加得
+\[
+f(x_0+h)+f(x_0-h)-2f(x_0)
+=\frac12\bigl[f''(\xi_1)+f''(\xi_2)\bigr]h^2>0.
+\]
+故
+\[
+f(x_0)<\frac12\bigl[f(x_0+h)+f(x_0-h)\bigr],
+\]
+即 \((*)\) 成立。
+\answer{(1) \(f''(x_0)\ge0\)；(2) 存在这样的 \(h>0\)}
+\examnote{中心二阶差分
+\(\bigl[f(x_0+h)-2f(x_0)+f(x_0-h)\bigr]/h^2\)
+是判断凸性的常用工具。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例18.} 若 \(\{a_n\}\) 收敛，\(\displaystyle \sum_{n=1}^{\infty}b_n\) 绝对收敛，证明：
+\[
+\sum_{n=1}^{\infty}a_nb_n
+\]
+绝对收敛。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{收敛数列必有界。把 \(a_n\) 的绝对值用一个常数控制，就能与 \(\sum |b_n|\) 比较。}
+因为 \(\{a_n\}\) 收敛，所以 \(\{a_n\}\) 有界。存在 \(M>0\)，使得
+\[
+|a_n|\le M,\qquad n=1,2,\cdots.
+\]
+又因为
+\[
+\sum_{n=1}^{\infty}b_n
+\]
+绝对收敛，所以
+\[
+\sum_{n=1}^{\infty}|b_n|<+\infty.
+\]
+于是
+\[
+\sum_{n=1}^{\infty}|a_nb_n|
+\le
+\sum_{n=1}^{\infty}M|b_n|
+=M\sum_{n=1}^{\infty}|b_n|
+<+\infty.
+\]
+因此
+\[
+\sum_{n=1}^{\infty}a_nb_n
+\]
+绝对收敛。
+\answer{已证 \(\displaystyle \sum_{n=1}^{\infty}a_nb_n\) 绝对收敛}
+\examnote{“收敛数列有界 + 绝对收敛级数可比较”是级数证明题里最常用的一步。}
+\end{solutionblock}

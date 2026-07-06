@@ -1,0 +1,490 @@
+\documentclass[UTF8,fontset=windows,11pt]{ctexart}
+\usepackage[a4paper,margin=1.85cm,headheight=24pt,footskip=24pt]{geometry}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\tcbuselibrary{skins,breakable}
+
+\definecolor{examnavy}{HTML}{1E3A5F}
+\definecolor{examblue}{HTML}{2563A7}
+\definecolor{examred}{HTML}{C2410C}
+\definecolor{examgray}{HTML}{4B5563}
+\definecolor{examline}{HTML}{D7DEE8}
+\definecolor{exambg}{HTML}{F8FAFC}
+\definecolor{choicepink}{HTML}{DB2777}
+\definecolor{answergreen}{HTML}{15803D}
+
+\hypersetup{colorlinks=true,linkcolor=examnavy,urlcolor=examblue}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.28em}
+\linespread{1.08}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small\textcolor{examnavy}{施工章节测试}}
+\rhead{\small\textcolor{examred}{复习指南对应题｜答案跟题}}
+\cfoot{\small\textcolor{examgray}{第 \thepage\ 页 / 共 \pageref{LastPage} 页}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{examline}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}
+  {\Large\bfseries\color{examnavy}}
+  {\thesection}
+  {0.8em}
+  {}
+\titlespacing*{\section}{0pt}{1.1em}{0.55em}
+
+\newcommand{\chaptermeta}[1]{%
+  \vspace{-0.25em}
+  {\small\textcolor{examgray}{#1}}\par
+  \vspace{0.35em}
+  {\color{examline}\rule{\linewidth}{0.55pt}}\vspace{0.25em}
+}
+
+\newcommand{\choice}[1]{%
+  \tcbox[
+    on line,
+    colback=white,
+    colframe=choicepink,
+    boxrule=0.55pt,
+    arc=0.8mm,
+    left=1.35mm,
+    right=1.35mm,
+    top=0.15mm,
+    bottom=0.15mm
+  ]{\textbf{\textcolor{choicepink}{#1}}}%
+}
+
+\newcommand{\questionstem}[1]{%
+  \textbf{\textcolor{examnavy}{#1}}\par\vspace{0.35em}
+}
+
+\newcommand{\answerarea}[1]{%
+  \vspace{0.2em}
+  \begin{tcolorbox}[
+    enhanced,
+    colback=exambg,
+    colframe=examline,
+    boxrule=0.45pt,
+    arc=0.8mm,
+    height=#1,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm
+  ]
+  \textcolor{examline}{作答区}
+  \end{tcolorbox}
+}
+
+\newtcolorbox{questionbox}[2]{
+  enhanced,
+  breakable,
+  colback=white,
+  colframe=examline,
+  boxrule=0.55pt,
+  arc=1mm,
+  left=3mm,
+  right=3mm,
+  top=2.4mm,
+  bottom=2mm,
+  before skip=0.65em,
+  after skip=0.72em,
+  borderline west={1.8pt}{0pt}{examblue},
+  title={\textcolor{examnavy}{#1}\hfill\textcolor{examgray}{#2}},
+  coltitle=examnavy,
+  colbacktitle=exambg,
+  fonttitle=\bfseries,
+  boxed title style={
+    colback=exambg,
+    colframe=examline,
+    boxrule=0.35pt,
+    arc=0.8mm
+  },
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  top=6mm
+}
+
+
+\newcommand{\guidebox}[1]{%
+  \begin{tcolorbox}[
+    enhanced,
+    breakable,
+    colback=examblue!5,
+    colframe=examline,
+    boxrule=0.4pt,
+    arc=0.8mm,
+    left=2mm,
+    right=2mm,
+    top=0.9mm,
+    bottom=0.9mm
+  ]
+  {\small\textbf{\textcolor{examblue}{对应复习指南：}}#1}
+  \end{tcolorbox}
+}
+
+\newcommand{\inlineanswer}[1]{%
+  \vspace{0.25em}
+  \begin{tcolorbox}[
+    enhanced,
+    breakable,
+    colback=answergreen!6,
+    colframe=answergreen,
+    boxrule=0.55pt,
+    arc=0.8mm,
+    left=2.5mm,
+    right=2.5mm,
+    top=1.2mm,
+    bottom=1.2mm,
+    borderline west={1.6pt}{0pt}{answergreen}
+  ]
+  \textbf{\textcolor{answergreen}{答案：}}#1
+  \end{tcolorbox}
+}
+
+\begin{document}
+
+
+
+\begin{titlepage}
+\vspace*{1.2cm}
+{\Huge\bfseries\textcolor{examnavy}{施工章节测试}}\par
+\vspace{0.35em}
+{\LARGE\bfseries\textcolor{examred}{复习指南对应题 去重答案跟题版}}\par
+\vspace{0.8em}
+{\color{examline}\rule{0.82\linewidth}{0.8pt}}\par
+\vspace{1.1em}
+{\large 仅保留参考 PDF 中与复习指南对应的题目；同一知识点或题干高度相似的题已去重。}\par
+\vspace{2.2em}
+\begin{tcolorbox}[
+  enhanced,
+  width=0.78\linewidth,
+  colback=exambg,
+  colframe=examline,
+  boxrule=0.6pt,
+  arc=1mm,
+  left=4mm,
+  right=4mm,
+  top=3mm,
+  bottom=3mm
+]
+\Large
+\textcolor{examnavy}{参考题数}\quad\textbf{101}\qquad
+\textcolor{examnavy}{去重后}\quad\textbf{21}\qquad
+\textcolor{examnavy}{删除相似}\quad\textbf{80}\par
+\vspace{0.45em}
+\normalsize\textcolor{examgray}{顺序版；每题后直接附答案，不生成乱序版。}
+\end{tcolorbox}
+\vfill
+{\small\textcolor{examgray}{依据《施工章节测试\_复习指南对应题\_刷题版4.pdf》重新整理}}
+\end{titlepage}
+\tableofcontents
+\newpage
+
+
+\section{第一章土方工程章节测试}
+
+\chaptermeta{本章保留 5 题；题号括号中标注原全卷题号。}
+
+\begin{questionbox}{第 1 题（原第 1 题）}{单选题}
+\guidebox{土方工程：填土压实质量控制指标——土的干密度}
+\questionstem{作为检验填土压实质量控制指标的是（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 土的干密度
+\item 土的密实度
+\item 土的压缩比
+\item 土的可松性
+\end{enumerate}
+\inlineanswer{A}
+\end{questionbox}
+
+\begin{questionbox}{第 2 题（原第 7 题）}{多选题}
+\guidebox{土方工程：土方施工机械的选择因素}
+\questionstem{土方机械的选择，一般应考虑的因素有（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 土方工程的范围大小
+\item 施工合同的要求
+\item 不同施工机械的组合
+\item 土的含水量
+\item 施工合同工期要求
+\end{enumerate}
+\inlineanswer{ACDE}
+\end{questionbox}
+
+\begin{questionbox}{第 3 题（原第 10 题）}{单选题}
+\guidebox{土方工程：基坑挖土方案——放坡、中心岛、盆式与逆作法}
+\questionstem{当地质条件和场地条件许可时，开挖深度不大的基坑可采用的开挖方案是（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 放坡挖土
+\item 中心岛挖土
+\item 盆式挖土
+\item 逆作法挖土
+\end{enumerate}
+\inlineanswer{A}
+\end{questionbox}
+
+\begin{questionbox}{第 4 题（原第 17 题）}{多选题}
+\guidebox{土方工程：回填土料、分层填筑、分层压实与分层检测}
+\questionstem{填方土料应符合设计要求，一般不能作为回填土的有（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 淤泥
+\item 淤泥质土
+\item 有机质为8\%的土
+\item 黏性土
+\item 砂砾坚土
+\end{enumerate}
+\inlineanswer{ABC}
+\end{questionbox}
+
+\begin{questionbox}{第 5 题（原第 24 题）}{多选题}
+\guidebox{土方工程：基坑验槽的组织、参加单位、方法与检查内容}
+\questionstem{可以组织基坑验槽的人员有（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 设计单位负责人
+\item 总监理工程师
+\item 施工单位负责人
+\item 建设单位项目负责人
+\item 勘察单位负责人
+\end{enumerate}
+\inlineanswer{BD}
+\end{questionbox}
+
+\section{第二章桩基础工程章节测试}
+
+\chaptermeta{本章保留 1 题；题号括号中标注原全卷题号。}
+
+\begin{questionbox}{第 6 题（原第 37 题）}{单选题}
+\guidebox{桩基础工程：静压桩终止沉桩控制原则}
+\questionstem{下列关于静压桩终止沉桩标准的说法，错误的是（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 静压桩应以标高为主，压力为辅
+\item 摩擦桩应按桩顶标高控制
+\item 端承桩应以终压力控制为主，桩顶标高控制为辅
+\item 端承摩擦桩，应以终压力控制为主，桩顶标高控制为辅
+\end{enumerate}
+\inlineanswer{D}
+\end{questionbox}
+
+\section{第三章基坑工程章节测试}
+
+\chaptermeta{本章保留 2 题；题号括号中标注原全卷题号。}
+
+\begin{questionbox}{第 7 题（原第 63 题）}{多选题}
+\guidebox{基坑工程：集水井、降水井、减压井及承压水突涌控制}
+\questionstem{可以起到防止深基坑坑底突涌的措施有（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 集水明排
+\item 钻孔减压
+\item 井点降水
+\item 井点回灌
+\item 水平封底隔渗
+\end{enumerate}
+\inlineanswer{BE}
+\end{questionbox}
+
+\begin{questionbox}{第 8 题（原第 67 题）}{单选题}
+\guidebox{基坑工程：井点回灌技术的作用与布置}
+\questionstem{工程基坑开挖常用井点回灌技术的主要目的是（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 避免坑底土体回弹
+\item 避免坑底出现管涌
+\item 减少排水设施，降低施工成本
+\item 防止降水井点对井点周围建（构）筑物、地下管线的影响
+\end{enumerate}
+\inlineanswer{D}
+\end{questionbox}
+
+\section{第四章混凝土结构工程章节测试}
+
+\chaptermeta{本章保留 6 题；题号括号中标注原全卷题号。}
+
+\begin{questionbox}{第 9 题（原第 77 题）}{单选题}
+\guidebox{混凝土结构工程：成型钢筋进场复验项目}
+\questionstem{成型钢筋在进场时无需复验的项目是（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 抗拉强度
+\item 弯曲性能
+\item 伸长率
+\item 重量偏差
+\end{enumerate}
+\inlineanswer{B}
+\end{questionbox}
+
+\begin{questionbox}{第 10 题（原第 109 题）}{单选题}
+\guidebox{混凝土结构工程：底模及支架拆除的同条件养护强度要求}
+\questionstem{某跨度8m的混凝土楼板，设计强度等级为C30。模板采用快拆支架体系，支架立杆间距为2m，拆模时混凝土的最低强度是（）MPa。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 15
+\item 22.5
+\item 25.5
+\item 30
+\end{enumerate}
+\inlineanswer{A}
+\end{questionbox}
+
+\begin{questionbox}{第 11 题（原第 121 题）}{单选题}
+\guidebox{混凝土结构工程：大体积混凝土防裂、材料选择与温度控制}
+\questionstem{配制厚大体积的普通混凝土不宜选用（）水泥。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 矿渣
+\item 粉煤
+\item 复合
+\item 硅酸盐
+\end{enumerate}
+\inlineanswer{D}
+\end{questionbox}
+
+\begin{questionbox}{第 12 题（原第 127 题）}{多选题}
+\guidebox{混凝土与砌筑工程：坍落度、维勃稠度、砂浆稠度及流动性}
+\questionstem{下列关于砂浆、混凝土流动性说法中正确的有（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 稠度测定仪测得的砂浆稠度值越小，流动性越大
+\item 稠度测定仪测得的砂浆稠度值越大，流动性越大
+\item 混凝土坍落度与坍落扩展度越小，流动性越大
+\item 混凝土坍落度与坍落扩展度越大，流动性越大
+\item 维勃稠度仪测得的混凝土稠度值越小，流动性越大
+\end{enumerate}
+\inlineanswer{BDE}
+\end{questionbox}
+
+\begin{questionbox}{第 13 题（原第 138 题）}{单选题}
+\guidebox{混凝土结构工程：减水剂、引气剂、早强剂与速凝剂}
+\questionstem{下列混凝土外加剂中，不能显著改善混凝土拌合物流变性能的是（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 减水剂
+\item 引气剂
+\item 膨胀剂
+\item 泵送剂
+\end{enumerate}
+\inlineanswer{C}
+\end{questionbox}
+
+\begin{questionbox}{第 14 题（原第 146 题）}{单选题}
+\guidebox{混凝土结构工程：混凝土分层浇筑与振捣要求}
+\questionstem{下列关于混凝土浇筑振捣的说法，正确的是（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 混凝土不宜分层浇筑，分层振动
+\item 插入式振捣棒振捣混凝土时，应慢插快拔
+\item 插入式振捣棒移动间距不宜大于振捣棒作用半径的1.4倍
+\item 振捣棒插入下层混凝土内的深度应不小于30mm
+\end{enumerate}
+\inlineanswer{C}
+\end{questionbox}
+
+\section{第五章预应力混凝土工程章节测试}
+
+\chaptermeta{本章保留 1 题；题号括号中标注原全卷题号。}
+
+\begin{questionbox}{第 15 题（原第 162 题）}{单选题}
+\guidebox{预应力混凝土工程：无粘结预应力施工特点与工序}
+\questionstem{无粘结后张法预应力混凝土中的预应力，是靠（）传递给混凝土。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 锚具
+\item 台座
+\item 张拉千斤顶
+\item 混凝土与预应力筋之间的粘结力
+\end{enumerate}
+\inlineanswer{A}
+\end{questionbox}
+
+\section{第六章砌筑工程章节测试}
+
+\chaptermeta{本章保留 2 题；题号括号中标注原全卷题号。}
+
+\begin{questionbox}{第 16 题（原第 180 题）}{多选题}
+\guidebox{砌筑工程：“三一”砌筑法}
+\questionstem{砖砌体“三一”砌筑法的具体含义是指（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 一个人
+\item 一铲灰
+\item 一块砖
+\item 一挤揉
+\item 一勾缝
+\end{enumerate}
+\inlineanswer{BCD}
+\end{questionbox}
+
+\begin{questionbox}{第 17 题（原第 195 题）}{多选题}
+\guidebox{砌筑工程：普通混凝土小型空心砌块施工要求}
+\questionstem{关于普通混凝土小砌块施工说法，正确的是（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 在施工前先浇水湿透
+\item 清除表面污物
+\item 底面朝下正砌于墙上
+\item 底面朝上反砌于墙上
+\item 小砌块在使用时的龄期已到
+\end{enumerate}
+\inlineanswer{BD}
+\end{questionbox}
+
+\section{第七章脚手架工程章节测试}
+
+\chaptermeta{本章保留 1 题；题号括号中标注原全卷题号。}
+
+\begin{questionbox}{第 18 题（原第 202 题）}{单选题}
+\guidebox{危大工程管理：专项施工方案专家论证范围}
+\questionstem{下列分部分项工程中，其专项施工方案不需要进行专家论证的有（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 架体高度23m的悬挑脚手架
+\item 开挖深度10m的人工挖孔桩
+\item 爬升高度80m的爬模
+\item 埋深10m的地下暗挖
+\end{enumerate}
+\inlineanswer{B}
+\end{questionbox}
+
+\section{第九章防水工程章节测试}
+
+\chaptermeta{本章保留 1 题；题号括号中标注原全卷题号。}
+
+\begin{questionbox}{第 19 题（原第 213 题）}{多选题}
+\guidebox{防水工程：屋面卷材防水施工顺序、铺贴与搭接缝}
+\questionstem{屋面防水施工基本要求正确的是（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 以排为主，以防为辅
+\item 上下层卷材不得相互垂直铺贴
+\item 屋面卷材防水施工时，由高向低铺贴
+\item 天沟卷材施工时，宜顺天沟方向铺贴
+\item 立面或大坡面贴卷材应采用满粘法
+\end{enumerate}
+\inlineanswer{BDE}
+\end{questionbox}
+
+\section{第十章流水施工原理章节测试}
+
+\chaptermeta{本章保留 1 题；题号括号中标注原全卷题号。}
+
+\begin{questionbox}{第 20 题（原第 219 题）}{单选题}
+\guidebox{逻辑思维内容指南1：流水施工原理}
+\questionstem{关于横道图进度计划特点的说法，正确的是（）。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 可以识别计划的关键工作
+\item 不能表达工作逻辑关系
+\item 调整计划的工作量较大
+\item 可以计算工作时差
+\end{enumerate}
+\inlineanswer{C}
+\end{questionbox}
+
+\section{第十一章网络计划技术章节测试}
+
+\chaptermeta{本章保留 1 题；题号括号中标注原全卷题号。}
+
+\begin{questionbox}{第 21 题（原第 243 题）}{单选题}
+\guidebox{逻辑思维内容指南2：单目标双代号网络计划六大时间参数}
+\questionstem{工程网络计划中，工作的最迟开始时间是指在不影响（）的前提下，必须开始的最迟时刻。}
+\begin{enumerate}[label=\protect\choice{\Alph*}, leftmargin=*, itemsep=0.32em, topsep=0.2em]
+\item 紧后工作最早开始
+\item 紧前工作最迟开始
+\item 整个任务按期完成
+\item 所有后续工作机动时间
+\end{enumerate}
+\inlineanswer{C}
+\end{questionbox}
+
+\end{document}

@@ -1,0 +1,421 @@
+EDITABLE_COUNT 0
+PDF_COUNT 46
+TOTAL_PAGES 403
+TOTAL_TEXT_CHARS 38870
+JSON_START
+[
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第10次作业及答案（力法1）.pdf",
+    "pages": 21,
+    "text_chars": 147,
+    "text_pages_gt80": 1,
+    "image_pages": 21,
+    "numbered_hits": 1,
+    "sample": "⼀一"
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第11次作业及答案（力法2）.pdf",
+    "pages": 8,
+    "text_chars": 599,
+    "text_pages_gt80": 1,
+    "image_pages": 8,
+    "numbered_hits": 2,
+    "sample": "叫研究生入学考试辅导丛书结构力学（第二版） EA C q勹B G§1』 20kN IF 丫G y A 7?7?77' 玉 j_ 2 尸 B ＼ L L 6m \u0001 6m l 1 ， 1 , , ．， 图5-149 图5-150 4. 弹性支承超静定结构的计算 5-31 图5-153 (a)所示结构，取图5 - 153 ("
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第12次作业及答案（位移法）.pdf",
+    "pages": 28,
+    "text_chars": 2049,
+    "text_pages_gt80": 5,
+    "image_pages": 28,
+    "numbered_hits": 0,
+    "sample": "6-25、 解：依次取正对称半结构和四分之一结构如图所示，位移法基本体系见图（a），位移法方 程为11 1 1 0 P r X R + = 。画出 1 M 图和M P 图如图（b）（c）所示，各系数和自由项为 11 4 3 EI r = ， 1 30 P R = 将系数和自由项代入位移法方程 1 4 30 0 3 EI"
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第13次作业及答案（弯矩分配法）.pdf",
+    "pages": 4,
+    "text_chars": 0,
+    "text_pages_gt80": 0,
+    "image_pages": 4,
+    "numbered_hits": 0,
+    "sample": ""
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第14次作业及答案（矩阵位移法）.pdf",
+    "pages": 4,
+    "text_chars": 0,
+    "text_pages_gt80": 0,
+    "image_pages": 4,
+    "numbered_hits": 0,
+    "sample": ""
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第15次作业及答案（动力学）.pdf",
+    "pages": 6,
+    "text_chars": 0,
+    "text_pages_gt80": 0,
+    "image_pages": 6,
+    "numbered_hits": 0,
+    "sample": ""
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第16次作业及答案（稳定）.pdf",
+    "pages": 1,
+    "text_chars": 0,
+    "text_pages_gt80": 0,
+    "image_pages": 1,
+    "numbered_hits": 0,
+    "sample": ""
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第17次作业及答案（极限荷载）.pdf",
+    "pages": 6,
+    "text_chars": 0,
+    "text_pages_gt80": 0,
+    "image_pages": 6,
+    "numbered_hits": 0,
+    "sample": ""
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第1次作业答案（几何组成分析）.pdf",
+    "pages": 6,
+    "text_chars": 1797,
+    "text_pages_gt80": 6,
+    "image_pages": 6,
+    "numbered_hits": 0,
+    "sample": "1-1、D 解析：采用两刚片规则分析，由于4根链杆平行且不等长，因此为瞬变体系，有 两个多余约束。 1-2、B 解析：原体系的计算自由度 3 3 1 2 4 3 W   ，故需要再补充三个约束。当 在A处加入固定端时，刚片ABC先并入大地，随后刚片DE与大地由链杆BD和铰 E连接，满足两刚片规则可并入大地，"
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第1次作业（几何组成分析）.pdf",
+    "pages": 3,
+    "text_chars": 0,
+    "text_pages_gt80": 0,
+    "image_pages": 3,
+    "numbered_hits": 0,
+    "sample": ""
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第2次作业答案（理论力学回顾）.pdf",
+    "pages": 4,
+    "text_chars": 1487,
+    "text_pages_gt80": 4,
+    "image_pages": 4,
+    "numbered_hits": 11,
+    "sample": "（a）解：取整体隔离体竖向力平衡，可得B处竖向支反力  0 0 1 1 2 2 By F l q q l     对B点取矩得B处支座反力矩 2 0 0 1 1 1 2 3 6 B M l q l q l     （顺时针） （b）解：取整体隔离体竖向力平衡，可得A处竖向支反力  15 1 "
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第2次作业（理论力学回顾）.pdf",
+    "pages": 2,
+    "text_chars": 11,
+    "text_pages_gt80": 0,
+    "image_pages": 2,
+    "numbered_hits": 0,
+    "sample": "求解图示结构的⽀座反⼒"
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第3次作业答案（材料力学回顾）.pdf",
+    "pages": 7,
+    "text_chars": 2039,
+    "text_pages_gt80": 7,
+    "image_pages": 7,
+    "numbered_hits": 14,
+    "sample": "一、 （a）解：取整体隔离体竖向力平衡，可得B处竖向支反力  0 0 1 1 2 2 By F l q q l     对B点取矩得B处支座反力矩 2 0 0 1 1 1 2 3 6 B M l q l q l     （上侧受拉） 画出原结构弯矩图和剪力图如图（a）（b）所示。 （b ）解"
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第3次作业（材料力学回顾）.pdf",
+    "pages": 12,
+    "text_chars": 413,
+    "text_pages_gt80": 1,
+    "image_pages": 12,
+    "numbered_hits": 3,
+    "sample": "小鹿土木考研 小鹿土木考研第43/359 页 结力基础班第 3 次作业——材料力学回顾 材料力学回顾作业及答案 一、画剪力图和弯矩图"
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第4次作业及答案（静定梁和刚架）.pdf",
+    "pages": 14,
+    "text_chars": 168,
+    "text_pages_gt80": 0,
+    "image_pages": 14,
+    "numbered_hits": 0,
+    "sample": "结力基础班第4 次作业——梁和刚架 梁和刚架作业及答案 第66页,共359页"
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第5次作业及答案（静定桁架）.pdf",
+    "pages": 3,
+    "text_chars": 1,
+    "text_pages_gt80": 0,
+    "image_pages": 3,
+    "numbered_hits": 0,
+    "sample": "箺"
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第6次作业及答案（组合结构）.pdf",
+    "pages": 3,
+    "text_chars": 1,
+    "text_pages_gt80": 0,
+    "image_pages": 3,
+    "numbered_hits": 0,
+    "sample": "噩"
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第7次作业及答案（三铰拱）.pdf",
+    "pages": 1,
+    "text_chars": 0,
+    "text_pages_gt80": 0,
+    "image_pages": 1,
+    "numbered_hits": 0,
+    "sample": ""
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第8次作业及答案（静定结构影响线）.pdf",
+    "pages": 18,
+    "text_chars": 1433,
+    "text_pages_gt80": 4,
+    "image_pages": 18,
+    "numbered_hits": 1,
+    "sample": "第三章 静定结构的影响线 扣 ＋ N = F - ， 沪max= lOXO. 5 =25kN。 五、练习题 图3-48所示结构在任意长度可移动荷载20kN/m作用下，截面K的剪力最大 值FQKmax 为 。（天津大学2010) 3-2求图3-48 所示结构在任意长度可动均布荷载20kN/m作用下截面K的最大弯 矩MKm"
+  },
+  {
+    "file": "6.作业&答案\\结构力学基础与技巧班第9次作业及答案（静定结构位移计算）.pdf",
+    "pages": 4,
+    "text_chars": 1,
+    "text_pages_gt80": 0,
+    "image_pages": 4,
+    "numbered_hits": 0,
+    "sample": "噩"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第10次作业笔记】—力法(1).pdf",
+    "pages": 21,
+    "text_chars": 2622,
+    "text_pages_gt80": 11,
+    "image_pages": 21,
+    "numbered_hits": 7,
+    "sample": "X x 圝 适lmū B ˋ ˋ A 出个 蕉价ie 811XHOpe01 Xilk nncxihhshhdhurousrun"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第10次作业笔记】—力法.pdf",
+    "pages": 21,
+    "text_chars": 2622,
+    "text_pages_gt80": 11,
+    "image_pages": 21,
+    "numbered_hits": 7,
+    "sample": "X x 圝 适lmū B ˋ ˋ A 出个 蕉价ie 811XHOpe01 Xilk nncxihhshhdhurousrun"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第11次作业笔记】—位移法(1).pdf",
+    "pages": 21,
+    "text_chars": 2352,
+    "text_pages_gt80": 16,
+    "image_pages": 21,
+    "numbered_hits": 7,
+    "sample": "x 7个 四 ⽹ 唯 国 ⽤函 B Ǘ 𨶙 的 事 it f 逕 贋 A H A T _i n a 戀 ⼼ 4戀 点 啦 kzinti hong 加 红 mom"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第11次作业笔记】—位移法.pdf",
+    "pages": 21,
+    "text_chars": 2352,
+    "text_pages_gt80": 16,
+    "image_pages": 21,
+    "numbered_hits": 7,
+    "sample": "x 7个 四 ⽹ 唯 国 ⽤函 B Ǘ 𨶙 的 事 it f 逕 贋 A H A T _i n a 戀 ⼼ 4戀 点 啦 kzinti hong 加 红 mom"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第13次作业笔记】—矩阵位移法(1).pdf",
+    "pages": 10,
+    "text_chars": 0,
+    "text_pages_gt80": 0,
+    "image_pages": 10,
+    "numbered_hits": 0,
+    "sample": ""
+  },
+  {
+    "file": "7.作业讲解笔记\\【第13次作业笔记】—矩阵位移法.pdf",
+    "pages": 10,
+    "text_chars": 0,
+    "text_pages_gt80": 0,
+    "image_pages": 10,
+    "numbered_hits": 0,
+    "sample": ""
+  },
+  {
+    "file": "7.作业讲解笔记\\【第14次作业笔记】—动力学(1).pdf",
+    "pages": 13,
+    "text_chars": 1484,
+    "text_pages_gt80": 7,
+    "image_pages": 13,
+    "numbered_hits": 3,
+    "sample": "D z B A B A 算 嘉 口 E 2 C w 会 ˇ ˇ X­ k.TKb 和 was 比 b­ook"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第14次作业笔记】—动力学.pdf",
+    "pages": 13,
+    "text_chars": 1484,
+    "text_pages_gt80": 7,
+    "image_pages": 13,
+    "numbered_hits": 3,
+    "sample": "D z B A B A 算 嘉 口 E 2 C w 会 ˇ ˇ X­ k.TKb 和 was 比 b­ook"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第1次作业笔记】—几何组成分析(1).pdf",
+    "pages": 6,
+    "text_chars": 376,
+    "text_pages_gt80": 2,
+    "image_pages": 6,
+    "numbered_hits": 0,
+    "sample": "gig B 婚 越 fi.it 瞬变体系，两个多余约束。 平⾏且等⻓，是常变。 平⾏不等⻓，是瞬变。"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第1次作业笔记】—几何组成分析.pdf",
+    "pages": 6,
+    "text_chars": 376,
+    "text_pages_gt80": 2,
+    "image_pages": 6,
+    "numbered_hits": 0,
+    "sample": "gig B 婚 越 fi.it 瞬变体系，两个多余约束。 平⾏且等⻓，是常变。 平⾏不等⻓，是瞬变。"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第2次作业笔记】—理论力学回顾(1).pdf",
+    "pages": 4,
+    "text_chars": 715,
+    "text_pages_gt80": 2,
+    "image_pages": 4,
+    "numbered_hits": 1,
+    "sample": "求出来的结果是负的，表示和假设相反，应该加⼀个括号，括号⾥⾯表示真 实⽅向。 Ig 该0 后 It 跒0 Finial BX IMB 0 MB_fix f 0 M13 9卡 nff Ito FAFo IFy 0 FAy 301151 45kno IMA⼆0 MA 303 152.5 0 ⼈MA⼆些kin EH 0 Fu"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第2次作业笔记】—理论力学回顾.pdf",
+    "pages": 4,
+    "text_chars": 715,
+    "text_pages_gt80": 2,
+    "image_pages": 4,
+    "numbered_hits": 1,
+    "sample": "求出来的结果是负的，表示和假设相反，应该加⼀个括号，括号⾥⾯表示真 实⽅向。 Ig 该0 后 It 跒0 Finial BX IMB 0 MB_fix f 0 M13 9卡 nff Ito FAFo IFy 0 FAy 301151 45kno IMA⼆0 MA 303 152.5 0 ⼈MA⼆些kin EH 0 Fu"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第3次作业笔记】—材料力学回顾(1).pdf",
+    "pages": 9,
+    "text_chars": 1329,
+    "text_pages_gt80": 8,
+    "image_pages": 9,
+    "numbered_hits": 1,
+    "sample": "ፏүۻᆱဵኌ\u0014 ൛΃˒ÿÿ౎ரү߮ڈᮗ ౎ரү߮ڈᮗ΃˒ԫኝಽ ʿǔႏҥүڗ֟ेᆆڗ q x 笼9 h ⽔ ii i 噐Fs not ix ⾯ ⼀𢞵 和 151𡵓130ku T c Bi Mc 301 i 1512 37.5 M5 A B Min T 45kno 45 45 30 1 QIN A l B"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第3次作业笔记】—材料力学回顾.pdf",
+    "pages": 9,
+    "text_chars": 1329,
+    "text_pages_gt80": 8,
+    "image_pages": 9,
+    "numbered_hits": 1,
+    "sample": "ፏүۻᆱဵኌ\u0014 ൛΃˒ÿÿ౎ரү߮ڈᮗ ౎ரү߮ڈᮗ΃˒ԫኝಽ ʿǔႏҥүڗ֟ेᆆڗ q x 笼9 h ⽔ ii i 噐Fs not ix ⾯ ⼀𢞵 和 151𡵓130ku T c Bi Mc 301 i 1512 37.5 M5 A B Min T 45kno 45 45 30 1 QIN A l B"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第4次作业笔记】—梁和刚架(1).pdf",
+    "pages": 11,
+    "text_chars": 1407,
+    "text_pages_gt80": 8,
+    "image_pages": 11,
+    "numbered_hits": 1,
+    "sample": "ፏүۻᆱဵኌ\u0015 ൛΃˒ÿÿೕ֟Ҁ౾ ೕ֟Ҁ౾΃˒ԫኝಽ B Fpfi FDE.noFu 0 0 0 𢒰q t o a i i i i i Emo FAy.liFAy 0 ii 装 n C"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第4次作业笔记】—梁和刚架.pdf",
+    "pages": 11,
+    "text_chars": 1407,
+    "text_pages_gt80": 8,
+    "image_pages": 11,
+    "numbered_hits": 1,
+    "sample": "ፏүۻᆱဵኌ\u0015 ൛΃˒ÿÿೕ֟Ҁ౾ ೕ֟Ҁ౾΃˒ԫኝಽ B Fpfi FDE.noFu 0 0 0 𢒰q t o a i i i i i Emo FAy.liFAy 0 ii 装 n C"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第5次作业笔记】—静定桁架(1).pdf",
+    "pages": 5,
+    "text_chars": 690,
+    "text_pages_gt80": 5,
+    "image_pages": 5,
+    "numbered_hits": 0,
+    "sample": "结⼒基础班第5次作业——桁架 桁架作业及答案 ⼀ 狐 Amggsngg 2 12 11211 Imai 镃 Nun 死 后 所ˋ ⼼450 Fto th EFp 1 dl.tn EMo 0 FnxzltFp.li j Faz i 即便题⽬没有强调，也是不包括⽀座连杆的。"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第5次作业笔记】—静定桁架.pdf",
+    "pages": 5,
+    "text_chars": 690,
+    "text_pages_gt80": 5,
+    "image_pages": 5,
+    "numbered_hits": 0,
+    "sample": "结⼒基础班第5次作业——桁架 桁架作业及答案 ⼀ 狐 Amggsngg 2 12 11211 Imai 镃 Nun 死 后 所ˋ ⼼450 Fto th EFp 1 dl.tn EMo 0 FnxzltFp.li j Faz i 即便题⽬没有强调，也是不包括⽀座连杆的。"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第6次作业笔记】—组合结构(1).pdf",
+    "pages": 6,
+    "text_chars": 650,
+    "text_pages_gt80": 2,
+    "image_pages": 6,
+    "numbered_hits": 0,
+    "sample": "结⼒基础班第6次作业——组合结构 组合结构作业及答案 C 烟 ĚFN lil FN.ws450，2 印 DEliidhoFNGF.in Fn 髺 㼦 髻 堡 兽 武客29 答 Fsa 㼦 厅⼆恶 FNA13 2厅 ⼀普__E E Ftii Ǜ n.in EME hn iti.if 4 fi 下⼆管 IMA 0 后E 3"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第6次作业笔记】—组合结构.pdf",
+    "pages": 6,
+    "text_chars": 650,
+    "text_pages_gt80": 2,
+    "image_pages": 6,
+    "numbered_hits": 0,
+    "sample": "结⼒基础班第6次作业——组合结构 组合结构作业及答案 C 烟 ĚFN lil FN.ws450，2 印 DEliidhoFNGF.in Fn 髺 㼦 髻 堡 兽 武客29 答 Fsa 㼦 厅⼆恶 FNA13 2厅 ⼀普__E E Ftii Ǜ n.in EME hn iti.if 4 fi 下⼆管 IMA 0 后E 3"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第7次作业笔记】—拱结构(1).pdf",
+    "pages": 2,
+    "text_chars": 513,
+    "text_pages_gt80": 2,
+    "image_pages": 2,
+    "numbered_hits": 0,
+    "sample": "结⼒基础班第7次作业——拱结构 三铰拱作业及答案 I i 圝礼 Mk 0 Mkt57 F 70 2 0 Mk⼆年kmu IMA⼆01 12⻔13 48 10 o 6 3 0 ⼈可13 70KN I ME0 48 4 1 4区B 6⻔⼝0 ⼩Fx13 57KN y 4器 1 ⽐刈⼆tx ii.glㄥ f 10 i i m"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第7次作业笔记】—拱结构.pdf",
+    "pages": 2,
+    "text_chars": 513,
+    "text_pages_gt80": 2,
+    "image_pages": 2,
+    "numbered_hits": 0,
+    "sample": "结⼒基础班第7次作业——拱结构 三铰拱作业及答案 I i 圝礼 Mk 0 Mkt57 F 70 2 0 Mk⼆年kmu IMA⼆01 12⻔13 48 10 o 6 3 0 ⼈可13 70KN I ME0 48 4 1 4区B 6⻔⼝0 ⼩Fx13 57KN y 4器 1 ⽐刈⼆tx ii.glㄥ f 10 i i m"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第8次作业笔记】—影响线(1).pdf",
+    "pages": 11,
+    "text_chars": 1751,
+    "text_pages_gt80": 8,
+    "image_pages": 11,
+    "numbered_hits": 0,
+    "sample": "第8次作业——静定结构影响线 静定结构影响线作业及答案 FQkmaxzoxixlt9kl lwkn u st.tkk 騻 if inˇ i x 㦛 上 T 1 0tano点i.im A 为櫯 t mon k txlMmax.kkzoxix9yiqokN.mn ABC是⼀个刚⽚，所以就是⼀条直线。 相对位移⽅向和剪⼒正⽅"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第8次作业笔记】—影响线.pdf",
+    "pages": 11,
+    "text_chars": 1751,
+    "text_pages_gt80": 8,
+    "image_pages": 11,
+    "numbered_hits": 0,
+    "sample": "第8次作业——静定结构影响线 静定结构影响线作业及答案 FQkmaxzoxixlt9kl lwkn u st.tkk 騻 if inˇ i x 㦛 上 T 1 0tano点i.im A 为櫯 t mon k txlMmax.kkzoxix9yiqokN.mn ABC是⼀个刚⽚，所以就是⼀条直线。 相对位移⽅向和剪⼒正⽅"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第9次作业笔记】—位移计算(1).pdf",
+    "pages": 5,
+    "text_chars": 473,
+    "text_pages_gt80": 3,
+    "image_pages": 5,
+    "numbered_hits": 0,
+    "sample": "1器 縈 䤕 笇 0 iii to ū C in Fpa ˋ___ iscrgp c i 唙幽 ⾔⼼后 乱ixaxlzip.tl it'll 匪 国⼆ ⾔lixlxilxiixlxf 圤Ìld"
+  },
+  {
+    "file": "7.作业讲解笔记\\【第9次作业笔记】—位移计算.pdf",
+    "pages": 5,
+    "text_chars": 473,
+    "text_pages_gt80": 3,
+    "image_pages": 5,
+    "numbered_hits": 0,
+    "sample": "1器 縈 䤕 笇 0 iii to ū C in Fpa ˋ___ iscrgp c i 唙幽 ⾔⼼后 乱ixaxlzip.tl it'll 匪 国⼆ ⾔lixlxilxiixlxf 圤Ìld"
+  }
+]

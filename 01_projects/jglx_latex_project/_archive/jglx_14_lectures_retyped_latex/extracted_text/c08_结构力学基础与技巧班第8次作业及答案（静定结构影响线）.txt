@@ -1,0 +1,389 @@
+【第 1 页，来源：pdf-text】
+第三章
+静定结构的影响线
+扣
+＋
+N
+=
+F
+沪max=
+lOXO. 5 =25kN。
+五、练习题
+图3-48所示结构在任意长度可移动荷载20kN/m作用下，截面K的剪力最大
+值FQKmax 为
+。(天津大学2010)
+3-2求图3-48 所示结构在任意长度可动均布荷载20kN/m作用下截面K的最大弯
+矩MKmax l。(华南理工大学2013)
+3-3
+图3-49所示多跨梁，截面K的剪力影响线在K点的竖标为YK左
+＝
+y店; =
+; 在图示移动荷载作用下，截面K的剪力最大值为
+。(浙江大学2009)
+3-1
+123
+
+【第 2 页，来源：ocr】
+al 研究生入学考试辅导丛书 结构力学〈第二版)          TS oO LNIESLLSE $7 /CeXeXe)
+.     -                    a | jor
+20KN/m
+|  4m  i   8m 2m |   6m   |     |  5m  |   8m  |, 2m | 2m ) 8m
+图3-48                         '     图3-49
+3-4 用机动法作图 3-50 所示多跨静定梁中 Ma 、Fas 、ME 、M 的影响线。 (湖南大
+学 2008)    |
+3-5 作图 3 - 51 所示结构的 Foxe. Fox. Mx 〈下侧受拉为正) 影响线。 (广州大学
+2011)
+Fpl    .      .                     Fpl
+3m   [1m | tm | 1m | Im  2m  | 1m|  2m    2m  2m  2m
+3-50      .                   图3-51
+3-6  用静力法作图 3-52 所示结构的 Me、Fas 、MAa影响线。Mc以杆 DC 下侧受拉为
+TE; Ma以AK 杆端下侧受拉为正。(Fe一1在 FDCH 段上移动) (青岛理工大学 2012)
+3-7 ER 3-53 所示结构的 ME、MFr影响线。(华南理工大学 2008)
+Fp=1      :
+.                       A               E
+x [Fl                                                      呈
+F一7    GC        H    ,                                 只
+| 2 | 24 4 22 -| 2 4    p—2m | 2m, 2m, 2m 4, _2m_
+.       图3-52                 图3-53
+3-8 移动荷载 Pe—1 PRB, MEM 3 - 54 PTR EAD Fy 和 Py
+线。(河北工业大学 2008)
+NEES Kf
+.       ‘          2mx6-12m     i  .
+图3-54
+aes
+3-9 作图3-55 SRARZA Fra. Fu. Fre. Fes Renee. Cu Arte EF RAGES NO,
+3-10 (ERI 3-56 RARE Fea. Feo. Mob. INK 2012) ZN
+O70
+24                         |                              iA ee FRED
+
+【第 3 页，来源：ocr】
+SS) CET Se Voy
+x       Fp=1                 .      、
+NA
+|            6xa
+Al 3-55
+3-11 图3-57所示结构，单位荷载 PP=1L AAA, HB. C. Diam. (1) 作轴 -
+力 Fog 、剪力 Faee和Mr的影响线。 (2) 若 CD 杆受到图示荷载作用，利用影响线计算
+Fype Fl Mac. GRINFE LAS 2011) ©
+‘  Fe=l ”“      ;      > 4KN/m
+t=}
+*                          g
+A           B     、
+C                    A               E
+4m  |  4m  |  4m  |  4m |  3m  ,  3m  ,  3m  "    .
+图3- 56       图3-57
+3-12 BOR 3-58 所示结构内力影响线 Ma Fm, For (单位荷载 已一1在 DF段移
+动) 。(青岛理工大学 2008)
+3-13 图 3- 59 所示结构， Fp=196 BCD 移动，试作出截面 K SH 〈下侧受拉为正)
+和轴力的影响线。(浙江大学2012)
+Fp=1               |
+D     E.        F         B IF »=1
+B          Cc                                   一                  Lo
+A                      4  K  mC OD
+|  了7  |  7  |  7  |  1         | 1/2 | 1/2 |  I   }
+图3-58                      图3-59
+3-14 用静力法作图 3 - 60 所示组合结构的 Ms 、Fn 、Fie的影响线。(青岛理工大学
+2009)
+3-15 图3-61 i mA—-T=EBH: (1) 设方向向下单位集中力 Fp=1 可以在拱上沿x
+轴方向移动，求作支座 A 水平反力 Fa的影响线 (z轴以A 为原点，以向右为正向) 。 (2)
+设拱上布满方向向下、沿 z 轴方向均匀分布的荷载g，试利用 CL) 中所求影响线， 求解水，，, ，
+FRA Fn的值。(武汉理工大学 2008)             SN
+3-16 (1) 作图 3 - 62 RA DH Fr MK 点弯矩 Mr的影响线; arse GG zo:
+示移动荷载组作用下 Mk的最大值。(要考虑荷载掉头) (西南交通大学 2012)     人
+seis’ Swen
+BER iS
+
+【第 4 页，来源：ocr】
+a 研究生入学考试辅导丛书 结构力学〈第二版)           12 Y< SAG AIRES Eee
+x   Fp=l
+|    |                 Fe=1
+E        D                         x
+C                                          4   C
+&                   y                         ~
+A                     B              ___, 4  _              D
+| -一阵 | im                人   |天一|一
+图3-60                            .               图3-61
+oo 上 poe
+Fol                       im 2m |
+A        K     B      C    D    E     F
+p—6m_, 4m} 4m 4 4m 4 4m 4 4m_y
+3-62                               :
+1./
+Ne   ry
+iT
+CA NS)
+12                                                                                    Zi
+6                                                                             萌锡线上快印
+
+【第 5 页，来源：ocr】
+FERRARI
+BARS         REE ODIGHUSES
+4H.          |                                               |
+|                        ym                                        (
+Bhs (Hele = pk
+|      关公
+|      uh
+|                                   2m     fm
+|       | kms > xx Wee Yo bem                                       .
+44,
+|                       Benne Sxl += Tol                          ,
+FAR   %  %                            |                   |
+|      oN
+的
+ci                            荫喝线止快印
+
+【第 6 页，来源：ocr】
+BE RBAR Sis
+|               |                              TRACE g3 1037888
+:      OD mM                        a
+@ My              1
+oO Pete
+|                                                                               |
+® Me                                                  _
+3-b.               PA
+OMe      A          aT?                               7
+vey O24                                                                                &,
+M br =  at w= RAM) 2 L (ta-ey—FAt Xe 2A SKA
+Teg              Ode:
+一    Va          ieee FRED |
+
+【第 7 页，来源：ocr】
+HE SBAR Sis
+kak
+Pye ao                                                    !
+|    xzmco , Foyy ude Ix[x-$4)=0, y= co 四
+—«® fee             Be         ——  |
+|    ox esa fv       Fh            Es m =
+pee                                    m
+Ta Pee a                         Fd.        |
+@) of Xu a,   Rh= ax  mez  这 “RA -  1(44~x) =a                 |
+: |                                        4a
+we 和
+:                                                        GENO}
+二                             荫喝线止快印
+
+【第 8 页，来源：ocr】
+—      PRRBARS
+9-8,  vi 1ia\}      A  Jd        IRAN OB TBE B88
+fe   :   人   人     人   0      n”   TR
+PTS BE
+|                            ta N i =              |
+|                        5        =
+Om Daal  en 2 i
+eal VL 7力克] ws]  < +)     i     ye            ;
+34                                            |
+Cay                                    |      7
+VK ph A, Via SN
+fo ”             ate           本
+je
+-AN
+ph Uk h TPS)     2
+二                      tw2efe, pH        。
+4 EDS. esY Cele
+Ae
+fA See ERED
+
+【第 9 页，来源：ocr】
+a          PRRAAR SN
+KZ 东久向全1981387888
+tall
+CL /
+WN     0     ZN/
+Fa          b              °
+加                          Foo] HEE MI RSY,
+ha: Fe , Fs FS %) 04,
+号            HAR), Fate Fs
+Ae ie
+“Sy oO
+BA 22 CRED
+
+【第 10 页，来源：pdf-text】
+当单位力作用在下弦时
+(1)
+RA
+F 杆轴力影响线
+与作用在上弦相同，可直接画出单位力作用在下弦时
+RA
+F 影响线，如图(a)所示。
+(2)1 杆轴力影响线
+采用联合法，断开1 杆[见图(b)]。令断口两端发生单位相对位移，AC、DB 段影响线应分别保
+持为直线，取A、C、D 和B 为关键点。当单位力作用在A 点和B 点时，力通过竖杆直接传递给大地了，
+所以yA=yB=0。当单位力作用在C 点时，如图(c)，求出支座反力，取Ⅰ-Ⅰ截面以右部分隔离体，根
+据竖向力平衡可求出
+1
+2
+6
+N =
+；当断开1 杆后，链杆IJ 和CD 相当于定向节点，因此AC 和BD 两段的
+影响线应保持平行，根据AC 段影响线，可以求出单位力作用在D 点时
+1
+2 2
+3
+N =
+。连接所有关键点竖
+标，可得1 杆轴力影响线，如图(d)所示。
+(3)2 杆轴力影响线(9 分)
+当单位力作用在下弦时，2 杆始终为0 杆，影响线而(e )所示
+
+【第 11 页，来源：pdf-text】
+(4)3 杆轴力影响线
+采用联合法，断开3 杆[见图(f)]。令断口两端发生单位相对位移，AE、BF 段影响线应分别保
+持为直线，取A、E、B 和F 为关键点。当单位力作用在A 点和B 点时，力通过竖杆直接传递给大地了，
+所以yA=yB=0。当单位力作用在E 点时，如图(g)，求出支座反力，取Ⅰ-Ⅰ截面以右部分隔离体，根
+据竖向力平衡可求出
+3
+2
+2
+N =
+；当断开3 杆后，链杆KL 和EF 相当于定向节点，因此AE 和BF 两段的
+影响线应保持平行，根据AE 段影响线，可以求出单位力作用在F 点时
+3
+2
+3
+N =
+。连接所有关键点竖
+标，可得3 杆轴力影响线，如图(h)所示。
+
+【第 12 页，来源：ocr】
+BE BARS GS]
+,     to,
+OP 一一           ihn |, BOFTT AH         |
+7                 =
+aa         g        >
+.                        |        中                                   、、41.y
+ae Z
+SRO
+|                                     fee FIRED
+
+【第 13 页，来源：ocr】
+|     —-—_-—_SSRRAaReind —
+a       术欠向信2991587888
+b             b             ,       Br Bek 4
+DEA YE, HAS fs RB        i
+Po & Mazo                            7
+yp
+Mae 2 Pey                     7
+¥                                                          :
+AO
+aA eee ERED
+
+【第 14 页，来源：pdf-text】
+3-11、(1)
+解：①
+NDE
+F
+影响线
+采用联合法，取B、C、D 为关键点，其中当单位力作用在B、C 点时DE 杆轴力为0.当单位力作用在D
+点时如图(a)所示，根据结点D 竖向力平衡可得
+5
+4
+NDE
+F
+= −
+。综合以上计算，画出影响线如图(b)所示。
+②
+QBC
+F
+影响线
+用机动法。去掉相应的约束，画出虚位移图[见图(c)]，令
+QBC
+F
+对应的位移等于1，求出影响线的竖标
+后可得到BC 杆B 端截面的剪力影响线如图(d)所示。
+③
+BC
+M
+影响线
+用机动法。去掉相应的约束，画出虚位移图[见图(e)]，令
+BC
+M
+对应的位移等于1，求出影响线的竖标
+后可得到BC 杆B 端截面的弯矩影响线如图(f)所示。
+(2)图示荷载作用下，可分别求得DE 杆轴力和
+BC
+M
+为
+1
+5
+15
+3
+4
+2
+4
+2
+NDE
+F
+KN
+= −
+\\times \\times
+\\times
+= −
+1 3 3 4
+18
+2
+BC
+M
+KN m
+= −
+\\times \\times \\times
+= −
+\\cdot
+
+【第 15 页，来源：ocr】
+PPAR
+Se:    |
+,                                   .                                                         GENO
+萌喝线上快印
+
+【第 16 页，来源：ocr】
+-    SASRARSION
+ce tht            未久向信1951587888
+39. Feb dik, Mes
+1 A> 8 ~     B        At   yey
+ae
+k    c      D
+se
+as i ca         |
+ha 1ERA    4: Tis ee
+b        cl       p’         有
+~~                 全
+是            iL       了
+mening >           Foot. By oft) 4X                   -
+aie, \f 4         4CXL3m
+1          4        HII 4, mo
+,                             M20            ;
+|                    f         Hy B.     Netra 2 Ka gf= 5               (       |
+Me 53      = |        |
+和CC Agz=X                           mo Ree 4x        :
+BA  cA  an        一
+Q 人
+rad                 _ wets 2   r       部
+A\cvz                     -
+|                                  ,   Ay Hoh sx                 3
+|                                                      Noe
+萌喝线上快印
+
+【第 17 页，来源：ocr】
+全刘
+AAS                          |
+{)      jer | C              aint t
+|                 AN 30          ，
+|           |                   N\=0                  ，
+¥
+aff      \          4
+.      wey       y+ fox te Fy-y         ;
+5   AM +  Font =   Ka
+:     1 有 WAL gy
+OM the   iM 4 dy +      5 4         L.1y)   A”        ,
+al             ~  4   ITLLLE5六和气
+(fa Se ap ED (5-389) F    |
+20 Yo          s                         S33, AS
+.         和                                    e7" iw@
+.                             萌喝线上快印
+
+【第 18 页，来源：ocr】
+ESRRAREITA] —
+, IRA alIO SI OSCCOMmEE
+和
+“Sy NG@
+四    ”戎喝线上快印-

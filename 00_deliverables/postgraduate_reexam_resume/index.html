@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>顾诗渝 - 考研复试个人简历</title>
+  <style>
+    :root {
+      --ink: #1e2b3a;
+      --muted: #5d6876;
+      --line: #d9e0e8;
+      --paper: #fffefa;
+      --deep: #1f2d40;
+      --blue: #075f7f;
+      --blue-soft: #eaf3f6;
+      --gold: #b8822f;
+      --gold-soft: #f8efe2;
+      --soft: #f4f7f9;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #e7eaef;
+      color: var(--ink);
+      font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+      line-height: 1.46;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 18px auto;
+      background: var(--paper);
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
+      padding: 10mm 13mm 8mm;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr 28mm;
+      gap: 12mm;
+      align-items: start;
+      padding-bottom: 7mm;
+      border-bottom: 2px solid var(--deep);
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 48mm;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--deep);
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: 0;
+      font-weight: 800;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 5px 8px;
+      margin-top: 10px;
+      color: #3d4654;
+      font-size: 10.1px;
+    }
+
+    .info-grid span {
+      padding: 4px 6px;
+      background: var(--soft);
+      border-left: 3px solid var(--gold);
+      min-height: 22px;
+    }
+
+    .portrait {
+      width: 28mm;
+      height: 37mm;
+      justify-self: end;
+      background: #fff;
+      border: 1.4px solid var(--line);
+      overflow: hidden;
+      box-shadow: 0 5px 14px rgba(31, 45, 64, 0.12);
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .summary {
+      margin: 7.5mm 0 0;
+      padding: 8px 10px 8px 12px;
+      background: linear-gradient(90deg, #f8fbfc 0%, #f1f6f8 100%);
+      border-left: 4px solid var(--blue);
+      color: #374151;
+      font-size: 10.4px;
+      line-height: 1.62;
+    }
+
+    .summary b {
+      color: var(--deep);
+      font-weight: 800;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.04fr 0.96fr;
+      gap: 10px;
+      margin-top: 10px;
+      align-items: start;
+    }
+
+    section {
+      margin-top: 10px;
+    }
+
+    .layout section:first-child,
+    .layout section:nth-child(2) {
+      margin-top: 0;
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin: 0 0 7px;
+      color: var(--blue);
+      font-size: 13.8px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    h2::before {
+      content: "";
+      width: 4px;
+      height: 15px;
+      background: var(--gold);
+    }
+
+    .card {
+      padding: 8px 9px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.92);
+      margin-bottom: 7px;
+    }
+
+    .education-card {
+      background: linear-gradient(90deg, #ffffff 0%, #f6f9fb 100%);
+    }
+
+    .card h3 {
+      margin: 0 0 3px;
+      color: var(--deep);
+      font-size: 11.15px;
+      line-height: 1.34;
+    }
+
+    .project h3 {
+      display: grid;
+      gap: 2px;
+    }
+
+    .project-title {
+      color: var(--deep);
+      font-weight: 800;
+    }
+
+    .project-focus {
+      color: var(--blue);
+      font-size: 9.4px;
+      font-weight: 700;
+    }
+
+    .date {
+      color: var(--muted);
+      font-size: 9.1px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      position: relative;
+      padding-left: 10px;
+      margin: 3px 0;
+      color: #414b59;
+      font-size: 9.5px;
+      line-height: 1.48;
+    }
+
+    li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.68em;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .awards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
+
+    .award {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 6px;
+      align-items: center;
+      padding: 6px 7px 6px 0;
+      background: linear-gradient(90deg, var(--gold-soft), #f7f9fb);
+      border-left: 3px solid var(--blue);
+      color: #3b4654;
+      font-size: 9.35px;
+      line-height: 1.34;
+      min-height: 29px;
+    }
+
+    .award::before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      margin-left: 5px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: inset 0 0 0 4px #d9edf3;
+    }
+
+    .award strong {
+      color: var(--deep);
+      font-weight: 800;
+    }
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 5px 8px;
+      color: #414b59;
+      font-size: 9.45px;
+      line-height: 1.52;
+    }
+
+    .skill-grid b {
+      color: var(--blue);
+      font-weight: 800;
+    }
+
+    .work-card li {
+      margin: 4px 0;
+    }
+
+    @page { size: A4; margin: 0; }
+
+    @media print {
+      body { background: #fff; }
+      .page {
+        margin: 0;
+        width: 210mm;
+        min-height: 297mm;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div>
+        <h1>顾诗渝</h1>
+        <div class="info-grid">
+          <span>本科院校：宁夏理工学院</span>
+          <span>本科专业：土木工程</span>
+          <span>联系电话：13013936376</span>
+          <span>邮箱：gsy1193@outlook.com</span>
+          <span>政治面貌：中共预备党员</span>
+          <span>外语 / 证书：日语 N2、计算机二级</span>
+          <span>其他证书：普通话二级甲等、驾驶证</span>
+          <span>方向基础：数学建模、工程智能检测</span>
+        </div>
+      </div>
+      <div class="portrait"><img src="assets/portrait.png" alt="证件照"></div>
+    </header>
+
+    <div class="summary">
+      <b>复试核心优势：</b>土木工程本科在读，专业基础覆盖结构力学、材料力学、混凝土结构、流体力学等课程；具备<b>数学建模</b>、<b>工程图像识别</b>、<b>科创项目执行</b>与<b>申报材料撰写</b>经验。曾获全国大学生数学建模竞赛全国二等奖、APMCM 亚太地区大学生数学建模竞赛二等奖、节能减排竞赛一等奖等荣誉，具备较强的问题建模、资料检索、团队协作与持续学习能力。
+    </div>
+
+    <div class="layout">
+      <section>
+        <h2>教育背景</h2>
+        <div class="card education-card">
+          <h3>宁夏理工学院 ｜ 土木工程 ｜ 本科 <span class="date">2023.08 - 2027.06</span></h3>
+          <ul>
+            <li>主修课程：混凝土结构基本原理、理论力学、材料力学、结构力学、流体力学。</li>
+            <li>专业方向基础：结构受力分析、工程结构安全检测、绿色建筑与双碳相关行业认知。</li>
+            <li>综合能力：具备工程课程学习、竞赛建模、项目材料整理与团队协作经验。</li>
+          </ul>
+        </div>
+
+        <h2>科创 / 项目经历</h2>
+        <div class="card project">
+          <h3>
+            <span class="project-title">慧眼识裂 - 基于 OpenClaw 的基础设施裂缝全链路智能诊断与闭环处置系统 <span class="date">2026.01 - 至今</span></span>
+            <span class="project-focus">基础设施裂缝识别 ｜ 工程图像识别 ｜ 智能诊断闭环</span>
+          </h3>
+          <ul>
+            <li>规划项目技术路线与实施步骤，推进数据集构建、模型适配与性能测试。</li>
+            <li>负责核心技术工作，围绕裂缝识别效率与准确率优化算法流程。</li>
+            <li>将土木工程安全检测场景转化为“识别 - 诊断 - 处置 - 反馈”的系统表达。</li>
+          </ul>
+        </div>
+        <div class="card project">
+          <h3>
+            <span class="project-title">智眼识蚜 - 枸杞蚜虫精准防控引领者 <span class="date">2024.11 - 2025.09</span></span>
+            <span class="project-focus">图像识别 ｜ 数据处理 ｜ 模型训练协同</span>
+          </h3>
+          <ul>
+            <li>制定项目实施计划，明确数据采集、处理、模型训练各阶段时间节点。</li>
+            <li>负责全流程数据处理与模型搭建，协调样本标注、参数调优等工作。</li>
+          </ul>
+        </div>
+        <div class="card project">
+          <h3>
+            <span class="project-title">智井卫士 - 城市智能监测井盖项目 <span class="date">2025.11 - 至今</span></span>
+            <span class="project-focus">城市安全监测 ｜ 商业计划书 ｜ 创新创业材料</span>
+          </h3>
+          <ul>
+            <li>独立完成商业计划书撰写，覆盖市场定位、商业模式、运营策略和风险管控。</li>
+            <li>梳理项目应用场景与落地路径，支持团队完成创新创业赛事材料准备。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>核心竞赛荣誉</h2>
+        <div class="awards">
+          <div class="award"><span><strong>2025</strong> 全国大学生数学建模竞赛全国二等奖</span></div>
+          <div class="award"><span>中国国际大学生创新大赛宁夏回族自治区铜奖</span></div>
+          <div class="award"><span><strong>2025</strong> 第十五届 APMCM 亚太地区大学生数学建模竞赛二等奖</span></div>
+          <div class="award"><span><strong>2024</strong> 全国大学生数学建模竞赛宁夏赛区一等奖</span></div>
+          <div class="award"><span>第二届宁夏大学生节能减排社会实践与科技竞赛一等奖</span></div>
+          <div class="award"><span>宁夏第十一届大学生数学建模竞赛暨全国选拔赛二等奖</span></div>
+          <div class="award"><span>宁夏第十届大学生数学建模竞赛暨全国选拔赛三等奖</span></div>
+          <div class="award"><span>2023-2024、2024-2025 学年校级优秀学生干部</span></div>
+          <div class="award"><span>2025-2026 学年校级优秀共青团员</span></div>
+        </div>
+
+        <h2>专业技能</h2>
+        <div class="card">
+          <div class="skill-grid">
+            <b>工程</b><span>结构力学、混凝土结构设计、工程结构安全检测、基建工程场景分析。</span>
+            <b>建模</b><span>数学建模、YOLO、OpenClaw、图像识别、数据处理与模型优化。</span>
+            <b>工具</b><span>AutoCAD、Revit、MATLAB、Python、OpenCV、Pandas、NumPy。</span>
+            <b>材料</b><span>项目申报书、商业计划书、汇报 PPT、公文和活动材料整理。</span>
+          </div>
+        </div>
+
+        <h2>校园经历</h2>
+        <div class="card work-card">
+          <ul>
+            <li>土木工程 23101 班副班长：协助班级日常管理、学风建设和师生沟通。</li>
+            <li>建筑与环境学院团委办公室干事 / 委员：负责团务材料归档和团学活动筹备执行。</li>
+            <li>建筑与环境学院学生党支部督察组委员：参与支部督查和理论学习组织。</li>
+            <li>建筑与环境学院学生党支部 23 党小组委员：协助党小组事务、学习记录和组织沟通。</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

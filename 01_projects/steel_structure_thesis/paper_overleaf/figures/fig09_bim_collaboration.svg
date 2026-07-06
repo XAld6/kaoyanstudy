@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs>
+<marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#1F4E73"/>
+</marker>
+<marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#6C757D"/>
+</marker>
+<marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#D8892C"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1000" fill="#FFFFFF"/>
+<text x="800" y="62" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="40" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+BIM协同设计、制造、施工流程图
+</text>
+<text x="800" y="108" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+一个模型贯通设计、制造、运输、安装和运维
+</text>
+<line x1="100" y1="132" x2="1500" y2="132" stroke="#CBD3DA" stroke-width="2"/>
+<circle cx="800" cy="500" r="150" fill="#DDECF7" stroke="#1F4E73" stroke-width="5"/>
+<text x="800" y="500" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="34" fill="#1F4E73" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+<tspan x="800" dy="-21.0">BIM</tspan>
+<tspan x="800" dy="42">信息模型</tspan>
+</text>
+<rect x="110" y="180" width="280" height="140" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="250" y="214" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+结构设计
+</text>
+<text x="250" y="272" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="250" dy="-13.0">计算模型</tspan>
+<tspan x="250" dy="26">构件拆分</tspan>
+</text>
+<line x1="250" y1="250" x2="800" y2="500" stroke="#6C757D" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<rect x="660" y="120" width="280" height="140" rx="14" fill="#F7E5CC" stroke="#D8892C" stroke-width="3"/>
+<text x="800" y="154" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#D8892C" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+深化设计
+</text>
+<text x="800" y="212" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="800" dy="-13.0">节点详图</tspan>
+<tspan x="800" dy="26">碰撞检查</tspan>
+</text>
+<line x1="800" y1="190" x2="800" y2="500" stroke="#6C757D" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<rect x="1210" y="180" width="280" height="140" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="1350" y="214" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+工厂制造
+</text>
+<text x="1350" y="272" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="1350" dy="-13.0">数控下料</tspan>
+<tspan x="1350" dy="26">构件编码</tspan>
+</text>
+<line x1="1350" y1="250" x2="800" y2="500" stroke="#6C757D" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<rect x="1210" y="650" width="280" height="140" rx="14" fill="#DDECF7" stroke="#2F6FA3" stroke-width="3"/>
+<text x="1350" y="684" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#2F6FA3" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+现场施工
+</text>
+<text x="1350" y="742" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="1350" dy="-13.0">进度模拟</tspan>
+<tspan x="1350" dy="26">吊装校核</tspan>
+</text>
+<line x1="1350" y1="720" x2="800" y2="500" stroke="#6C757D" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<rect x="660" y="740" width="280" height="140" rx="14" fill="#F7E5CC" stroke="#D8892C" stroke-width="3"/>
+<text x="800" y="774" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#D8892C" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+质量管理
+</text>
+<text x="800" y="832" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="800" dy="-13.0">扫码追溯</tspan>
+<tspan x="800" dy="26">验收记录</tspan>
+</text>
+<line x1="800" y1="810" x2="800" y2="500" stroke="#6C757D" stroke-width="3" marker-end="url(#arrow-gray)"/>
+<rect x="110" y="650" width="280" height="140" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="250" y="684" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+运维管理
+</text>
+<text x="250" y="742" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="250" dy="-13.0">构件档案</tspan>
+<tspan x="250" dy="26">维修计划</tspan>
+</text>
+<line x1="250" y1="720" x2="800" y2="500" stroke="#6C757D" stroke-width="3" marker-end="url(#arrow-gray)"/>
+</svg>

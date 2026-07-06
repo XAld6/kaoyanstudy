@@ -1,0 +1,916 @@
+\chapter{无穷级数}
+
+\section{原题页索引}
+本章原题对应做题本第 112--129 页。第 123 页后原题题号从 \(34\) 跳到 \(36\)，可见页面中未出现第 \(35\) 题。
+
+\begin{center}
+\includegraphics[width=.92\textwidth]{figures/original_pages/page_112.png}
+\end{center}
+
+\section{详细解析}
+
+\begin{problemblock}
+\textbf{1.} 判断命题正误。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{本题考查级数基本性质，尤其是“发散”与“通项比较”不能随意互推。}
+A 错，例如 \(\sum 1/(n\ln n)\) 发散，但 \(1/(n\ln n)<1/n\)。B 错，例如 \(a_{2n-1}=1,a_{2n}=-1\)，成对级数为 \(0\)，原级数不收敛。D 错，例如 \(a_n=1,b_n=1/n^2\)，\(\sum|a_nb_n|\) 收敛但 \(\sum a_n^2\) 发散。C 正确：若 \(\sum(|a_n|+|b_n|)\) 收敛，则 \(\sum|a_n|\)、\(\sum|b_n|\) 都收敛，从而两个原级数都绝对收敛，与“至少一个发散”矛盾。
+\answer{C}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{2.} 判断四个命题中正确的个数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{注意极限比较和夹逼判别都需要相应的正项或非负项结构。}
+(1) 正确。若 \(\sum a_n\) 收敛，则其部分和有界，而 \((-1)^n/n\) 单调趋零，由 Dirichlet 判别法，\(\sum (-1)^n a_n/n\) 收敛。(2) 错，\(a_n=1/n\) 满足 \(a_{n+1}/a_n<1\)，但级数发散。(3) 错，缺少正项条件时极限比较不能直接用。(4) 正确。由 \(0\le b_n-a_n\le c_n-a_n\)，且 \(\sum(c_n-a_n)\) 收敛，得 \(\sum(b_n-a_n)\) 收敛，故 \(\sum b_n\) 收敛。
+\answer{2 个，选 C}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{3.} \(f(x)\) 在 \([0,1]\) 上连续，
+\[
+a_n=\sqrt n\int_{1/(n+1)}^{1/n}f(x)\,dx.
+\]
+判断 \(\sum a_n\) 的敛散性。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{连续函数有界，小区间长度约为 \(1/n^2\)。}
+设 \(|f(x)|\le M\)，则
+\[
+|a_n|\le M\sqrt n\left(\frac1n-\frac1{n+1}\right)
+=O\left(\frac1{n^{3/2}}\right).
+\]
+故 \(\sum|a_n|\) 收敛。
+\answer{绝对收敛，选 B}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{4.} 设 \(p>0\)，讨论
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{\ln(en+p)}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{分母趋于无穷，通项正部 \(1/\ln(en+p)\) 单调趋零，但绝对值级数比调和级数更慢。}
+由交错级数判别法，原级数收敛。绝对级数
+\[
+\sum\frac1{\ln(en+p)}
+\]
+发散，因为其通项不小于常数倍 \(1/n\) 对充分大 \(n\) 成立。
+\answer{条件收敛，选 B}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{5.} 判断比较判别相关命题。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{若没有正项条件，很多“极限比较”说法都不成立。}
+A、B 都是错误的比较方向；C 错，例如 \(a_n=b_n=1/n\)，则 \(a_nb_n\to0\)，但两个级数都发散。D 正确：若 \(\sum a_n,\sum b_n\) 都收敛，则 \(a_n\to0,b_n\to0\)，于是 \(a_nb_n\to0\)，与 \(\lim a_nb_n=1\) 矛盾。
+\answer{D}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{6.} 已知 \(\sum a_n\) 收敛，判断哪个结论不正确。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{线性组合和平方差望远镜通常保收敛，但隔项差不一定。}
+A、B 都是对原收敛级数的有限错位与分组，收敛。D 为
+\[
+\sum(a_n^2-a_{n+1}^2),
+\]
+部分和等于 \(a_1^2-a_{N+1}^2\)，而 \(a_n\to0\)，故收敛。C 不一定，例如 \(a_n=(-1)^n/\sqrt n\) 时 \(\sum a_n\) 收敛，但
+\[
+a_{2n}-a_{2n+1}\sim \frac1{\sqrt{2n}}+\frac1{\sqrt{2n+1}},
+\]
+对应级数发散。
+\answer{C}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{7.} \(a_n>0,\sum a_n\) 收敛，\(\lambda\in(0,\pi/2)\)，讨论
+\[
+\sum_{n=1}^{\infty}(-1)^n\left(n\tan\frac{\lambda}{n}\right)a_{2n}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(n\tan(\lambda/n)\to\lambda\)，而正项收敛级数的子级数也收敛。}
+有
+\[
+n\tan\frac{\lambda}{n}\to\lambda,
+\]
+故绝对值级数与 \(\sum a_{2n}\) 同敛散。因为 \(\sum a_n\) 收敛且 \(a_n>0\)，\(\sum a_{2n}\) 收敛，所以原级数绝对收敛。
+\answer{C}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{8.} 设 \(\sum u_n\) 收敛，判断必收敛的级数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{严格地说，按题面 A 与 D 都必收敛；若原题作单选，则题面不唯一。}
+D 中
+\[
+\sum_{n=1}^N(u_n+u_{n+1})=S_N+S_{N+1}-u_1\to2S-u_1,
+\]
+必收敛。A 也必收敛：\(\sum u_n\) 的部分和有界，而 \((-1)^n/n\) 趋零且总变差有限，由 Abel 变换可得 \(\sum(-1)^nu_n/n\) 收敛。B 可取 \(u_n=(-1)^n/\sqrt n\) 反例；C 同样由交错调和型反例可否定。
+\answer{A、D 均必收敛；若按常规单选，D 是最直接选项。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{9.} 若 \(\sum a_n\) 收敛，判断必收敛的级数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{错位平均保持收敛；乘以 \((-1)^n\) 或相邻项相乘不一定。}
+D 中
+\[
+\sum_{n=1}^N\frac{a_n+a_{n+1}}2
+=\frac12(S_N+S_{N+1}-a_1)\to S-\frac{a_1}{2}.
+\]
+A 不一定绝对收敛；B 取 \(a_n=(-1)^n/n\)，变为调和型发散；C 取 \(a_n=(-1)^n/\sqrt n\)，则 \(a_na_{n+1}\sim-1/n\) 发散。
+\answer{D}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{10.} 若 \(a_n\to0\)，判断与 \(\sum b_n\) 有关的命题。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{只有绝对收敛与有界因子相乘最稳。}
+由 \(a_n\to0\) 知 \(\{a_n\}\) 有界。若 \(\sum|b_n|\) 收敛，则 \(\sum b_n^2\) 收敛，从而
+\[
+\sum a_n^2b_n^2
+\]
+收敛。A、B、D 均可由条件收敛或发散级数构造反例。
+\answer{C}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{11.} \(a_n>0\)，\(\sum a_n\) 发散而 \(\sum(-1)^{n-1}a_n\) 收敛，判断结论。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{交错级数收敛并不推出奇项或偶项正项级数分别收敛，但成对差就是原交错级数的分组。}
+有
+\[
+\sum_{n=1}^{\infty}(a_{2n-1}-a_{2n})
+=\sum_{n=1}^{\infty}(-1)^{n-1}a_n
+\]
+按相邻两项分组，故收敛。其他关于奇项、偶项正项级数的断言不一定成立。
+\answer{D}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{12.} 设 \(\{u_n\}\) 为数列，判断命题正确项。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{收敛级数可以相邻分组，但反向由分组收敛推出原级数收敛是错误的。}
+若 \(\sum u_n\) 收敛，则
+\[
+\sum_{n=1}^{\infty}(u_{2n-1}+u_{2n})
+\]
+是原级数按两项分组，必收敛。B 可取 \(u_{2n-1}=1,u_{2n}=-1\)；C 可取交错调和型反例；D 同样不成立。
+\answer{A}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{13.} 已知
+\[
+\sum (-1)^n\sqrt n\sin\frac1{n^\alpha}
+\]
+绝对收敛，且
+\[
+\sum\frac{(-1)^n}{n^{2-\alpha}}
+\]
+条件收敛，求 \(\alpha\) 范围。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{分别化为 \(p\)-级数与交错 \(p\)-级数。}
+\[
+\sqrt n\sin\frac1{n^\alpha}\sim n^{1/2-\alpha}.
+\]
+绝对收敛要求
+\[
+1/2-\alpha<-1,\quad \alpha>\frac32.
+\]
+第二个级数条件收敛要求
+\[
+0<2-\alpha\le1,
+\]
+即 \(1\le\alpha<2\)。交集为
+\[
+\boxed{\frac32<\alpha<2}.
+\]
+\answer{D}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{14.} 设 \(a_n\) 为正项数列，判断正确选项。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{交错级数判别需要 \(a_n\to0\)，而不仅是递减。}
+A 缺少 \(a_n\to0\)，错。B 错，交错级数收敛不必严格递减。C 错，如 \(a_n=1/(n\ln^2 n)\) 收敛，但不存在合适 \(p>1\) 使 \(n^pa_n\) 有有限极限。D 正确：若存在 \(p>1\)，使 \(\lim n^pa_n\) 为有限值，则 \(a_n=O(1/n^p)\)，故 \(\sum a_n\) 收敛。
+\answer{D}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{15.} 若幂级数 \(\sum_{n=0}^{\infty}a_n(x+1)^n\) 在 \(x=1\) 处收敛，判断 \(\sum a_n\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(x=1\) 对应中心变量 \(t=x+1=2\)，而 \(\sum a_n\) 对应 \(t=1\)，属于收敛圆内部。}
+幂级数在 \(t=2\) 处收敛，故收敛半径 \(R\ge2\)。当 \(t=1\) 时在收敛圆内部，所以绝对收敛。
+\answer{A}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{16.} \(\sum (x-a)^n/n\) 在 \(x=-2\) 处条件收敛，判断 \(\sum n^2(x-a)^n\) 在 \(x=\ln(1/2)\) 处的敛散性。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(\sum t^n/n\) 在 \(t=-1\) 条件收敛。}
+由 \(-2-a=-1\)，得 \(a=-1\)。当 \(x=\ln(1/2)=-\ln2\) 时，
+\[
+x-a=1-\ln2,
+\]
+其绝对值小于 \(1\)。级数 \(\sum n^2t^n\) 在 \(|t|<1\) 内绝对收敛。
+\answer{A}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{17.} \(a_n\) 单调减且 \(a_n\to0\)，\(S_n=\sum_{k=1}^n a_k\) 无界，求
+\[
+\sum_{n=1}^{\infty}a_n(x-1)^n
+\]
+的收敛域。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{半径为 \(1\)。右端点是正项级数发散，左端点是交错级数收敛。}
+当 \(|x-1|<1\) 时收敛，即 \(0<x<2\)。当 \(x=2\) 时为 \(\sum a_n\)，由 \(S_n\) 无界知发散；当 \(x=0\) 时为 \(\sum a_n(-1)^n\)，由 Leibniz 判别法收敛。故收敛域为
+\[
+\boxed{[0,2)}.
+\]
+\answer{C}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{18.} \(a_n>0,p>1\)，且
+\[
+\lim_{n\to\infty}n^p(e^{1/n}-1)a_n=1.
+\]
+若 \(\sum a_n\) 收敛，求 \(p\) 范围。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{\(e^{1/n}-1\sim1/n\)，所以 \(a_n\) 等价于 \(1/n^{p-1}\)。}
+由题设
+\[
+a_n\sim \frac1{n^p(e^{1/n}-1)}\sim\frac1{n^{p-1}}.
+\]
+正项级数收敛要求
+\[
+p-1>1,
+\]
+即
+\[
+\boxed{p>2}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{19.} 若 \(\sum a_nx^n\) 的收敛半径为 \(3\)，求
+\[
+\sum_{n=1}^{\infty}n a_n(x-1)^{n+1}
+\]
+的收敛区间。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{乘以 \(n\) 和多乘一个 \((x-1)\) 不改变收敛半径。}
+中心变量为 \(t=x-1\)，半径仍为 \(3\)，故开区间为
+\[
+\boxed{(-2,4)}.
+\]
+仅由原半径不能确定端点。
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{20.} \(\sum a_n(x+2)^n\) 在 \(x=0\) 收敛，在 \(x=-4\) 发散，求 \(\sum a_n(x-3)^n\) 的收敛域。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{旧级数中心为 \(-2\)，两个端点对应 \(t=\pm2\)。}
+由 \(x=0\) 收敛、\(x=-4\) 发散可知半径为 \(2\)，且 \(t=2\) 收敛，\(t=-2\) 发散。新级数中心为 \(3\)，故
+\[
+|x-3|<2.
+\]
+右端点 \(x=5\) 对应 \(t=2\)，收敛；左端点 \(x=1\) 对应 \(t=-2\)，发散。收敛域为
+\[
+\boxed{(1,5]}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{21.} 正项数列 \(a_n\) 单调减，且 \(a_n\ln n\to1\)，求
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^na_n}{n}(x+1)^n
+\]
+的收敛区间。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{系数约为 \(1/(n\ln n)\)，半径为 \(1\)。}
+当 \(|x+1|<1\) 时收敛。右端点 \(x=0\) 为
+\[
+\sum\frac{(-1)^na_n}{n},
+\]
+交错收敛；左端点 \(x=-2\) 为
+\[
+\sum\frac{a_n}{n}\sim\sum\frac1{n\ln n},
+\]
+发散。故
+\[
+\boxed{(-2,0]}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{22.} 已知 \(\sum(-1)^na_n\) 条件收敛，求
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^na_n}{n}(x+1)^n
+\]
+的收敛区间。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{题面未给 \(a_n\) 单调或 \(\sum a_n/n\) 的信息，左端点不能唯一确定。}
+一般可确定的是：半径通常为 \(1\)，在 \(-2<x<0\) 内绝对收敛；右端点 \(x=0\) 为 \(\sum(-1)^na_n/n\)，在常规交错条件下收敛。左端点 \(x=-2\) 变为 \(\sum a_n/n\)，仅由 \(\sum(-1)^na_n\) 条件收敛不能判断。例如 \(a_n=1/\sqrt n\) 时 \(\sum a_n/n\) 收敛；\(a_n=1/\ln n\) 时 \(\sum a_n/n\) 发散。
+\answer{可确定部分为 \((-2,0]\)，但 \(x=-2\) 端点题面条件不足。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{23.} 若 \(\sum a_nx^n\) 在 \(x=2\) 条件收敛，求
+\[
+\sum a_nx^{2n}
+\]
+的收敛域。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{令 \(u=x^2\)，新级数就是旧级数在 \(u\) 处的取值。}
+旧级数半径为 \(2\)，且 \(u=2\) 时条件收敛。因此
+\[
+x^2<2
+\]
+时绝对收敛；当 \(x^2=2\) 时条件收敛。故收敛域为
+\[
+\boxed{[-\sqrt2,\sqrt2]}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{24.} 求幂级数
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^nx^n}{n[(-3)^n+2^n]}
+\]
+的收敛域。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{主导项为 \((-3)^n\)，半径为 \(3\)，再判端点。}
+当 \(|x|<3\) 时绝对收敛。当 \(x=3\) 时，通项约为 \(1/n\)，发散；当 \(x=-3\) 时，通项约为 \((-1)^n/n\)，条件收敛。因此
+\[
+\boxed{[-3,3)}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{25.} 判定级数敛散性。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{分别使用根值、比较、交错级数判别。}
+\begin{enumerate}
+\item \(\sum 1/(a^n n^a)\)：当 \(a>1\) 收敛；当 \(a=1\) 为调和级数发散；当 \(0<a<1\) 通项不趋零，发散。
+\item \(\displaystyle \sum\frac{\sqrt n}{\int_0^n\sqrt[4]{1+x^4}\,dx}\) 收敛，因为分母 \(\sim n^2/2\)，通项 \(\sim2/n^{3/2}\)。
+\item \(\displaystyle \sum\frac{n^3(\sqrt2+(-1)^n)^n}{3^n}\) 绝对收敛，偶、奇子列的指数比均小于 \(1\)。
+\item \(\displaystyle \sum(-1)^n\frac{n-1}{n+1}\frac1{\sqrt n}\) 条件收敛；绝对值与 \(\sum1/\sqrt n\) 同阶发散。
+\end{enumerate}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{26.} \(y'=x+y,\ y(0)=1\)，讨论
+\[
+\sum_{n=1}^{\infty}\left[y\left(\frac1n\right)-1-\frac1n\right]
+\]
+的敛散性。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先解微分方程，再看通项等价。}
+解得
+\[
+y=2e^x-x-1.
+\]
+因此
+\[
+y\left(\frac1n\right)-1-\frac1n
+=2e^{1/n}-2-\frac2n
+=2\left(e^{1/n}-1-\frac1n\right)
+\sim\frac1{n^2}.
+\]
+故级数收敛。
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{27.} 将
+\[
+f(x)=\frac{x}{x^2+7x+6}
+\]
+在 \(x=4\) 处展开为幂级数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先部分分式，再令 \(t=x-4\)。}
+\[
+\frac{x}{(x+1)(x+6)}=-\frac1{5(x+1)}+\frac6{5(x+6)}.
+\]
+令 \(t=x-4\)，则
+\[
+f(x)=-\frac1{25}\frac1{1+t/5}+\frac3{25}\frac1{1+t/10}.
+\]
+所以
+\[
+\boxed{
+f(x)=\sum_{n=0}^{\infty}(-1)^n\left(-\frac1{25\cdot5^n}+\frac3{25\cdot10^n}\right)(x-4)^n},
+\quad |x-4|<5.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{28.} 将
+\[
+\ln\frac1{2+2x+x^2}
+\]
+在 \(x=-1\) 处展开。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{令 \(t=x+1\)，分母化为 \(1+t^2\)。}
+\[
+\ln\frac1{2+2x+x^2}=-\ln(1+t^2).
+\]
+故
+\[
+\boxed{
+\ln\frac1{2+2x+x^2}
+=\sum_{n=1}^{\infty}\frac{(-1)^n}{n}(x+1)^{2n}},
+\quad |x+1|<1.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{29.} 将
+\[
+\arctan\frac{4+x^2}{4-x^2}
+\]
+展开为 \(x\) 的幂级数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{利用 \(\tan(\pi/4+u)=(1+\tan u)/(1-\tan u)\)。}
+令 \(t=x^2/4\)，则
+\[
+\arctan\frac{1+t}{1-t}=\frac{\pi}{4}+\arctan t.
+\]
+因此
+\[
+\boxed{
+\arctan\frac{4+x^2}{4-x^2}
+=\frac{\pi}{4}+\sum_{n=0}^{\infty}\frac{(-1)^nx^{4n+2}}{(2n+1)4^{2n+1}}},
+\quad |x|<2.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{30.} 求
+\[
+S(x)=x+2\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{4n^2-1}x^{2n+1}
+\]
+的收敛域及和函数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{对幂级数求导可化为 \(\arctan x\)。}
+半径为 \(1\)，端点因系数 \(O(1/n^2)\) 均绝对收敛，收敛域为 \([-1,1]\)。
+\[
+S'(x)=1+2\sum_{n=1}^{\infty}\frac{(-1)^{n+1}x^{2n}}{2n-1}
+=1+2x\arctan x.
+\]
+又 \(S(0)=0\)，故
+\[
+S(x)=\int_0^x(1+2t\arctan t)\,dt
+=\boxed{(1+x^2)\arctan x}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{31.} 求
+\[
+\sum_{n=0}^{\infty}\frac{x^{4n}}{(4n)!}
+\]
+的收敛域与和函数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是 \(e^x\) 中只保留 \(4n\) 次幂的部分。}
+收敛域为 \((-\infty,+\infty)\)。由根筛法，
+\[
+\sum_{n=0}^{\infty}\frac{x^{4n}}{(4n)!}
+=\frac{e^x+e^{-x}+e^{ix}+e^{-ix}}4
+=\boxed{\frac{\cosh x+\cos x}{2}}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{32.} 求
+\[
+S(x)=\sum_{n=1}^{\infty}\frac{(-1)^{n-1}x^{2n+1}}{n(2n-1)}
+\]
+的收敛域及和函数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{分解 \(1/[n(2n-1)]=-1/n+2/(2n-1)\)。}
+半径为 \(1\)，两端点绝对收敛，故收敛域 \([-1,1]\)。有
+\[
+\begin{aligned}
+S(x)
+&=-x\sum_{n=1}^{\infty}\frac{(-1)^{n-1}x^{2n}}n
++2x^3\sum_{m=0}^{\infty}\frac{(-1)^mx^{2m}}{2m+1}\\
+&=\boxed{2x^2\arctan x-x\ln(1+x^2)}.
+\end{aligned}
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{33.} 求
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{(2n-1)(2n+1)}
+\]
+的和。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{拆成两个 Leibniz 反正切级数。}
+\[
+\frac1{(2n-1)(2n+1)}=\frac12\left(\frac1{2n-1}-\frac1{2n+1}\right).
+\]
+且
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{2n-1}=\frac{\pi}{4}.
+\]
+故原和为
+\[
+\boxed{\frac{\pi}{4}-\frac12}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{34.} 将
+\[
+f(x)=
+\begin{cases}
+\dfrac{1+x^2}{x}\arctan x,&x\ne0,\\
+1,&x=0
+\end{cases}
+\]
+展开，并求
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^n}{1-4n^2}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由 \(\arctan x/x\) 的展开乘以 \(1+x^2\)。}
+\[
+\frac{\arctan x}{x}=\sum_{n=0}^{\infty}\frac{(-1)^nx^{2n}}{2n+1}.
+\]
+整理得
+\[
+f(x)=1+\sum_{n=1}^{\infty}\frac{2(-1)^{n-1}}{4n^2-1}x^{2n},\quad |x|\le1.
+\]
+取 \(x=1\)，
+\[
+f(1)=2\arctan1=\frac{\pi}{2}
+=1+2\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{4n^2-1}.
+\]
+而
+\[
+\frac{(-1)^n}{1-4n^2}=\frac{(-1)^{n-1}}{4n^2-1},
+\]
+故所求和为
+\[
+\boxed{\frac{\pi}{4}-\frac12}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{36.} 幂级数 \(\sum a_nx^n\) 在全实轴收敛，和函数满足
+\[
+y''-2xy'-4y=0,\quad y(0)=0,\quad y'(0)=1.
+\]
+证明递推式并求 \(y(x)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把 \(y=\sum a_nx^n\) 代入微分方程比较系数。}
+比较 \(x^n\) 系数：
+\[
+(n+2)(n+1)a_{n+2}-(2n+4)a_n=0,
+\]
+即
+\[
+a_{n+2}=\frac{2}{n+1}a_n.
+\]
+初值给出 \(a_0=0,a_1=1\)，偶次系数全为 \(0\)。直接求解微分方程也可发现
+\[
+\boxed{y=xe^{x^2}},
+\]
+它满足方程和初值。
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{37.} \(a_0=3,a_1=1,\ a_{n-2}-n(n-1)a_n=0\)，\(S(x)=\sum a_nx^n\)。证明 \(S''-S=0\)，并求 \(S(x)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{递推式正好对应二阶导数的系数。}
+由
+\[
+n(n-1)a_n=a_{n-2}
+\]
+得
+\[
+S''(x)=\sum_{n=0}^{\infty}(n+2)(n+1)a_{n+2}x^n
+=\sum_{n=0}^{\infty}a_nx^n=S(x).
+\]
+又
+\[
+S(0)=3,\qquad S'(0)=1.
+\]
+解 \(S''-S=0\)，得
+\[
+S=C e^x+D e^{-x}.
+\]
+由 \(C+D=3,\ C-D=1\)，得
+\[
+\boxed{S(x)=2e^x+e^{-x}}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{38.} \(a_0=1,a_1=\frac12\)，且 \(n a_n=(n-\frac12)a_{n-1}\)。证明 \(|x|<1\) 时幂级数收敛并求和函数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{该递推正是 \((1-x)^{-1/2}\) 的二项式系数递推。}
+设
+\[
+S(x)=\sum_{n=0}^{\infty}a_nx^n.
+\]
+由递推式知系数与
+\[
+(1-x)^{-1/2}=\sum_{n=0}^{\infty}\binom{-1/2}{n}(-x)^n
+\]
+完全相同，且半径为 \(1\)。故
+\[
+\boxed{S(x)=\frac1{\sqrt{1-x}}},\qquad |x|<1.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{39.} \(a_0=2,\ n a_n=a_{n-1}+n-1\)，求幂级数和函数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先猜出一个特解 \(a_n=1\)，再看偏差。}
+令 \(b_n=a_n-1\)，则
+\[
+n b_n=b_{n-1},\qquad b_0=1.
+\]
+所以
+\[
+b_n=\frac1{n!},\qquad a_n=1+\frac1{n!}.
+\]
+因此
+\[
+S(x)=\sum_{n=0}^{\infty}x^n+\sum_{n=0}^{\infty}\frac{x^n}{n!}
+=\boxed{\frac1{1-x}+e^x},\quad |x|<1.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{40.} \(f\) 在 \(0\) 附近有连续一阶导数，且
+\[
+\lim_{x\to0}\frac{f(x)}x=2.
+\]
+证明
+\[
+\sum_{n=1}^{\infty}(-1)^nf\left(\frac1n\right)
+\]
+条件收敛。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由条件得 \(f(0)=0,f'(0)=2\)。连续导数保证 \(f'(x)>0\) 在足够小邻域内成立，从而 \(f(1/n)\) 终究正且递减。}
+因为 \(f'(0)=2\)，存在 \(\delta>0\)，使 \(0<x<\delta\) 时 \(f'(x)>0\)。故 \(f(x)\) 在该邻域内递增，且
+\[
+f\left(\frac1n\right)\to0.
+\]
+于是对充分大 \(n\)，\(f(1/n)>0\) 且随 \(n\) 递减，交错级数判别法给出收敛。
+
+又
+\[
+f\left(\frac1n\right)\sim\frac2n,
+\]
+故绝对值级数与调和级数同敛散，发散。因此原级数条件收敛。
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{41.} \(f(x)=|x-\frac12|\)，
+\[
+b_n=2\int_0^1f(x)\sin n\pi x\,dx,\qquad
+S(x)=\sum_{n=1}^{\infty}b_n\sin n\pi x.
+\]
+求 \(S(-9/4)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是 \([0,1]\) 上的 Fourier 正弦级数，对应奇延拓并以 \(2\) 为周期。}
+由周期性，
+\[
+S\left(-\frac94\right)=S\left(-\frac14\right).
+\]
+正弦级数为奇延拓，故
+\[
+S\left(-\frac14\right)=-S\left(\frac14\right).
+\]
+在 \(0<x<1\) 内，\(S(x)=f(x)\)，所以
+\[
+S\left(\frac14\right)=\left|\frac14-\frac12\right|=\frac14.
+\]
+故
+\[
+\boxed{-\frac14}.
+\]
+\answer{C}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{42.} 设
+\[
+x^2=\sum_{n=0}^{\infty}a_n\cos nx,\qquad -\pi\le x\le\pi.
+\]
+求 \(a_2\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是偶函数 Fourier 余弦系数。}
+当 \(n\ge1\) 时
+\[
+a_n=\frac1\pi\int_{-\pi}^{\pi}x^2\cos nx\,dx
+=\frac{4(-1)^n}{n^2}.
+\]
+故
+\[
+\boxed{a_2=1}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{43.} \(f\) 在 \([0,+\infty)\) 连续，且 \(\int_0^{+\infty}f^2(x)\,dx\) 收敛。令
+\[
+a_n=\int_0^1f(nx)\,dx.
+\]
+证明 \(\sum a_n^2/n^\alpha\ (\alpha>0)\) 收敛。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{换元后用 Cauchy 不等式估计 \(a_n\)。}
+有
+\[
+a_n=\frac1n\int_0^n f(u)\,du.
+\]
+由 Cauchy 不等式，
+\[
+a_n^2\le\frac1{n^2}\cdot n\int_0^n f^2(u)\,du
+\le\frac{C}{n},
+\]
+其中 \(C=\int_0^{+\infty}f^2(u)\,du\)。故
+\[
+\frac{a_n^2}{n^\alpha}\le \frac{C}{n^{1+\alpha}},
+\]
+而 \(\alpha>0\)，右侧级数收敛，命题得证。
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{44.} \(a_n>0,b_n>0\)，且
+\[
+\frac{a_{n+1}}{a_n}\le\frac{b_{n+1}}{b_n}.
+\]
+证明相关比较结论。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{条件等价于 \(a_n/b_n\) 单调不增。}
+由题设
+\[
+\frac{a_{n+1}}{b_{n+1}}\le\frac{a_n}{b_n},
+\]
+故
+\[
+\frac{a_n}{b_n}\le\frac{a_1}{b_1}.
+\]
+于是
+\[
+a_n\le\frac{a_1}{b_1}b_n.
+\]
+若 \(\sum b_n\) 收敛，则由比较判别法 \(\sum a_n\) 收敛。第二问是第一问的逆否命题：若 \(\sum a_n\) 发散而 \(\sum b_n\) 收敛，则推出 \(\sum a_n\) 收敛，矛盾；故 \(\sum b_n\) 必发散。
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{45.} \(u_1=3,u_2=5,u_n=u_{n-1}+u_{n-2}\ (n\ge3)\)，证明
+\[
+\sum_{n=1}^{\infty}\frac1{u_n}
+\]
+收敛。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{递推数列至少每隔两项翻倍，倒数可按奇偶拆成几何级数比较。}
+因为
+\[
+u_{n+2}=u_{n+1}+u_n\ge2u_n,
+\]
+所以
+\[
+\frac1{u_{n+2}}\le\frac12\frac1{u_n}.
+\]
+于是奇数项倒数子列和偶数项倒数子列都分别被公比 \(1/2\) 的几何级数控制，故原级数收敛。
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{46.} 将 \(f(x)=x-1\ (0\le x\le2)\) 展开成周期为 \(4\) 的余弦级数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{半区间余弦展开，\(L=2\)。}
+\[
+f(x)\sim \frac{a_0}{2}+\sum_{n=1}^{\infty}a_n\cos\frac{n\pi x}{2},
+\]
+其中
+\[
+a_0=\int_0^2(x-1)\,dx=0,
+\]
+\[
+a_n=\int_0^2(x-1)\cos\frac{n\pi x}{2}\,dx
+=\frac{4[(-1)^n-1]}{n^2\pi^2}.
+\]
+故
+\[
+\boxed{
+x-1\sim -\frac8{\pi^2}\sum_{\substack{n\ge1\\ n\ \mathrm{odd}}}
+\frac{\cos(n\pi x/2)}{n^2}}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{47.} 将 \(f(x)=1-x^2\ (0\le x\le\pi)\) 展开成余弦级数，并求 \(\sum(-1)^{n-1}/n^2\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{半区间余弦展开，取 \(x=0\) 可得交错平方倒数和。}
+\[
+a_0=\frac2\pi\int_0^\pi(1-x^2)\,dx=2\left(1-\frac{\pi^2}{3}\right),
+\]
+\[
+a_n=\frac2\pi\int_0^\pi(1-x^2)\cos nx\,dx
+=-\frac{4(-1)^n}{n^2}.
+\]
+故
+\[
+1-x^2\sim 1-\frac{\pi^2}{3}-4\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}\cos nx.
+\]
+令 \(x=0\)，得
+\[
+1=1-\frac{\pi^2}{3}-4\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2},
+\]
+因此
+\[
+\boxed{\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{n^2}=\frac{\pi^2}{12}}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{48.} 将 \(f(x)=2+|x|\ (-1\le x\le1)\) 展开成以 \(2\) 为周期的 Fourier 级数，并求 \(\sum1/n^2\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{函数为偶函数，只含余弦项。}
+取 \(L=1\)。有
+\[
+\frac{a_0}{2}=\frac12\int_{-1}^{1}(2+|x|)\,dx=\frac52,
+\]
+\[
+a_n=\int_{-1}^{1}(2+|x|)\cos n\pi x\,dx
+=2\int_0^1(2+x)\cos n\pi x\,dx
+=\frac{2[(-1)^n-1]}{n^2\pi^2}.
+\]
+故
+\[
+2+|x|\sim \frac52+\sum_{n=1}^{\infty}
+\frac{2[(-1)^n-1]}{n^2\pi^2}\cos n\pi x.
+\]
+取 \(x=0\)，得奇数项平方倒数和
+\[
+\sum_{\substack{n\ge1\\ n\ \mathrm{odd}}}\frac1{n^2}=\frac{\pi^2}{8}.
+\]
+又偶数项和为 \(\frac14\sum1/n^2\)，故
+\[
+\sum_{n=1}^{\infty}\frac1{n^2}
+=\frac{\pi^2}{8}+\frac14\sum_{n=1}^{\infty}\frac1{n^2},
+\]
+解得
+\[
+\boxed{\sum_{n=1}^{\infty}\frac1{n^2}=\frac{\pi^2}{6}}.
+\]
+\end{solutionblock}
+
+\section{本章小结}
+第七章可见题号为 \(1\)--\(34\)、\(36\)--\(48\)，原书页面中未见第 \(35\) 题。第 \(8\) 题按严格数学判断有两个必收敛选项；第 \(22\) 题左端点需要额外条件才能唯一确定，解析中已单独标注。

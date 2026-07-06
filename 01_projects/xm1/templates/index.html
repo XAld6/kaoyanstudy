@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% from "_macros.html" import record_card %}
+{% block title %}校园建筑外墙 AI 图像识别巡检系统{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <p class="eyebrow">AI Inspection</p>
+    <h1>{{ project.name }}</h1>
+    <p class="subtle">上传校园建筑外墙图片，系统自动识别裂缝、脱落、渗水和鼓包空鼓，并生成风险等级、巡检记录和维修工单。</p>
+  </div>
+  <div class="engine">当前引擎：{{ engine }}</div>
+</section>
+
+<section class="layout">
+  <div class="panel upload-panel">
+    <h2>单张图片识别</h2>
+    <form action="/detect" method="post" enctype="multipart/form-data">
+      <label class="upload-box">
+        <span>选择一张外墙图片</span>
+        <input type="file" name="file" accept="image/*" required>
+      </label>
+      <button type="submit">开始识别</button>
+    </form>
+  </div>
+
+  <div class="panel upload-panel">
+    <h2>批量图片识别</h2>
+    <form action="/detect-batch" method="post" enctype="multipart/form-data">
+      <label class="upload-box">
+        <span>选择多张外墙图片</span>
+        <input type="file" name="files" accept="image/*" multiple required>
+      </label>
+      <button type="submit">批量识别</button>
+    </form>
+  </div>
+</section>
+
+<section class="layout">
+  <div class="panel stats-panel">
+    <h2>风险统计</h2>
+    <div class="stats-grid">
+      {% for key, label in risk_labels.items() %}
+      <div class="stat {{ key }}">
+        <span>{{ label }}</span>
+        <strong>{{ stats.get(key, 0) }}</strong>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="section-title">
+      <h2>演示样例</h2>
+      <form action="/generate-samples" method="post">
+        <button class="compact-button" type="submit">重新生成</button>
+      </form>
+    </div>
+    {% if samples %}
+    <div class="sample-grid">
+      {% for sample in samples %}
+      <form action="/detect-sample" method="post" class="sample-card">
+        <input type="hidden" name="sample" value="{{ sample.filename }}">
+        <button type="submit" class="image-button">
+          <img src="{{ sample.path }}" alt="{{ sample.filename }}">
+          <span>{{ sample.filename }}</span>
+        </button>
+      </form>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty">暂无演示样例，点击“重新生成”即可创建。</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="panel">
+  <div class="section-title">
+    <h2>最近巡检记录</h2>
+    <a href="/records">查看全部</a>
+  </div>
+  {% if records %}
+  <div class="record-grid">
+    {% for record in records %}
+    {{ record_card(record) }}
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty">暂无巡检记录。可以点击样例图片一键识别，或上传真实外墙图片。</p>
+  {% endif %}
+</section>
+{% endblock %}

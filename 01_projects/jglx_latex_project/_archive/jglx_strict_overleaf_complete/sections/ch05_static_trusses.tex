@@ -1,0 +1,502 @@
+\chapter{静定桁架}
+
+\begin{notecard}
+静定桁架求解默认约定为：杆件轴力以受拉为正、受压为负。解题顺序通常为先判零杆，再求整体支座反力，最后按节点法或截面法求目标杆。节点上若仅有两根不共线杆且无外力，则两杆均为零杆；若三杆中两杆共线且节点无外力，则第三杆为零杆。
+\end{notecard}
+
+\section{一、零杆判别与基本节点法}
+
+\begin{problemcard}{2-23 零杆数目}
+图示桁架中零杆的数目为多少？不包括支座链杆。
+\[
+  \text{选项：}\quad
+  \mathrm{A.}\ 6\text{ 根},\qquad
+  \mathrm{B.}\ 7\text{ 根},\qquad
+  \mathrm{C.}\ 8\text{ 根},\qquad
+  \mathrm{D.}\ 9\text{ 根}.
+\]
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.85,>=Stealth]
+  \coordinate (A) at (0,1.6);
+  \coordinate (B) at (0,0.6);
+  \coordinate (C) at (0,-0.4);
+  \coordinate (D) at (-1.1,-0.4);
+  \coordinate (E) at (1.1,-0.4);
+  \coordinate (F) at (1.1,0.6);
+  \coordinate (G) at (2.2,0.6);
+  \coordinate (H) at (2.2,-0.4);
+  \draw[member] (A)--(B)--(C)--(D) (C)--(E)--(H)--(G)--(F)--(E);
+  \draw[member] (B)--(F)--(G) (D)--(B) (A)--(F) (C)--(H);
+  \wallroller{0}{1.6}
+  \roller{-1.1}{-0.4}
+  \wallroller{2.2}{0.6}
+  \wallroller{2.2}{-1.1}
+  \foreach \p in {A,B,C,D,E,F,G,H} \node[smallpin] at (\p) {};
+  \draw[Brand,-{Stealth[length=2mm]}] (0.75,0.1)--(0.25,-0.3) node[midway,below] {\(F_p\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (0.7,0.1)--(1.0,0.5) node[midway,right] {\(F_p\)};
+  \node[right] at (0.62,1.1) {1};
+  \node[above] at (0.55,0.6) {2};
+  \node[right] at (0,0.1) {3};
+  \draw[<->] (-1.1,-0.85)--(0,-0.85) node[midway,below] {\(a\)};
+  \draw[<->] (0,-0.85)--(1.1,-0.85) node[midway,below] {\(a\)};
+  \draw[<->] (1.1,-0.85)--(2.2,-0.85) node[midway,below] {\(a\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：C，零杆共 \(8\) 根。}
+
+判零杆时不把支座链杆计入。按“无外力两杆节点”和“三杆中两杆共线”逐步识别：先从无外力端节点剥离，得到第一组 \(2\) 根零杆；相邻节点随之成为新的无外力两杆或三杆节点，继续剥离可得
+\[
+  2+2+1+2+1=8.
+\]
+这一题即使题目没有特别强调，也应排除支座链杆，只数桁架内部杆件。
+\end{solutioncard}
+
+\begin{problemcard}{2-24 指定杆 1、2 的轴力}
+计算图示桁架中 1、2 杆件的轴力。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (D) at (1.3,0);
+  \coordinate (B) at (2.6,0);
+  \coordinate (L) at (0,2.6);
+  \coordinate (T) at (1.3,2.6);
+  \coordinate (R) at (2.6,2.6);
+  \coordinate (C) at (1.3,1.3);
+  \draw[member] (A)--(B)--(R)--(L)--(A) (D)--(T) (A)--(C)--(R) (L)--(C)--(B);
+  \foreach \p in {A,D,B,L,T,R,C} \node[smallpin] at (\p) {};
+  \wallroller{0}{0}
+  \roller{0}{0}
+  \roller{2.6}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (D)+(0,0.9)--(D)+(0,0.08) node[midway,right] {\(F_p\)};
+  \node[above left] at (0.8,2.0) {1};
+  \node[right] at (2.6,1.3) {2};
+  \node[below left] at (A) {\(A\)};
+  \node[below] at (B) {\(B\)};
+  \node[right] at (C) {\(C\)};
+  \draw[<->] (0,-0.45)--(1.3,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (1.3,-0.45)--(2.6,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (3.05,0)--(3.05,1.3) node[midway,right] {\(l\)};
+  \draw[<->] (3.05,1.3)--(3.05,2.6) node[midway,right] {\(l\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{\(F_{N1}=\dfrac{\sqrt2}{2}F_p,\qquad F_{N2}=-\dfrac12F_p\)。}
+
+整体关于中线受竖向集中力，左右竖向反力相等：
+\[
+  F_{Ay}=F_{By}=\frac{F_p}{2}.
+\]
+先取左半部分截面，截过 1 杆。1 杆与水平成 \(45^\circ\)，由竖向平衡
+\[
+  F_{N1}\sin45^\circ-\frac{F_p}{2}=0,
+\]
+故
+\[
+  F_{N1}=\frac{F_p}{2\sin45^\circ}=\frac{\sqrt2}{2}F_p.
+\]
+再取右侧隔离体，对左端点取矩：
+\[
+  F_{N2}\cdot 2l+F_p\cdot l=0,
+\]
+于是
+\[
+  F_{N2}=-\frac12F_p.
+\]
+负号表示 2 杆受压。
+\end{solutioncard}
+
+\section{二、截面法求指定杆}
+
+\begin{problemcard}{2-25 指定杆 1、2 的轴力}
+求图示结构中指定杆件 1、2 的轴力。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.82,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (3,0);
+  \coordinate (C) at (0,2);
+  \coordinate (D) at (1,1);
+  \coordinate (E) at (2,1);
+  \coordinate (F) at (3,2);
+  \draw[member] (A)--(B)--(F)--(C)--(A) (C)--(D)--(F) (A)--(E)--(B) (D)--(E) (E)--(B);
+  \foreach \p in {A,B,C,D,E,F} \node[smallpin] at (\p) {};
+  \wallroller{0}{0}
+  \roller{0}{0}
+  \roller{3}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (-0.8,2)--(-0.05,2) node[midway,above] {\(50\,\mathrm{kN}\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (D)+(0,0.85)--(D)+(0,0.08) node[midway,right] {\(30\,\mathrm{kN}\)};
+  \node[below] at (1.55,1.0) {1};
+  \node[right] at (2.55,0.55) {2};
+  \draw[<->] (0,-0.45)--(1,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (1,-0.45)--(2,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (2,-0.45)--(3,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (3.35,0)--(3.35,1) node[midway,right] {\(l\)};
+  \draw[<->] (3.35,1)--(3.35,2) node[midway,right] {\(l\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{\(F_{N1}=-50\,\mathrm{kN},\qquad F_{N2}=-\dfrac{50\sqrt2}{3}\,\mathrm{kN}\)。}
+
+取穿过 1 杆的上部截面。该截面上水平外力为 \(50\,\mathrm{kN}\)，1 杆为水平杆，因此由水平方向平衡直接得
+\[
+  50+F_{N1}=0,\qquad F_{N1}=-50\,\mathrm{kN}.
+\]
+再在节点附近取截面，2 杆为斜杆，其方向余弦可由图中几何关系确定。代入节点平衡并消去同截面上的非目标杆，得
+\[
+  F_{N2}=-\frac{50\sqrt2}{3}\,\mathrm{kN}.
+\]
+两个结果均为负，说明指定 1、2 杆均受压。
+\end{solutioncard}
+
+\begin{problemcard}{2-26 指定杆 1、2 的轴力}
+求图示结构中指定杆件 1、2 的轴力。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.82,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (C) at (0,1.5);
+  \coordinate (D) at (1.4,0);
+  \coordinate (E) at (1.4,1.5);
+  \coordinate (F) at (2.8,0);
+  \coordinate (G) at (2.8,1.5);
+  \coordinate (I) at (4.2,0);
+  \coordinate (J) at (4.2,1.5);
+  \coordinate (B) at (0.2,2.7);
+  \draw[member] (A)--(D)--(F)--(I)--(J)--(G)--(E)--(C)--(A);
+  \draw[member] (D)--(E) (F)--(G) (C)--(D)--(G)--(I) (D)--(G) (G)--(J) (B)--(J);
+  \draw[member] (B)--(A);
+  \foreach \p in {A,C,D,E,F,G,I,J,B} \node[smallpin] at (\p) {};
+  \wallroller{0}{0}
+  \roller{0}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (D)+(0,0.65)--(D)+(0,0.05) node[midway,right] {\(F_p\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (I)+(0,0.65)--(I)+(0,0.05) node[midway,right] {\(F_p\)};
+  \node[below left] at ($(C)!0.5!(D)$) {1};
+  \node[above] at ($(B)!0.55!(J)$) {2};
+  \node[left] at (B) {\(B\)};
+  \node[right] at (J) {\(J\)};
+  \draw[<->] (0,-0.45)--(1.4,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (1.4,-0.45)--(2.8,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (2.8,-0.45)--(4.2,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (4.65,0)--(4.65,1.5) node[midway,right] {\(l\)};
+  \draw[<->] (4.65,1.5)--(4.65,2.7) node[midway,right] {\(l\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{\(F_{N1}=\dfrac{4\sqrt2}{3}F_p,\qquad F_{N2}=\dfrac{2\sqrt{10}}{3}F_p\)。}
+
+先取右侧附属部分求传至主体的端部作用力，再用截面法穿过 1、2 杆。对左端支座点取矩，原答案笔记给出的控制方程为
+\[
+  F_{N2}\frac{3}{\sqrt{10}}\cdot 2l-F_p l-F_p\cdot 3l=0,
+\]
+故
+\[
+  F_{N2}=\frac{2\sqrt{10}}{3}F_p.
+\]
+再对同一隔离体列水平方向平衡，斜杆 2 的水平分量与 1 杆分量共同平衡，得
+\[
+  F_{N1}=\frac{4\sqrt2}{3}F_p.
+\]
+两杆均为正，表示按受拉为正的约定均受拉。
+\end{solutioncard}
+
+\section{三、多杆桁架的对称、零杆与截面法}
+
+\begin{problemcard}{2-27 指定杆 1、2 的轴力}
+求图示桁架中 1、2 杆的轴力。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (1,0);
+  \coordinate (C) at (2,0);
+  \coordinate (D) at (3,0);
+  \coordinate (E) at (4,0);
+  \coordinate (F) at (1,-1.3);
+  \coordinate (G) at (2,-1.3);
+  \coordinate (H) at (3,-1.3);
+  \draw[member] (A)--(E) (F)--(H) (B)--(F)--(C)--(G)--(D)--(H)--(E);
+  \draw[member] (A)--(F) (B)--(G) (G)--(D) (H)--(E) (F)--(C) (D)--(G);
+  \foreach \p in {A,B,C,D,E,F,G,H} \node[smallpin] at (\p) {};
+  \wallroller{0}{0}
+  \roller{0}{0}
+  \roller{4}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (B)+(0,0.85)--(B)+(0,0.05) node[midway,right] {\(F_p\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (D)+(0,0.85)--(D)+(0,0.05) node[midway,right] {\(F_p\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (G)+(0,-0.85)--(G)+(0,-0.05) node[midway,right] {\(2F_p\)};
+  \node[right] at ($(B)!0.5!(G)$) {1};
+  \node[above] at ($(A)!0.55!(B)$) {2};
+  \draw[<->] (0,-1.85)--(1,-1.85) node[midway,below] {\(d\)};
+  \draw[<->] (1,-1.85)--(2,-1.85) node[midway,below] {\(d\)};
+  \draw[<->] (2,-1.85)--(3,-1.85) node[midway,below] {\(d\)};
+  \draw[<->] (3,-1.85)--(4,-1.85) node[midway,below] {\(d\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{\(F_{N1}=-\sqrt2F_p,\qquad F_{N2}=0\)。}
+
+结构和荷载关于中线对称。左端上弦 2 杆所在节点在水平方向没有需要它传递的外力，结合相邻两杆共线的零杆判据，得
+\[
+  F_{N2}=0.
+\]
+对左半跨作截面，截过 1 杆并利用中线对称条件，斜杆 1 的竖向分量平衡一侧集中力：
+\[
+  F_{N1}\sin45^\circ+F_p=0,
+\]
+故
+\[
+  F_{N1}=-\sqrt2F_p.
+\]
+负号表示 1 杆受压。
+\end{solutioncard}
+
+\begin{problemcard}{2-28 指定杆 \(a,b,c\) 的轴力}
+作图示桁架中 \(a,b,c\) 三杆的轴力。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.68,>=Stealth]
+  \coordinate (A) at (0,2);
+  \coordinate (B) at (0,1);
+  \coordinate (C) at (1.3,2);
+  \coordinate (D) at (1.3,1);
+  \coordinate (E) at (2.6,2);
+  \coordinate (F) at (2.6,1);
+  \coordinate (G) at (3.9,2);
+  \coordinate (H) at (3.9,1);
+  \coordinate (I) at (2.6,0);
+  \coordinate (J) at (2.6,-1);
+  \coordinate (K) at (3.9,0);
+  \coordinate (L) at (3.9,-1);
+  \draw[member] (A)--(G)--(H)--(B)--(A) (C)--(D) (E)--(F) (I)--(J)--(L)--(K)--(I);
+  \draw[member] (B)--(I)--(L) (B)--(J) (D)--(I) (F)--(K) (D)--(G) (A)--(D) (F)--(G);
+  \foreach \p in {A,B,C,D,E,F,G,H,I,J,K,L} \node[smallpin] at (\p) {};
+  \wallroller{0}{1}
+  \wallroller{3.9}{2}
+  \roller{2.6}{-1}
+  \draw[Brand,-{Stealth[length=2mm]}] (C)+(0,0.65)--(C)+(0,0.05) node[midway,right] {\(F_p\)};
+  \node[right] at ($(F)!0.5!(K)$) {\(a\)};
+  \node[below left] at ($(B)!0.55!(J)$) {\(b\)};
+  \node[above] at ($(C)!0.5!(E)$) {\(c\)};
+  \draw[<->] (0,-1.45)--(1.3,-1.45) node[midway,below] {\(d\)};
+  \draw[<->] (1.3,-1.45)--(2.6,-1.45) node[midway,below] {\(d\)};
+  \draw[<->] (2.6,-1.45)--(3.9,-1.45) node[midway,below] {\(d\)};
+  \draw[<->] (4.35,-1)--(4.35,0) node[midway,right] {\(d\)};
+  \draw[<->] (4.35,0)--(4.35,1) node[midway,right] {\(d\)};
+  \draw[<->] (4.35,1)--(4.35,2) node[midway,right] {\(d\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{\(F_{Na}=-\dfrac{\sqrt2}{2}F_p,\quad F_{Nb}=\dfrac{\sqrt2}{2}F_p,\quad F_{Nc}=\dfrac12F_p\)。}
+
+先由整体平衡求支座反力，再依次取三个截面。原答案提示的截面顺序为 \(I-I\)、\(II-II\)、\(III-III\)：由 \(I-I\) 截面按 \(x\) 轴投影求 \(F_{Na}\)，由 \(II-II\) 截面求 \(F_{Nc}\)，由 \(III-III\) 截面求 \(F_{Nb}\)。相应平衡式可整理为
+\[
+  F_{Na}\cos45^\circ+\frac12F_p=0,\qquad
+  F_{Nc}-\frac12F_p=0,
+\]
+\[
+  F_{Nb}\cos45^\circ-\frac12F_p=0.
+\]
+故得到上述三式。\(a\) 杆为受压，\(b,c\) 杆为受拉。
+\end{solutioncard}
+
+\begin{problemcard}{2-29 指定杆 \(a,b\) 的轴力}
+试求图示桁架中 \(a,b\) 杆件的内力。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (1,1.2);
+  \coordinate (C) at (2,2.4);
+  \coordinate (D) at (3,1.2);
+  \coordinate (E) at (4,0);
+  \coordinate (F) at (1,0);
+  \coordinate (G) at (2,0);
+  \coordinate (H) at (3,0);
+  \draw[member] (A)--(B)--(C)--(D)--(E) (A)--(E) (B)--(F)--(G)--(H)--(D) (B)--(G)--(D) (G)--(H);
+  \foreach \p in {A,B,C,D,E,F,G,H} \node[smallpin] at (\p) {};
+  \roller{0}{0}
+  \roller{2}{0}
+  \roller{4}{0}
+  \wallroller{4}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (F)+(0,0.65)--(F)+(0,0.05) node[midway,right] {\(F_p\)};
+  \node[above] at ($(G)!0.5!(D)$) {\(a\)};
+  \node[right] at ($(G)!0.55!(D)$) {\(b\)};
+  \draw[<->] (0,-0.45)--(2,-0.45) node[midway,below] {\(2d\)};
+  \draw[<->] (2,-0.45)--(4,-0.45) node[midway,below] {\(2d\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{\(F_{Na}=-F_p,\qquad F_{Nb}=\dfrac{\sqrt2}{2}F_p\)。}
+
+先对整体取矩求支座竖向反力，再截取含 \(a,b\) 杆的右半部分。由于 \(a\) 杆为水平受力杆，其轴力由水平方向平衡直接得到压缩值：
+\[
+  F_{Na}=-F_p.
+\]
+斜杆 \(b\) 与水平成 \(45^\circ\)，其竖向分量平衡截面处等效竖向力：
+\[
+  F_{Nb}\sin45^\circ-\frac12F_p=0,
+\]
+故
+\[
+  F_{Nb}=\frac{\sqrt2}{2}F_p.
+\]
+\end{solutioncard}
+
+\begin{problemcard}{2-30 指定杆 \(a,b\) 的轴力}
+求图示桁架中 \(a,b\) 杆件的内力，图中上部竖向荷载为 \(F_p=1\)。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.68,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (1,0);
+  \coordinate (C) at (2,0);
+  \coordinate (D) at (3,0);
+  \coordinate (E) at (4,0);
+  \coordinate (F) at (1,1);
+  \coordinate (G) at (2,1);
+  \coordinate (H) at (3,1);
+  \coordinate (I) at (2,2);
+  \draw[member] (A)--(E) (F)--(H) (A)--(F)--(I)--(H)--(E) (B)--(F) (C)--(G) (D)--(H) (B)--(G)--(D) (F)--(C)--(H);
+  \foreach \p in {A,B,C,D,E,F,G,H,I} \node[smallpin] at (\p) {};
+  \wallroller{0}{0}
+  \roller{0}{0}
+  \roller{3}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (F)+(0,0.75)--(F)+(0,0.05) node[midway,left] {\(F_p=1\)};
+  \node[above] at ($(C)!0.5!(D)$) {\(a\)};
+  \node[below] at ($(C)!0.5!(H)$) {\(b\)};
+  \draw[<->] (0,-0.45)--(4,-0.45) node[midway,below] {\(6\times1\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{\(F_{Na}=0,\qquad F_{Nb}=\dfrac12F_p\)。若按图中 \(F_p=1\)，则 \(F_{Nb}=0.5\)。}
+
+先判零杆：集中力右侧和悬臂部分的若干杆均为零杆。去掉零杆后，结构可化为原答案提示中的简化体系；由对称性或节点无外力条件可判定
+\[
+  F_{Na}=0.
+\]
+再对含 \(b\) 杆的节点列平衡。该节点剩余受力中，\(b\) 杆的轴力分量承担一半单位荷载，故
+\[
+  F_{Nb}=\frac12F_p.
+\]
+\end{solutioncard}
+
+\begin{problemcard}{2-31 指定杆 \(a,b\) 的轴力}
+计算图示桁架中 \(a,b\) 两杆的轴力。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.72,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (1,0);
+  \coordinate (C) at (2,0);
+  \coordinate (D) at (3,0);
+  \coordinate (E) at (0,1.2);
+  \coordinate (F) at (1,1.2);
+  \coordinate (G) at (2,1.2);
+  \coordinate (H) at (3,1.2);
+  \draw[member] (A)--(D) (E)--(H) (A)--(E) (B)--(F) (C)--(G) (D)--(H);
+  \draw[member] (A)--(F) (A)--(G) (A)--(H) (F)--(G)--(H);
+  \foreach \p in {A,B,C,D,E,F,G,H} \node[smallpin] at (\p) {};
+  \wallroller{0}{1.2}
+  \roller{0}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (B)+(0,0.75)--(B)+(0,0.05) node[midway,right] {\(F_p\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (C)+(0,0.75)--(C)+(0,0.05) node[midway,right] {\(F_p\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (D)+(0,0.75)--(D)+(0,0.05) node[midway,right] {\(F_p\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (D)+(0.05,0)--(D)+(0.75,0) node[midway,above] {\(F_p\)};
+  \node[above] at ($(A)!0.5!(H)$) {\(a\)};
+  \node[below] at ($(A)!0.5!(G)$) {\(b\)};
+  \draw[<->] (0,-0.45)--(1,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (1,-0.45)--(2,-0.45) node[midway,below] {\(l\)};
+  \draw[<->] (2,-0.45)--(3,-0.45) node[midway,below] {\(l\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{\(F_{Na}=-\sqrt5F_p,\qquad F_{Nb}=F_p\)。}
+
+对右侧部分取截面，截过 \(a,b\) 及一根辅助杆。由几何关系，\(a\) 杆斜率对应方向余弦
+\[
+  \cos\alpha=\frac{2}{\sqrt5},\qquad \sin\alpha=\frac{1}{\sqrt5}.
+\]
+先对截面交点取矩消去辅助杆，可得 \(b\) 杆：
+\[
+  F_{Nb}=F_p.
+\]
+再列水平方向平衡，外力 \(F_p\) 与 \(b\) 杆分量已知，解得
+\[
+  F_{Na}=-\sqrt5F_p.
+\]
+负号表示 \(a\) 杆受压。
+\end{solutioncard}
+
+\begin{problemcard}{2-32 指定杆 1、2 的轴力}
+求图示桁架中 1、2 杆件的轴力。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.82,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (1,1.4);
+  \coordinate (C) at (2,2.4);
+  \coordinate (D) at (3,1.4);
+  \coordinate (E) at (4,0);
+  \coordinate (L) at (0,1.4);
+  \coordinate (R) at (4,1.4);
+  \coordinate (M) at (2,1.0);
+  \draw[member] (A)--(B)--(C)--(D)--(E) (A)--(E) (L)--(B) (D)--(R) (L)--(A) (R)--(E);
+  \draw[member] (A)--(M)--(E) (B)--(M)--(D) (L)--(M)--(R) (C)--(M);
+  \foreach \p in {A,B,C,D,E,L,R,M} \node[smallpin] at (\p) {};
+  \wallroller{0}{0}
+  \roller{0}{0}
+  \roller{4}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (L)+(-0.75,0)--(L)+(-0.05,0) node[midway,above] {\(F_p\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (R)+(0.75,0)--(R)+(0.05,0) node[midway,above] {\(F_p\)};
+  \node[below left] at ($(B)!0.45!(M)$) {1};
+  \node[left] at ($(C)!0.5!(M)$) {2};
+  \node[below] at ($(A)!0.5!(M)$) {\(A\)};
+  \draw[<->] (0,-0.45)--(2,-0.45) node[midway,below] {\(a\)};
+  \draw[<->] (2,-0.45)--(4,-0.45) node[midway,below] {\(a\)};
+  \draw[<->] (4.45,0)--(4.45,0.8) node[midway,right] {\(a/2\)};
+  \draw[<->] (4.45,0.8)--(4.45,1.6) node[midway,right] {\(a/2\)};
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{\(F_{N1}=-\dfrac{\sqrt5}{2}F_p,\qquad F_{N2}=-F_p\)。}
+
+原答案提示：先判断 \(A\) 点连接的两根斜杆为零杆，再用节点法或截面法。去掉零杆后，对穿过 1、2 杆的截面列平衡。由中部竖杆 2 的竖向平衡直接得
+\[
+  F_{N2}=-F_p.
+\]
+杆 1 的几何长度对应水平、竖向分量比为 \(2:1\)，故
+\[
+  \cos\alpha=\frac{2}{\sqrt5},\qquad \sin\alpha=\frac{1}{\sqrt5}.
+\]
+代入截面平衡可得
+\[
+  F_{N1}=-\frac{\sqrt5}{2}F_p.
+\]
+两杆均受压。
+\end{solutioncard}
+
+\begin{notecard}
+第 5 次作业讲解笔记补充：桁架题不要急于列大方程。先用零杆规则删去明显不受力杆，再根据“只求少数杆”优先选截面法；若目标杆集中在某个节点附近，则用节点法更快。截面法的核心是选取矩心，让同一截面上尽量多的未知杆被消去。
+\end{notecard}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from "_macros.html" import record_card %}
+{% block title %}批量识别结果{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <p class="eyebrow">Batch Detection</p>
+    <h1>批量识别结果</h1>
+    <p class="subtle">本次共处理 {{ records | length }} 张图片，高风险和紧急风险会自动进入维修工单。</p>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="record-grid">
+    {% for record in records %}
+    {{ record_card(record) }}
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

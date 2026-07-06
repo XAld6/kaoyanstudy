@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs>
+<marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#1F4E73"/>
+</marker>
+<marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#6C757D"/>
+</marker>
+<marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#D8892C"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1000" fill="#FFFFFF"/>
+<text x="800" y="62" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="40" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+现场吊装与装配施工流程图
+</text>
+<text x="800" y="108" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+运输、吊装、校正、连接与验收的连续作业
+</text>
+<line x1="100" y1="132" x2="1500" y2="132" stroke="#CBD3DA" stroke-width="2"/>
+<line x1="260" y1="780" x2="1350" y2="780" stroke="#222222" stroke-width="6"/>
+<rect x="310" y="500" width="70" height="280" rx="4" fill="#DDECF7" stroke="#1F4E73" stroke-width="3"/>
+<rect x="850" y="500" width="70" height="280" rx="4" fill="#DDECF7" stroke="#1F4E73" stroke-width="3"/>
+<rect x="310" y="500" width="610" height="55" rx="4" fill="#EEF1F4" stroke="#1F4E73" stroke-width="3"/>
+<line x1="345" y1="500" x2="885" y2="555" stroke="#4F8F5B" stroke-width="8"/>
+<line x1="345" y1="555" x2="885" y2="500" stroke="#4F8F5B" stroke-width="8"/>
+<line x1="1150" y1="780" x2="1280" y2="250" stroke="#D8892C" stroke-width="8"/>
+<line x1="1280" y1="250" x2="1040" y2="250" stroke="#D8892C" stroke-width="8"/>
+<line x1="1040" y1="250" x2="930" y2="470" stroke="#D8892C" stroke-width="4"/>
+<circle cx="930" cy="485" r="20" fill="#F7E5CC" stroke="#D8892C" stroke-width="3"/>
+<text x="1220" y="215" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#D8892C" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+塔吊/汽车吊
+</text>
+<rect x="100" y="185" width="200" height="110" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="200" y="219" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+基础复核
+</text>
+<text x="200" y="262" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="200" dy="-13.0">轴线、标高</tspan>
+<tspan x="200" dy="26">预埋锚栓</tspan>
+</text>
+<line x1="310" y1="240" x2="360" y2="240" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="370" y="185" width="200" height="110" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="470" y="219" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+构件进场
+</text>
+<text x="470" y="262" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="470" dy="-13.0">编号核对</tspan>
+<tspan x="470" dy="26">堆放保护</tspan>
+</text>
+<line x1="580" y1="240" x2="630" y2="240" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="640" y="185" width="200" height="110" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="740" y="219" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+吊装就位
+</text>
+<text x="740" y="262" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="740" dy="-13.0">吊点选择</tspan>
+<tspan x="740" dy="26">临时固定</tspan>
+</text>
+<line x1="850" y1="240" x2="900" y2="240" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="910" y="185" width="200" height="110" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="1010" y="219" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+测量校正
+</text>
+<text x="1010" y="262" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="1010" dy="-13.0">垂直度</tspan>
+<tspan x="1010" dy="26">标高偏差</tspan>
+</text>
+<line x1="1120" y1="240" x2="1170" y2="240" stroke="#1F4E73" stroke-width="4" marker-end="url(#arrow-blue)"/>
+<rect x="1180" y="185" width="200" height="110" rx="14" fill="#E2F1E4" stroke="#4F8F5B" stroke-width="3"/>
+<text x="1280" y="219" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#4F8F5B" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+节点连接
+</text>
+<text x="1280" y="262" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="1280" dy="-13.0">螺栓终拧</tspan>
+<tspan x="1280" dy="26">焊缝补强</tspan>
+</text>
+<rect x="520" y="815" width="560" height="95" rx="14" fill="#F7E5CC" stroke="#D8892C" stroke-width="3"/>
+<text x="800" y="849" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#D8892C" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+控制重点
+</text>
+<text x="800" y="884" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="800" dy="-13.0">吊装稳定、临时支撑、节点施工质量、</tspan>
+<tspan x="800" dy="26">交叉作业安全</tspan>
+</text>
+</svg>

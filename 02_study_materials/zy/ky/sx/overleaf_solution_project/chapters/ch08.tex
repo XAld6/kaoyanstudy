@@ -1,0 +1,721 @@
+\chapter{向量代数与空间解析几何及多元微分学在几何上的应用}
+
+\section{原题页索引}
+本章原题对应做题本第 130--140 页。
+
+\begin{center}
+\includegraphics[width=.92\textwidth]{figures/original_pages/page_130.png}
+\end{center}
+
+\section{详细解析}
+
+\begin{problemblock}
+\textbf{1.} 求直线
+\[
+L_1:\frac{x-1}{1}=\frac{y-5}{-2}=\frac{z+8}{1},\qquad
+L_2:\begin{cases}x-y=6,\\2y+z=3\end{cases}
+\]
+的夹角。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{直线夹角由方向向量夹角确定。}
+\[
+\boldsymbol d_1=(1,-2,1).
+\]
+\(L_2\) 是两平面交线，方向向量为两法向量叉乘：
+\[
+\boldsymbol d_2=(1,-1,0)\times(0,2,1)=(-1,-1,2).
+\]
+于是
+\[
+\cos\theta=\frac{|\boldsymbol d_1\cdot\boldsymbol d_2|}{|\boldsymbol d_1||\boldsymbol d_2|}
+=\frac3{6}=\frac12.
+\]
+故夹角
+\[
+\boxed{\theta=\frac{\pi}{3}}.
+\]
+\answer{C}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{2.} 判断直线
+\[
+L:\begin{cases}x+3y+2z+1=0,\\2x-y-10z+3=0\end{cases}
+\]
+与平面 \(\Pi:4x-2y+z-2=0\) 的关系。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{交线方向向量为两平面法向量叉乘，再与 \(\Pi\) 的法向量比较。}
+\[
+(1,3,2)\times(2,-1,-10)=(-28,14,-7)=-7(4,-2,1).
+\]
+这正与 \(\Pi\) 的法向量 \((4,-2,1)\) 平行，所以直线 \(L\) 垂直于 \(\Pi\)。
+\answer{C}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{3.} 曲面 \(z=4-x^2-y^2\) 上点 \(P\) 的切平面平行于 \(2x+2y+z-1=0\)，求 \(P\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{曲面写成 \(F=x^2+y^2+z-4=0\)，切平面法向量为 \((2x,2y,1)\)。}
+平行条件给
+\[
+(2x,2y,1)\parallel(2,2,1),
+\]
+故
+\[
+x=1,\quad y=1,\quad z=4-1-1=2.
+\]
+\[
+\boxed{P=(1,1,2)}.
+\]
+\answer{C}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{4.} 曲线 \(x=t,y=-t^2,z=t^3\) 的切线中，与平面 \(x+2y+z=4\) 平行的有几条？
+\end{problemblock}
+\begin{solutionblock}
+\analysis{切线平行平面等价于切向量垂直平面法向量。}
+切向量为
+\[
+\boldsymbol r'(t)=(1,-2t,3t^2).
+\]
+平面法向量为 \((1,2,1)\)，故
+\[
+\boldsymbol r'(t)\cdot(1,2,1)=1-4t+3t^2=0.
+\]
+解得
+\[
+t=1,\quad t=\frac13.
+\]
+故共有两条。
+\answer{B}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{5.} \(f_x(0,0)=3,f_y(0,0)=1\)，判断相关结论。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{题面只给偏导数存在，没有明确给出可微；因此不能直接断言全微分或曲面切平面一定存在。沿 \(y=0\) 的截线切向量则可由 \(f_x\) 给出。}
+曲线
+\[
+y=0,\qquad z=f(x,y)
+\]
+可参数化为
+\[
+\boldsymbol r(x)=(x,0,f(x,0)).
+\]
+在 \(x=0\) 处切向量为
+\[
+\boldsymbol r'(0)=(1,0,f_x(0,0))=(1,0,3).
+\]
+\answer{C}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{6.} 求 \(f(x,y)=\arctan(x/y)\) 在 \((0,1)\) 处的梯度。
+\end{problemblock}
+\begin{solutionblock}
+\[
+f_x=\frac{y}{x^2+y^2},\qquad f_y=-\frac{x}{x^2+y^2}.
+\]
+故
+\[
+\nabla f(0,1)=(1,0)=\boldsymbol i.
+\]
+\answer{A}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{7.} 求曲面
+\[
+x^2+\cos(xy)+yz+x=0
+\]
+在 \((0,1,-1)\) 处的切平面。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{隐式曲面切平面法向量为 \(\nabla F\)。}
+令
+\[
+F=x^2+\cos(xy)+yz+x.
+\]
+则
+\[
+F_x=2x-y\sin(xy)+1,\quad F_y=-x\sin(xy)+z,\quad F_z=y.
+\]
+在 \((0,1,-1)\) 处
+\[
+\nabla F=(1,-1,1).
+\]
+切平面为
+\[
+x-(y-1)+(z+1)=0,
+\]
+即
+\[
+\boxed{x-y+z=-2}.
+\]
+\answer{A}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{8.} 已知 \((\boldsymbol a\times\boldsymbol b)\cdot\boldsymbol c=2\)，求
+\[
+[(\boldsymbol a+\boldsymbol b)\times(\boldsymbol b+\boldsymbol c)]\cdot(\boldsymbol c+\boldsymbol a).
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{用混合积的线性性和循环不变性。}
+\[
+(\boldsymbol a+\boldsymbol b)\times(\boldsymbol b+\boldsymbol c)
+=\boldsymbol a\times\boldsymbol b+\boldsymbol a\times\boldsymbol c+\boldsymbol b\times\boldsymbol c.
+\]
+与 \(\boldsymbol c+\boldsymbol a\) 点乘后，仅
+\[
+(\boldsymbol a\times\boldsymbol b)\cdot\boldsymbol c,\qquad
+(\boldsymbol b\times\boldsymbol c)\cdot\boldsymbol a
+\]
+非零，且二者相等，均为 \(2\)。故结果为
+\[
+\boxed{4}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{9.} 求点 \((2,1,0)\) 到平面 \(3x+4y+5z=0\) 的距离。
+\end{problemblock}
+\begin{solutionblock}
+\[
+d=\frac{|3\cdot2+4\cdot1+5\cdot0|}{\sqrt{3^2+4^2+5^2}}
+=\frac{10}{5\sqrt2}
+=\boxed{\sqrt2}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{10.} 求与两直线
+\[
+x=1,\ y=-1+t,\ z=2+t;\qquad
+\frac{x+1}{1}=\frac{y+2}{2}=\frac{z-1}{1}
+\]
+都平行且过原点的平面。
+\end{problemblock}
+\begin{solutionblock}
+两方向向量为
+\[
+\boldsymbol d_1=(0,1,1),\qquad \boldsymbol d_2=(1,2,1).
+\]
+平面法向量
+\[
+\boldsymbol n=\boldsymbol d_1\times\boldsymbol d_2=(-1,1,-1).
+\]
+过原点，故
+\[
+\boxed{x-y+z=0}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{11.} 求过 \(M(1,2,-1)\) 且与直线
+\[
+x=-t+2,\quad y=3t-4,\quad z=t-1
+\]
+垂直的平面。
+\end{problemblock}
+\begin{solutionblock}
+直线方向向量为
+\[
+(-1,3,1),
+\]
+它即为所求平面的法向量。故
+\[
+-(x-1)+3(y-2)+(z+1)=0,
+\]
+即
+\[
+\boxed{x-3y-z+4=0}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{12.} 求过
+\[
+L_1:\frac{x-1}{1}=\frac{y-2}{0}=\frac{z-3}{-1}
+\]
+且平行于
+\[
+L_2:\frac{x+2}{2}=\frac{y-1}{1}=\frac{z}{1}
+\]
+的平面。
+\end{problemblock}
+\begin{solutionblock}
+两个方向向量为
+\[
+\boldsymbol d_1=(1,0,-1),\qquad \boldsymbol d_2=(2,1,1).
+\]
+平面法向量
+\[
+\boldsymbol n=\boldsymbol d_1\times\boldsymbol d_2=(1,-3,1).
+\]
+平面过 \(L_1\) 上点 \((1,2,3)\)，故
+\[
+(x-1)-3(y-2)+(z-3)=0,
+\]
+即
+\[
+\boxed{x-3y+z+2=0}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{13.} 平面过原点及点 \((6,-3,2)\)，且与 \(4x-y+2z=8\) 垂直，求方程。
+\end{problemblock}
+\begin{solutionblock}
+所求平面含向量
+\[
+\boldsymbol p=(6,-3,2),
+\]
+其法向量还应垂直于已知平面法向量
+\[
+\boldsymbol n_0=(4,-1,2).
+\]
+故可取
+\[
+\boldsymbol n=\boldsymbol p\times\boldsymbol n_0=(-4,-4,6)\sim(-2,-2,3).
+\]
+过原点，方程为
+\[
+\boxed{-2x-2y+3z=0}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{14.} 曲线
+\[
+3x^2+2y^2=12,\quad z=0
+\]
+绕 \(y\) 轴旋转得到旋转面，求其在 \((0,\sqrt3,\sqrt2)\) 处指向外侧的单位法向量。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{绕 \(y\) 轴旋转时 \(x^2\) 变成 \(x^2+z^2\)。}
+旋转面为
+\[
+F=3(x^2+z^2)+2y^2-12=0.
+\]
+法向量
+\[
+\nabla F=(6x,4y,6z).
+\]
+在点 \((0,\sqrt3,\sqrt2)\) 处
+\[
+\nabla F=(0,4\sqrt3,6\sqrt2).
+\]
+其模为 \(2\sqrt{30}\)，故外侧单位法向量为
+\[
+\boxed{\left(0,\frac{\sqrt{10}}5,\frac{\sqrt{15}}5\right)}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{15.} 直线
+\[
+\frac{x-1}{0}=\frac{y-1}{1}=\frac{z-1}{1}
+\]
+绕 \(y\) 轴旋转，求旋转曲面方程。
+\end{problemblock}
+\begin{solutionblock}
+直线可写为
+\[
+x=1,\qquad z=y.
+\]
+绕 \(y\) 轴旋转时保持 \(y\) 不变，且半径平方
+\[
+x^2+z^2=1+y^2.
+\]
+故旋转曲面为
+\[
+\boxed{x^2+z^2=1+y^2}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{16.} 求 \(u=\ln(x^2+y^2+z^2)\) 在 \(M(1,2,-2)\) 处的梯度。
+\end{problemblock}
+\begin{solutionblock}
+\[
+\nabla u=\frac{2(x,y,z)}{x^2+y^2+z^2}.
+\]
+在 \(M\) 处分母为 \(9\)，所以
+\[
+\boxed{\nabla u|_M=\left(\frac29,\frac49,-\frac49\right)}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{17.} 求 \(f=x^2y+z^2\) 在 \((1,2,0)\) 处沿 \(\boldsymbol n=(1,2,2)\) 的方向导数。
+\end{problemblock}
+\begin{solutionblock}
+\[
+\nabla f=(2xy,x^2,2z),
+\qquad \nabla f(1,2,0)=(4,1,0).
+\]
+单位方向向量为
+\[
+\frac{(1,2,2)}3.
+\]
+方向导数为
+\[
+(4,1,0)\cdot\frac{(1,2,2)}3=\boxed{2}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{18.} \(u=1+x^2/6+y^2/12+z^2/18\)，\(\boldsymbol n=(1,1,1)/\sqrt3\)，求 \(\partial u/\partial n\) 在 \((1,2,3)\) 处的值。
+\end{problemblock}
+\begin{solutionblock}
+\[
+\nabla u=\left(\frac x3,\frac y6,\frac z9\right),
+\quad
+\nabla u(1,2,3)=\left(\frac13,\frac13,\frac13\right).
+\]
+故
+\[
+\frac{\partial u}{\partial n}
+=\left(\frac13,\frac13,\frac13\right)\cdot\frac{(1,1,1)}{\sqrt3}
+=\boxed{\frac1{\sqrt3}}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{19.} \(\nabla f=(1,2,3)\)，求沿 \(\boldsymbol l=(1,1,1)\) 方向的方向导数。
+\end{problemblock}
+\begin{solutionblock}
+单位方向向量为 \((1,1,1)/\sqrt3\)，故
+\[
+D_{\boldsymbol l}f=(1,2,3)\cdot\frac{(1,1,1)}{\sqrt3}
+=\boxed{2\sqrt3}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{20.} \(u=3x^2y-2yz+z^3,\ v=4xy-z^3\)，求 \(u\) 在 \(P(1,-1,1)\) 处沿 \(\nabla v\) 方向的方向导数。
+\end{problemblock}
+\begin{solutionblock}
+\[
+\nabla u=(6xy,3x^2-2z,-2y+3z^2),
+\quad
+\nabla u(P)=(-6,1,5).
+\]
+\[
+\nabla v=(4y,4x,-3z^2),
+\quad
+\nabla v(P)=(-4,4,-3).
+\]
+方向导数为
+\[
+\nabla u(P)\cdot\frac{\nabla v(P)}{|\nabla v(P)|}
+=\frac{24+4-15}{\sqrt{41}}
+=\boxed{\frac{13}{\sqrt{41}}}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{21.} 隐函数 \(u(x,y,z)\) 由
+\[
+x+y+z+u+xy^2z^3e^u=1
+\]
+确定。求其在 \((0,0,0)\) 处沿椭球面
+\[
+x^2+2y^2+3(z-1)^2=3
+\]
+在该点外法线方向的方向导数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先求该点对应的 \(u\)，再求隐函数梯度。}
+当 \(x=y=z=0\) 时，由方程得
+\[
+u=1.
+\]
+设
+\[
+F=x+y+z+u+xy^2z^3e^u-1.
+\]
+在该点，乘积项各偏导均为 \(0\)，且 \(F_u=1\)，故
+\[
+u_x=u_y=u_z=-1.
+\]
+即
+\[
+\nabla u=(-1,-1,-1).
+\]
+椭球在 \((0,0,0)\) 处的外法线方向为
+\[
+(0,0,-1).
+\]
+方向导数为
+\[
+\boxed{1}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{22.} 求 \(u=x^2+y^2+z^2\) 在椭球面 \(2x^2+2y^2+z^2=1\) 上哪点沿哪方向方向导数最大，并求最大值。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{某点最大方向导数为 \(|\nabla u|\)，方向为梯度方向；再在椭球上最大化 \(u\)。}
+\[
+\nabla u=2(x,y,z),\qquad |\nabla u|=2\sqrt{x^2+y^2+z^2}.
+\]
+在约束
+\[
+2x^2+2y^2+z^2=1
+\]
+下，\(x^2+y^2+z^2\) 最大时取
+\[
+x=y=0,\quad z=\pm1.
+\]
+最大方向分别为
+\[
+(0,0,1)\quad\text{和}\quad(0,0,-1),
+\]
+最大方向导数为
+\[
+\boxed{2}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{23.} 求曲线
+\[
+\begin{cases}
+x^2+y^2+z^2=a^2,\\
+x^2+y^2=ax
+\end{cases}
+\]
+在 \(M_0(0,0,a)\) 处的切线及法平面。
+\end{problemblock}
+\begin{solutionblock}
+两个曲面的法向量分别为
+\[
+\nabla F_1=(2x,2y,2z),\quad \nabla F_2=(2x-a,2y,0).
+\]
+在 \(M_0\) 处
+\[
+\nabla F_1=(0,0,2a),\quad \nabla F_2=(-a,0,0).
+\]
+切向量为二者叉乘，平行于 \(y\) 轴。因此切线为
+\[
+\boxed{x=0,\quad z=a},
+\]
+法平面垂直于切向量，故
+\[
+\boxed{y=0}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{24.} 求直线
+\[
+L:\frac{x-1}{1}=\frac{y}{1}=\frac{z-1}{-1}
+\]
+在平面 \(\Pi:x-y+2z-1=0\) 上的投影直线 \(L_0\)，并求 \(L_0\) 绕 \(y\) 轴旋转所得曲面。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{投影直线的方向为原方向在平面上的投影；点可取原直线上一点向平面作垂线投影。}
+原直线方向
+\[
+\boldsymbol d=(1,1,-1),\quad \Pi\text{ 法向量 }\boldsymbol n=(1,-1,2).
+\]
+方向投影为
+\[
+\boldsymbol d_0=\boldsymbol d-\frac{\boldsymbol d\cdot\boldsymbol n}{|\boldsymbol n|^2}\boldsymbol n
+=(1,1,-1)+\frac13(1,-1,2)\sim(4,2,-1).
+\]
+取 \(P=(1,0,1)\in L\)，其到平面的投影为
+\[
+P_0=P-\frac{2}{6}(1,-1,2)=\left(\frac23,\frac13,\frac13\right).
+\]
+故
+\[
+\boxed{\frac{x-2/3}{4}=\frac{y-1/3}{2}=\frac{z-1/3}{-1}}.
+\]
+令参数为 \(s\)，则
+\[
+x=2y,\qquad z=\frac{1-y}{2}.
+\]
+绕 \(y\) 轴旋转时 \(x^2+z^2\) 保持为半径平方，故曲面为
+\[
+\boxed{x^2+z^2=4y^2+\frac{(y-1)^2}{4}}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{25.} 求椭球面 \(x^2+2y^2+3z^2=21\) 的切平面，使其过直线
+\[
+L:\frac{x-6}{2}=\frac{y-3}{1}=\frac{2z-1}{-2}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{设切点为 \((x_0,y_0,z_0)\)，切平面为 \(x_0x+2y_0y+3z_0z=21\)，再代入直线参数。}
+直线参数为
+\[
+x=6+2t,\quad y=3+t,\quad z=\frac12-t.
+\]
+代入切平面并令恒等于 \(21\)，得
+\[
+6x_0+6y_0+\frac32z_0=21,\qquad
+2x_0+2y_0-3z_0=0.
+\]
+又切点在椭球上：
+\[
+x_0^2+2y_0^2+3z_0^2=21.
+\]
+由前两式得
+\[
+x_0+y_0=3,\quad z_0=2.
+\]
+代入椭球：
+\[
+x_0^2+2y_0^2=9.
+\]
+解得
+\[
+(x_0,y_0,z_0)=(3,0,2)\quad\text{或}\quad(1,2,2).
+\]
+对应切平面为
+\[
+\boxed{x+2z=7}
+\]
+或
+\[
+\boxed{x+4y+6z=21}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{26.} 求过直线
+\[
+\begin{cases}x+2y+z-1=0,\\x-y-2z+3=0\end{cases}
+\]
+且与曲线
+\[
+\begin{cases}x^2+y^2=\frac12z^2,\\x+y+2z=4\end{cases}
+\]
+在 \((1,-1,2)\) 处的切线平行的平面。
+\end{problemblock}
+\begin{solutionblock}
+已知直线方向为
+\[
+(1,2,1)\times(1,-1,-2)\sim(1,-1,1).
+\]
+曲线在点处的切向量为两曲面法向量叉乘：
+\[
+(2,-2,-2)\times(1,1,2)\sim(1,3,-2).
+\]
+所求平面含这两个方向，法向量为
+\[
+(1,-1,1)\times(1,3,-2)=(-1,3,4).
+\]
+又平面过给定直线，可写成两已知平面的线性组合。最终得
+\[
+\boxed{-3x+9y+12z-17=0}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{27.} 小山高度
+\[
+h(x,y)=75-x^2-y^2+xy,\quad D:x^2+y^2-xy\le75.
+\]
+\begin{enumerate}
+\item 求在点 \(M(x_0,y_0)\) 处方向导数最大的方向及最大值 \(g(x_0,y_0)\)。
+\item 在边界上求坡度最大的攀登起点。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{平面上函数方向导数最大方向为梯度方向，最大值为梯度模。}
+\[
+\nabla h=(-2x+y,\ x-2y).
+\]
+因此在 \(M(x_0,y_0)\) 处最大方向为
+\[
+\boxed{\nabla h(x_0,y_0)}
+\]
+方向，最大值为
+\[
+\boxed{g(x_0,y_0)=\sqrt{(-2x_0+y_0)^2+(x_0-2y_0)^2}}.
+\]
+在边界
+\[
+x^2+y^2-xy=75
+\]
+上最大化
+\[
+g^2=5(x^2+y^2)-8xy.
+\]
+令
+\[
+s=x+y,\qquad d=x-y.
+\]
+则边界为
+\[
+s^2+3d^2=300,
+\]
+而
+\[
+g^2=\frac12s^2+\frac92d^2.
+\]
+显然当 \(s=0,d^2=100\) 时最大，即
+\[
+x+y=0,\qquad x-y=\pm10.
+\]
+故攀登起点为
+\[
+\boxed{(5,-5)\quad\text{或}\quad(-5,5)}.
+\]
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{28.} 礼堂顶部为半椭球面
+\[
+z=4\sqrt{1-\frac{x^2}{16}-\frac{y^2}{36}},
+\]
+求下雨时过 \(P(1,3,\sqrt{11})\) 的雨水流下路线。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{不计摩擦时，雨水沿高度函数在 \(xOy\) 平面投影的负梯度方向流动。}
+设
+\[
+z=z(x,y)=4\sqrt{1-\frac{x^2}{16}-\frac{y^2}{36}}.
+\]
+则
+\[
+z_x=-\frac{x}{4\sqrt Q},\qquad z_y=-\frac{2y}{9\sqrt Q},
+\quad Q=1-\frac{x^2}{16}-\frac{y^2}{36}.
+\]
+负梯度方向满足
+\[
+\frac{dy}{dx}=\frac{-z_y}{-z_x}=\frac{8y}{9x}.
+\]
+解得
+\[
+\ln y=\frac89\ln x+C,
+\]
+过 \((1,3)\)，所以
+\[
+y=3x^{8/9}.
+\]
+因此雨水路线为空间曲线
+\[
+\boxed{
+\begin{cases}
+y=3x^{8/9},\\
+z=4\sqrt{1-\dfrac{x^2}{16}-\dfrac{y^2}{36}}.
+\end{cases}}
+\]
+\end{solutionblock}
+
+\section{本章小结}
+第八章共 \(28\) 题，重点是方向向量、法向量、切平面、方向导数和梯度的几何意义。遇到“方向导数最大”优先想到梯度方向。

@@ -1,0 +1,994 @@
+\chapter{材料力学回顾：剪力图与弯矩图}
+
+\section*{作图规则速记}
+\addcontentsline{toc}{section}{作图规则速记}
+
+\begin{notecard}
+材料力学回顾部分的重点是把支座反力、剪力图和弯矩图连成一套检查链。作图时可按以下顺序：
+\begin{enumerate}
+  \item 先用整体平衡求支座反力和固定端反力矩。
+  \item 从左到右画剪力图：集中力使剪力图突跳，均布荷载使剪力图为斜线，线性分布荷载使剪力图为二次曲线。
+  \item 由 \(dM/dx=F_Q\) 画弯矩图：剪力为常数时弯矩为斜线，剪力为一次函数时弯矩为二次曲线，剪力为二次函数时弯矩为三次曲线。
+  \item 集中力偶只使弯矩图突跳，不改变剪力图。
+  \item 下列图中弯矩正负以讲义常用的“受拉侧”说明为准；数值标在图上，便于和原题答案逐项核对。
+\end{enumerate}
+\end{notecard}
+
+\section{一、画剪力图和弯矩图}
+
+\begin{problemcard}{3-1 画图题：前 6 个基本梁}
+画出图示各梁的剪力图 \(Q\) 和弯矩图 \(M\)。本题的六个结构与第 2 次作业中求支座反力的前六个结构相同；本章在已求反力的基础上继续作内力图。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.74,>=Stealth]
+  % (a)
+  \begin{scope}[shift={(0,5.2)}]
+    \draw[member] (0,0)--(3.0,0);
+    \draw[ground] (3,-0.45)--(3,0.45);
+    \foreach \y in {-0.34,-0.16,0.02,0.20,0.38} \draw[ground] (3,\y)--(3.15,\y+0.08);
+    \foreach \x/\h in {0.45/0.18,0.9/0.32,1.35/0.46,1.8/0.60,2.25/0.74,2.7/0.88}
+      \draw[Brand,-{Stealth[length=1.5mm]}] (\x,\h)--(\x,0.07);
+    \draw[Brand] (0.35,0.18)--(2.85,0.92);
+    \node[below] at (0,0) {\(A\)};
+    \node[below left] at (3,0) {\(B\)};
+    \node at (1.5,-0.70) {(a)};
+  \end{scope}
+  % (b)
+  \begin{scope}[shift={(5.2,5.2)}]
+    \draw[member] (0,0)--(3.4,0);
+    \draw[ground] (0,-0.43)--(0,0.43);
+    \foreach \y in {-0.32,-0.14,0.04,0.22} \draw[ground] (0,\y)--(-0.15,\y-0.08);
+    \foreach \x in {2.45,2.7,2.95,3.2} \draw[Brand,-{Stealth[length=1.5mm]}] (\x,0.56)--(\x,0.07);
+    \draw[Brand] (2.35,0.56)--(3.35,0.56);
+    \draw[Brand,-{Stealth[length=1.8mm]}] (3.4,0.92)--(3.4,0.07);
+    \node[above] at (2.85,0.65) {\scriptsize \(15\,\mathrm{kN/m}\)};
+    \node[right] at (3.4,0.80) {\scriptsize \(30\,\mathrm{kN}\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (2.35,0) {\(C\)};
+    \node[below] at (3.4,0) {\(B\)};
+    \node at (1.7,-0.70) {(b)};
+  \end{scope}
+  % (c)
+  \begin{scope}[shift={(0,2.55)}]
+    \draw[member] (0,0)--(4.0,0);
+    \roller{1.0}{0}
+    \roller{4.0}{0}
+    \draw[Brand,-{Stealth[length=1.8mm]}] (2.5,0.90)--(2.5,0.07);
+    \draw[Brand,-{Stealth[length=1.8mm]}] (0.18,0.48) arc[start angle=65,end angle=300,radius=0.30];
+    \node[above left] at (0.18,0.55) {\scriptsize \(30\,\mathrm{kN\cdot m}\)};
+    \node[right] at (2.5,0.75) {\scriptsize \(40\,\mathrm{kN}\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (1.0,0) {\(C\)};
+    \node[below] at (2.5,0) {\(D\)};
+    \node[below] at (4.0,0) {\(B\)};
+    \node at (2.0,-0.70) {(c)};
+  \end{scope}
+  % (d)
+  \begin{scope}[shift={(5.2,2.55)}]
+    \draw[member] (0,0)--(4.0,0);
+    \roller{0}{0}
+    \roller{4.0}{0}
+    \foreach \x in {0.25,0.55,...,3.85} \draw[Brand,-{Stealth[length=1.4mm]}] (\x,0.56)--(\x,0.07);
+    \draw[Brand] (0.15,0.56)--(3.95,0.56);
+    \draw[Brand,-{Stealth[length=1.8mm]}] (3.20,0.76) arc[start angle=120,end angle=-160,radius=0.28];
+    \node[above] at (1.75,0.66) {\scriptsize \(0.2\,\mathrm{kN/m}\)};
+    \node[above right] at (3.2,0.82) {\scriptsize \(4\,\mathrm{kN\cdot m}\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (3.2,0) {\(C\)};
+    \node[below] at (4.0,0) {\(B\)};
+    \node at (2.0,-0.70) {(d)};
+  \end{scope}
+  % (e)
+  \begin{scope}[shift={(0,0)}]
+    \draw[member] (0,0)--(4.0,0);
+    \roller{0}{0}
+    \roller{4.0}{0}
+    \draw[Brand,-{Stealth[length=1.8mm]}] (0.20,0.50) arc[start angle=60,end angle=300,radius=0.28];
+    \draw[Brand,-{Stealth[length=1.8mm]}] (3.80,0.50) arc[start angle=120,end angle=-160,radius=0.28];
+    \draw[Brand,-{Stealth[length=1.8mm]}] (2.65,0.90)--(2.65,0.07);
+    \node[above left] at (0.28,0.58) {\scriptsize \(6\,\mathrm{kN\cdot m}\)};
+    \node[above right] at (3.55,0.62) {\scriptsize \(20\,\mathrm{kN\cdot m}\)};
+    \node[above] at (2.65,0.92) {\scriptsize \(20\,\mathrm{kN}\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (2.65,0) {\(C\)};
+    \node[below] at (4.0,0) {\(B\)};
+    \node at (2.0,-0.70) {(e)};
+  \end{scope}
+  % (f)
+  \begin{scope}[shift={(5.2,0)}]
+    \draw[member] (0,0)--(4.2,0);
+    \roller{0}{0}
+    \roller{3.35}{0}
+    \foreach \x in {3.55,3.75,3.95,4.15} \draw[Brand,-{Stealth[length=1.4mm]}] (\x,0.56)--(\x,0.07);
+    \draw[Brand] (3.4,0.56)--(4.2,0.56);
+    \node[above] at (3.8,0.66) {\scriptsize \(q\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (3.35,0) {\(C\)};
+    \node[below] at (4.2,0) {\(B\)};
+    \node at (2.1,-0.70) {(f)};
+  \end{scope}
+  \figtitle{第 3 次作业第一部分题图：结构示意}
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\textbf{(a) 三角形荷载悬臂梁}
+
+由整体平衡已得
+\[
+  F_{By}=\frac12q_0l,\qquad
+  M_B=-\frac16q_0l^2\quad(\text{上侧受拉}).
+\]
+若从自由端 \(A\) 起取坐标 \(x\)，荷载集度为 \(q(x)=q_0x/l\)，则
+\[
+  Q(x)=-\int_0^x\frac{q_0s}{l}\,ds=-\frac{q_0x^2}{2l},\qquad
+  M(x)=\int_0^xQ(s)\,ds=-\frac{q_0x^3}{6l}.
+\]
+故 \(Q_A=M_A=0\)，固定端 \(B\) 处 \(Q_B=-\frac12q_0l\)，\(M_B=-\frac16q_0l^2\)。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(3.4,0);
+    \draw[Brand,thick] (0,0) .. controls (1.1,-0.08) and (2.2,-0.42) .. (3.4,-1.0);
+    \draw (3.4,0)--(3.4,-1.0);
+    \node[right] at (3.4,-1.0) {\(\frac12q_0l\)};
+    \node[below] at (1.7,-1.12) {\(Q\) 图};
+  \end{scope}
+  \begin{scope}[shift={(5.0,0)}]
+    \draw[member] (0,0)--(3.4,0);
+    \draw[Brand,thick] (0,0) .. controls (1.0,-0.04) and (2.3,-0.25) .. (3.4,-1.0);
+    \draw (3.4,0)--(3.4,-1.0);
+    \node[right] at (3.4,-1.0) {\(\frac16q_0l^2\)};
+    \node[below] at (1.7,-1.12) {\(M\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(b) 末端集中力与局部均布荷载悬臂梁}
+
+反力为
+\[
+  F_{Ay}=15\times1+30=45\,\mathrm{kN},\qquad
+  M_A=-15\times1\times2.5-30\times3=-127.5\,\mathrm{kN\cdot m}.
+\]
+弯矩图上侧受拉。关键值为 \(M_A=127.5\,\mathrm{kN\cdot m}\)，在 \(C\) 处剩余荷载对截面的力矩为 \(37.5\,\mathrm{kN\cdot m}\)，到 \(B\) 端为零；剪力图在 \(AC\) 段为 \(45\,\mathrm{kN}\)，在 \(CB\) 段线性降至 \(30\,\mathrm{kN}\)，再由端部集中力突降为零。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(4.2,0);
+    \draw[Brand,thick] (0,-1.15)--(3.0,-0.34)--(4.2,0);
+    \draw (0,0)--(0,-1.15);
+    \draw (3.0,0)--(3.0,-0.34);
+    \node[left] at (0,-1.15) {\(127.5\)};
+    \node[below] at (3.0,-0.34) {\(37.5\)};
+    \node[below] at (2.1,-1.36) {\(M\) 图 \((\mathrm{kN\cdot m})\)};
+  \end{scope}
+  \begin{scope}[shift={(5.5,0)}]
+    \draw[member] (0,0)--(4.2,0);
+    \draw[Brand,thick] (0,0.85)--(3.0,0.85)--(4.2,0.55);
+    \draw (0,0)--(0,0.85);
+    \draw (4.2,0.55)--(4.2,0);
+    \node[above] at (0,0.85) {\(45\)};
+    \node[above] at (3.0,0.85) {\(45\)};
+    \node[above] at (4.2,0.55) {\(30\)};
+    \node[below] at (2.1,-0.28) {\(Q\) 图 \((\mathrm{kN})\)};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(c) 带外伸段的简支梁}
+
+由第 2 章平衡结果
+\[
+  F_B=10\,\mathrm{kN},\qquad F_C=30\,\mathrm{kN}.
+\]
+剪力在 \(C\) 点由零突跳到 \(+30\,\mathrm{kN}\)，在 \(D\) 点受 \(40\,\mathrm{kN}\) 集中力后变为 \(-10\,\mathrm{kN}\)，到 \(B\) 点回零。弯矩图受 \(A\) 端力偶影响，在 \(AC\) 段保持 \(30\,\mathrm{kN\cdot m}\)，随后线性变化，\(D\) 附近出现 \(-15\,\mathrm{kN\cdot m}\) 控制值，至 \(B\) 点为零。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(4.0,0);
+    \draw[Brand,thick] (0,0.75)--(1.0,0.75)--(2.5,-0.38)--(4.0,0);
+    \draw[densely dashed] (1.0,0.75)--(4.0,0);
+    \draw (0,0)--(0,0.75);
+    \node[above] at (0.55,0.75) {\(30\)};
+    \node[below] at (2.5,-0.38) {\(15\)};
+    \node[below] at (2.0,-0.78) {\(M\) 图 \((\mathrm{kN\cdot m})\)};
+  \end{scope}
+  \begin{scope}[shift={(5.3,0)}]
+    \draw[member] (0,0)--(4.0,0);
+    \draw[Brand,thick] (1.0,0.70)--(2.5,0.70)--(2.5,-0.32)--(4.0,-0.32);
+    \draw (1.0,0)--(1.0,0.70);
+    \draw (4.0,-0.32)--(4.0,0);
+    \node[above] at (1.7,0.70) {\(30\)};
+    \node[below] at (3.3,-0.32) {\(10\)};
+    \node[below] at (2.0,-0.78) {\(Q\) 图 \((\mathrm{kN})\)};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(d) 全跨均布荷载与集中力偶}
+
+整体平衡得
+\[
+  F_B\times10-4-0.2\times10\times5=0,\qquad
+  F_B=1.4\,\mathrm{kN},\quad F_A=0.6\,\mathrm{kN}.
+\]
+集中力偶使 \(C\) 点两侧弯矩突变。由 \(C\) 左侧截开取 \(AC\) 段，
+\[
+  M_C^L=0.6\times8-0.2\times8\times4=-1.6\,\mathrm{kN\cdot m},
+\]
+由 \(C\) 结点力矩平衡得
+\[
+  M_C^R=2.4\,\mathrm{kN\cdot m}.
+\]
+剪力图为斜线，从 \(A\) 点 \(+0.6\,\mathrm{kN}\) 线性降到 \(B\) 点支座前的 \(-1.4\,\mathrm{kN}\)。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(4.8,0);
+    \draw[Brand,thick] (0,0) parabola bend (2.4,-0.55) (3.85,-0.34);
+    \draw[Brand,thick] (3.85,-0.34)--(3.85,0.60);
+    \draw[Brand,thick] (3.85,0.60) parabola bend (4.25,0.32) (4.8,0);
+    \node[above] at (3.88,0.62) {\(2.4\)};
+    \node[below] at (3.55,-0.35) {\(1.6\)};
+    \node[below] at (2.4,-0.86) {\(M\) 图 \((\mathrm{kN\cdot m})\)};
+  \end{scope}
+  \begin{scope}[shift={(6.0,0)}]
+    \draw[member] (0,0)--(4.8,0);
+    \draw[Brand,thick] (0,0.45)--(4.8,-0.80);
+    \draw (0,0)--(0,0.45);
+    \draw (4.8,-0.80)--(4.8,0);
+    \node[above] at (0,0.45) {\(0.6\)};
+    \node[below] at (4.8,-0.80) {\(1.4\)};
+    \node[below] at (2.4,-1.05) {\(Q\) 图 \((\mathrm{kN})\)};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(e) 两端集中力偶与集中力}
+
+整体平衡为
+\[
+  F_B\times3-6-20\times2-20=0,
+\]
+故
+\[
+  F_B=22\,\mathrm{kN}.
+\]
+若竖向向上为正，则
+\[
+  F_A+F_B-20=0\quad\Rightarrow\quad F_A=-2\,\mathrm{kN},
+\]
+即 \(A\) 处实际反力向下，大小为 \(2\,\mathrm{kN}\)。剪力图在 \(AC\) 段为 \(-2\,\mathrm{kN}\)，过集中力后为 \(-22\,\mathrm{kN}\)，到 \(B\) 点回零；弯矩图在集中力偶处突跳，并以图中控制值 \(6,2,20\) 标注。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(4.2,0);
+    \draw[Brand,thick] (0,-0.18)--(2.8,-0.06)--(4.2,0.92);
+    \draw (0,0)--(0,-0.18);
+    \draw (4.2,0)--(4.2,0.92);
+    \node[left] at (0,-0.18) {\(6\)};
+    \node[below] at (2.8,-0.06) {\(2\)};
+    \node[right] at (4.2,0.92) {\(20\)};
+    \node[below] at (2.1,-0.70) {\(M\) 图 \((\mathrm{kN\cdot m})\)};
+  \end{scope}
+  \begin{scope}[shift={(5.5,0)}]
+    \draw[member] (0,0)--(4.2,0);
+    \draw[Brand,thick] (0,-0.18)--(2.8,-0.18)--(2.8,-0.82)--(4.2,-0.82);
+    \draw (0,0)--(0,-0.18);
+    \draw (4.2,-0.82)--(4.2,0);
+    \node[below] at (1.4,-0.18) {\(2\)};
+    \node[below] at (3.5,-0.82) {\(22\)};
+    \node[below] at (2.1,-1.05) {\(Q\) 图 \((\mathrm{kN})\)};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(f) 伸臂梁端部均布荷载}
+
+由整体平衡
+\[
+  F_C\cdot4a-qa\cdot4.5a=0,
+\]
+得
+\[
+  F_C=\frac98qa,\qquad F_A=-\frac18qa.
+\]
+所以 \(A\) 处反力实际向下。剪力图在 \(AC\) 段为 \(-\frac18qa\)，到 \(C\) 点由支反力突跳为 \(qa\)，在 \(CB\) 受均布荷载线性降至零。弯矩图在 \(C\) 点达到控制值 \(\frac12qa^2\)，伸臂段为二次曲线收至 \(B\) 点零弯矩。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(5.0,0);
+    \draw[Brand,thick] (0,0)--(4.0,0.70);
+    \draw[Brand,thick] (4.0,0.70) .. controls (4.35,0.55) and (4.75,0.15) .. (5.0,0);
+    \node[above] at (4.0,0.70) {\(\frac12qa^2\)};
+    \node[below] at (2.5,-0.35) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(6.0,0)}]
+    \draw[member] (0,0)--(5.0,0);
+    \draw[Brand,thick] (0,-0.25)--(4.0,-0.25)--(4.0,0.78)--(5.0,0);
+    \draw (0,0)--(0,-0.25);
+    \node[below] at (2.0,-0.25) {\(\frac18qa\)};
+    \node[above] at (4.12,0.78) {\(qa\)};
+    \node[below] at (2.5,-0.70) {\(Q\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{notecard}
+\textbf{讲解笔记补充：第一部分的分段式与作图检查}
+
+\begin{enumerate}
+  \item 对 (a)，若从自由端 \(A\) 向固定端 \(B\) 取坐标 \(x\)，线性荷载为 \(q(x)=q_0x/l\)，因此
+  \[
+    Q(x)=-\frac{q_0}{2l}x^2,\qquad
+    M(x)=-\frac{q_0}{6l}x^3.
+  \]
+  剪力图为二次曲线，弯矩图为三次曲线，且自由端均为零。
+
+  \item 对 (b)，从固定端 \(A\) 起取 \(x\)，讲解笔记中给出的分段式为
+  \[
+    Q(x)=
+    \begin{cases}
+      45, & 0\le x<2,\\
+      75-15x, & 2\le x\le3,
+    \end{cases}
+  \]
+  \[
+    M(x)=
+    \begin{cases}
+      45x-127.5, & 0\le x<2,\\
+      -157.5+75x-7.5x^2, & 2\le x\le3.
+    \end{cases}
+  \]
+  因而 \(A\) 端控制值为 \(127.5\,\mathrm{kN\cdot m}\)，\(C\) 处为 \(37.5\,\mathrm{kN\cdot m}\)，到 \(B\) 端收为零。
+
+  \item 对 (c)，先由平衡得 \(F_C=30\,\mathrm{kN}\)、\(F_B=10\,\mathrm{kN}\)。由于 \(AC\) 段无竖向剪力，弯矩保持 \(30\,\mathrm{kN\cdot m}\)；\(D\) 点受 \(40\,\mathrm{kN}\) 集中力后，剪力从 \(+30\,\mathrm{kN}\) 变为 \(-10\,\mathrm{kN}\)，弯矩图折线斜率随之改变，故在 \(D\) 附近出现 \(-15\,\mathrm{kN\cdot m}\) 控制值。
+
+  \item 对 (d)，均布荷载使剪力图为一条斜线。弯矩图在 \(C\) 点因集中力偶突跳；按受拉侧标注时，\(C\) 左侧控制值为 \(1.6\,\mathrm{kN\cdot m}\)，\(C\) 右侧控制值为 \(2.4\,\mathrm{kN\cdot m}\)。这正是“集中力偶只改变弯矩图、不改变剪力图”的典型检查点。
+
+  \item 对 (e)，由 \(AC\) 段隔离体可得 \(Q_{AC}=-2\,\mathrm{kN}\)、\(M_C=2\,\mathrm{kN\cdot m}\)。\(AC\) 段无分布荷载，故 \(M\) 图为斜线；过集中力后 \(Q\) 突跳到 \(-22\,\mathrm{kN}\)，再结合两端力偶得到 \(M\) 图的 \(6,2,20\) 三个控制值。
+
+  \item 对 (f)，从右端伸臂 \(CB\) 隔离体可直接得到 \(M_C=\frac12qa^2\)。\(AC\) 段剪力为 \(-\frac18qa\)，到 \(C\) 点由支座反力突跳为 \(qa\)，随后在 \(CB\) 段受均布荷载线性降为零；因此 \(C\) 点既是剪力突跳点，也是弯矩控制点。
+\end{enumerate}
+\end{notecard}
+
+\section{二、利用 \texorpdfstring{\(q\)、\(Q\)、\(M\)}{q、Q、M} 的微分关系作图}
+
+\begin{notecard}
+本组题的作图检查关系为
+\[
+  \frac{dQ}{dx}=-q(x),\qquad \frac{dM}{dx}=Q(x).
+\]
+因此：无分布荷载区间剪力图为水平线、弯矩图为斜线；均布荷载区间剪力图为斜线、弯矩图为抛物线；集中力使剪力突跳；集中力偶使弯矩突跳。
+\end{notecard}
+
+\begin{problemcard}{3-2 由微分关系作剪力图和弯矩图}
+试利用荷载集度、剪力和弯矩之间的微分关系，作下列各梁的剪力图和弯矩图。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.68,>=Stealth]
+  % a
+  \begin{scope}[shift={(0,5.3)}]
+    \draw[member] (0,0)--(3.2,0);
+    \draw[ground] (0,-0.45)--(0,0.45);
+    \foreach \y in {-0.34,-0.16,0.02,0.20,0.38} \draw[ground] (0,\y)--(-0.15,\y-0.08);
+    \foreach \x in {2.15,2.40,2.65,2.90,3.15} \draw[Brand,-{Stealth[length=1.4mm]}] (\x,0.55)--(\x,0.07);
+    \draw[Brand] (2.05,0.55)--(3.2,0.55);
+    \node[above] at (2.65,0.66) {\scriptsize \(5\,\mathrm{kN/m}\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (2.05,0) {\(C\)};
+    \node[below] at (3.2,0) {\(B\)};
+    \node at (1.6,-0.65) {(a)};
+  \end{scope}
+  % b
+  \begin{scope}[shift={(5.3,5.3)}]
+    \draw[member] (0,0)--(3.2,0);
+    \draw[ground] (0,-0.45)--(0,0.45);
+    \foreach \y in {-0.34,-0.16,0.02,0.20,0.38} \draw[ground] (0,\y)--(-0.15,\y-0.08);
+    \draw[Brand,-{Stealth[length=1.8mm]}] (1.6,0.95)--(1.6,0.07);
+    \draw[Brand,-{Stealth[length=1.8mm]}] (1.88,0.70) arc[start angle=120,end angle=-160,radius=0.28];
+    \node[above left] at (1.6,0.96) {\scriptsize \(15\,\mathrm{kN}\)};
+    \node[above right] at (1.82,0.75) {\scriptsize \(10\,\mathrm{kN\cdot m}\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (1.6,0) {\(C\)};
+    \node[below] at (3.2,0) {\(B\)};
+    \node at (1.6,-0.65) {(b)};
+  \end{scope}
+  % c
+  \begin{scope}[shift={(0,2.65)}]
+    \draw[member] (0,0)--(4.2,0);
+    \roller{0}{0}
+    \roller{4.2}{0}
+    \foreach \x in {0.95,1.25,...,3.25} \draw[Brand,-{Stealth[length=1.35mm]}] (\x,0.55)--(\x,0.07);
+    \draw[Brand] (0.85,0.55)--(3.35,0.55);
+    \node[above] at (2.1,0.66) {\scriptsize \(q\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (0.85,0) {\(C\)};
+    \node[below] at (3.35,0) {\(D\)};
+    \node[below] at (4.2,0) {\(B\)};
+    \node at (2.1,-0.65) {(c)};
+  \end{scope}
+  % d
+  \begin{scope}[shift={(5.3,2.65)}]
+    \draw[member] (0,0)--(4.2,0);
+    \roller{0}{0}
+    \roller{4.2}{0}
+    \draw[Brand,-{Stealth[length=1.8mm]}] (1.45,0.65) arc[start angle=140,end angle=-40,radius=0.32];
+    \draw[Brand,-{Stealth[length=1.8mm]}] (3.95,0.66) arc[start angle=140,end angle=320,radius=0.32];
+    \node[above] at (1.45,0.72) {\scriptsize \(M_e\)};
+    \node[above] at (3.95,0.72) {\scriptsize \(2M_e\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (1.4,0) {\(C\)};
+    \node[below] at (4.2,0) {\(B\)};
+    \node at (2.1,-0.65) {(d)};
+  \end{scope}
+  % e
+  \begin{scope}[shift={(0,0)}]
+    \draw[member] (0,0)--(4.2,0);
+    \roller{0}{0}
+    \roller{4.2}{0}
+    \foreach \x in {0.3,0.6,...,3.9} \draw[Brand,-{Stealth[length=1.35mm]}] (\x,0.55)--(\x,0.07);
+    \draw[Brand] (0.15,0.55)--(4.05,0.55);
+    \draw[Brand,-{Stealth[length=1.8mm]}] (0.25,0.78) arc[start angle=60,end angle=300,radius=0.28];
+    \draw[Brand,-{Stealth[length=1.8mm]}] (3.95,0.78) arc[start angle=120,end angle=-160,radius=0.28];
+    \node[above] at (2.1,0.66) {\scriptsize \(4\,\mathrm{kN/m}\)};
+    \node[above left] at (0.25,0.86) {\scriptsize \(4\,\mathrm{kN\cdot m}\)};
+    \node[above right] at (3.85,0.86) {\scriptsize \(20\,\mathrm{kN\cdot m}\)};
+    \node at (2.1,-0.65) {(e)};
+  \end{scope}
+  % f
+  \begin{scope}[shift={(5.3,0)}]
+    \draw[member] (0,0)--(4.2,0);
+    \roller{0}{0}
+    \roller{4.2}{0}
+    \draw[Brand,-{Stealth[length=1.8mm]}] (1.05,0.85)--(1.05,0.07);
+    \draw[Brand,-{Stealth[length=1.8mm]}] (2.1,-0.80)--(2.1,-0.07);
+    \draw[Brand,-{Stealth[length=1.8mm]}] (3.15,0.85)--(3.15,0.07);
+    \node[above] at (1.05,0.86) {\scriptsize \(F\)};
+    \node[below] at (2.1,-0.86) {\scriptsize \(\frac{11}{8}F\)};
+    \node[above] at (3.15,0.86) {\scriptsize \(F\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (4.2,0) {\(B\)};
+    \node at (2.1,-1.22) {(f)};
+  \end{scope}
+  \figtitle{第二部分题图 \((a)\)--\((f)\)}
+\end{tikzpicture}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.76,>=Stealth]
+  % g
+  \begin{scope}
+    \draw[member] (0,0)--(4.0,0);
+    \roller{0}{0}
+    \roller{4.0}{0}
+    \foreach \x in {0.25,0.5,...,1.75} \draw[Brand,-{Stealth[length=1.35mm]}] (\x,0.55)--(\x,0.07);
+    \draw[Brand] (0.15,0.55)--(1.85,0.55);
+    \node[above] at (1.0,0.66) {\scriptsize \(2\,\mathrm{kN/m}\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (2.0,0) {\(C\)};
+    \node[below] at (4.0,0) {\(B\)};
+    \node at (2.0,-0.65) {(g)};
+  \end{scope}
+  % h
+  \begin{scope}[shift={(5.4,0)}]
+    \draw[member] (0,0)--(5.0,0);
+    \roller{0}{0}
+    \roller{5.0}{0}
+    \foreach \x in {0.25,0.55,...,4.75} \draw[Brand,-{Stealth[length=1.25mm]}] (\x,0.50)--(\x,0.07);
+    \draw[Brand] (0.15,0.50)--(4.85,0.50);
+    \draw[Brand,-{Stealth[length=1.8mm]}] (1.65,1.05)--(1.65,0.07);
+    \draw[Brand,-{Stealth[length=1.8mm]}] (3.35,1.05)--(3.35,0.07);
+    \node[above] at (1.05,0.61) {\scriptsize \(10\,\mathrm{kN/m}\)};
+    \node[above] at (1.65,1.05) {\scriptsize \(250\,\mathrm{kN}\)};
+    \node[above] at (3.35,1.05) {\scriptsize \(250\,\mathrm{kN}\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (5.0,0) {\(B\)};
+    \node at (2.5,-0.65) {(h)};
+  \end{scope}
+  \figtitle{第二部分题图 \((g)\)--\((h)\)}
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\textbf{(a) 端部均布荷载悬臂梁}
+
+整体平衡得
+\[
+  F_{Ay}=5\times1=5\,\mathrm{kN},\qquad
+  M_A=-5\times1\times2=-10\,\mathrm{kN\cdot m}.
+\]
+在无荷载的 \(AC\) 段，剪力为常数、弯矩为斜线；在受均布荷载的 \(CB\) 段，剪力线性降为零，弯矩为二次曲线。关键值为 \(M_A=10\,\mathrm{kN\cdot m}\)、\(M_C=2.5\,\mathrm{kN\cdot m}\)、\(Q_A=Q_C=5\,\mathrm{kN}\)。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(4.2,0);
+    \draw[Brand,thick] (0,1.0)--(2.8,0.25);
+    \draw[Brand,thick] (2.8,0.25) .. controls (3.4,0.15) and (3.9,0.03) .. (4.2,0);
+    \draw (0,0)--(0,1.0);
+    \node[left] at (0,1.0) {\(10\)};
+    \node[above] at (2.8,0.25) {\(2.5\)};
+    \node[below] at (2.1,-0.35) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(5.4,0)}]
+    \draw[member] (0,0)--(4.2,0);
+    \draw[Brand,thick] (0,0.75)--(2.8,0.75)--(4.2,0);
+    \draw (0,0)--(0,0.75);
+    \node[above] at (0,0.75) {\(5\)};
+    \node[above] at (2.8,0.75) {\(5\)};
+    \node[below] at (2.1,-0.35) {\(Q\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(b) 集中力与集中力偶悬臂梁}
+
+整体平衡得
+\[
+  F_{Ay}=15\,\mathrm{kN},\qquad
+  M_A=-10-15\times1=-25\,\mathrm{kN\cdot m}.
+\]
+\(AC\) 段剪力为 \(15\,\mathrm{kN}\)，弯矩线性变化；集中力偶使 \(C\) 点弯矩突跳，\(CB\) 段无剪力、无弯矩。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(4.0,0);
+    \draw[Brand,thick] (0,1.0)--(2.0,0.42);
+    \draw[Brand,thick] (2.0,0.42)--(2.0,0)--(4.0,0);
+    \node[left] at (0,1.0) {\(25\)};
+    \node[above] at (2.0,0.42) {\(10\)};
+    \node[below] at (2.0,-0.35) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(5.2,0)}]
+    \draw[member] (0,0)--(4.0,0);
+    \draw[Brand,thick] (0,0.75)--(2.0,0.75)--(2.0,0)--(4.0,0);
+    \draw (0,0)--(0,0.75);
+    \node[above] at (1.0,0.75) {\(15\)};
+    \node[below] at (2.0,-0.35) {\(Q\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(c) 对称局部均布荷载简支梁}
+
+由平衡方程
+\[
+  F_B\cdot5a-q\cdot3a\cdot2.5a=0
+\]
+得
+\[
+  F_A=F_B=\frac32qa.
+\]
+剪力图在 \(AC\) 段为 \(+\frac32qa\)，在 \(CD\) 段线性降至 \(-\frac32qa\)，在 \(DB\) 段保持负常数。弯矩图在 \(C,D\) 两点均为 \(\frac32qa^2\)，跨中最大为 \(\frac{21}{8}qa^2\)。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(5,0);
+    \draw[Brand,thick] (0,0)--(1,0.55);
+    \draw[Brand,thick] (1,0.55) .. controls (2.0,0.95) and (3.0,0.95) .. (4,0.55);
+    \draw[Brand,thick] (4,0.55)--(5,0);
+    \node[above] at (1,0.55) {\(\frac32qa^2\)};
+    \node[above] at (2.5,0.95) {\(\frac{21}{8}qa^2\)};
+    \node[above] at (4,0.55) {\(\frac32qa^2\)};
+    \node[below] at (2.5,-0.35) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(6.0,0)}]
+    \draw[member] (0,0)--(5,0);
+    \draw[Brand,thick] (0,0.70)--(1,0.70)--(4,-0.70)--(5,-0.70);
+    \draw (0,0)--(0,0.70);
+    \draw (5,-0.70)--(5,0);
+    \node[above] at (0.5,0.70) {\(\frac32qa\)};
+    \node[below] at (4.5,-0.70) {\(\frac32qa\)};
+    \node[below] at (2.5,-1.0) {\(Q\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(d) 两个集中力偶作用的简支梁}
+
+取整体对 \(A\) 点取矩：
+\[
+  F_B\cdot3a+M_e-2M_e=0,
+\]
+故
+\[
+  F_B=\frac{M_e}{3a},\qquad F_A=-\frac{M_e}{3a}.
+\]
+剪力图为全跨常值 \(-M_e/(3a)\)。弯矩图在 \(C\) 点因 \(M_e\) 突跳：\(C\) 左侧为 \(\frac13M_e\)，突跳后为 \(\frac43M_e\)，至 \(B\) 点为 \(2M_e\)。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(4.5,0);
+    \draw[Brand,thick] (0,0)--(1.5,0.25)--(1.5,0.75)--(4.5,1.05);
+    \draw (4.5,0)--(4.5,1.05);
+    \node[above left,font=\scriptsize] at (1.45,0.27) {\(\frac13M_e\)};
+    \node[above,font=\scriptsize] at (1.90,0.78) {\(\frac43M_e\)};
+    \node[right] at (4.5,1.05) {\(2M_e\)};
+    \node[below] at (2.25,-0.35) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(5.8,0)}]
+    \draw[member] (0,0)--(4.5,0);
+    \draw[Brand,thick] (0,-0.45)--(4.5,-0.45);
+    \draw (0,0)--(0,-0.45);
+    \draw (4.5,-0.45)--(4.5,0);
+    \node at (2.25,-0.23) {\(\frac{M_e}{3a}\)};
+    \node[below] at (2.25,-0.88) {\(Q\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(e) 全跨均布荷载与两端力偶}
+
+对 \(A\) 点取矩：
+\[
+  F_B\cdot4=4\times4\times2+4+20,
+\]
+得
+\[
+  F_B=14\,\mathrm{kN},\qquad F_A=2\,\mathrm{kN}.
+\]
+剪力图从 \(+2\,\mathrm{kN}\) 线性降至 \(-14\,\mathrm{kN}\)。弯矩图为抛物线，并受两端力偶影响，按答案图标出端部控制值 \(4\,\mathrm{kN\cdot m}\) 与 \(20\,\mathrm{kN\cdot m}\)，跨内控制值约 \(8\,\mathrm{kN\cdot m}\)。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(4.4,0);
+    \draw[Brand,thick] (0,0.28) .. controls (1.4,0.10) and (3.0,0.50) .. (4.4,1.0);
+    \draw (0,0)--(0,0.28);
+    \draw (4.4,0)--(4.4,1.0);
+    \node[left] at (0,0.28) {\(4\)};
+    \node[above] at (2.2,0.42) {\(8\)};
+    \node[right] at (4.4,1.0) {\(20\)};
+    \node[below] at (2.2,-0.35) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(5.7,0)}]
+    \draw[member] (0,0)--(4.4,0);
+    \draw[Brand,thick] (0,0.38)--(4.4,-0.85);
+    \draw (0,0)--(0,0.38);
+    \draw (4.4,-0.85)--(4.4,0);
+    \node[above] at (0,0.38) {\(+2\)};
+    \node[below] at (4.4,-0.85) {\(14\)};
+    \node[below] at (2.2,-1.12) {\(Q\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(f) 三个集中力作用的简支梁}
+
+整体平衡：
+\[
+  F_B\cdot4a+\frac{11}{8}F\cdot2a=F\cdot a+F\cdot3a,
+\]
+故
+\[
+  F_B=\frac{5}{16}F,\qquad F_A=\frac{5}{16}F.
+\]
+剪力图依次为
+\[
+  +\frac{5}{16}F,\quad -\frac{11}{16}F,\quad +\frac{11}{16}F,\quad -\frac{5}{16}F.
+\]
+弯矩图由这些常剪力段积分得到折线图，控制值为两侧 \(\frac{5}{16}Fa\)，中部 \(\frac{3}{8}Fa\)。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(4.8,0);
+    \draw[Brand,thick] (0,0)--(1.2,-0.45)--(2.4,0.70)--(3.6,-0.45)--(4.8,0);
+    \node[below] at (1.2,-0.45) {\(\frac{5}{16}Fa\)};
+    \node[above] at (2.4,0.70) {\(\frac38Fa\)};
+    \node[below] at (3.6,-0.45) {\(\frac{5}{16}Fa\)};
+    \node[below] at (2.4,-0.85) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(6.0,0)}]
+    \draw[member] (0,0)--(4.8,0);
+    \draw[Brand,thick] (0,0.40)--(1.2,0.40)--(1.2,-0.70)--(2.4,-0.70)--(2.4,0.70)--(3.6,0.70)--(3.6,-0.40)--(4.8,-0.40);
+    \node[above] at (0.6,0.40) {\(\frac{5}{16}F\)};
+    \node[below] at (1.8,-0.70) {\(\frac{11}{16}F\)};
+    \node[above] at (3.0,0.70) {\(\frac{11}{16}F\)};
+    \node[below] at (4.2,-0.40) {\(\frac{5}{16}F\)};
+    \node[below] at (2.4,-1.02) {\(Q\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(g) 左半跨均布荷载简支梁}
+
+对 \(A\) 点取矩：
+\[
+  F_B\cdot2=2\times1\times0.5,
+\]
+故
+\[
+  F_B=\frac12\,\mathrm{kN},\qquad F_A=\frac32\,\mathrm{kN}.
+\]
+在左侧 \(1\,\mathrm{m}\) 均布荷载段，
+\[
+  Q(x)=\frac32-2x,\qquad M(x)=\frac32x-x^2.
+\]
+所以 \(M_C=\frac12\,\mathrm{kN\cdot m}\)，最大弯矩在 \(x=0.75\,\mathrm{m}\) 处，为 \(\frac{9}{16}\,\mathrm{kN\cdot m}\)。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(4,0);
+    \draw[Brand,thick] (0,0) .. controls (0.8,0.62) and (1.2,0.55) .. (2,0.45)--(4,0);
+    \node[above] at (1.0,0.62) {\(\frac{9}{16}\)};
+    \node[above] at (2,0.45) {\(\frac12\)};
+    \node[below] at (2,-0.35) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(5.2,0)}]
+    \draw[member] (0,0)--(4,0);
+    \draw[Brand,thick] (0,0.75)--(2,-0.25)--(4,-0.25);
+    \draw (0,0)--(0,0.75);
+    \draw (4,-0.25)--(4,0);
+    \node[above] at (0,0.75) {\(\frac32\)};
+    \node[below] at (3,-0.25) {\(\frac12\)};
+    \node[below] at (2,-0.70) {\(Q\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(h) 对称集中力与全跨均布荷载}
+
+取整体对 \(A\) 点取矩：
+\[
+  F_B\cdot6=10\times6\times3+250\times2+250\times4,
+\]
+得
+\[
+  F_B=280\,\mathrm{kN},\qquad F_A=280\,\mathrm{kN}.
+\]
+剪力图从 \(+280\,\mathrm{kN}\) 开始，均布荷载使其线性下降；在两个 \(250\,\mathrm{kN}\) 集中力处各突降一次。关键值依次为 \(280,260,10,-10,-260,-280\)。弯矩图关于跨中对称，在 \(x=2\,\mathrm{m}\) 和 \(x=4\,\mathrm{m}\) 处为 \(540\,\mathrm{kN\cdot m}\)，跨中最大为 \(545\,\mathrm{kN\cdot m}\)。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.86,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(5.4,0);
+    \draw[Brand,thick] (0,0) .. controls (1.2,0.75) and (1.8,0.86) .. (2.0,0.82);
+    \draw[Brand,thick] (2.0,0.82) .. controls (2.5,0.90) and (3.1,0.90) .. (3.4,0.82);
+    \draw[Brand,thick] (3.4,0.82) .. controls (4.0,0.72) and (5.0,0.25) .. (5.4,0);
+    \node[above,font=\scriptsize] at (1.85,0.82) {\(540\)};
+    \node[above,font=\scriptsize] at (2.70,1.04) {\(545\)};
+    \node[above,font=\scriptsize] at (3.55,0.82) {\(540\)};
+    \node[below] at (2.7,-0.35) {\(M\) 图 \((\mathrm{kN\cdot m})\)};
+  \end{scope}
+  \begin{scope}[shift={(6.5,0)}]
+    \draw[member] (0,0)--(5.4,0);
+    \draw[Brand,thick] (0,0.90)--(1.8,0.78)--(1.8,0.04)--(2.7,0)--(3.6,-0.04)--(3.6,-0.78)--(5.4,-0.90);
+    \draw (0,0)--(0,0.90);
+    \draw (5.4,-0.90)--(5.4,0);
+    \node[above] at (0,0.90) {\(280\)};
+    \node[above] at (1.8,0.78) {\(260\)};
+    \node[above] at (2.35,0.08) {\(10\)};
+    \node[below] at (3.15,-0.08) {\(10\)};
+    \node[below] at (3.6,-0.78) {\(260\)};
+    \node[below] at (5.4,-0.90) {\(280\)};
+    \node[below] at (2.7,-1.18) {\(Q\) 图 \((\mathrm{kN})\)};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{notecard}
+\textbf{讲解笔记补充：第二部分的微分关系检查}
+
+\begin{enumerate}
+  \item (a)、(b) 都是悬臂梁。无荷载段剪力为常数、弯矩为斜线；受均布荷载段剪力为斜线、弯矩为抛物线。(a) 的关键值是 \(M_A=10\,\mathrm{kN\cdot m}\)、\(M_C=2.5\,\mathrm{kN\cdot m}\)；(b) 的 \(CB\) 段无剪力、无弯矩，集中力偶只造成 \(C\) 处弯矩突跳。
+
+  \item (c) 的要点是对称性与叠加。两端反力均为 \(\frac32qa\)，在 \(C,D\) 处弯矩均为 \(\frac32qa^2\)。中段均布荷载会在这个线性底图上叠加抛物线，因此跨中最大值为 \(\frac{21}{8}qa^2\)。
+
+  \item (d) 没有横向分布荷载，剪力图全跨为常值 \(-M_e/(3a)\)。两个集中力偶使弯矩图在 \(C\) 与 \(B\) 处突跳；作图时先画由常剪力产生的斜线，再在力偶位置按力偶大小跳跃。
+
+  \item (e) 全跨均布荷载使剪力线性下降，端部力偶只改弯矩图。由平衡得 \(F_A=2\,\mathrm{kN}\)、\(F_B=14\,\mathrm{kN}\)，弯矩图受两端力偶控制，端部标为 \(4\,\mathrm{kN\cdot m}\)、\(20\,\mathrm{kN\cdot m}\)，跨内约 \(8\,\mathrm{kN\cdot m}\) 为检查值。
+
+  \item (f) 可利用对称性快速校核：两端反力均为 \(\frac{5}{16}F\)。剪力依次为 \(+\frac{5}{16}F,-\frac{11}{16}F,+\frac{11}{16}F,-\frac{5}{16}F\)，弯矩控制值为两侧 \(\frac{5}{16}Fa\)、中部 \(\frac38Fa\)。
+
+  \item (g) 左半跨均布荷载下，先求 \(F_A=\frac32\,\mathrm{kN}\)、\(F_B=\frac12\,\mathrm{kN}\)。令 \(Q(x)=\frac32-2x=0\) 可得最大弯矩位置 \(x=0.75\,\mathrm{m}\)，最大值 \(\frac{9}{16}\,\mathrm{kN\cdot m}\)。
+
+  \item (h) 结构与荷载关于跨中对称，故 \(F_A=F_B=280\,\mathrm{kN}\)。剪力关键值 \(280,260,10,-10,-260,-280\) 是逐段检查图形最可靠的顺序；弯矩图关于跨中对称，\(x=2\,\mathrm{m}\)、\(x=4\,\mathrm{m}\) 处为 \(540\,\mathrm{kN\cdot m}\)，跨中为 \(545\,\mathrm{kN\cdot m}\)。
+\end{enumerate}
+\end{notecard}
+
+\section{三、具有中间铰的梁}
+
+\begin{notecard}
+带中间铰的梁作图时，先利用铰处弯矩为零把结构拆成两部分。若某一段为二力杆，则该段只有轴力，不产生剪力和弯矩；若铰的一侧还有支座和外荷载，则先对该侧隔离体取矩求铰力，再回到另一侧画内力图。
+\end{notecard}
+
+\begin{problemcard}{3-3 具有中间铰的梁}
+试作下列具有中间铰的梁的剪力图和弯矩图。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88,>=Stealth]
+  \begin{scope}
+    \draw[ground] (0,-0.50)--(0,0.55);
+    \foreach \y in {-0.40,-0.20,0,0.20,0.40}
+      \draw[ground] (0,\y)--(-0.15,\y-0.10);
+    \draw[member] (0,0)--(1.8,0);
+    \node[smallpin] at (1.8,0) {};
+    \draw[member] (1.8,0)--(5.4,0);
+    \roller{3.6}{0}
+    \foreach \x in {0.35,0.65,...,1.55}
+      \draw[Brand,-{Stealth[length=1.5mm]}] (\x,0.62)--(\x,0.08);
+    \draw[Brand] (0.22,0.62)--(1.65,0.62);
+    \draw[Brand,-{Stealth[length=2mm]}] (5.4,0.95)--(5.4,0.08);
+    \node[above] at (0.92,0.68) {\(q\)};
+    \node[right] at (5.4,0.85) {\(F=qa\)};
+    \node[left] at (0,0) {\(A\)};
+    \node[below] at (1.8,0) {\(C\)};
+    \node[below] at (3.6,0) {\(B\)};
+    \node[below] at (5.4,0) {\(D\)};
+    \draw[<->] (0,-0.62)--(1.8,-0.62) node[midway,below] {\(a\)};
+    \draw[<->] (1.8,-0.62)--(3.6,-0.62) node[midway,below] {\(a\)};
+    \draw[<->] (3.6,-0.62)--(5.4,-0.62) node[midway,below] {\(a\)};
+    \node at (2.7,-1.15) {(a)};
+  \end{scope}
+
+  \begin{scope}[shift={(0,-3.1)}]
+    \node[smallpin] at (0,0) {};
+    \draw[ground] (-0.24,-0.25)--(0.24,-0.25);
+    \draw[ground] (-0.18,-0.25)--(-0.28,-0.38);
+    \draw[ground] (0,-0.25)--(-0.10,-0.38);
+    \draw[ground] (0.18,-0.25)--(0.08,-0.38);
+    \draw[member] (0,0)--(1.8,0);
+    \node[smallpin] at (1.8,0) {};
+    \draw[member] (1.8,0)--(5.4,0);
+    \roller{3.6}{0}
+    \roller{5.4}{0}
+    \draw[Brand,-{Stealth[length=2mm]}] (1.8,0.95)--(1.8,0.08);
+    \draw[Brand,-{Stealth[length=2mm]}] (5.15,0.52) arc[start angle=140,end angle=-210,radius=0.32];
+    \node[above] at (1.8,0.95) {\(F=qa\)};
+    \node[above right] at (5.35,0.56) {\(M_e=qa^2\)};
+    \node[below] at (0,0) {\(A\)};
+    \node[below] at (1.8,0) {\(C\)};
+    \node[below] at (3.6,0) {\(B\)};
+    \node[below] at (5.4,0) {\(D\)};
+    \draw[<->] (0,-0.62)--(1.8,-0.62) node[midway,below] {\(a\)};
+    \draw[<->] (1.8,-0.62)--(3.6,-0.62) node[midway,below] {\(a\)};
+    \draw[<->] (3.6,-0.62)--(5.4,-0.62) node[midway,below] {\(a\)};
+    \node at (2.7,-1.15) {(b)};
+  \end{scope}
+  \figtitle{第三部分题图：中间铰梁结构示意}
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\textbf{(a) 固端梁与右侧伸臂段通过中间铰连接}
+
+先取右侧 \(CD\) 部分隔离体。设铰 \(C\) 对右侧隔离体的竖向作用为 \(F_C\)，对 \(B\) 点取矩：
+\[
+  F_C\cdot a=qa\cdot a,
+\]
+故
+\[
+  F_C=qa.
+\]
+该力在右侧隔离体上向下，在左侧 \(AC\) 段上则向上。右侧竖向平衡还给出
+\[
+  F_B-F_C-qa=0\quad\Rightarrow\quad F_B=2qa.
+\]
+
+再取左侧 \(AC\) 段。铰力 \(F_C=qa\) 向上，均布荷载合力 \(qa\) 向下，故固定端竖向反力为零；对 \(A\) 点取矩得
+\[
+  M_A=qa\cdot a-\frac12qa\cdot a=\frac12qa^2,
+\]
+下侧受拉。若 \(x\) 从 \(A\) 向 \(C\) 量取，则
+\[
+  Q_{AC}(x)=-qx,\qquad
+  M_{AC}(x)=\frac12qa^2-\frac12qx^2,
+  \quad 0\le x\le a.
+\]
+于是 \(C\) 铰处 \(M_C=0\)。右侧 \(CD\) 段中，\(CB\) 段剪力为 \(-qa\)，到 \(B\) 点由支反力 \(2qa\) 突跳为 \(+qa\)，再在 \(D\) 点由端部集中力 \(qa\) 回零；弯矩图在 \(B\) 点达到控制值 \(qa^2\)，两端 \(C,D\) 均为零。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.90,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(5.4,0);
+    \draw[Brand,thick] (0,0.62) parabola bend (1.8,0) (1.8,0);
+    \draw[Brand,thick] (1.8,0)--(3.6,1.05)--(5.4,0);
+    \node[above] at (0,0.62) {\(\frac12qa^2\)};
+    \node[above] at (3.6,1.05) {\(qa^2\)};
+    \node[below] at (2.7,-0.35) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(0,-2.2)}]
+    \draw[member] (0,0)--(5.4,0);
+    \draw[Brand,thick] (0,0)--(1.8,-0.72)--(1.8,-0.72)--(3.6,-0.72)--(3.6,0.72)--(5.4,0.72);
+    \draw[Brand,thick] (5.4,0.72)--(5.4,0);
+    \node[below] at (1.55,-0.72) {\(qa\)};
+    \node[above] at (4.5,0.72) {\(qa\)};
+    \node[below] at (2.7,-1.05) {\(Q\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}
+
+\begin{solutioncard}
+\textbf{(b) 左段为二力杆的中间铰梁}
+
+左段 \(AC\) 两端均为铰，且杆上没有横向荷载和力偶，因此 \(AC\) 是二力杆，只承受轴力：
+\[
+  Q_{AC}=0,\qquad M_{AC}=0.
+\]
+
+只需分析右侧 \(CBD\) 部分。集中力 \(F=qa\) 作用在 \(C\) 点，\(D\) 点有集中力偶 \(M_e=qa^2\)。由 \(C\) 点右侧隔离体可知，\(B\) 点竖向支反力承担该集中力，
+\[
+  F_B=qa,\qquad F_D=0,
+\]
+且 \(F_B\cdot a=M_e\) 正好平衡端部力偶。故 \(CB\) 段剪力为 \(-qa\)，过 \(B\) 点后剪力回零；弯矩图从 \(C\) 点零弯矩线性增至 \(B\) 点控制值 \(qa^2\)，在 \(BD\) 段保持常值，至 \(D\) 点受端部力偶突跳为零。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.92,>=Stealth]
+  \begin{scope}
+    \draw[member] (0,0)--(5.4,0);
+    \draw[Brand,thick] (1.8,0)--(3.6,0.88)--(5.4,0.88)--(5.4,0);
+    \node[above] at (4.5,0.88) {\(qa^2\)};
+    \node[below] at (2.7,-0.35) {\(M\) 图};
+  \end{scope}
+  \begin{scope}[shift={(0,-1.9)}]
+    \draw[member] (0,0)--(5.4,0);
+    \draw[Brand,thick] (1.8,0)--(1.8,-0.70)--(3.6,-0.70)--(3.6,0);
+    \node[below] at (2.7,-0.70) {\(qa\)};
+    \node[below] at (2.7,-1.05) {\(Q\) 图};
+  \end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{solutioncard}

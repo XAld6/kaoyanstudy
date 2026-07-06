@@ -1,0 +1,299 @@
+\chapter{三铰拱}
+
+\begin{notecard}
+三铰拱在竖向荷载作用下，通常先按同跨度简支梁求竖向反力，再利用中间铰弯矩为零求水平推力。任意截面的弯矩可写成
+\[
+  M=M^{0}-Hy,
+\]
+其中 \(M^{0}\) 是相应简支梁在同截面处的弯矩，\(H\) 为水平推力，\(y\) 为该截面到两拱脚连线的竖向高度。求剪力和轴力时，应把截面处的合力沿拱轴切线与法线方向分解。
+\end{notecard}
+
+\section{三铰拱水平推力与截面内力}
+
+\begin{problemcard}{2-40 截面 \(K\) 的弯矩}
+图 2-188 所示三铰拱，拱轴线方程为
+\[
+  y=\frac{4f}{l^2}(lx-x^2).
+\]
+求截面 \(K\) 的弯矩，规定下拉为正。（广西大学 2010）
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.58,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (C) at (6,4);
+  \coordinate (K) at (10,2.222);
+  \coordinate (B) at (12,0);
+  \draw[member,domain=0:12,samples=100] plot (\x,{4/144*(12*\x-\x*\x)});
+  \node[smallpin] at (A) {};
+  \node[smallpin] at (C) {};
+  \node[smallpin] at (K) {};
+  \node[smallpin] at (B) {};
+  \wallroller{0}{0}
+  \roller{0}{0}
+  \roller{12}{0}
+  \wallroller{12.55}{0}
+  \node[below left] at (A) {\(A\)};
+  \node[above] at (C) {\(C\)};
+  \node[above right] at (K) {\(K\)};
+  \node[below right] at (B) {\(B\)};
+  \foreach \x in {0.4,1.2,...,5.6}
+    \draw[Brand,-{Stealth[length=1.4mm]}] (\x,5.25)--(\x,4.55);
+  \draw[Brand] (0.2,5.25)--(5.8,5.25);
+  \node[above] at (3,5.25) {\(q=20\,\mathrm{kN/m}\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (K)+(0,1.45)--(K)+(0,0.18) node[midway,right] {\(48\,\mathrm{kN}\)};
+  \draw[<->] (0,-0.85)--(6,-0.85) node[midway,below] {\(6\,\mathrm{m}\)};
+  \draw[<->] (6,-0.85)--(12,-0.85) node[midway,below] {\(6\,\mathrm{m}\)};
+  \draw[<->] (0,-1.45)--(10,-1.45) node[midway,below] {\(10\,\mathrm{m}\)};
+  \draw[<->] (12.9,0)--(12.9,4) node[midway,right] {\(4\,\mathrm{m}\)};
+  \figtitle{图 2-188：三铰拱截面 \(K\)}
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(M_K=13.33\,\mathrm{kN\cdot m}\)。}
+
+本题先求右拱脚的竖向反力和水平反力。左半跨均布荷载合力为
+\[
+  q\cdot6=20\times6=120\,\mathrm{kN},
+\]
+作用点距 \(A\) 为 \(3\,\mathrm{m}\)。对 \(A\) 点取矩：
+\[
+  12F_{By}-48\times10-120\times3=0,
+\]
+故
+\[
+  F_{By}=70\,\mathrm{kN}.
+\]
+再利用中铰 \(C\) 的弯矩为零。取右半拱，关于 \(C\) 点取矩：
+\[
+  4F_{Bx}+48\times4-6F_{By}=0,
+\]
+代入 \(F_{By}=70\,\mathrm{kN}\)，得
+\[
+  F_{Bx}=57\,\mathrm{kN}.
+\]
+截面 \(K\) 的横坐标为 \(x_K=10\,\mathrm{m}\)，拱高为
+\[
+  y_K=\frac{4\times4}{12^2}(12\times10-10^2)
+      =\frac{20}{9}\,\mathrm{m}.
+\]
+取 \(K\) 到 \(B\) 的右段隔离体，对 \(K\) 点取矩：
+\[
+  M_K+F_{Bx}y_K-F_{By}(12-10)=0.
+\]
+因此
+\[
+  M_K=70\times2-57\times\frac{20}{9}
+      =\frac{40}{3}
+      =13.33\,\mathrm{kN\cdot m}.
+\]
+\end{solutioncard}
+
+\begin{problemcard}{2-41 水平支座反力}
+图 2-189 所示三铰拱的水平支座反力是多少？（武汉大学 2010）
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.64,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (P) at (3,1.5);
+  \coordinate (C) at (6,2);
+  \coordinate (B) at (12,0);
+  \draw[member,domain=0:12,samples=100] plot (\x,{2/36*(12*\x-\x*\x)});
+  \foreach \p in {A,C,B} \node[smallpin] at (\p) {};
+  \wallroller{0}{0}
+  \roller{0}{0}
+  \roller{12}{0}
+  \wallroller{12.55}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (P)+(0,1.2)--(P)+(0,0.1) node[midway,left] {\(20\,\mathrm{kN}\)};
+  \draw[Brand,-{Stealth[length=2mm]}] (C)+(0,1.3)--(C)+(0,0.12) node[midway,right] {\(20\,\mathrm{kN}\)};
+  \draw[<->] (0,-0.65)--(3,-0.65) node[midway,below] {\(3\,\mathrm{m}\)};
+  \draw[<->] (3,-0.65)--(6,-0.65) node[midway,below] {\(3\,\mathrm{m}\)};
+  \draw[<->] (6,-0.65)--(12,-0.65) node[midway,below] {\(6\,\mathrm{m}\)};
+  \draw[<->] (12.9,0)--(12.9,2) node[midway,right] {\(2\,\mathrm{m}\)};
+  \node[below left] at (A) {\(A\)};
+  \node[above] at (C) {\(C\)};
+  \node[below right] at (B) {\(B\)};
+  \figtitle{图 2-189：两集中荷载三铰拱}
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：水平支座反力为 \(45\,\mathrm{kN}\)。}
+
+先由整体竖向平衡求右支座竖向反力。对 \(A\) 点取矩：
+\[
+  12F_{By}-20\times3-20\times6=0,
+\]
+因此
+\[
+  F_{By}=15\,\mathrm{kN},\qquad F_{Ay}=40-15=25\,\mathrm{kN}.
+\]
+再取左半拱 \(A\sim C\)。中铰 \(C\) 处弯矩为零，关于 \(C\) 点取矩：
+\[
+  2H-25\times6+20\times3=0.
+\]
+于是
+\[
+  H=\frac{150-60}{2}=45\,\mathrm{kN}.
+\]
+左右拱脚水平反力大小相等、方向相反，题问水平支座反力的大小即为 \(45\,\mathrm{kN}\)。
+\end{solutioncard}
+
+\begin{problemcard}{2-42 链杆 \(AB\) 的轴力}
+图 2-190 所示结构中，链杆 \(AB\) 的轴力为多少？以受拉为正。（中南大学 2010）
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.78,>=Stealth]
+  \coordinate (L) at (0,0);
+  \coordinate (A) at (2.15,2);
+  \coordinate (T) at (4,3);
+  \coordinate (B) at (5.85,2);
+  \coordinate (R) at (8,0);
+  \draw[member,domain=0:8,samples=100] plot (\x,{3/16*(8*\x-\x*\x)});
+  \draw[member] (A)--(B);
+  \draw[member] (T)--(4,2.55);
+  \foreach \p in {L,A,T,B,R} \node[smallpin] at (\p) {};
+  \wallroller{0}{0}
+  \roller{0}{0}
+  \roller{8}{0}
+  \wallroller{8.45}{0}
+  \draw[Brand,-{Stealth[length=2mm]}] (T)+(0,1.1)--(T)+(0,0.12) node[midway,left] {\(F_p\)};
+  \node[left] at (A) {\(A\)};
+  \node[right] at (B) {\(B\)};
+  \draw[<->] (0,-0.65)--(4,-0.65) node[midway,below] {\(l/2\)};
+  \draw[<->] (4,-0.65)--(8,-0.65) node[midway,below] {\(l/2\)};
+  \draw[<->] (8.7,0)--(8.7,2) node[midway,right] {\(l/4\)};
+  \draw[<->] (8.7,2)--(8.7,3) node[midway,right] {\(l/4\)};
+  \figtitle{图 2-190：含水平链杆的三铰拱}
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(F_{NAB}=-F_p\)，即链杆 \(AB\) 受压。}
+
+结构和荷载关于中线对称，故两拱脚竖向反力相等：
+\[
+  F_{Ly}=F_{Ry}=\frac{F_p}{2}.
+\]
+取右半结构，由右拱脚到跨中铰的水平距离为 \(l/2\)。对左侧拱脚或由整体对称可知，右拱脚竖向反力为 \(F_p/2\)。
+
+再取右半拱中包含链杆 \(AB\) 的隔离体，对右拱脚 \(R\) 点取矩。链杆 \(AB\) 的作用线距 \(R\) 的竖向距离为 \(l/4\)，跨中竖向荷载在右半隔离体中对应的力臂为 \(l/2\)，于是
+\[
+  F_{NAB}\cdot\frac{l}{4}
+  +\frac{F_p}{2}\cdot\frac{l}{2}=0.
+\]
+化简得
+\[
+  F_{NAB}=-F_p.
+\]
+按题设受拉为正，负号表示链杆 \(AB\) 受压。
+\end{solutioncard}
+
+\begin{problemcard}{2-43 截面 \(D\) 的弯矩与剪力}
+图 2-191 所示三铰拱，拱轴线方程为
+\[
+  y=\frac{4f}{l^2}(lx-x^2),
+\]
+其中 \(f=4\,\mathrm{m}\)，\(l=16\,\mathrm{m}\)。求截面 \(D\) 的弯矩 \(M_D\) 与剪力 \(F_{QD}\)。（浙江大学 2012）
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.45,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (C) at (8,4);
+  \coordinate (D) at (12,3);
+  \coordinate (B) at (16,0);
+  \draw[member,domain=0:16,samples=120] plot (\x,{1*\x-\x*\x/16});
+  \foreach \p in {A,C,D,B} \node[smallpin] at (\p) {};
+  \wallroller{0}{0}
+  \roller{0}{0}
+  \roller{16}{0}
+  \wallroller{16.7}{0}
+  \foreach \x in {0.8,2.0,...,7.2}
+    \draw[Brand,-{Stealth[length=1.4mm]}] (\x,5.4)--(\x,4.55);
+  \draw[Brand] (0.4,5.4)--(7.6,5.4);
+  \node[above] at (4,5.4) {\(q\)};
+  \node[below left] at (A) {\(A\)};
+  \node[above] at (C) {\(C\)};
+  \node[above right] at (D) {\(D\)};
+  \node[below right] at (B) {\(B\)};
+  \draw[<->] (0,-0.8)--(8,-0.8) node[midway,below] {\(8\,\mathrm{m}\)};
+  \draw[<->] (8,-0.8)--(12,-0.8) node[midway,below] {\(4\,\mathrm{m}\)};
+  \draw[<->] (12,-0.8)--(16,-0.8) node[midway,below] {\(4\,\mathrm{m}\)};
+  \draw[<->] (17.3,0)--(17.3,3) node[midway,right] {\(3\,\mathrm{m}\)};
+  \draw[<->] (17.3,3)--(17.3,4) node[midway,right] {\(1\,\mathrm{m}\)};
+  \figtitle{图 2-191：抛物线三铰拱截面 \(D\)}
+\end{tikzpicture}
+\end{figure}
+\end{problemcard}
+
+\begin{solutioncard}
+\answer{答案：\(M_D=4q\)（上侧受拉），\(F_{QD}=0\)。}
+
+左半跨均布荷载合力为 \(8q\)，作用点距 \(A\) 为 \(4\,\mathrm{m}\)。对 \(A\) 点取矩：
+\[
+  16F_{By}-8q\times4=0,
+\]
+得
+\[
+  F_{By}=2q.
+\]
+由竖向平衡还可得
+\[
+  F_{Ay}=8q-2q=6q.
+\]
+再取中铰 \(C\) 的弯矩为零。对左半拱 \(A\sim C\) 关于 \(C\) 点取矩：
+\[
+  4H-6q\times8+8q\times4=0,
+\]
+因此
+\[
+  H=4q.
+\]
+按右半拱受力方向取截面，支座 \(B\) 处反力为
+\[
+  F_{Bx}=4q,\qquad F_{By}=2q,
+\]
+与讲解笔记中的右段隔离体一致。
+
+截面 \(D\) 位于 \(x=12\,\mathrm{m}\)，由拱轴线
+\[
+  y=x-\frac{x^2}{16}
+\]
+得
+\[
+  y_D=12-\frac{12^2}{16}=3\,\mathrm{m}.
+\]
+取右段 \(D\sim B\)，对 \(D\) 点取矩：
+\[
+  M_D+4q\times3-2q\times4=0.
+\]
+若按代数弯矩取下侧受拉为正，则 \(M_D=-4q\)。题图答案按受拉侧标注，因此写为
+\[
+  M_D=4q,
+\]
+且标注为上侧受拉。
+
+最后求剪力。拱轴线导数为
+\[
+  y'=1-\frac{2x}{16}=1-\frac{x}{8},
+\]
+在 \(D\) 点
+\[
+  y'_D=1-\frac{12}{8}=-\frac12.
+\]
+因此截面切线方向的斜率大小为 \(1/2\)，方向余弦可取
+\[
+  \cos\theta=\frac{2}{\sqrt5},\qquad \sin\theta=\frac{1}{\sqrt5}.
+\]
+右段外力合力 \((4q,\,2q)\) 与截面切线平行，其法向分量为零，所以
+\[
+  F_{QD}=0.
+\]
+\end{solutioncard}
+
+\begin{notecard}
+第 7 次作业讲解笔记补充：三铰拱题应优先找“中铰”。中铰不传弯矩，常用来求水平推力；截面弯矩则可用 \(M=M^0-Hy\) 快速复核。若要求剪力和轴力，不要直接把竖向剪力当作 \(F_Q\)，必须按截面切线方向重新分解。
+\end{notecard}

@@ -1,0 +1,299 @@
+\chapter{高等数学：三重积分}
+
+\section{三重积分的极限、区域与坐标变换}
+
+\begin{problemblock}
+\textbf{例1.} 求极限
+\[
+\lim_{n\to\infty}\frac{\pi}{2n^5}
+\sum_{i=1}^{n}\sum_{j=1}^{n}\sum_{k=1}^{n}
+i^2\sin\frac{\pi j}{2n}\cos\frac{k}{n}.
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{三重求和可以拆成三个一维求和：
+\[
+\frac{\pi}{2n^5}
+\left(\sum_{i=1}^n i^2\right)
+\left(\sum_{j=1}^n\sin\frac{\pi j}{2n}\right)
+\left(\sum_{k=1}^n\cos\frac{k}{n}\right).
+\]
+整理成 Riemann 和：
+\[
+\frac{\pi}{2}
+\left(\frac1{n^3}\sum_{i=1}^n i^2\right)
+\left(\frac1n\sum_{j=1}^n\sin\frac{\pi j}{2n}\right)
+\left(\frac1n\sum_{k=1}^n\cos\frac{k}{n}\right).
+\]
+三个极限分别为
+\[
+\frac1{n^3}\sum_{i=1}^n i^2\to\int_0^1x^2\,dx=\frac13,
+\]
+\[
+\frac1n\sum_{j=1}^n\sin\frac{\pi j}{2n}\to
+\int_0^1\sin\frac{\pi y}{2}\,dy=\frac2\pi,
+\]
+\[
+\frac1n\sum_{k=1}^n\cos\frac{k}{n}\to
+\int_0^1\cos z\,dz=\sin1.
+\]
+故原极限为
+\[
+\frac{\pi}{2}\cdot\frac13\cdot\frac2\pi\cdot\sin1
+=\frac{\sin1}{3}.
+\]}
+\answer{\(\displaystyle \frac{\sin1}{3}\)}
+\examnote{多重求和若被乘积型通项分离，先拆和，再分别转化为一维 Riemann 和。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例2.} 确定 \(\Omega\) 的形状，使得三重积分
+\[
+I=\iiint_{\Omega}(1-x^2-2y^2-3z^2)\,dv
+\]
+取得最大值。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{如果积分区域 \(\Omega\) 可以自由选取，为使
+\[
+\iiint_{\Omega}f(x,y,z)\,dv
+\]
+最大，应取所有使 \(f(x,y,z)>0\) 的点，舍去使 \(f(x,y,z)<0\) 的点。这里
+\[
+f(x,y,z)=1-x^2-2y^2-3z^2.
+\]
+因此最优区域为
+\[
+\Omega=\{(x,y,z):1-x^2-2y^2-3z^2\ge0\},
+\]
+即椭球
+\[
+x^2+2y^2+3z^2\le1.
+\]
+若顺便求最大值，令
+\[
+u=x,\qquad v=\sqrt2\,y,\qquad w=\sqrt3\,z,
+\]
+则 \(dx\,dy\,dz=\frac1{\sqrt6}\,du\,dv\,dw\)，区域化为单位球 \(u^2+v^2+w^2\le1\)。最大值为
+\[
+\frac1{\sqrt6}\iiint_{u^2+v^2+w^2\le1}(1-u^2-v^2-w^2)\,du\,dv\,dw
+\]
+\[
+=\frac1{\sqrt6}\cdot4\pi\int_0^1(1-r^2)r^2\,dr
+=\frac{8\pi}{15\sqrt6}.
+\]}
+\answer{\(\Omega\) 应取椭球 \(x^2+2y^2+3z^2\le1\)。此时最大值为 \(\displaystyle \frac{8\pi}{15\sqrt6}\)。}
+\examnote{“自由选区域使积分最大”本质是正负区域取舍：正的全取，负的全舍，零边界不影响积分值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例3.} 计算
+\[
+I=\iiint_{\Omega}(x+y+z)\,dx\,dy\,dz,
+\]
+其中 \(\Omega\) 为三个坐标面及平面 \(x+y+z=1\) 所围成的区域。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{区域为第一卦限中的四面体
+\[
+\Omega=\{(x,y,z):x\ge0,\ y\ge0,\ z\ge0,\ x+y+z\le1\}.
+\]
+直接积分：
+\[
+I=\int_0^1\int_0^{1-x}\int_0^{1-x-y}(x+y+z)\,dz\,dy\,dx.
+\]
+也可用对称性。该四面体体积为
+\[
+V=\frac16.
+\]
+四面体的重心为
+\[
+\left(\frac14,\frac14,\frac14\right).
+\]
+因此
+\[
+\iiint_{\Omega}x\,dV=\frac16\cdot\frac14=\frac1{24},
+\]
+同理 \(y,z\) 的积分也各为 \(\frac1{24}\)。故
+\[
+I=3\cdot\frac1{24}=\frac18.
+\]}
+\method{方法二：变量代换}
+令
+\[
+u=x+y+z.
+\]
+在标准单纯形中，满足 \(x+y+z\le u\) 的小四面体体积为 \(u^3/6\)，故按 \(u\) 分层时的体积密度为
+\[
+\frac{d}{du}\frac{u^3}{6}=\frac{u^2}{2}.
+\]
+于是也可得到
+\[
+I=\int_0^1u\cdot\frac{u^2}{2}\,du=\frac18.
+\]
+\answer{\(\displaystyle \frac18\)}
+\examnote{标准四面体 \(x+y+z\le1\) 的体积是 \(1/6\)，重心坐标是 \((1/4,1/4,1/4)\)，这两个结论在考研中很省时间。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例4.} 计算
+\[
+\iiint_{\Omega}z\,dx\,dy\,dz,
+\]
+其中 \(\Omega\) 由
+\[
+z=\sqrt{2-x^2-y^2},\qquad z=x^2+y^2
+\]
+围成。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{两个曲面分别是上半球
+\[
+x^2+y^2+z^2=2,\qquad z\ge0,
+\]
+与抛物面
+\[
+z=x^2+y^2.
+\]
+用柱坐标 \(x=r\cos\theta,\ y=r\sin\theta\)。交线满足
+\[
+z=r^2,\qquad z=\sqrt{2-r^2}.
+\]
+于是
+\[
+r^2=\sqrt{2-r^2}
+\quad\Longrightarrow\quad r^4+r^2-2=0,
+\]
+得 \(r^2=1\)，即 \(0\le r\le1\)。区域为
+\[
+0\le\theta\le2\pi,\qquad
+0\le r\le1,\qquad
+r^2\le z\le\sqrt{2-r^2}.
+\]
+因此
+\[
+I=\int_0^{2\pi}\int_0^1\int_{r^2}^{\sqrt{2-r^2}}z\,r\,dz\,dr\,d\theta.
+\]
+先对 \(z\) 积分：
+\[
+I=2\pi\int_0^1\frac12\left[(2-r^2)-r^4\right]r\,dr
+\]
+\[
+=\pi\int_0^1(2r-r^3-r^5)\,dr
+=\pi\left(1-\frac14-\frac16\right)
+=\frac{7\pi}{12}.
+\]}
+\answer{\(\displaystyle \frac{7\pi}{12}\)}
+\examnote{球面与旋转抛物面围成的区域，柱坐标通常最直接；交线先用 \(r\) 解出来。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例5.} 求
+\[
+\iiint_{\Omega}\sqrt{x^2+y^2+z^2}\,dV,
+\]
+其中 \(\Omega\) 由
+\[
+z=\sqrt{x^2+y^2}
+\]
+与平面 \(z=1\) 围成。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{曲面 \(z=\sqrt{x^2+y^2}\) 是圆锥 \(z=r\)，平面 \(z=1\) 截出锥体。由于被积函数是到原点的距离，用球坐标最方便：
+\[
+x=\rho\sin\varphi\cos\theta,\quad
+y=\rho\sin\varphi\sin\theta,\quad
+z=\rho\cos\varphi.
+\]
+圆锥 \(z=r\) 对应
+\[
+\varphi=\frac{\pi}{4},
+\]
+平面 \(z=1\) 对应
+\[
+\rho\cos\varphi=1,\qquad \rho=\sec\varphi.
+\]
+区域为
+\[
+0\le\theta\le2\pi,\qquad
+0\le\varphi\le\frac{\pi}{4},\qquad
+0\le\rho\le\sec\varphi.
+\]
+被积函数为 \(\rho\)，体积元为 \(\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta\)。故
+\[
+I=\int_0^{2\pi}\int_0^{\pi/4}\int_0^{\sec\varphi}
+\rho^3\sin\varphi\,d\rho\,d\varphi\,d\theta
+\]
+\[
+=\frac{\pi}{2}\int_0^{\pi/4}\sec^4\varphi\sin\varphi\,d\varphi.
+\]
+令 \(u=\cos\varphi\)，则
+\[
+\int_0^{\pi/4}\sec^4\varphi\sin\varphi\,d\varphi
+=\int_{\sqrt2/2}^{1}u^{-4}\,du
+=\frac{2\sqrt2-1}{3}.
+\]
+因此
+\[
+I=\frac{\pi(2\sqrt2-1)}6.
+\]}
+\answer{\(\displaystyle \frac{\pi(2\sqrt2-1)}6\)}
+\examnote{被积函数含 \(\sqrt{x^2+y^2+z^2}\) 时，优先考虑球坐标；圆锥给 \(\varphi\) 的范围，水平面给 \(\rho\) 的上限。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例6.} 曲面
+\[
+(x^2+y^2+z^2)^3=xyz
+\]
+所围立体的体积为 \(\underline{\hspace{2.5cm}}\).
+\end{problemblock}
+\begin{solutionblock}
+\analysis{用球坐标：
+\[
+x=\rho\sin\varphi\cos\theta,\quad
+y=\rho\sin\varphi\sin\theta,\quad
+z=\rho\cos\varphi.
+\]
+代入曲面方程得
+\[
+\rho^6=\rho^3\sin^2\varphi\cos\varphi\cos\theta\sin\theta,
+\]
+即
+\[
+\rho^3=\sin^2\varphi\cos\varphi\cos\theta\sin\theta.
+\]
+右端必须为正，因此立体只分布在 \(xyz>0\) 的四个卦限中，且四部分全等。
+
+先算第一卦限。此时
+\[
+0\le\varphi\le\frac{\pi}{2},\qquad
+0\le\theta\le\frac{\pi}{2},
+\]
+且
+\[
+0\le\rho\le
+\left(\sin^2\varphi\cos\varphi\cos\theta\sin\theta\right)^{1/3}.
+\]
+第一卦限体积为
+\[
+V_1=\int_0^{\pi/2}\int_0^{\pi/2}
+\int_0^{\rho_{\max}}\rho^2\sin\varphi\,d\rho\,d\theta\,d\varphi
+\]
+\[
+=\frac13\int_0^{\pi/2}\int_0^{\pi/2}
+\sin^2\varphi\cos\varphi\cos\theta\sin\theta\cdot\sin\varphi
+\,d\theta\,d\varphi
+\]
+\[
+=\frac13\left(\int_0^{\pi/2}\sin^3\varphi\cos\varphi\,d\varphi\right)
+\left(\int_0^{\pi/2}\cos\theta\sin\theta\,d\theta\right)
+=\frac13\cdot\frac14\cdot\frac12=\frac1{24}.
+\]
+共有四个全等部分，所以总体积为
+\[
+V=4V_1=\frac16.
+\]}
+\answer{\(\displaystyle \frac16\)}
+\examnote{方程右端含 \(xyz\) 时，先判断哪些卦限有实体。球坐标下若曲面给出 \(\rho^3=\) 角函数，体积积分会明显简化。}
+\end{solutionblock}

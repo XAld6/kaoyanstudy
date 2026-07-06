@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% from "_macros.html" import risk_badge %}
+{% block title %}维修工单{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <p class="eyebrow">Repair Orders</p>
+    <h1>维修工单</h1>
+    <p class="subtle">高风险和紧急风险识别结果会自动生成工单，用于跟踪整改闭环。</p>
+  </div>
+</section>
+
+<section class="panel">
+  {% if orders %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>工单标题</th>
+        <th>风险</th>
+        <th>处理人</th>
+        <th>时限</th>
+        <th>状态</th>
+        <th>结果图</th>
+        <th>更新</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+      <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.title }}</td>
+        <td>{{ risk_badge(order.risk_level, order.risk_label) }}</td>
+        <td>{{ order.handler }}</td>
+        <td>{{ order.deadline }}</td>
+        <td><span class="status {{ order.status }}">{{ order.status }}</span></td>
+        <td><a href="{{ order.before_image_path }}" target="_blank">查看</a></td>
+        <td>
+          <form action="/work-orders/{{ order.id }}/status" method="post" class="inline-form">
+            <select name="status">
+              <option value="pending" {% if order.status == "pending" %}selected{% endif %}>pending</option>
+              <option value="processing" {% if order.status == "processing" %}selected{% endif %}>processing</option>
+              <option value="completed" {% if order.status == "completed" %}selected{% endif %}>completed</option>
+            </select>
+            <button class="tiny-button" type="submit">保存</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="empty">暂无维修工单。上传或点击样例识别高风险图片后，系统会自动创建。</p>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,7 @@
+{
+  "source": "D:\\xm\\zy\\jglx\\7.作业讲解笔记\\【第8次作业笔记】—影响线(1).pdf",
+  "page": 8,
+  "method": "rapidocr",
+  "text": "3 - 11\n力FNDE、剪力FQBc和MBc的影响线。（2）若CD杆爱到图示薇载作思\n利思影响线计算\nFNDE和MBC。（武汉理工大学2011)\n如何判断时简单刚架还是复杂刚架：\n先用机动法试着做，做不出来，就换用联合\n法。\n③如果有斜杆的话，就是复杂刚架。\n3m\n3m\n3m\nABL, cD\nB,c,D\nJB：单位力在B点时，de杆的轴力。\nJB=D\n3m\n3m\n3m\nyo:单位力在D点时，Bc杆的剪力。\nYo= D\n9 = =\n3m\n3m\n3m\nyp:单位力在D点时，MpL。\ny0= D\nMmL= - 4x × 3x)= -(8 Lm\n3m\n3m\n3m",
+  "figure": "figures/src28_p008.jpg"
+}

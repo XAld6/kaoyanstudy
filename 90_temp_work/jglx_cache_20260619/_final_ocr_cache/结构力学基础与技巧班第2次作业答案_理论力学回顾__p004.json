@@ -1,0 +1,7 @@
+{
+  "source": "D:\\xm\\zy\\jglx\\6.作业&答案\\结构力学基础与技巧班第2次作业答案（理论力学回顾）.pdf",
+  "page": 4,
+  "method": "pdf-text",
+  "text": "（m）解：取整体隔离体对A点取矩，可得\n2\n1\n2\n2\nDy\nDy\nqh\nF\nl\nq\nh\nh\nF\nl\n\\times =\n\\times\n\\times\n\n=\n，再由\n整体竖向力和水平力平衡，可得A处支座反力\n2\n2\nAy\nqh\nF\nl\n=\n，\nDx\nF\nqh\n=\n。",
+  "figure": "figures/结构力学基础与技巧班第2次作业答案_理论力学回顾__p004.jpg"
+}

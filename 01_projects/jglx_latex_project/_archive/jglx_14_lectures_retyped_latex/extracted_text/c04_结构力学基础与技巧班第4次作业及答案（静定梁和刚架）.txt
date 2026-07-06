@@ -1,0 +1,383 @@
+【第 1 页，来源：ocr】
+结力基础班第 4 次作业一一染和刚架
+粱和刚架作业及答案
+2-1 图2-60 所示结构截面A 的弯矩〈以下侧受拉为正) BC), CRACKS
+2008)
+A. M                       B. —M
+C. —2M                     D. 0
+2-2 图2- 61 所示结构剪力 Fa一         _。 (BRK 2010)
+M                            Cc  oo a |
+.     )  ~    B                      |
+C
+A     B
+E        D                                     E       F                  7
+2-60                            ;      Al 2-61
+2-3 图2-62所示刚架中AB 杆的弯矩为  ». BAA.  (河北工业大学
+2010)
+2-4 图2-63所示刚架，AD 杆截面D SBMn=_ (AMISEHAIED. CHT
+大学 2011)
+10kN-m                                     q
+4              30kN    |
+&                       C
+B
+FA            5kN-m                                                   |
+R                      A            _            B
+,—4m_   8m    ,2m 42m)       |   pa}, 20 } 22 4 a}
+图2-62 2-63
+2-5 试作图 2-64 所示结构的弯矩图。(北京科技大学 2008)
+2-6 作图2-65所示多跨梁的弯矩图和前力图，并给出 AB 杆的受力平衡图。 (北京
+交通大学 2011)
+本 ‘ie   >     6kNm    | AGN    10kN/m       i
+B                 E    FOG        B       A
+2m ptm} 2m} oo 2a} mf 2m     } 5       : 8x2m
+Al 2-64                                         fa 2-65
+1.v
+AY . “hi Th
+SS A ie i
+O54, es
+Or. inv D
+fA ee FIRED
+Sit-ReE ASK
+
+【第 2 页，来源：ocr】
+2-7 求图2-66 所示结构的内力、  作弯矩图(可不写过程)。(东南大学 2008)
+2-8 绘出图 2-67 所示结构的弯矩图。(武汉大学 2010)
+Fp      Fp            Fp
+40kN    “on               40kN/m                                                  |
+}2m_{ 2m} 2m {2m | _""4m_}       ‘    人2 ee a
+FA 2-66                           ;                                2-67
+2-9 ER 2-68 Brae nIZe M图。(福州大学 2008)   1           4     .
+z-10 绘制图 2 - 69 所示结构的弯矩图。(武汉科技大学 ye       G 7
+|     ov ATTN...”
+4 s   {oY                     I~?       E  lm
+D      E       Z
+el ，                      7                       ‘
+wna |             ke            TF 30
+pp                    3m      3m     3m
+图2-68               图2-69
+2-11 绘图2-70所示结构的弯矩图。(重庆大学 2012)                                               i
+42-12 已知图 2- 71 所示结构的弯矩图，试作前力图和轴力图。已知 FP=10kN, M=
+40kN +m. (哈尔滨工业大学 2010)
+40
+20          B         20
+ql                             ‘ "i        =|
+Fp
+c                              ‘
+{
+$24" 4+               ;
+图之-了0                                  Bl2-7%
+2-13 作图2-72所示刚架的弯矩图。(中南大学 2009)
+2-14 绘出图 2- 73 所示结构的弯矩图。(武汉大学 2010)
+Fe=ql          q                        2kN/m        “s               ,
+3kN
+1           7                  |   2m   |    2m   |
+图2-72                图2-73       vel
+O54, es
+Ori VO
+戎和锡线上快印
+
+【第 3 页，来源：ocr】
+2-15 作图 2 - 74 所示结构的内力图。(北京工业大学 2011)
+2-16 求图2-75 所示结构的内力，并作弯矩图。(可不写过程) (东南大学 2008)
+30kN-m                               Fp
+(T               mm                             cs
+30kN         F                         |
+g                                i :                      a
+Z                            时     8
+p24  8m   p—2n +        2+ a :
+: 2-74                                         fA 2-75
+2-17 作图 2-76 所示结构的弯矩图。(无须写出分析过程) (东南大学 2007)
+2-18 作图2-77 所示结构弯矩图。(中南大学 2010)      ee
+20kN/m                                10kN/m           30kN |              :
+}     C       g       D    Cc    E      F         7
+Z    .                ;                     co
+4                     .                       %         &
+E     A        B            A       =&B          H
+¢—Sm_,-_Sm__, 6m   pp em ny
+图2-76                         Kl 2-7   |
+2-19 已知结构在集中力和集中力偶矩作用下的弯矩图如图2- 78 所示，其中 BC 段
+为二次抛物线，试确定结构所受的荷载情况，并绘出 BE 段隔离体受力平衡图。 (北京交通
+大学 2009)
+2-20 已知图 2-79 所示静定刚架的弯矩图 〈曲线部分为二次抛物线) ，试绘图标出作
+用于刚架上的荷载，并作出剪力图和轴力图 〈假设各杆无局部平衡的轴向荷载， 无分布力
+偶) 。(浙江大学 2012)
+3qa*                      ;                               :
+2qa@           q2             : D     C     rE
+B    E     qa                          2  &
+2ga        8                 5 5      ,
+&
+A        D                A          B
+MW图(kN'm)
+|一一                   2m     2m   |   ;
+2-78                              图2-79
+wlan.
+NTA
+SSS A ie i
+255, =
+COINS)
+BA ee FIRED
+St-RE Abie
+
+【第 4 页，来源：ocr】
+2-21 不经过计算，绘制图 2 - 80 所示结构弯矩图。(武汉科技大学 2009)
+2-22 试求解图 2 - 81 所示刚架，并绘制弯矩图。(东北大学 2005)
+J                        K
+C
+M                                              M &
+Fp                Fp
+(GF       D                         E       =)
+县
+10KN-m
+vt <3,            H-        A                   B           I
+3m     3m          Sm    3m    有     3m         3m          3m
+ppm fp tp
+图2-80                                                         Al 2- Si
+o’ ' 1 /
+ONO
+BA ee FIRED
+Bite iz
+
+【第 5 页，来源：ocr】
+BE EAR StS
+|          TRAC si931 0371666
+.     i,          ws Nowe
+|       4044     网          D> eyo                             |
+i                                                                             |
+TY
+a                 . 和          Mg= Ws     x                          !
+Puy i
+A           多      下 an                                                      4
+C  fh
+tbo                               党         50,         Pe  |
+AAA人           二【bo kum.                 人3
+aw?           F   MAGE 20 yr 2% Ge 40 oy       sha
+i}                                 M px                              和
+加      as
+fe       ri I,        My. Wx 》一PRx4= 3% lm                      a
+tte                            Nt =9
+SND)
+iA ae FIRED
+
+【第 6 页，来源：ocr】
+东久徽售5981887888
+a
+a              Pops ba 信 Aa x3A
+.         A\L~
+| *             4  和  Fas4a+ 和wx ax       ,
+Tite &
+:     a  从 2 [yin B10)
+2
+aud ¥
+;       “      时       4 ppg CES
+ra          WA a).    4% wr 4e NS a
+|        } en .    J Mae 4x  J
+|             fy                    人ww     fa
+|                        6 af     Fup ide 7"
+Re                Sv   Typ             — 加。 生
+5         Kap Se de Stem
+i        (3               lo ¥  -    AAf=  De
+|     is, 一 y aS      wae  vie
+Ww    M2
+|        99
+]                                Nie
+ET      px Ante BW
+oo       ky    4% [vx ie os
+Wh rez ?ovxb= th wy
+(ieee                Ape 4 4
+,        名
+|                                                                                               41 .7
+EPO
+Si:A* ikSieaK
+
+【第 7 页，来源：ocr】
+|     Aviso 310371888
+|                      we
+|      ye ib
+A  ri           ;   “     如    4?                                 ,
+a            "     4x 4x zz Rlw
+bo         foley  + Gry 4° Siku              |
+ee ex     =
+Epp     mh ae Wek         Mye
+Al be    \                 ial idl id 的
+,                       b,
+|            -          bo                                                  .
+oR,                                     bet ahyp
+liad          Fra        ha              .           7
+A         多          5            fda”    Aa ten                               }
+f J                            |                                          |
+ft           Maz 2Fpxa- FpxAz Fh,                                      , |
+2, P                                M =o
+FS                 Ax Ye Dt Ixy                   J     a
+人
+ff  VS:       Fake hw              :
+[上 ena alee                 :
+pn      it 4  + zy 2二|
+D leo          wv Mts bxI- 244 = 人-= kvm,            7
+.                                                                                          1.v
+NO
+A ae FRED
+
+【第 8 页，来源：ocr】
+CACM EI 931 O31,80.9
+和 is,          tof]              ibs -                            |
+wy |v oP  /”     hp   mo stot af
+|        ia      Bp culty              InX aud + Fore zh
+|                  jw     4 shail
+le!   NF     a 本本
+TN
+>a ay  | Mw
+aN      PY Poy vi  B
+|     LA     ，        _、
+| |     /    fav       Mp= W  , “
+|      A <           各xz- Uns *             |
+|  ‘           i ne  bs. Mg Blt uy =冰
+| i        4o            cs  Vv
+|      vs       0
+feel 22
+人                         FF二
+|     mo                     中     al |
+joo 中                bw
+人网
+NO
+萌哆线上快印
+
+【第 9 页，来源：ocr】
+EY SBAR Sis
+|        TRAM si9 31031666
+by                                          ,
+C
+A             二人gm
+way”                 “Tay    hye Fay oe                                   !
+a                                                                      |
+4         加                        国| 本 本
+*
+ma                 b                                                          ,
+2
+244,             4
+2 1中
+Ww      Ap + ~24|=8
+Nuz 3x4 x2 %2- he
+b,                     t
+3
+|                 》
+7S. \     -                                 Mazes
+和          lox 4
+fox k    |                    A eli            4olw
+lm     © “hl                    vo
+,        U                          Bt.
+1 .v
+ONAL
+ENO
+ieee FRED
+
+【第 10 页，来源：ocr】
+RAR Stil
+ARO RU OBIGETOSS
+40x 4- WK Y= Inx (vy Y=                           |
+vite 一 M fue 4x 4- were $0 my,
+|    a)        sob    “
+°                                 }
+|       PN         可
+|     yo
+| |      ) i  (i           f
+|      _   AL)
+ee:
+. |    »  x 30 ”8.75   ok                 Te |             |
+|  red |            40  8.75 30     |
+ele                              oe               8.75 leat 10
+we
+Ci @
+iA ae FIRED
+Siew nse
+
+【第 11 页，来源：ocr】
+EEL SBAR STS
+IRM OD IGSTOSS
+24h, & 伸         rr          :
+To                      b  be  Bb\~
+fr >} im     In      fp :      了po [un
+= /Mpa
+a  b   4 |       h           She ag
+、 Mave Fre Fra.
+AOS Foye H
+“i i
+‘                                              一>
+al           SA            |
+|                                 L
+中                              a
+\4
+joy bz |? tt
+A      a
+的人
+A ae FRED
+
+【第 12 页，来源：ocr】
+未久微信19812587888
+三Ap        fo x TS 4 Wx Ib                              |
+_              & Mo»                                          E
+fe  4       G         4       F        box b+ Wx” TS 4 Wy DYb
+“3                         fyy (=
+ce Fy = ib8 TS lov
+一个            F   “TfR Feent fe                                         :
+a                Fry     Frxx {+ Wr by} 2  ib¥TS% 6
+|                               5       ce Efe P25 kw
+BLS      》  \  Fox + bot {vx 4
+‘   a hye 1S
+a              a Poxz 站 kw
+10S                       Neve boy 3t IFRS -      -
+fxn ir" 3bv                         加
+M (him) “                                             “8
+to Pee ry fee by  UT He                    7
+oF           AE FL
+,                           GT fag I 4¥ 4oy. 4= 4p,          ，             _
+is          Yasin «Een a5 tay Vs  4               :
+_ BAA
+°              Foyx oe low 和2                        ed
+一人人          a le            |              I
+个    “a    Foxx 4+ Joy Y= Fo + 2 ~ WUy2             Pe
+fe
+5        SS Wye Dw                                          :
+>" (oy 4's Ww.                           ;
+ae 1 。/
+OPO
+fA eZ FIRED
+
+【第 13 页，来源：ocr】
+后绢六菠公众呈LA
+TRAMs Os IO3TSCS
+2414,     WY
+ave          < 4A               oy
+Ly                4X fu w= + waz A                  a
+|     a               wfe bY
+|                     =>     ¥      r
+|              Er                  “      ii a                         ~ ap")
+|                              wae
+}                    \                os  Wy
+7M,
+$e fe 42 XS 下 fe b kw
+|     和
+Nye Yew
+|                           Pour 4-24 2
+Ae        b     —> TR = ASE                                                  |
+f | 4
+i | Ra图GD)  机  "9 t ‘  FyR(KN)  ae a
+;                                                                                               ae ee)
+CRO)
+萌喝线上快印
+
+【第 14 页，来源：ocr】
+RAR Stil
+RENE ODIGBISSS
+2-2" 、             ib          lo              /| \   Fee  By ut ¥y KIA H r%
+a ee avy aitep, meaty uy
+2722,
+mr       MM                                  AN                                              |
+sv                     *
+a ae rail oof                             ,
+AF Yo Hap top
+oft                 f   DY 7H OS RTH,                       .
+For ADU Rep
+REfp         B    Lp  W\t= fox 六fr 2 af.
+aff               3h                                           |
+“Sp
+萌喝线上快印

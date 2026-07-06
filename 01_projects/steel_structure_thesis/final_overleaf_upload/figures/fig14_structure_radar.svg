@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs>
+<marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#1F4E73"/>
+</marker>
+<marker id="arrow-gray" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#6C757D"/>
+</marker>
+<marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#D8892C"/>
+</marker>
+</defs>
+<rect x="0" y="0" width="1600" height="1000" fill="#FFFFFF"/>
+<text x="800" y="62" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="40" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+钢结构、混凝土结构、木结构综合特点对比雷达图
+</text>
+<text x="800" y="108" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#6C757D" text-anchor="middle" dominant-baseline="middle">
+概念性评分：用于论文讨论，不代表精确统计数据
+</text>
+<line x1="100" y1="132" x2="1500" y2="132" stroke="#CBD3DA" stroke-width="2"/>
+<polygon points="800,450 851,480 851,540 800,570 748,540 748,480" fill="#FFFFFF" stroke="#CBD3DA" stroke-width="2"/>
+<polygon points="800,390 903,450 903,570 800,630 696,570 696,450" fill="#FFFFFF" stroke="#CBD3DA" stroke-width="2"/>
+<polygon points="800,330 955,420 955,600 800,690 644,600 644,420" fill="#FFFFFF" stroke="#CBD3DA" stroke-width="2"/>
+<polygon points="800,270 1007,390 1007,630 800,750 592,630 592,390" fill="#FFFFFF" stroke="#CBD3DA" stroke-width="2"/>
+<polygon points="800,210 1059,360 1059,660 800,810 540,660 540,360" fill="#FFFFFF" stroke="#CBD3DA" stroke-width="2"/>
+<line x1="800" y1="510" x2="800" y2="210" stroke="#CBD3DA" stroke-width="2"/>
+<text x="800" y="140" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+强度重量比
+</text>
+<line x1="800" y1="510" x2="1059" y2="360" stroke="#CBD3DA" stroke-width="2"/>
+<text x="1129" y="325" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+施工速度
+</text>
+<line x1="800" y1="510" x2="1059" y2="660" stroke="#CBD3DA" stroke-width="2"/>
+<text x="1129" y="695" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+耐久维护
+</text>
+<line x1="800" y1="510" x2="800" y2="810" stroke="#CBD3DA" stroke-width="2"/>
+<text x="800" y="880" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+成本稳定
+</text>
+<line x1="800" y1="510" x2="540" y2="660" stroke="#CBD3DA" stroke-width="2"/>
+<text x="470" y="695" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+材料循环
+</text>
+<line x1="800" y1="510" x2="540" y2="360" stroke="#CBD3DA" stroke-width="2"/>
+<text x="470" y="325" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+防火要求
+</text>
+<polygon points="800,210 1059,360 1007,630 800,690 540,660 644,420" fill="#FFFFFF" stroke="#2F6FA3" stroke-width="5"/>
+<polygon points="800,330 955,420 1059,660 800,750 696,570 540,360" fill="#FFFFFF" stroke="#D8892C" stroke-width="5"/>
+<polygon points="800,270 1007,390 955,600 800,690 592,630 644,420" fill="#FFFFFF" stroke="#4F8F5B" stroke-width="5"/>
+<line x1="1180" y1="310" x2="1250" y2="310" stroke="#2F6FA3" stroke-width="6"/>
+<text x="1340" y="310" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+钢结构
+</text>
+<line x1="1180" y1="370" x2="1250" y2="370" stroke="#D8892C" stroke-width="6"/>
+<text x="1340" y="370" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+混凝土结构
+</text>
+<line x1="1180" y1="430" x2="1250" y2="430" stroke="#4F8F5B" stroke-width="6"/>
+<text x="1340" y="430" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+木结构
+</text>
+<rect x="140" y="735" width="460" height="150" rx="14" fill="#EEF1F4" stroke="#6C757D" stroke-width="3"/>
+<text x="370" y="769" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" fill="#222222" text-anchor="middle" dominant-baseline="middle" font-weight="700">
+说明
+</text>
+<text x="370" y="832" font-family="SimHei, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" fill="#222222" text-anchor="middle" dominant-baseline="middle">
+<tspan x="370" dy="-26.0">本图为综述论文中的概念性比较</tspan>
+<tspan x="370" dy="26">，反映一般工程认知，不作为定</tspan>
+<tspan x="370" dy="26">量评价结论。</tspan>
+</text>
+</svg>

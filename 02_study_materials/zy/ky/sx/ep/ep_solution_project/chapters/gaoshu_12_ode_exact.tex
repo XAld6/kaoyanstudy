@@ -1,0 +1,1061 @@
+\chapter{高等数学：微分方程}
+
+\section{线性方程解的结构}
+
+\begin{problemblock}
+\textbf{例1.} 设 \(y_1(x),y_2(x)\) 是某二阶非齐次线性微分方程的两个特解，若常数
+\(\lambda,\mu\) 使得 \(2\lambda y_1(x)+\mu y_2(x)\) 是该方程的解，
+\(\lambda y_1(x)-2\mu y_2(x)\) 是该方程对应的齐次方程的解，则（\quad）
+
+A. \(\lambda=\frac15,\mu=\frac25\)
+\quad B. \(\lambda=\frac25,\mu=\frac15\)
+\quad C. \(\lambda=\frac14,\mu=\frac12\)
+\quad D. \(\lambda=\frac12,\mu=\frac14\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{非齐次线性方程的关键结构是：若 \(L[y]=f\)，则 \(L[\alpha y_1+\beta y_2]=(\alpha+\beta)f\)，因为 \(y_1,y_2\) 都满足 \(L[y_i]=f\)。}
+由 \(2\lambda y_1+\mu y_2\) 仍为原非齐次方程的解，得
+\[
+2\lambda+\mu=1.
+\]
+由 \(\lambda y_1-2\mu y_2\) 为对应齐次方程的解，得
+\[
+\lambda-2\mu=0.
+\]
+联立解得
+\[
+\lambda=2\mu,\qquad 5\mu=1,
+\]
+所以
+\[
+\lambda=\frac25,\qquad \mu=\frac15.
+\]
+\answer{B}
+\examnote{非齐次线性方程中，“特解的线性组合仍为特解”要求系数和为 \(1\)；“线性组合为齐次解”要求系数和为 \(0\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例2.} 设 \(p(x),q(x)\) 与 \(f(x)\) 均为连续函数，\(f(x)\ne0\)。
+设 \(y_1(x),y_2(x),y_3(x)\) 是二阶非齐次线性微分方程
+\[
+y''+p(x)y'+q(x)y=f(x)
+\]
+的 3 个解，且
+\[
+\frac{y_1-y_2}{y_2-y_3}\ne \text{常数},
+\]
+则方程的通解为 \underline{\hspace{5cm}}。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{两个非齐次解相减，右端 \(f(x)\) 被消去，差函数就是对应齐次方程的解。题设比例不为常数，正是在说明两个差函数线性无关。}
+令
+\[
+u_1=y_1-y_2,\qquad u_2=y_2-y_3.
+\]
+因为 \(y_1,y_2,y_3\) 都是同一非齐次方程的解，所以
+\[
+L[u_1]=L[y_1-y_2]=f-f=0,\qquad
+L[u_2]=L[y_2-y_3]=f-f=0.
+\]
+又由
+\[
+\frac{u_1}{u_2}=\frac{y_1-y_2}{y_2-y_3}
+\]
+不是常数，知 \(u_1,u_2\) 线性无关。因此它们构成对应齐次方程的一组基本解。
+
+取 \(y_3\) 为非齐次方程的一个特解，则原方程通解为
+\[
+y=y_3+C_1(y_1-y_2)+C_2(y_2-y_3).
+\]
+\answer{\(\displaystyle y=y_3+C_1(y_1-y_2)+C_2(y_2-y_3)\)}
+\examnote{这类题不要先求 \(p,q,f\)。考研选择填空常考“非齐次解的差是齐次解”这一结构。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例3.} 设二阶常系数非齐次线性微分方程
+\[
+y''+ay'+by=(cx+d)e^{2x}
+\]
+有特解
+\[
+y=2e^x+(x^2-1)e^{2x},
+\]
+求该方程的通解，并求 \(a,b,c,d\) 的值。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{右端只含 \(e^{2x}\)，所以特解中的 \(2e^x\) 必须来自齐次方程；再把 \((x^2-1)e^{2x}\) 代入算出参数。}
+记微分算子
+\[
+L[y]=y''+ay'+by.
+\]
+由于 \(L[2e^x]=0\)，有
+\[
+1+a+b=0. \tag{1}
+\]
+令 \(y=e^{2x}u(x)\)，则
+\[
+L[e^{2x}u]=e^{2x}\{u''+(4+a)u'+(4+2a+b)u\}.
+\]
+取 \(u=x^2-1\)，代入 \(u'=2x,u''=2\)，得
+\[
+L[(x^2-1)e^{2x}]
+=e^{2x}\{2+2(4+a)x+(4+2a+b)(x^2-1)\}.
+\]
+由 (1) 得 \(b=-1-a\)，于是
+\[
+4+2a+b=3+a.
+\]
+右端 \((cx+d)e^{2x}\) 不含 \(x^2\) 项，所以
+\[
+3+a=0,\qquad a=-3.
+\]
+进而
+\[
+b=2.
+\]
+此时
+\[
+L[(x^2-1)e^{2x}]=(2x+2)e^{2x},
+\]
+故
+\[
+c=2,\qquad d=2.
+\]
+齐次方程为
+\[
+y''-3y'+2y=0,
+\]
+特征方程
+\[
+r^2-3r+2=(r-1)(r-2)=0.
+\]
+所以通解可写为
+\[
+y=C_1e^x+C_2e^{2x}+x^2e^{2x}.
+\]
+\answer{\(\displaystyle a=-3,\ b=2,\ c=2,\ d=2;\quad y=C_1e^x+C_2e^{2x}+x^2e^{2x}\)}
+\examnote{已给特解中若含“看似多余”的齐次解项，可以吸收到通解常数里；求参数时仍可直接代入。}
+\end{solutionblock}
+
+\section{一阶方程与可降阶方程}
+
+\begin{problemblock}
+\textbf{例4.} 设 \(f(x)\) 是以 \(2\pi\) 为周期的二阶可导函数，满足关系式
+\[
+f(x)+2f'(x+\pi)=\sin x,
+\]
+求 \(f(x)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{方程含有 \(x+\pi\) 的移位，利用周期性把移位导数转化为 \(\sin x,\cos x\) 的线性组合。}
+由于右端为一次谐波，且周期线性方程的其他 Fourier 分量系数不可能为零，设
+\[
+f(x)=A\sin x+B\cos x.
+\]
+则
+\[
+f'(x)=A\cos x-B\sin x,
+\]
+从而
+\[
+f'(x+\pi)=A\cos(x+\pi)-B\sin(x+\pi)
+=-A\cos x+B\sin x.
+\]
+代入原式：
+\[
+A\sin x+B\cos x+2(-A\cos x+B\sin x)=\sin x.
+\]
+比较 \(\sin x,\cos x\) 系数，得
+\[
+A+2B=1,\qquad B-2A=0.
+\]
+解得
+\[
+A=\frac15,\qquad B=\frac25.
+\]
+故
+\[
+f(x)=\frac15\sin x+\frac25\cos x.
+\]
+\method{方法二：移位后联立}
+将原式中的 \(x\) 换为 \(x+\pi\)，并用周期性 \(f'(x+2\pi)=f'(x)\)，得
+\[
+f(x+\pi)+2f'(x)=-\sin x.
+\]
+原式与该式联立，也会推出 \(f\) 只能由 \(\sin x,\cos x\) 组成，最后得到同样结果。
+\answer{\(\displaystyle f(x)=\frac15\sin x+\frac25\cos x\)}
+\examnote{含 \(x+\pi\) 的周期函数题，常用“换 \(x+\pi\)”或“设三角形式”两条路。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例5.} 设函数 \(y=y(x)\) 满足
+\[
+y(x)=x^3-x\int_1^x\frac{y(t)}{t^2}\,dt+y'(x)\qquad (x>0),
+\]
+并且
+\[
+\lim_{x\to+\infty}\frac{y(x)}{x^3}
+\]
+存在，求 \(y(x)\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{方程同时含 \(y\)、\(y'\) 与变上限积分。先把积分项记出，再对原式求导消去积分，最后用极限条件排除指数项。}
+记
+\[
+I(x)=\int_1^x\frac{y(t)}{t^2}\,dt.
+\]
+由原式
+\[
+y=x^3-xI+y'
+\]
+得
+\[
+y'-y=-x^3+xI. \tag{1}
+\]
+对 (1) 求导：
+\[
+y''-y'=-3x^2+I+xI'.
+\]
+又
+\[
+I'=\frac{y}{x^2},\qquad
+I=\frac{x^3+y'-y}{x}=x^2+\frac{y'-y}{x}.
+\]
+代入上式，得
+\[
+y''-y'=-3x^2+x^2+\frac{y'-y}{x}+\frac{y}{x}
+=-2x^2+\frac{y'}x.
+\]
+令 \(z=y'\)，则
+\[
+z'-\left(1+\frac1x\right)z=-2x^2.
+\]
+积分因子为
+\[
+e^{\int-(1+1/x)\,dx}=\frac{e^{-x}}x.
+\]
+于是
+\[
+\left(\frac{e^{-x}}x z\right)'=-2xe^{-x},
+\]
+积分得
+\[
+\frac{e^{-x}}x z=2(x+1)e^{-x}+C,
+\]
+即
+\[
+y'=2x^2+2x+Cxe^x.
+\]
+再积分：
+\[
+y=\frac23x^3+x^2+Ce^x(x-1)+D.
+\]
+由原式在 \(x=1\) 处成立，且积分项为 \(0\)，有
+\[
+y(1)=1+y'(1).
+\]
+计算
+\[
+y(1)=\frac53+D,\qquad y'(1)=4+Ce,
+\]
+故
+\[
+D=\frac{10}{3}+Ce.
+\]
+又 \(\lim_{x\to+\infty}y(x)/x^3\) 存在，指数项 \(Ce^x(x-1)\) 必须消失，所以 \(C=0\)。因此
+\[
+y(x)=\frac23x^3+x^2+\frac{10}{3}.
+\]
+\answer{\(\displaystyle y(x)=\frac23x^3+x^2+\frac{10}{3}\)}
+\examnote{变上限积分方程常用“设积分为 \(I(x)\)+求导消元”。最后不要忘记把原方程在积分下限处代回取初值。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例6.} 已知微分方程
+\[
+y'+y=f(x),
+\]
+其中 \(f(x)\) 是 \(\mathbb R\) 上的连续函数。
+
+\begin{enumerate}[label=(\arabic*)]
+\item 若 \(f(x)=x\)，求方程的通解；
+\item 若 \(f(x)\) 是周期为 \(T\) 的函数，证明：方程存在唯一以 \(T\) 为周期的解。
+\end{enumerate}
+\end{problemblock}
+\begin{solutionblock}
+\analysis{一阶线性方程先乘积分因子 \(e^x\)。周期解的唯一性来自初值 \(y(0)\) 被周期条件 \(y(T)=y(0)\) 唯一确定。}
+(1) 当 \(f(x)=x\) 时，
+\[
+y'+y=x.
+\]
+乘以 \(e^x\)，得
+\[
+(e^xy)'=xe^x.
+\]
+积分：
+\[
+e^xy=(x-1)e^x+C.
+\]
+故
+\[
+y=x-1+Ce^{-x}.
+\]
+
+(2) 对一般连续 \(f\)，从 \(0\) 积到 \(x\) 得
+\[
+y(x)=e^{-x}\left(a+\int_0^x e^t f(t)\,dt\right),
+\qquad a=y(0).
+\]
+若 \(y\) 以 \(T\) 为周期，则必须满足 \(y(T)=y(0)=a\)，即
+\[
+e^{-T}\left(a+\int_0^T e^t f(t)\,dt\right)=a.
+\]
+于是
+\[
+a=\frac{\int_0^T e^t f(t)\,dt}{e^T-1}.
+\]
+这说明周期解的初值至多唯一。
+
+取上述 \(a\) 定义 \(y(x)\)。利用 \(f(t+T)=f(t)\) 可验证
+\[
+y(x+T)=y(x),
+\]
+所以周期解存在。综上，方程存在唯一以 \(T\) 为周期的解。
+\answer{(1) \(\displaystyle y=x-1+Ce^{-x}\)；(2) 存在唯一 \(T\) 周期解}
+\examnote{证明“唯一周期解”时，先用周期条件确定初值，再证明由该初值得到的解确实周期。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例7.} 求微分方程
+\[
+x^2y''-2xy'-(y')^2=0\qquad (x>2)
+\]
+满足条件
+\[
+\left.y\right|_{x=3}=\frac12,\qquad
+\left.y'\right|_{x=3}=-9
+\]
+的解。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{方程不显含 \(y\)，令 \(p=y'\) 可降为一阶方程。再观察 \(p/x^2\) 的导数，计算会很快。}
+令
+\[
+p=y',
+\]
+则
+\[
+x^2p'-2xp-p^2=0.
+\]
+注意
+\[
+\left(\frac{p}{x^2}\right)'
+=\frac{x^2p'-2xp}{x^4}
+=\frac{p^2}{x^4}
+=\left(\frac{p}{x^2}\right)^2.
+\]
+令
+\[
+u=\frac{p}{x^2},
+\]
+得
+\[
+u'=u^2.
+\]
+于是
+\[
+-\frac1u=x+C,
+\qquad
+u=-\frac1{x+C_1}.
+\]
+故
+\[
+p=y'=-\frac{x^2}{x+C_1}.
+\]
+由 \(y'(3)=-9\)，得
+\[
+-\frac{9}{3+C_1}=-9,
+\]
+所以
+\[
+C_1=-2.
+\]
+因此
+\[
+y'=-\frac{x^2}{x-2}
+=-\left(x+2+\frac4{x-2}\right).
+\]
+积分：
+\[
+y=-\frac{x^2}{2}-2x-4\ln(x-2)+C.
+\]
+由 \(y(3)=1/2\)，得
+\[
+\frac12=-\frac92-6+C,
+\]
+所以 \(C=11\)。故
+\[
+y=11-\frac{x^2}{2}-2x-4\ln(x-2).
+\]
+\answer{\(\displaystyle y=11-\frac{x^2}{2}-2x-4\ln(x-2)\quad (x>2)\)}
+\examnote{可降阶题先看是否不显含 \(y\)、不显含 \(x\)、或是 Euler 型；本题属于不显含 \(y\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例8.} 设 \(f(x)\) 在 \((0,+\infty)\) 上二阶可导，
+\[
+f(1)=1,\qquad f'\!\left(\frac1x\right)=-\frac12 f(x),
+\]
+则 \(f(x)=\underline{\hspace{4cm}}\)。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把 \(x\) 换成 \(1/x\) 后可得到 \(f'(x)\)，再求导得到 Euler 型二阶方程。}
+在条件中令 \(x\) 换为 \(1/x\)，得
+\[
+f'(x)=-\frac12 f\!\left(\frac1x\right). \tag{1}
+\]
+对 (1) 求导：
+\[
+f''(x)=-\frac12 f'\!\left(\frac1x\right)\left(-\frac1{x^2}\right)
+=\frac1{2x^2}f'\!\left(\frac1x\right).
+\]
+由原条件
+\[
+f'\!\left(\frac1x\right)=-\frac12f(x),
+\]
+故
+\[
+f''(x)=-\frac1{4x^2}f(x).
+\]
+于是
+\[
+x^2f''+\frac14f=0.
+\]
+这是 Euler 方程。设 \(f=x^m\)，得
+\[
+m(m-1)+\frac14=0,
+\]
+即
+\[
+\left(m-\frac12\right)^2=0.
+\]
+故
+\[
+f(x)=\sqrt{x}(C_1+C_2\ln x).
+\]
+由 \(f(1)=1\)，得 \(C_1=1\)。又
+\[
+f'(1)=-\frac12f(1)=-\frac12.
+\]
+而
+\[
+f'(1)=\frac12+C_2,
+\]
+所以 \(C_2=-1\)。因此
+\[
+f(x)=\sqrt{x}(1-\ln x).
+\]
+\answer{\(\displaystyle f(x)=\sqrt{x}(1-\ln x)\)}
+\examnote{函数方程里出现 \(1/x\) 时，常用“再换一次 \(x\mapsto1/x\)”把未知项闭合。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例9.} 微分方程
+\[
+(1+y^2)\,dx+(x-\arctan y)\,dy=0
+\]
+的通解为 \underline{\hspace{5cm}}。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{把 \(x\) 看作 \(y\) 的函数后，就是一阶线性方程；\(\arctan y\) 与 \((1+y^2)^{-1}\) 配合非常明显。}
+由原方程得
+\[
+(1+y^2)\frac{dx}{dy}+x-\arctan y=0,
+\]
+即
+\[
+\frac{dx}{dy}+\frac{x}{1+y^2}
+=\frac{\arctan y}{1+y^2}.
+\]
+令
+\[
+u=\arctan y,\qquad du=\frac{dy}{1+y^2}.
+\]
+则方程化为
+\[
+\frac{dx}{du}+x=u.
+\]
+乘积分因子 \(e^u\)，得
+\[
+(e^ux)'=ue^u,
+\]
+其中撇号表示对 \(u\) 求导。积分：
+\[
+e^ux=e^u(u-1)+C.
+\]
+所以
+\[
+x=u-1+Ce^{-u}.
+\]
+代回 \(u=\arctan y\)，得
+\[
+\bigl(x-\arctan y+1\bigr)e^{\arctan y}=C.
+\]
+\answer{\(\displaystyle \bigl(x-\arctan y+1\bigr)e^{\arctan y}=C\)}
+\examnote{微分形式题不一定先查恰当性；若 \(M\,dx+N\,dy=0\) 中 \(x\) 一次出现，常把 \(x\) 视作 \(y\) 的函数。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例10.} 微分方程
+\[
+e^x y'+e^y=e^x
+\]
+满足 \(\left.y\right|_{x=1}=1\) 的解为 \underline{\hspace{5cm}}。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{除以 \(e^x\) 后出现 \(e^{y-x}\)，令 \(u=y-x\) 可分离变量。}
+原方程除以 \(e^x\)，得
+\[
+y'+e^{y-x}=1.
+\]
+令
+\[
+u=y-x,
+\]
+则
+\[
+y'=u'+1.
+\]
+代入：
+\[
+u'+1+e^u=1,
+\]
+即
+\[
+u'=-e^u.
+\]
+分离变量：
+\[
+e^{-u}u'=-1.
+\]
+由于
+\[
+(e^{-u})'=-e^{-u}u',
+\]
+故
+\[
+(e^{-u})'=1.
+\]
+积分得
+\[
+e^{-u}=x+C.
+\]
+由 \(y(1)=1\)，得 \(u(1)=0\)，于是
+\[
+1=1+C,\qquad C=0.
+\]
+所以
+\[
+e^{-(y-x)}=x,
+\]
+即
+\[
+y=x-\ln x.
+\]
+\answer{\(\displaystyle y=x-\ln x\quad (x>0)\)}
+\examnote{看到 \(e^y/e^x=e^{y-x}\)，优先尝试 \(u=y-x\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例11.} 求微分方程
+\[
+\frac{yy''-(y')^2}{y^2}=\ln y
+\]
+的通解。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{左端正是 \((y'/y)'\)，而 \(y'/y=(\ln y)'\)。令 \(z=\ln y\) 后方程立即线性化。}
+令
+\[
+z=\ln y\qquad (y>0).
+\]
+则
+\[
+z'=\frac{y'}y,
+\]
+并且
+\[
+z''=\left(\frac{y'}y\right)'
+=\frac{yy''-(y')^2}{y^2}.
+\]
+原方程化为
+\[
+z''=z.
+\]
+其通解为
+\[
+z=C_1e^x+C_2e^{-x}.
+\]
+因此
+\[
+y=e^z=\exp\left(C_1e^x+C_2e^{-x}\right).
+\]
+\answer{\(\displaystyle y=\exp\left(C_1e^x+C_2e^{-x}\right)\)}
+\examnote{含 \(yy''-(y')^2\) 的式子，优先联想到 \((y'/y)'\) 或 \((\ln y)''\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例12.} 求微分方程
+\[
+(x^3-y^2)\,dx+(x^2y+xy)\,dy=0
+\]
+的通解。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{由方程写出 \(dy/dx\) 后，右端含 \(y^2\)。令 \(z=y^2\) 可化为一阶线性方程。}
+由原方程得
+\[
+\frac{dy}{dx}=\frac{y^2-x^3}{xy(x+1)}.
+\]
+令
+\[
+z=y^2,
+\]
+则
+\[
+\frac{dz}{dx}=2y\frac{dy}{dx}
+=\frac{2(y^2-x^3)}{x(x+1)}
+=\frac{2(z-x^3)}{x(x+1)}.
+\]
+即
+\[
+z'-\frac{2}{x(x+1)}z=-\frac{2x^2}{x+1}.
+\]
+积分因子为
+\[
+\exp\int-\frac{2}{x(x+1)}\,dx
+=\exp\int\left(-\frac2x+\frac2{x+1}\right)dx
+=\frac{(x+1)^2}{x^2}.
+\]
+于是
+\[
+\left(z\frac{(x+1)^2}{x^2}\right)'
+=-\frac{2x^2}{x+1}\cdot\frac{(x+1)^2}{x^2}
+=-2(x+1).
+\]
+积分：
+\[
+z\frac{(x+1)^2}{x^2}=-x^2-2x+C.
+\]
+把 \(z=y^2\) 代回，并吸收常数，可写为
+\[
+(x+1)^2\left(1+\frac{y^2}{x^2}\right)=C.
+\]
+\answer{\(\displaystyle (x+1)^2\left(1+\frac{y^2}{x^2}\right)=C\)}
+\examnote{微分方程中出现 \(y^2\) 且有 \(y\,dy/dx\) 的结构时，令 \(z=y^2\) 往往能把非线性降成线性。}
+\end{solutionblock}
+
+\section{综合应用与定性结论}
+
+\begin{problemblock}
+\textbf{例13.} 设函数 \(f(x)\) 满足
+\[
+f(x-y)=f(x)f(y)+\sin x\sin y,
+\]
+其中 \(x,y\) 为任意常数，且
+\[
+f(0)=1,\qquad f'(0)\ \text{存在},
+\]
+求 \(f(x)\) 的表达式。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先由 \(x=0\) 得到偶性，再对 \(y=0\) 处求导得到微分方程。偶函数在 0 处可导，导数必为 0。}
+令 \(x=0\)，得
+\[
+f(-y)=f(0)f(y)+0=f(y),
+\]
+所以 \(f\) 是偶函数。由于 \(f'(0)\) 存在，偶函数在原点的导数为
+\[
+f'(0)=0.
+\]
+对
+\[
+f(x-y)=f(x)f(y)+\sin x\sin y
+\]
+关于 \(y\) 在 \(y=0\) 处求导。左端导数为 \(-f'(x)\)，右端导数为
+\[
+f(x)f'(0)+\sin x\cos0=\sin x.
+\]
+因此
+\[
+-f'(x)=\sin x,
+\]
+即
+\[
+f'(x)=-\sin x.
+\]
+积分：
+\[
+f(x)=\cos x+C.
+\]
+由 \(f(0)=1\)，得
+\[
+1=1+C,
+\]
+所以 \(C=0\)。故
+\[
+f(x)=\cos x.
+\]
+\method{方法二：代入 \(y=x\)}
+令 \(y=x\)，得
+\[
+1=f(0)=f^2(x)+\sin^2x,
+\]
+所以 \(f^2(x)=\cos^2x\)。结合 \(f(0)=1\)、可导性及原方程的结构，可排除任意改变符号的情形，最终仍得 \(f(x)=\cos x\)。
+\answer{\(\displaystyle f(x)=\cos x\)}
+\examnote{函数方程给出 \(f'(0)\) 时，常在 \(y=0\) 或 \(x=0\) 处求导，得到普通微分方程。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例14.} 如果对微分方程
+\[
+y''-2ay'+(a+2)y=0
+\]
+的任一解 \(y(x)\)，反常积分
+\[
+\int_0^{+\infty}y(x)\,dx
+\]
+均收敛，那么 \(a\) 的取值范围是（\quad）
+
+A. \((-2,-1]\)
+\quad B. \((-\infty,-1]\)
+\quad C. \((-2,0)\)
+\quad D. \((-\infty,0)\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{任一解的积分都收敛，等价于齐次方程所有基本解在 \(+\infty\) 都衰减到足够快；常系数方程就是要求全部特征根实部小于 0。}
+特征方程为
+\[
+r^2-2ar+(a+2)=0.
+\]
+若所有解的反常积分都收敛，则所有特征根都必须满足
+\[
+\operatorname{Re}r<0.
+\]
+对二阶实系数方程
+\[
+r^2+\alpha r+\beta=0
+\]
+两根实部均小于 \(0\) 的充要条件为
+\[
+\alpha>0,\qquad \beta>0.
+\]
+本题中
+\[
+\alpha=-2a,\qquad \beta=a+2.
+\]
+故
+\[
+-2a>0,\qquad a+2>0.
+\]
+即
+\[
+a<0,\qquad a>-2.
+\]
+所以
+\[
+-2<a<0.
+\]
+\answer{C}
+\examnote{常系数齐次方程的反常积分收敛问题，本质是特征根实部问题；根在虚轴上或右半平面都不行。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例15.} 设 \(f(x)\) 为 \((-\infty,+\infty)\) 上的连续函数，已知微分方程
+\[
+y'+(\sin x)y=f(x)
+\]
+的解 \(y(x)\) 满足 \(y(1)=0\)，则下列说法中正确的是（\quad）
+
+A. 若 \(f(x)\) 是偶函数，则 \(y(x)\) 是奇函数。
+
+B. 若 \(y(x)\) 是奇函数，则 \(f(x)\) 是偶函数。
+
+C. 若 \(f(x)\) 是有界函数，则 \(y(x)\) 也是有界函数。
+
+D. 若 \(y(x)\) 是有界函数，则 \(f(x)\) 也是有界函数。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{本题判断的是“必然推出”。直接由方程 \(f=y'+(\sin x)y\) 分析奇偶性最稳。}
+若 \(y(x)\) 是奇函数，则 \(y'(x)\) 是偶函数；又 \(\sin x\) 是奇函数，所以
+\[
+(\sin x)y(x)
+\]
+是偶函数。因此
+\[
+f(x)=y'(x)+(\sin x)y(x)
+\]
+是偶函数，B 正确。
+
+A 不正确。例如取偶函数 \(f(x)=1\)，满足 \(y(1)=0\) 的解为
+\[
+y(x)=e^{\cos x}\int_1^x e^{-\cos t}\,dt.
+\]
+此时
+\[
+y(0)=e\int_1^0e^{-\cos t}\,dt\ne0,
+\]
+而奇函数必须满足 \(y(0)=0\)，故 \(y\) 不一定是奇函数。
+
+C 不正确。例如取 \(f(x)=1\)，方程
+\[
+y'+(\sin x)y=1
+\]
+的积分因子为
+\[
+e^{\int\sin x\,dx}=e^{-\cos x}.
+\]
+于是解中含有
+\[
+e^{\cos x}\int e^{-\cos x}\,dx,
+\]
+该积分一般随 \(x\) 线性增长，所以不必有界。
+
+D 不正确。可先取一个有界但导数无界的函数，如
+\[
+y(x)=\sin\bigl((x-1)^2\bigr),
+\]
+它满足 \(y(1)=0\)，再定义
+\[
+f(x)=y'(x)+(\sin x)y(x).
+\]
+此时 \(f\) 连续，但因 \(y'\) 无界，\(f\) 不一定有界。
+\answer{B}
+\examnote{判断命题正误时，正确项给证明，错误项给反例。尤其有界性不能由微分方程随意传递。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例16.} 设
+\[
+xy=c_1e^x+c_2e^{2x}
+\]
+是某二阶齐次线性微分方程的通解，则该方程为
+\underline{\hspace{6cm}}。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{题中 \(xy\) 而不是 \(y\) 满足常系数方程。令 \(z=xy\)，先写出 \(z\) 的方程，再换回 \(y\)。}
+令
+\[
+z=xy.
+\]
+由
+\[
+z=c_1e^x+c_2e^{2x}
+\]
+知 \(z\) 满足特征根为 \(1,2\) 的齐次方程：
+\[
+z''-3z'+2z=0.
+\]
+而
+\[
+z'=y+xy',\qquad z''=2y'+xy''.
+\]
+代入：
+\[
+2y'+xy''-3(y+xy')+2xy=0.
+\]
+整理得
+\[
+xy''+(2-3x)y'+(2x-3)y=0.
+\]
+\answer{\(\displaystyle xy''+(2-3x)y'+(2x-3)y=0\)}
+\examnote{看到通解是 \(xy=\cdots\)，不要误把 \(y\) 当作 \(e^x,e^{2x}\) 的线性组合。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例17.} 设 \(y=y(x)\) 是
+\[
+y'+ey=\left(1-\frac1x\right)^x
+\]
+的一个解，则
+\[
+\lim_{x\to+\infty}y(x)=\underline{\hspace{3cm}}。
+\]
+\end{problemblock}
+\begin{solutionblock}
+\analysis{这是稳定的一阶线性方程。右端有极限，且齐次解 \(Ce^{-ex}\) 衰减，所以解的极限由平衡关系 \(eL=\lim f(x)\) 决定。}
+记
+\[
+g(x)=\left(1-\frac1x\right)^x.
+\]
+则
+\[
+\lim_{x\to+\infty}g(x)=e^{-1}.
+\]
+方程
+\[
+y'+ey=g(x)
+\]
+的通解为
+\[
+y=e^{-ex}\left(C+\int^x e^{et}g(t)\,dt\right).
+\]
+由于系数 \(e>0\)，齐次项 \(Ce^{-ex}\to0\)。当 \(g(x)\to e^{-1}\) 时，解的极限 \(L\) 满足平衡方程
+\[
+eL=e^{-1}.
+\]
+因此
+\[
+L=e^{-2}.
+\]
+\method{方法二：L'Hospital 型极限}
+写成
+\[
+y=e^{-ex}\left(C+\int_{x_0}^x e^{et}g(t)\,dt\right).
+\]
+对积分项与 \(e^{ex}\) 用 L'Hospital 法：
+\[
+\lim_{x\to+\infty}
+\frac{\int_{x_0}^x e^{et}g(t)\,dt}{e^{ex}}
+=\lim_{x\to+\infty}\frac{e^{ex}g(x)}{ee^{ex}}
+=\frac{e^{-1}}e=e^{-2}.
+\]
+\answer{\(\displaystyle e^{-2}\)}
+\examnote{一阶线性稳定方程 \(y'+ay=g(x)\)、\(a>0\)，若 \(g(x)\to g_0\)，则 \(y(x)\to g_0/a\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例18.} 证明：若 \(q(x)<0\)，则方程
+\[
+y''+q(x)y=0
+\]
+的任一非零解至多有一个零点。
+\end{problemblock}
+\begin{solutionblock}
+\analysis{反证。若有两个零点，就在两零点之间积分 \((yy')'\)，利用 \(q<0\) 得到严格正量，和端点值矛盾。}
+假设某一非零解 \(y\) 至少有两个零点。取相邻两个零点 \(a<b\)，则
+\[
+y(a)=y(b)=0,
+\]
+并且 \(y\) 在 \((a,b)\) 内不为 \(0\)，否则可继续取相邻零点。
+
+由方程
+\[
+y''=-q(x)y.
+\]
+因为 \(q(x)<0\)，所以在 \(y(x)\ne0\) 处，
+\[
+yy''=-q(x)y^2>0.
+\]
+于是
+\[
+(yy')'=y'^2+yy''.
+\]
+在 \((a,b)\) 上有
+\[
+y'^2+yy''>0.
+\]
+两边积分：
+\[
+\int_a^b (yy')'\,dx
+=\int_a^b \bigl(y'^2+yy''\bigr)\,dx>0.
+\]
+但左端
+\[
+\int_a^b (yy')'\,dx
+=\left.yy'\right|_a^b
+=y(b)y'(b)-y(a)y'(a)=0.
+\]
+这与严格大于 \(0\) 矛盾。因此非零解至多有一个零点。
+\answer{命题成立}
+\examnote{二阶线性方程零点个数问题常用反证法；本题的核心乘子是 \(y\)，核心导数是 \((yy')'\)。}
+\end{solutionblock}
+
+\begin{problemblock}
+\textbf{例19.} 设 \(y=y(x)\) 满足条件
+\[
+\begin{cases}
+y''+2y'+4y=0,\\
+y(0)=y'(0)=2,
+\end{cases}
+\]
+则
+\[
+\int_0^{+\infty}y(x)\,dx
+\quad\text{和}\quad
+\int_0^{+\infty}y^2(x)\,dx
+\]
+的值分别为（\quad）
+
+A. \(\displaystyle \frac32,\frac{13}{4}\)
+\quad B. \(\displaystyle \frac23,\frac{13}{4}\)
+\quad C. \(\displaystyle \frac32,\frac{13}{2}\)
+\quad D. \(\displaystyle \frac23,\frac{13}{2}\)
+\end{problemblock}
+\begin{solutionblock}
+\analysis{先求出阻尼振荡解，再用 Laplace 积分公式计算两个反常积分。}
+特征方程为
+\[
+r^2+2r+4=0,
+\]
+故
+\[
+r=-1\pm \sqrt3\,i.
+\]
+于是
+\[
+y=e^{-x}\left(A\cos\sqrt3x+B\sin\sqrt3x\right).
+\]
+由 \(y(0)=2\)，得
+\[
+A=2.
+\]
+又
+\[
+y'(0)=-A+B\sqrt3=2,
+\]
+所以
+\[
+-2+B\sqrt3=2,\qquad B=\frac4{\sqrt3}.
+\]
+因此
+\[
+y=e^{-x}\left(2\cos\sqrt3x+\frac4{\sqrt3}\sin\sqrt3x\right).
+\]
+先算
+\[
+\int_0^{+\infty}y(x)\,dx.
+\]
+利用
+\[
+\int_0^\infty e^{-x}\cos ax\,dx=\frac1{1+a^2},\qquad
+\int_0^\infty e^{-x}\sin ax\,dx=\frac{a}{1+a^2},
+\]
+取 \(a=\sqrt3\)，得
+\[
+\int_0^\infty y\,dx
+=2\cdot\frac14+\frac4{\sqrt3}\cdot\frac{\sqrt3}{4}
+=\frac12+1=\frac32.
+\]
+再算平方积分。记 \(a=\sqrt3\)，则
+\[
+y^2=e^{-2x}\left(4\cos^2 ax+\frac{16}{3}\sin^2 ax+\frac{16}{a}\sin ax\cos ax\right).
+\]
+用
+\[
+\int_0^\infty e^{-2x}\cos^2 ax\,dx=\frac5{16},\quad
+\int_0^\infty e^{-2x}\sin^2 ax\,dx=\frac3{16},\quad
+\int_0^\infty e^{-2x}\sin ax\cos ax\,dx=\frac{a}{16},
+\]
+得
+\[
+\int_0^\infty y^2\,dx
+=4\cdot\frac5{16}
++\frac{16}{3}\cdot\frac3{16}
++\frac{16}{a}\cdot\frac{a}{16}
+=\frac54+1+1
+=\frac{13}{4}.
+\]
+\answer{A}
+\examnote{阻尼振荡解的积分可以直接套 Laplace 公式；平方积分先化为 \(\cos^2,\sin^2,\sin\cos\).}
+\end{solutionblock}

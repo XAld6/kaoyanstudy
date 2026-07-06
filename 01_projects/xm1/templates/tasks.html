@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}巡检任务{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <p class="eyebrow">Inspection Tasks</p>
+    <h1>巡检任务</h1>
+    <p class="subtle">展示校园建筑外墙巡检计划，便于答辩演示“任务分配 → 图片识别 → 隐患处理”的业务链路。</p>
+  </div>
+</section>
+
+<section class="panel">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>任务名称</th>
+        <th>楼栋</th>
+        <th>区域</th>
+        <th>巡检员</th>
+        <th>状态</th>
+        <th>创建时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in tasks %}
+      <tr>
+        <td>{{ task.id }}</td>
+        <td>{{ task.task_name }}</td>
+        <td>{{ task.building_name }}</td>
+        <td>{{ task.area }}</td>
+        <td>{{ task.inspector }}</td>
+        <td><span class="status {{ task.status }}">{{ task.status }}</span></td>
+        <td>{{ task.created_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
