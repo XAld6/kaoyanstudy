@@ -1,50 +1,91 @@
-# D:\xm 工作区整理说明
+# D:\xm 工作区组织说明
 
-本工作区已按“交付文件 / 项目工程 / 学习资料 / 临时产物”重新分类。整理过程只移动文件，不删除内容。
-
-最近整理：2026-06-18。根目录散落的临时检查脚本、提取脚本和临时文本已归档到 `90_temp_work/root_loose_20260618/`；原根目录 `tmp/` 已归档到 `90_temp_work/tmp_20260618/`；根目录残留的 `zy/sg/cy/` 学习资料已并入 `02_study_materials/zy/sg/cy/`。
-
-## 当前根目录
+本工作区按四个根分类目录组织，整理遵循「归档优先、只移动不删除」的原则。
 
 | 目录 | 用途 |
 |---|---|
-| `00_deliverables/` | 最终交付文件、可上传压缩包 |
-| `01_projects/` | 代码项目、LaTeX 工程、独立项目目录 |
-| `02_study_materials/` | 学习资料、原始课程/题本资料 |
-| `90_temp_work/` | 临时预览、OCR/检查、解压验证、打包 staging |
+| `00_deliverables/` | 可交付成果：最终 PDF、源码 ZIP、版本快照、简历等 |
+| `01_projects/` | 独立项目与可持续维护的源码工程 |
+| `02_study_materials/` | 课程、题本、原始学习资料及其分类归档 |
+| `90_temp_work/` | 临时工作包、编译中间物、OCR、审计与杂项下载 |
 
-隐藏目录 `.git/`、`.claude/`、`.codex-playwright/` 仍留在根目录，用于工作区配置或工具缓存，不建议手动移动。
+根目录仅保留：`.gitignore`、`WORKSPACE_ORGANIZATION.md`，以及工具配置目录（`.git/`、`.opencode/`、`.claude/` 等）。
 
-## 重要文件位置
+---
 
-| 内容 | 新位置 |
+## 00_deliverables — 交付成果
+
+| 路径 | 内容 |
 |---|---|
-| 线性代数解析 Overleaf 上传包 | `D:\xm\00_deliverables\mz_linear_solution_project_overleaf.zip` |
-| 线性代数解析 LaTeX 工程 | `D:\xm\01_projects\mz_linear_solution_project\` |
-| 线性代数打包 staging / zip 验证目录 | `D:\xm\90_temp_work\` |
-| 原 `zy` 学习资料目录 | `D:\xm\02_study_materials\zy\` |
-| 2026-06-18 根目录临时脚本归档 | `D:\xm\90_temp_work\root_loose_20260618\` |
-| 2026-06-18 根目录 tmp 归档 | `D:\xm\90_temp_work\tmp_20260618\` |
-| 桥梁/施工课程新增资料 | `D:\xm\02_study_materials\zy\sg\cy\` |
+| `leleche/` | 勒勒车竞赛方案：`current/` 当前版 + `archive/` 历史快照；见 `leleche/MANIFEST.md` |
+| `resumes/postgraduate_reexam_resume/` | 考研复试个人简历 |
+| `resumes/resume_competition_intern/` | 竞赛导向通用实习简历 |
+| `mz_linear_solution/` | 线代解题 Overleaf 包 ZIP |
+| `rc_sampling_solutions/` | RC sampling 解答 Overleaf 包 ZIP |
 
-## 项目工程
+### 勒勒车关键位置
 
-以下目录已归入 `01_projects/`：
+- 当前交付：`00_deliverables/leleche/current/2026-07-07_r08_ch09_science_v10/`
+- 历史快照：`00_deliverables/leleche/archive/`（r01–r07）
+- 工作源码：`90_temp_work/leleche/active/`
+- 历史工作包：`90_temp_work/leleche/snapshots/`
 
-- `cc1/`
-- `dachaung/`
-- `kaoyan-study-console/`
-- `lyl660_latex/`
-- `mz_linear_solution_project/`
-- `overleaf_rc_sampling_solutions/`
-- `xm1/`
+---
 
-## 维护建议
+## 01_projects — 工程源码
 
-- 新完成的 zip、pdf、可上传包放到 `00_deliverables/`。
-- 新的源码工程放到 `01_projects/`。
-- 原始资料、课程文件、题本放到 `02_study_materials/`。
-- OCR、预览图、编译缓存、解压验证目录放到 `90_temp_work/`。
-- 不确定用途的文件先放 `90_temp_work/`，确认后再归档。
-- `node_modules/`、`marker312/`、`__pycache__/`、LaTeX 中间产物和批量渲染/OCR 目录已写入工作区 `.gitignore`，日常搜索和版本管理时建议继续排除这些目录。
-- 当前 `.git/` 目录缺少 `HEAD` 和 `config`，Git 不会把本目录识别为有效仓库；如果后续要版本管理，需要重新初始化或修复仓库元数据。
+| 项目 | 说明 |
+|---|---|
+| `chatgpt-register-k12/` | ChatGPT 注册/登录 K12 流水线（CLI + WebUI） |
+| `CodexCont/` | Codex 中间件 / 代理 |
+| `dachaung/` | 大创「智爪识损」：前后端、申报书、PPT、脚本 |
+| `jglx_latex_project/` | 结构力学 LaTeX 题本（含 Overleaf 上传包） |
+| `kaoyan-study-console/` | 考研学习控制台（前后端） |
+| `mz_linear_solution_project/` | 线性代数解题 LaTeX 工程 |
+| `steel_structure_thesis/` | 钢结构论文 Overleaf |
+| `xm1/` | 墙体缺陷检测（YOLO 相关） |
+| `zy_latex_work/` | 桥梁复习等 LaTeX 工程 |
+
+---
+
+## 02_study_materials — 学习资料
+
+| 路径 | 内容 |
+|---|---|
+| `zy/gcjjx/` | 工程经济学相关 |
+| `zy/jglx/` | 结构力学作业与笔记 PDF |
+| `zy/ky/` | 考研资料（高数/线代 EP、武忠祥等）；`ky/sx/lyl660/` 为线代源 PDF |
+| `zy/sg/` | 施工课程：源文件、成品、LaTeX 工程、脚本 |
+
+---
+
+## 90_temp_work — 临时工作
+
+| 路径 | 内容 |
+|---|---|
+| `leleche/active/` | 勒勒车当前 LaTeX 工作包 |
+| `leleche/snapshots/` | 勒勒车历史 LaTeX 工作包 |
+| `jglx/cache_20260619/` | 结构力学 OCR/预览/审计缓存 |
+| `zy_latex_work/cache_20260619/` | 桥梁 LaTeX 渲染缓存 |
+| `lyl660_ocr_20260609/` | 线代书 OCR/检查产物 |
+| `latex_review_20260705/` | 一次性审阅包与脚本 |
+| `misc_downloads/` | 从学习资料中移出的安装包、种子等杂项 |
+| `skills-audit-report.md` | Codex skills 审计报告（2026-06-20） |
+| `README.md` | 本目录补充说明 |
+
+---
+
+## 规则
+
+- **交付**：每项保留一个 `current/`；替换前将旧版整体移入 `archive/`，命名含日期、修订号与阶段。
+- **快照**：保留 PDF、源码 ZIP 及必要展开源码；不改内部原始文件名。
+- **资料**：归入 `02_study_materials/` 对应主题；不与源码或交付混放。
+- **临时物**：编译缓存、OCR、预览、一次性审阅 → `90_temp_work/`。**清理前须单独确认。**
+- **工程 vs 交付**：可维护源码在 `01_projects/`；完成交付副本在 `00_deliverables/`。
+- **工具目录**：`.git/`、`.opencode/`、`.claude/`、`.codex-playwright/` 等保持原位，不作日常归档。
+- **嵌套仓库**：`CodexCont/`、`chatgpt-register-k12/`、`dachaung/skill/` 为独立 git 仓库；父仓不跟踪其内容，见 `01_projects/NESTED_REPOS.md`。整理时勿动其内部状态。
+
+## 整理记录
+
+- 2026-07-06：初次按四类目录归档（见 commit `249b27b` 相关说明）。
+- 2026-07-11：收尾整理——交付 ZIP/简历归入子目录；安装包等移至 `90_temp_work/misc_downloads/`；审计报告迁入 `90_temp_work/`；更新本说明。未删除任何缓存或 OCR 产物。
