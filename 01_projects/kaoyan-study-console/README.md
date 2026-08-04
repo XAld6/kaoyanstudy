@@ -29,7 +29,7 @@ kaoyan-console.bat
 前端：
 
 ```powershell
-cd D:\xm\kaoyan-study-console\frontend
+cd D:\xm\01_projects\kaoyan-study-console\frontend
 npm.cmd install
 npm.cmd run dev
 ```
@@ -37,7 +37,7 @@ npm.cmd run dev
 后端：
 
 ```powershell
-cd D:\xm\kaoyan-study-console\backend
+cd D:\xm\01_projects\kaoyan-study-console\backend
 python -m pip install -r requirements.txt
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8018
 ```
@@ -47,13 +47,24 @@ python -m uvicorn app.main:app --host 127.0.0.1 --port 8018
 今日页：
 
 - 添加今日任务、快速模板任务
-- 勾选完成、记录实际学习分钟数
+- 勾选完成、记录实际学习分钟数（支持 +15 / +30 / 填满计划）
+- 专注计时：正计时 / 番茄（15 / 25 / 45 分钟可选，记住上次选择），绑定任务后结束可自动累加实际时长
+- 番茄完成后自动进入 5 分钟休息倒计时（可跳过；休息结束也会提醒）
+- 今日专注统计：计时器记入的专注分钟与番茄个数（独立于任务实际时长）
+- 键盘快捷键（计时进行中）：空格 暂停/继续 · Enter 结束并记入 · Esc 跳过休息/丢弃（输入框内不触发）
+- 计时中顶部常驻条（任意页面可暂停/结束/跳过休息）+ 浏览器标签实时显示剩余/已用时间
+- **刷新页面不丢计时**：番茄/正计时/休息进度写入 sessionStorage；离开期间已到点的番茄会按目标分钟记入，并尽量接上剩余休息
+- 番茄到点提示音 + 系统通知（设置页可开关并测试）
+- 逾期提醒：一键把逾期任务整理到当前日期
 - 复盘模板：按当天完成率和未完成任务生成复盘草稿
 - 收尾检查：检查复盘、实际时长、明日任务是否准备好
+- 一键收尾：补复盘草稿 + 补完成任务时长 + 顺延未完成到明天
 - 明日开局：把未完成任务整理到明天
+- 刷新页面会记住当前标签页（sessionStorage）
 
 计划页：
 
+- 顶部快捷操作：复制上周、顺延未完成、整理逾期、一键减负、一键补块、生成周报
 - 周视图和全部任务视图
 - 按科目、优先级、状态筛选
 - 复制上周计划到本周
@@ -66,13 +77,17 @@ python -m uvicorn app.main:app --host 127.0.0.1 --port 8018
 
 进度页：
 
+- 学习热力日历：最近 8/12/16 周实际学习量热力图，点击切换当前日期；显示连续天数与合计
 - 查看最近 7/14/30 天科目计划时长和实际时长
 - 调整各科每周目标小时数
+- 一键生成周报（完成率、分科执行、调整提示、下周三条重点），支持复制与下载 Markdown
+- 写入复盘：把周报摘要追加到当前日期复盘（同一周不会重复写入）
 
 AI 教练：
 
-- 使用最近 7 天任务、今日完成情况和复盘文本生成明日建议
-- API 不可用时自动显示本地规则建议
+- 使用最近 7 天任务、今日完成情况和复盘文本生成建议
+- 固定结构：补哪科 / 砍哪块 / 明日三件事
+- API 不可用时自动显示同结构的本地规则建议
 
 设置页：
 
@@ -81,6 +96,7 @@ AI 教练：
 - 调整科目颜色和每周目标
 - 配置 OpenAI 兼容 API
 - 测试 API 连接
+- 查看备份状态（最近导出时间、距今天数）
 - 导出/导入 JSON 数据
 
 ## API 配置
@@ -112,7 +128,18 @@ backend/llm_config.local.json
 
 常规使用时，学习数据保存在浏览器 `localStorage`。
 
-建议定期在“设置”页点击“导出 JSON”，尤其是：
+导出入口：
+
+- **今日页**：顶部「导出备份」条、任务区「备份」按钮
+- **设置页**：「数据备份」卡片、底部「导出 JSON 备份」
+
+系统会记录最近一次导出时间：
+
+- 从未导出：打开时顶部提示「立即备份」
+- 超过 7 天：建议更新备份
+- 超过 14 天：升级为过期提醒
+
+建议在这些时机导出：
 
 - 大量调整计划后
 - 导入外部数据前
@@ -128,7 +155,7 @@ backend/llm_config.local.json
 前端测试和构建：
 
 ```powershell
-cd D:\xm\kaoyan-study-console\frontend
+cd D:\xm\01_projects\kaoyan-study-console\frontend
 npm.cmd test
 npm.cmd run build
 ```
@@ -136,7 +163,7 @@ npm.cmd run build
 后端测试：
 
 ```powershell
-cd D:\xm\kaoyan-study-console\backend
+cd D:\xm\01_projects\kaoyan-study-console\backend
 python -m pytest --basetemp ..\.runtime\pytest-temp
 ```
 
@@ -147,6 +174,11 @@ python -m pytest --basetemp ..\.runtime\pytest-temp
 ```text
 kaoyan-study-console/
   frontend/              React + Vite + TypeScript 前端
+    src/main.tsx         应用状态与页面编排
+    src/uiComponents.tsx 可复用 UI 组件
+    src/studyCore.ts     学习业务纯函数
+    src/focusTimer.ts    专注计时
+    src/storage.ts       本地存储与备份
   backend/               FastAPI 后端
   kaoyan-console.bat     推荐入口：打开中文菜单
   kaoyan-console.ps1     启动、关闭、状态管理脚本

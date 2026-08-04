@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   AlertTriangle,
@@ -15,54 +15,134 @@ import {
   Gauge,
   Import,
   LineChart,
+  Pause,
+  Play,
   Plus,
   RefreshCw,
   RotateCcw,
   Settings,
   Sparkles,
+  Square,
   Timer,
   Trash2
 } from "lucide-react";
 import { ApiForm, Health, fetchConfig, requestAdvice, saveConfig, testConfig } from "./api";
 import {
   AppData,
-  DailyClosureItem,
-  DataHealthItem,
   PlanTaskFilters,
   Subject,
-  SubjectWeeklyLoad,
   StudyTask,
-  WeeklyAdjustmentTip,
-  WeekDayOverview,
+  WeeklyReport,
   addDays,
   addLightSubjectStudyBlock,
+  appendWeeklyReportToReview,
   buildReviewTemplate,
+  buildWeeklyReport,
+  bumpTaskActualMinutes,
   copyWeekTasks,
+  countOverdueTasks,
+  fillTaskActualMinutes,
   formatDate,
-  generateRuleAdvice,
+  StructuredAdvice,
+  buildCoachAdvicePayload,
+  generateStructuredRuleAdvice,
   generateWeeklyAdjustmentTips,
+  parseStructuredAdvice,
   getDailyClosureChecklist,
   getDataHealth,
   getDataOverview,
   getPlanTasks,
+  buildStudyHeatmap,
   getSubjectProgress,
   getSubjectWeeklyLoad,
   getTasksForDate,
   getTodayStats,
   getWeekOverview,
+  patchTaskActualMinutes,
   prepareTomorrowPlan,
   relieveHeaviestDay,
   resolveOverdueTasksToDate,
   resolveSubjectIdByKeywords,
   rolloverUnfinishedTasks,
+  runDailyClosure,
   shiftTasksByIds,
   updateTasksByIds,
   uid
 } from "./studyCore";
-import { clearAppData, createAppDataExport, loadAppData, loadAppDataWithStatus, parseImportedData, saveAppData } from "./storage";
+import {
+  BackupMeta,
+  clearAppData,
+  clearBackupMeta,
+  createAppDataExport,
+  formatBackupTimestamp,
+  getBackupHealth,
+  loadAppData,
+  loadAppDataWithStatus,
+  loadBackupMeta,
+  loadFocusNotifyPrefs,
+  loadFocusStatsStore,
+  loadPomodoroMinutes,
+  markBackupExported,
+  parseImportedData,
+  recordFocusSession,
+  restoreFocusTimerSession,
+  saveAppData,
+  saveFocusNotifyPrefs,
+  saveFocusTimerSession,
+  savePomodoroMinutes
+} from "./storage";
+import {
+  DEFAULT_BREAK_MINUTES,
+  DEFAULT_DOCUMENT_TITLE,
+  DEFAULT_POMODORO_MINUTES,
+  FocusMode,
+  FocusTimerState,
+  POMODORO_DURATION_OPTIONS,
+  buildFocusDocumentTitle,
+  createIdleFocusTimer,
+  discardFocusTimer,
+  getFocusSnapshot,
+  isFocusTimerActive,
+  normalizePomodoroMinutes,
+  pauseFocusTimer,
+  resumeFocusTimer,
+  setFocusMode,
+  startBreakTimer,
+  startFocusTimer,
+  stopFocusTimer
+} from "./focusTimer";
+import {
+  FocusNotifyPrefs,
+  getNotificationPermissionState,
+  notifyFocusComplete,
+  playFocusCompleteSound,
+  showFocusCompleteNotification
+} from "./focusNotify";
+import {
+  FocusStatsStore,
+  formatFocusStatsSummary,
+  getDailyFocusStats,
+  getFocusMinutesByDate
+} from "./focusStats";
+import { daysLeft, minutesLabel } from "./format";
+import { useSelectedDate } from "./hooks/useSelectedDate";
+import { View, useView } from "./hooks/useView";
+import {
+  ClosureChecklist,
+  FocusStickyBar,
+  HealthItem,
+  Metric,
+  OverviewItem,
+  PlanTaskRow,
+  StructuredAdviceBoard,
+  StudyHeatmapBoard,
+  TaskCreator,
+  TaskRow,
+  WeekPlanBoard,
+  WeeklyAdjustmentPanel,
+  WeeklyLoadStrip
+} from "./uiComponents";
 import "./styles.css";
-
-type View = "today" | "plan" | "progress" | "coach" | "settings";
 
 const navItems: Array<{ view: View; label: string; icon: React.ReactNode }> = [
   { view: "today", label: "今日", icon: <CalendarDays size={18} /> },
@@ -72,7 +152,6 @@ const navItems: Array<{ view: View; label: string; icon: React.ReactNode }> = [
   { view: "settings", label: "设置", icon: <Settings size={18} /> }
 ];
 
-const weekdayLabels = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
 
 type QuickTemplate = {
   key: string;
@@ -123,35 +202,32 @@ const quickTemplates: QuickTemplate[] = [
   }
 ];
 
-function minutesLabel(minutes: number) {
-  const hours = Math.floor(minutes / 60);
-  const rest = minutes % 60;
-  if (!hours) return `${rest} 分钟`;
-  if (!rest) return `${hours} 小时`;
-  return `${hours} 小时 ${rest} 分钟`;
-}
-
-function daysLeft(examDate: string) {
-  if (!examDate) return 0;
-  const today = new Date(formatDate());
-  const exam = new Date(examDate);
-  return Math.max(0, Math.ceil((exam.getTime() - today.getTime()) / 86400000));
-}
 
 function App() {
   const [initialLoad] = useState(() => loadAppDataWithStatus());
-  const [data, setData] = useState<AppData>(() => initialLoad.data);
-  const [view, setView] = useState<View>("today");
-  const [selectedDate, setSelectedDate] = useState(formatDate());
+  const [pomodoroMinutes, setPomodoroMinutes] = useState(() => loadPomodoroMinutes());
+  const [focusRestore] = useState(() => restoreFocusTimerSession(Date.now(), DEFAULT_BREAK_MINUTES, loadPomodoroMinutes()));
+  const [data, setData] = useState<AppData>(() => {
+    if (focusRestore.logTaskId && focusRestore.logMinutes > 0) {
+      return bumpTaskActualMinutes(structuredClone(initialLoad.data), focusRestore.logTaskId, focusRestore.logMinutes);
+    }
+    return initialLoad.data;
+  });
+  const [view, setView] = useView();
+  const [selectedDate, setSelectedDate] = useSelectedDate();
   const [newTask, setNewTask] = useState({ title: "", subjectId: "", estimatedMinutes: 60, priority: "中" as StudyTask["priority"] });
   const [newSubject, setNewSubject] = useState({ name: "", color: "#6f82ff", weeklyTargetHours: 8 });
   const [progressDays, setProgressDays] = useState(7);
+  const [heatmapWeeks, setHeatmapWeeks] = useState(12);
   const [planScope, setPlanScope] = useState<"week" | "all">("week");
   const [planFilters, setPlanFilters] = useState<Omit<PlanTaskFilters, "scope">>({ subjectId: "all", priority: "all", status: "all", query: "" });
   const [todayActionStatus, setTodayActionStatus] = useState("");
   const [planActionStatus, setPlanActionStatus] = useState("");
   const [settingsActionStatus, setSettingsActionStatus] = useState("");
-  const [aiAdvice, setAiAdvice] = useState<string[]>([]);
+  const [backupMeta, setBackupMeta] = useState<BackupMeta>(() => loadBackupMeta());
+  const [backupBannerDismissed, setBackupBannerDismissed] = useState(false);
+  const [overdueBannerDismissed, setOverdueBannerDismissed] = useState(false);
+  const [aiAdvice, setAiAdvice] = useState<StructuredAdvice | null>(null);
   const [aiStatus, setAiStatus] = useState("");
   const [health, setHealth] = useState<Health | null>(null);
   const [apiForm, setApiForm] = useState<ApiForm>({ api_key: "", base_url: "https://api.openai.com/v1", model: "gpt-4.1-mini" });
@@ -161,10 +237,57 @@ function App() {
   const [isApiSaving, setIsApiSaving] = useState(false);
   const [isApiTesting, setIsApiTesting] = useState(false);
   const [storageWarning, setStorageWarning] = useState(initialLoad.recovered ? "检测到浏览器里的学习数据异常，已回退到示例数据。若你有备份，请在设置页导入 JSON。" : "");
+  const [focusTimer, setFocusTimer] = useState<FocusTimerState>(() => {
+    if (focusRestore.restored) return focusRestore.state;
+    // 无会话时保留上次选择的番茄时长（模式仍为正计时，切换番茄即可用）
+    return createIdleFocusTimer("stopwatch", loadPomodoroMinutes());
+  });
+  const [focusNow, setFocusNow] = useState(() => Date.now());
+  const [focusStatusMessage, setFocusStatusMessage] = useState(() => focusRestore.message);
+  const [focusNotifyPrefs, setFocusNotifyPrefs] = useState<FocusNotifyPrefs>(() => loadFocusNotifyPrefs());
+  const [focusNotifyStatus, setFocusNotifyStatus] = useState("");
+  const [focusStatsStore, setFocusStatsStore] = useState<FocusStatsStore>(() => {
+    if (focusRestore.logMinutes > 0) {
+      return recordFocusSession({ minutes: focusRestore.logMinutes, isPomodoro: true });
+    }
+    return loadFocusStatsStore();
+  });
+  const focusStats = useMemo(() => getDailyFocusStats(focusStatsStore, formatDate()), [focusStatsStore]);
+  const [weeklyReport, setWeeklyReport] = useState<WeeklyReport | null>(null);
+  const [weeklyReportStatus, setWeeklyReportStatus] = useState("");
+  const focusTimerRef = useRef(focusTimer);
+  const focusNotifyPrefsRef = useRef(focusNotifyPrefs);
+  const pomodoroMinutesRef = useRef(pomodoroMinutes);
+  const focusRestoreNotifiedRef = useRef(false);
+  const focusActionRefs = useRef({
+    pauseOrResume: () => {},
+    finish: () => {},
+    cancel: () => {},
+    skipBreak: () => {}
+  });
+  focusTimerRef.current = focusTimer;
+  focusNotifyPrefsRef.current = focusNotifyPrefs;
+  pomodoroMinutesRef.current = pomodoroMinutes;
 
   useEffect(() => {
     saveAppData(data);
   }, [data]);
+
+  useEffect(() => {
+    saveFocusTimerSession(focusTimer);
+  }, [focusTimer]);
+
+  // 刷新恢复时：离开期间已完成的番茄/休息补一次提醒（只触发一次）
+  useEffect(() => {
+    if (focusRestoreNotifiedRef.current) return;
+    if (!focusRestore.notify) return;
+    focusRestoreNotifiedRef.current = true;
+    void notifyFocusComplete(
+      focusNotifyPrefsRef.current,
+      focusRestore.notify.title,
+      focusRestore.notify.minutes
+    );
+  }, [focusRestore.notify]);
 
   useEffect(() => {
     fetchConfig()
@@ -175,21 +298,103 @@ function App() {
       .catch(() => setHealth({ status: "offline", llm_configured: false, model: "未连接", base_url: "本地后端未启动" }));
   }, []);
 
+  useEffect(() => {
+    if (focusTimer.status !== "running") return;
+    const id = window.setInterval(() => {
+      const now = Date.now();
+      setFocusNow(now);
+      const current = focusTimerRef.current;
+      if (current.status !== "running") return;
+      if (!getFocusSnapshot(current, now).isComplete) return;
+      const preferred = pomodoroMinutesRef.current;
+
+      // 休息倒计时结束
+      if (current.phase === "break") {
+        const idle = discardFocusTimer(current, preferred);
+        focusTimerRef.current = idle;
+        setFocusTimer(idle);
+        setFocusStatusMessage(
+          current.lastWorkTaskTitle
+            ? `休息结束。可以继续「${current.lastWorkTaskTitle}」，或换一个任务开始下一轮。`
+            : "休息结束，可以开始下一轮专注。"
+        );
+        void notifyFocusComplete(focusNotifyPrefsRef.current, "休息", 0);
+        return;
+      }
+
+      // 番茄工作结束 → 记入时长 → 自动进入 5 分钟休息
+      if (current.mode !== "pomodoro" || current.phase !== "work") return;
+      const result = stopFocusTimer(current, now, preferred);
+      if (result.taskId && result.elapsedMinutes > 0) {
+        setData((dataCurrent) => bumpTaskActualMinutes(structuredClone(dataCurrent), result.taskId!, result.elapsedMinutes));
+        setFocusStatsStore(recordFocusSession({ minutes: result.elapsedMinutes, isPomodoro: true, date: formatDate() }));
+      }
+      void notifyFocusComplete(
+        focusNotifyPrefsRef.current,
+        current.taskTitle || "当前任务",
+        result.elapsedMinutes
+      );
+
+      if (result.shouldStartBreak) {
+        const breakState = startBreakTimer(
+          result.state,
+          now,
+          DEFAULT_BREAK_MINUTES,
+          result.lastWorkTaskId,
+          result.lastWorkTaskTitle
+        );
+        focusTimerRef.current = breakState;
+        setFocusTimer(breakState);
+        setFocusStatusMessage(
+          result.elapsedMinutes > 0
+            ? `番茄完成：已记入 ${result.elapsedMinutes} 分钟。已开始 ${DEFAULT_BREAK_MINUTES} 分钟休息。`
+            : `番茄时间到。已开始 ${DEFAULT_BREAK_MINUTES} 分钟休息。`
+        );
+      } else {
+        focusTimerRef.current = result.state;
+        setFocusTimer(result.state);
+        setFocusStatusMessage("番茄时间到。");
+      }
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, [focusTimer.status, focusTimer.phase]);
+
   const todayTasks = useMemo(() => getTasksForDate(data, selectedDate), [data, selectedDate]);
   const stats = useMemo(() => getTodayStats(data, selectedDate), [data, selectedDate]);
-  const ruleAdvice = useMemo(() => generateRuleAdvice(data, selectedDate), [data, selectedDate]);
+  const ruleAdvice = useMemo(() => generateStructuredRuleAdvice(data, selectedDate), [data, selectedDate]);
+  const displayedAdvice = aiAdvice ?? ruleAdvice;
   const dailyClosureChecklist = useMemo(() => getDailyClosureChecklist(data, selectedDate), [data, selectedDate]);
   const progress = useMemo(() => getSubjectProgress(data, progressDays, selectedDate), [data, progressDays, selectedDate]);
   const weekOverview = useMemo(() => getWeekOverview(data, selectedDate), [data, selectedDate]);
   const weeklyLoad = useMemo(() => getSubjectWeeklyLoad(data, selectedDate), [data, selectedDate]);
+  const studyHeatmap = useMemo(
+    () => buildStudyHeatmap(data, selectedDate, heatmapWeeks, getFocusMinutesByDate(focusStatsStore)),
+    [data, selectedDate, heatmapWeeks, focusStatsStore]
+  );
   const weeklyAdjustmentTips = useMemo(() => generateWeeklyAdjustmentTips(data, selectedDate), [data, selectedDate]);
   const hasHeavyDayTip = weeklyAdjustmentTips.some((tip) => tip.id.startsWith("heavy-day-"));
   const hasLightSubjectTip = weeklyAdjustmentTips.some((tip) => tip.id.startsWith("light-"));
   const visiblePlanTasks = useMemo(() => getPlanTasks(data, selectedDate, { scope: planScope, ...planFilters }), [data, planFilters, planScope, selectedDate]);
   const dataOverview = useMemo(() => getDataOverview(data), [data]);
   const dataHealth = useMemo(() => getDataHealth(data, selectedDate), [data, selectedDate]);
+  const overdueCount = useMemo(() => countOverdueTasks(data, selectedDate), [data, selectedDate]);
+  const backupHealth = useMemo(() => getBackupHealth(backupMeta), [backupMeta]);
+  const focusSnapshot = useMemo(() => getFocusSnapshot(focusTimer, focusNow), [focusTimer, focusNow]);
+  const focusActive = isFocusTimerActive(focusTimer);
+  const notificationPermission = getNotificationPermissionState();
+  const showBackupBanner = backupHealth.needsAttention && !backupBannerDismissed;
+  const showOverdueBanner = overdueCount > 0 && !overdueBannerDismissed;
+  const closureReadyCount = dailyClosureChecklist.filter((item) => item.done).length;
   const hasActivePlanFilters = planFilters.subjectId !== "all" || planFilters.priority !== "all" || planFilters.status !== "all" || Boolean(planFilters.query?.trim());
   const reviewText = data.reviews.find((review) => review.date === selectedDate)?.text ?? "";
+  const focusTask = focusTimer.taskId ? data.tasks.find((task) => task.id === focusTimer.taskId) : undefined;
+
+  useEffect(() => {
+    document.title = buildFocusDocumentTitle(focusSnapshot, DEFAULT_DOCUMENT_TITLE);
+    return () => {
+      document.title = DEFAULT_DOCUMENT_TITLE;
+    };
+  }, [focusSnapshot]);
 
   function updateData(updater: (current: AppData) => AppData) {
     setData((current) => updater(structuredClone(current)));
@@ -207,10 +412,269 @@ function App() {
   }
 
   function updateTaskMinutes(taskId: string, actualMinutes: number) {
-    updateData((current) => {
-      current.tasks = current.tasks.map((task) => task.id === taskId ? { ...task, actualMinutes, status: actualMinutes > 0 ? task.status : "todo" } : task);
-      return current;
-    });
+    updateData((current) => patchTaskActualMinutes(current, taskId, actualMinutes));
+  }
+
+  function bumpMinutes(taskId: string, delta: number) {
+    updateData((current) => bumpTaskActualMinutes(current, taskId, delta));
+  }
+
+  function fillMinutes(taskId: string) {
+    updateData((current) => fillTaskActualMinutes(current, taskId));
+  }
+
+  function applyFocusSessionLog(minutes: number, isPomodoro: boolean) {
+    if (minutes <= 0) return;
+    const next = recordFocusSession({ minutes, isPomodoro, date: formatDate() });
+    setFocusStatsStore(next);
+  }
+
+  function changeFocusMode(mode: FocusMode) {
+    if (isFocusTimerActive(focusTimer)) {
+      setFocusStatusMessage("计时进行中，请先结束或丢弃后再切换模式。");
+      return;
+    }
+    setFocusTimer(setFocusMode(focusTimer, mode, pomodoroMinutes));
+    setFocusStatusMessage(mode === "pomodoro" ? `已切换为番茄倒计时（${pomodoroMinutes} 分钟）。` : "已切换为正计时。");
+  }
+
+  function changePomodoroMinutes(minutes: number) {
+    if (isFocusTimerActive(focusTimer)) {
+      setFocusStatusMessage("计时进行中，请先结束或丢弃后再改番茄时长。");
+      return;
+    }
+    const next = savePomodoroMinutes(minutes);
+    setPomodoroMinutes(next);
+    pomodoroMinutesRef.current = next;
+    if (focusTimer.mode === "pomodoro" || focusTimer.phase === "break") {
+      setFocusTimer(setFocusMode(focusTimer, "pomodoro", next));
+    }
+    setFocusStatusMessage(`番茄时长已设为 ${next} 分钟。`);
+  }
+
+  function beginFocusOnTask(task: StudyTask) {
+    if (isFocusTimerActive(focusTimer) && focusTimer.phase === "work" && focusTimer.taskId && focusTimer.taskId !== task.id) {
+      if (!window.confirm(`当前正在计时「${focusTimer.taskTitle}」。切换到「${task.title}」将丢弃当前未结算时长，是否继续？`)) {
+        return;
+      }
+    }
+    if (isFocusTimerActive(focusTimer) && focusTimer.phase === "break") {
+      if (!window.confirm("当前在休息中。开始新任务将结束休息，是否继续？")) return;
+    }
+    const now = Date.now();
+    setFocusNow(now);
+    const nextMode = focusTimer.phase === "break" ? "pomodoro" : focusTimer.mode;
+    setFocusTimer(startFocusTimer(focusTimer, task.id, task.title, now, pomodoroMinutes));
+    setFocusStatusMessage(`已开始${nextMode === "pomodoro" || focusTimer.mode === "pomodoro" ? "番茄" : "正计时"}：${task.title}`);
+  }
+
+  function pauseOrResumeFocus() {
+    const now = Date.now();
+    setFocusNow(now);
+    if (focusTimer.status === "running") {
+      setFocusTimer(pauseFocusTimer(focusTimer, now));
+      setFocusStatusMessage(focusTimer.phase === "break" ? "已暂停休息。" : "已暂停计时。");
+      return;
+    }
+    if (focusTimer.status === "paused") {
+      setFocusTimer(resumeFocusTimer(focusTimer, now));
+      setFocusStatusMessage(focusTimer.phase === "break" ? "已继续休息。" : "已继续计时。");
+    }
+  }
+
+  function finishFocusAndLog() {
+    if (!isFocusTimerActive(focusTimer)) return;
+    const now = Date.now();
+    setFocusNow(now);
+
+    if (focusTimer.phase === "break") {
+      const idle = discardFocusTimer(focusTimer, pomodoroMinutes);
+      setFocusTimer(idle);
+      setFocusStatusMessage("已结束休息。");
+      return;
+    }
+
+    const wasPomodoro = focusTimer.mode === "pomodoro";
+    const result = stopFocusTimer(focusTimer, now, pomodoroMinutes);
+    if (result.taskId && result.elapsedMinutes > 0) {
+      updateData((current) => bumpTaskActualMinutes(current, result.taskId!, result.elapsedMinutes));
+      applyFocusSessionLog(result.elapsedMinutes, wasPomodoro);
+    }
+
+    if (result.shouldStartBreak && result.elapsedMinutes > 0) {
+      const breakState = startBreakTimer(
+        result.state,
+        now,
+        DEFAULT_BREAK_MINUTES,
+        result.lastWorkTaskId,
+        result.lastWorkTaskTitle
+      );
+      setFocusTimer(breakState);
+      setFocusStatusMessage(`已记入 ${result.elapsedMinutes} 分钟，并开始 ${DEFAULT_BREAK_MINUTES} 分钟休息。`);
+      return;
+    }
+
+    setFocusTimer(result.state);
+    if (result.taskId && result.elapsedMinutes > 0) {
+      setFocusStatusMessage(`已结束计时：给「${focusTimer.taskTitle || "当前任务"}」记入 ${result.elapsedMinutes} 分钟。`);
+    } else {
+      setFocusStatusMessage("计时已结束，本次不足 1 分钟，未记入时长。");
+    }
+  }
+
+  function cancelFocusSession() {
+    if (!isFocusTimerActive(focusTimer)) return;
+    const message = focusTimer.phase === "break"
+      ? "确定跳过休息吗？"
+      : "确定丢弃当前计时进度吗？不会写入实际时长。";
+    if (!window.confirm(message)) return;
+    setFocusTimer(discardFocusTimer(focusTimer, pomodoroMinutes));
+    setFocusStatusMessage(focusTimer.phase === "break" ? "已跳过休息。" : "已丢弃本次计时。");
+  }
+
+  function skipBreakSession() {
+    if (focusTimer.phase !== "break") return;
+    setFocusTimer(discardFocusTimer(focusTimer, pomodoroMinutes));
+    setFocusStatusMessage("已跳过休息。");
+  }
+
+  focusActionRefs.current = {
+    pauseOrResume: pauseOrResumeFocus,
+    finish: finishFocusAndLog,
+    cancel: cancelFocusSession,
+    skipBreak: skipBreakSession
+  };
+
+  useEffect(() => {
+    function isTypingTarget(target: EventTarget | null) {
+      if (!(target instanceof HTMLElement)) return false;
+      const tag = target.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+      if (target.isContentEditable) return true;
+      return Boolean(target.closest("input, textarea, select, [contenteditable='true']"));
+    }
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
+      if (isTypingTarget(event.target)) return;
+      if (!isFocusTimerActive(focusTimerRef.current)) return;
+
+      const key = event.key;
+      if (key === " " || key === "Spacebar") {
+        event.preventDefault();
+        focusActionRefs.current.pauseOrResume();
+        return;
+      }
+      if (key === "Enter") {
+        event.preventDefault();
+        focusActionRefs.current.finish();
+        return;
+      }
+      if (key === "Escape") {
+        event.preventDefault();
+        if (focusTimerRef.current.phase === "break") {
+          focusActionRefs.current.skipBreak();
+        } else {
+          focusActionRefs.current.cancel();
+        }
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  function updateFocusNotifyPrefs(patch: Partial<FocusNotifyPrefs>) {
+    const next = saveFocusNotifyPrefs({ ...focusNotifyPrefs, ...patch });
+    setFocusNotifyPrefs(next);
+    focusNotifyPrefsRef.current = next;
+    setFocusNotifyStatus("专注提醒设置已保存到本机浏览器。");
+  }
+
+  async function requestNotificationPermissionFromSettings() {
+    if (typeof Notification === "undefined") {
+      setFocusNotifyStatus("当前浏览器不支持系统通知。");
+      return;
+    }
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        updateFocusNotifyPrefs({ notificationEnabled: true });
+        setFocusNotifyStatus("已获得通知权限，番茄到点会弹出系统通知。");
+      } else if (permission === "denied") {
+        setFocusNotifyStatus("通知权限被拒绝。可在浏览器站点设置里重新允许。");
+      } else {
+        setFocusNotifyStatus("尚未授权通知，下次到点时仍可再请求。");
+      }
+    } catch {
+      setFocusNotifyStatus("请求通知权限失败。");
+    }
+  }
+
+  async function testFocusNotify() {
+    const parts: string[] = [];
+    if (focusNotifyPrefs.soundEnabled) {
+      const played = await playFocusCompleteSound();
+      parts.push(played ? "提示音已播放" : "提示音播放失败");
+    } else {
+      parts.push("提示音已关闭");
+    }
+
+    if (focusNotifyPrefs.notificationEnabled) {
+      const result = await showFocusCompleteNotification("测试任务", 25, { enabled: true });
+      if (result.shown) parts.push("系统通知已弹出");
+      else if (result.reason === "denied") parts.push("通知权限被拒绝");
+      else if (result.reason === "unsupported") parts.push("浏览器不支持通知");
+      else if (result.reason === "default") parts.push("尚未授权通知");
+      else parts.push("通知未弹出");
+    } else {
+      parts.push("系统通知已关闭");
+    }
+    setFocusNotifyStatus(parts.join(" · "));
+  }
+
+  function generateWeeklyReportForSelectedDate() {
+    const report = buildWeeklyReport(data, selectedDate);
+    setWeeklyReport(report);
+    setWeeklyReportStatus(`已生成 ${report.weekStart} ~ ${report.weekEnd} 周报。`);
+  }
+
+  async function copyWeeklyReport() {
+    if (!weeklyReport) {
+      generateWeeklyReportForSelectedDate();
+    }
+    const report = weeklyReport ?? buildWeeklyReport(data, selectedDate);
+    setWeeklyReport(report);
+    try {
+      await navigator.clipboard.writeText(report.markdown);
+      setWeeklyReportStatus("周报已复制到剪贴板。");
+    } catch {
+      setWeeklyReportStatus("复制失败，请手动全选下方文本复制。");
+    }
+  }
+
+  function downloadWeeklyReport() {
+    const report = weeklyReport ?? buildWeeklyReport(data, selectedDate);
+    setWeeklyReport(report);
+    const blob = new Blob([report.markdown], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `kaoyan-weekly-report-${report.weekStart}.md`;
+    link.click();
+    URL.revokeObjectURL(url);
+    setWeeklyReportStatus(`已下载周报：kaoyan-weekly-report-${report.weekStart}.md`);
+  }
+
+  function appendWeeklyReportToSelectedReview() {
+    const result = appendWeeklyReportToReview(data, selectedDate, weeklyReport ?? undefined);
+    setWeeklyReport(result.report);
+    if (result.appended) {
+      setData(result.data);
+      setWeeklyReportStatus(`已把 ${result.report.weekStart} ~ ${result.report.weekEnd} 周报摘要写入 ${result.date} 的复盘。`);
+    } else {
+      setWeeklyReportStatus(`${result.date} 的复盘里已有该周周报摘要，未重复写入。`);
+    }
   }
 
   function addTask() {
@@ -302,6 +766,36 @@ function App() {
     );
   }
 
+  function runSelectedDailyClosure() {
+    if (!window.confirm("确定执行一键收尾吗？将补复盘草稿、补已完成任务的实际时长，并把未完成任务整理到明天。")) return;
+
+    let reviewFilled = false;
+    let filledActualCount = 0;
+    let movedCount = 0;
+    let targetDate = "";
+    let tomorrowTaskCount = 0;
+    let readyCount = 0;
+    updateData((current) => {
+      const result = runDailyClosure(current, selectedDate);
+      reviewFilled = result.reviewFilled;
+      filledActualCount = result.filledActualCount;
+      movedCount = result.movedCount;
+      targetDate = result.targetDate;
+      tomorrowTaskCount = result.tomorrowTaskCount;
+      readyCount = result.checklist.filter((item) => item.done).length;
+      return result.data;
+    });
+
+    const parts = [
+      reviewFilled ? "已写入复盘草稿" : "复盘已有内容",
+      filledActualCount ? `补了 ${filledActualCount} 个完成任务时长` : "完成任务时长已齐",
+      movedCount ? `顺延 ${movedCount} 项到 ${targetDate}` : "无需顺延",
+      `明天 ${tomorrowTaskCount} 项`,
+      `收尾 ${readyCount}/3`
+    ];
+    setTodayActionStatus(parts.join(" · "));
+  }
+
   function shiftVisiblePlanTasks(dayDelta: number) {
     if (!visiblePlanTasks.length) {
       setPlanActionStatus("当前没有可批量调整的任务。");
@@ -337,7 +831,7 @@ function App() {
     setPlanActionStatus(`已将 ${updatedCount} 个可见任务${actionLabel}。`);
   }
 
-  function resolveOverdueTasks() {
+  function resolveOverdueTasks(source: "today" | "settings" = "settings") {
     let movedCount = 0;
     let createdCount = 0;
     updateData((current) => {
@@ -346,11 +840,15 @@ function App() {
       createdCount = result.createdCount;
       return result.data;
     });
-    setSettingsActionStatus(
-      movedCount
-        ? `已整理 ${movedCount} 个逾期任务到 ${selectedDate}${createdCount ? `，其中 ${createdCount} 个生成了续做任务` : ""}。`
-        : "当前没有需要整理的逾期任务。"
-    );
+    const message = movedCount
+      ? `已整理 ${movedCount} 个逾期任务到 ${selectedDate}${createdCount ? `，其中 ${createdCount} 个生成了续做任务` : ""}。`
+      : "当前没有需要整理的逾期任务。";
+    if (source === "today") {
+      setTodayActionStatus(message);
+      setOverdueBannerDismissed(false);
+    } else {
+      setSettingsActionStatus(message);
+    }
   }
 
   function copyPreviousWeekTasks() {
@@ -474,23 +972,18 @@ function App() {
     if (isAiLoading) return;
     setIsAiLoading(true);
     setAiStatus("正在请求 AI 教练...");
-    setAiAdvice([]);
+    setAiAdvice(null);
     try {
-      const recentDates = Array.from({ length: 7 }, (_, index) => formatDate(addDays(new Date(selectedDate), index - 6)));
       const body = await requestAdvice({
         date: selectedDate,
-        payload: {
-          subjects: data.subjects,
-          tasks: data.tasks.filter((task) => recentDates.includes(task.date)),
-          review: reviewText,
-          local_advice: ruleAdvice
-        }
+        payload: buildCoachAdvicePayload(data, selectedDate)
       });
-      setAiAdvice(body.advice);
-      setAiStatus("AI 建议已生成");
+      const structured = parseStructuredAdvice(body.advice ?? []);
+      setAiAdvice(structured);
+      setAiStatus("AI 结构化建议已生成（补哪科 / 砍哪块 / 明日三件事）");
     } catch (error) {
       setAiAdvice(ruleAdvice);
-      setAiStatus(error instanceof Error ? `已切换本地建议：${error.message}` : "已切换本地建议");
+      setAiStatus(error instanceof Error ? `已切换本地结构化建议：${error.message}` : "已切换本地结构化建议");
     } finally {
       setIsAiLoading(false);
     }
@@ -536,17 +1029,25 @@ function App() {
     URL.revokeObjectURL(url);
   }
 
-  function downloadData() {
-    downloadExportFile(createAppDataExport(data, "manual"));
+  function downloadData(kind: "manual" | "before-import" = "manual") {
+    downloadExportFile(createAppDataExport(data, kind));
+    const nextMeta = markBackupExported(kind);
+    setBackupMeta(nextMeta);
+    setBackupBannerDismissed(false);
+    if (kind === "manual") {
+      setSettingsActionStatus(`已下载备份：${formatBackupTimestamp(nextMeta.lastExportAt)}。建议把文件放到安全位置。`);
+      setTodayActionStatus(`已下载学习数据备份（${formatBackupTimestamp(nextMeta.lastExportAt)}）。`);
+    }
   }
 
   function importData(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
-    downloadExportFile(createAppDataExport(data, "before-import"));
+    downloadData("before-import");
     file.text().then((text) => {
       setData(parseImportedData(text));
       setStorageWarning("导入前已自动下载当前数据备份；新数据已导入。");
+      setSettingsActionStatus("导入成功。导入前的旧数据已自动导出一份。");
       event.target.value = "";
     }).catch((error) => {
       alert(error instanceof Error ? error.message : "导入失败");
@@ -557,11 +1058,25 @@ function App() {
   function resetData() {
     if (!window.confirm("确定要重置为示例数据吗？当前浏览器里的学习记录会被清空。")) return;
     clearAppData();
+    clearBackupMeta();
+    setBackupMeta(loadBackupMeta());
+    setBackupBannerDismissed(false);
     setData(loadAppData());
+    setSettingsActionStatus("已重置为示例数据。备份记录也已清空，请尽快重新导出。");
   }
 
   return (
-    <main className="app-shell">
+    <main className={`app-shell ${focusActive ? "focus-active" : ""}`}>
+      {focusActive && (
+        <FocusStickyBar
+          snapshot={focusSnapshot}
+          onPauseResume={pauseOrResumeFocus}
+          onFinish={finishFocusAndLog}
+          onDiscard={cancelFocusSession}
+          onSkipBreak={focusTimer.phase === "break" ? skipBreakSession : undefined}
+          onGoToday={() => setView("today")}
+        />
+      )}
       <aside className="rail">
         <div className="logo-mark">K</div>
         {navItems.map((item) => (
@@ -612,18 +1127,141 @@ function App() {
 
         {storageWarning && <div className="notice storage-warning">{storageWarning}<button className="ghost mini" onClick={() => setStorageWarning("")}>知道了</button></div>}
 
+        {showBackupBanner && (
+          <div className={`notice backup-banner tone-${backupHealth.tone}`}>
+            <div className="backup-banner-copy">
+              <strong>{backupHealth.title}</strong>
+              <span>{backupHealth.detail}</span>
+            </div>
+            <div className="backup-banner-actions">
+              <button className="primary compact-button" onClick={() => downloadData("manual")}><Download size={16} />立即备份</button>
+              <button className="ghost mini" onClick={() => setBackupBannerDismissed(true)}>稍后</button>
+            </div>
+          </div>
+        )}
+
+        {showOverdueBanner && (
+          <div className="notice backup-banner tone-warn overdue-banner">
+            <div className="backup-banner-copy">
+              <strong>有 {overdueCount} 个逾期未完成任务</strong>
+              <span>建议先整理到当前日期，再开始今天的主线，避免旧任务一直挂着。</span>
+            </div>
+            <div className="backup-banner-actions">
+              <button className="primary compact-button" onClick={() => resolveOverdueTasks("today")}><RotateCcw size={16} />一键整理到今天</button>
+              <button className="ghost mini" onClick={() => setOverdueBannerDismissed(true)}>稍后</button>
+            </div>
+          </div>
+        )}
+
         {view === "today" && (
           <section className="panel-grid today-grid">
             <Metric title="计划时长" value={minutesLabel(stats.plannedMinutes)} icon={<Timer size={20} />} />
             <Metric title="实际执行" value={minutesLabel(stats.actualMinutes)} icon={<CheckCircle2 size={20} />} />
             <Metric title="完成率" value={`${stats.completionRate}%`} icon={<Flame size={20} />} />
             <Metric title="需补科目" value={stats.laggingSubjectName} icon={<AlertTriangle size={20} />} tone="warn" />
+            <Metric title="今日专注" value={minutesLabel(focusStats.focusMinutes)} icon={<Timer size={20} />} />
+            <Metric title="今日番茄" value={`${focusStats.pomodoroCount} 个`} icon={<Flame size={20} />} />
+
+            <section className="panel backup-strip">
+              <div className="backup-strip-copy">
+                <span className="eyebrow">本地数据</span>
+                <strong>{backupHealth.title}</strong>
+                <p>最近导出：{backupHealth.lastExportLabel} · 任务 {dataOverview.taskCount} · 复盘 {dataOverview.reviewCount} 天{overdueCount ? ` · 逾期 ${overdueCount}` : ""}</p>
+              </div>
+              <div className="backup-strip-actions">
+                {overdueCount > 0 && (
+                  <button className="ghost compact-button" onClick={() => resolveOverdueTasks("today")}><RotateCcw size={16} />整理逾期</button>
+                )}
+                <button className="primary compact-button" onClick={() => downloadData("manual")}><Download size={16} />导出备份</button>
+              </div>
+            </section>
+
+            <section className={`panel focus-panel ${isFocusTimerActive(focusTimer) ? "active" : ""} ${focusTimer.phase === "break" ? "break-phase" : ""}`}>
+              <div className="panel-head">
+                <h2>专注计时</h2>
+                <div className="panel-actions">
+                  <div className="segmented">
+                    <button className={focusTimer.mode === "stopwatch" && focusTimer.phase === "work" ? "active" : ""} onClick={() => changeFocusMode("stopwatch")} disabled={isFocusTimerActive(focusTimer)}>正计时</button>
+                    <button className={focusTimer.mode === "pomodoro" || focusTimer.phase === "break" ? "active" : ""} onClick={() => changeFocusMode("pomodoro")} disabled={isFocusTimerActive(focusTimer)}>番茄 {pomodoroMinutes}m</button>
+                  </div>
+                </div>
+              </div>
+              <div className="pomodoro-duration-row" aria-label="番茄时长">
+                <span className="hint">番茄时长</span>
+                <div className="segmented compact">
+                  {POMODORO_DURATION_OPTIONS.map((minutes) => (
+                    <button
+                      key={minutes}
+                      type="button"
+                      className={pomodoroMinutes === minutes ? "active" : ""}
+                      disabled={isFocusTimerActive(focusTimer)}
+                      onClick={() => changePomodoroMinutes(minutes)}
+                    >
+                      {minutes}m
+                    </button>
+                  ))}
+                </div>
+                <span className="pill focus-stats-pill" title={formatFocusStatsSummary(focusStats)}>
+                  今日 {focusStats.pomodoroCount} 番茄 · {minutesLabel(focusStats.focusMinutes)}
+                </span>
+              </div>
+              <div className="focus-board">
+                <div className="focus-clock-block">
+                  <span className="focus-mode-label">
+                    {focusTimer.phase === "break"
+                      ? "休息剩余"
+                      : focusTimer.mode === "pomodoro" ? "番茄剩余" : "已专注"}
+                  </span>
+                  <strong className="focus-clock">{focusSnapshot.display}</strong>
+                  <span className="focus-task-label">
+                    {focusTimer.phase === "break"
+                      ? `${focusTimer.status === "paused" ? "休息已暂停" : "休息中"}${focusTimer.lastWorkTaskTitle ? ` · 上一轮：${focusTimer.lastWorkTaskTitle}` : ""}`
+                      : focusTimer.taskId
+                        ? `${focusTimer.status === "paused" ? "已暂停 · " : "进行中 · "}${focusTimer.taskTitle}`
+                        : "点任务上的「开始」绑定一个今日任务"}
+                  </span>
+                  {(focusTimer.mode === "pomodoro" || focusTimer.phase === "break") && isFocusTimerActive(focusTimer) && (
+                    <div className="focus-progress" aria-hidden="true">
+                      <i style={{ width: `${Math.round(focusSnapshot.progress * 100)}%` }} />
+                    </div>
+                  )}
+                </div>
+                <div className="focus-controls">
+                  <button className="ghost compact-button" onClick={pauseOrResumeFocus} disabled={!isFocusTimerActive(focusTimer)}>
+                    {focusTimer.status === "running" ? <><Pause size={16} />暂停</> : <><Play size={16} />继续</>}
+                  </button>
+                  <button className="primary compact-button" onClick={finishFocusAndLog} disabled={!isFocusTimerActive(focusTimer)}>
+                    <Square size={16} />{focusTimer.phase === "break" ? "结束休息" : "结束并记入"}
+                  </button>
+                  <button className="ghost compact-button" onClick={cancelFocusSession} disabled={!isFocusTimerActive(focusTimer)}>
+                    {focusTimer.phase === "break" ? "跳过休息" : "丢弃"}
+                  </button>
+                </div>
+              </div>
+              {focusTask && focusTimer.phase === "work" && (
+                <p className="hint focus-hint">
+                  当前任务实际时长 {minutesLabel(focusTask.actualMinutes)}
+                  {focusSnapshot.elapsedMinutes > 0 ? ` · 本段约 ${focusSnapshot.elapsedMinutes} 分钟（结束时累加）` : ""}
+                </p>
+              )}
+              <p className="hint focus-shortcut-hint">快捷键：空格 暂停/继续 · Enter 结束并记入 · Esc 跳过休息/丢弃（输入框内不触发）</p>
+              {(focusStatusMessage || isFocusTimerActive(focusTimer)) && (
+                <div className="notice inline-notice">
+                  {focusStatusMessage || (focusTimer.phase === "break"
+                    ? `休息 ${DEFAULT_BREAK_MINUTES} 分钟，到点会提醒。可跳过或直接点任务开始下一轮。`
+                    : focusTimer.mode === "pomodoro"
+                      ? `番茄 ${focusTimer.targetMinutes || pomodoroMinutes} 分钟，到点自动记入并进入 ${DEFAULT_BREAK_MINUTES} 分钟休息。`
+                      : "正计时运行中，点「结束并记入」把本段时间加到任务实际时长。")}
+                </div>
+              )}
+            </section>
 
             <section className="panel task-panel">
               <div className="panel-head">
                 <h2>今日任务</h2>
                 <div className="panel-actions">
                   <span className="pill">可直接用模板补任务</span>
+                  <button className="ghost compact-button" onClick={() => downloadData("manual")}><Download size={16} />备份</button>
                   <button className="ghost compact-button" onClick={prepareSelectedTomorrowPlan}><ArrowRight size={16} />明日开局</button>
                   <button className="icon-button" onClick={addTask} title="添加任务"><Plus size={18} /></button>
                 </div>
@@ -639,7 +1277,21 @@ function App() {
               <TaskCreator data={data} newTask={newTask} setNewTask={setNewTask} addTask={addTask} />
               {todayActionStatus && <div className="notice inline-notice">{todayActionStatus}</div>}
               <div className="task-list">
-                {todayTasks.map((task) => <TaskRow key={task.id} task={task} data={data} toggleTask={toggleTask} updateTaskMinutes={updateTaskMinutes} deleteTask={deleteTask} />)}
+                {todayTasks.map((task) => (
+                  <TaskRow
+                    key={task.id}
+                    task={task}
+                    data={data}
+                    toggleTask={toggleTask}
+                    updateTaskMinutes={updateTaskMinutes}
+                    bumpMinutes={bumpMinutes}
+                    fillMinutes={fillMinutes}
+                    deleteTask={deleteTask}
+                    onStartFocus={beginFocusOnTask}
+                    isFocusTarget={focusTimer.taskId === task.id && isFocusTimerActive(focusTimer)}
+                    focusRunning={focusTimer.taskId === task.id && focusTimer.status === "running"}
+                  />
+                ))}
                 {!todayTasks.length && <p className="empty">今天还没有任务，先加一个 45 分钟的小任务。</p>}
               </div>
             </section>
@@ -648,15 +1300,15 @@ function App() {
               <div className="panel-head">
                 <h2>今日复盘</h2>
                 <div className="panel-actions">
-                  <span className="pill">自动保存</span>
+                  <span className="pill">收尾 {closureReadyCount}/3</span>
                   <button className="ghost compact-button" onClick={insertReviewTemplate}><ClipboardList size={16} />复盘模板</button>
+                  <button className="primary compact-button" onClick={runSelectedDailyClosure}><CheckCircle2 size={16} />一键收尾</button>
                 </div>
               </div>
               <textarea value={reviewText} onChange={(event) => saveReview(event.target.value)} placeholder="写一句：今天偏差最大的是哪科？明天第一件事是什么？" />
               <ClosureChecklist items={dailyClosureChecklist} />
-              <div className="advice-stack">
-                {ruleAdvice.map((item) => <div className="advice" key={item}>{item}</div>)}
-              </div>
+              <p className="hint closure-hint">一键收尾会：补复盘草稿（若为空）→ 给已完成但未记时长的任务填计划分钟 → 把未完成任务整理到明天。</p>
+              <StructuredAdviceBoard advice={ruleAdvice} sourceLabel="本地规则" />
             </section>
           </section>
         )}
@@ -666,6 +1318,14 @@ function App() {
             <div className="panel-head">
               <h2>计划排布</h2>
               <span className="pill">可直接调整日期、科目和时长</span>
+            </div>
+            <div className="plan-quick-actions" aria-label="计划快捷操作">
+              <button className="ghost compact-button" onClick={copyPreviousWeekTasks}><Copy size={16} />复制上周</button>
+              <button className="ghost compact-button" onClick={rolloverSelectedDateTasks}><ArrowRight size={16} />顺延未完成</button>
+              <button className="ghost compact-button" onClick={() => resolveOverdueTasks("today")} disabled={overdueCount === 0}><RotateCcw size={16} />整理逾期{overdueCount ? ` ${overdueCount}` : ""}</button>
+              <button className="ghost compact-button" onClick={relieveSelectedWeekHeavyDay} disabled={!hasHeavyDayTip}><ArrowRight size={16} />一键减负</button>
+              <button className="ghost compact-button" onClick={addSuggestedStudyBlock} disabled={!hasLightSubjectTip}><Plus size={16} />一键补块</button>
+              <button className="primary compact-button" onClick={() => { setView("progress"); generateWeeklyReportForSelectedDate(); }}><ClipboardList size={16} />生成周报</button>
             </div>
             <WeekPlanBoard weekOverview={weekOverview} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             <WeeklyLoadStrip weeklyLoad={weeklyLoad} />
@@ -686,7 +1346,6 @@ function App() {
                   <button className={planScope === "week" ? "active" : ""} onClick={() => setPlanScope("week")}>本周</button>
                   <button className={planScope === "all" ? "active" : ""} onClick={() => setPlanScope("all")}>全部</button>
                 </div>
-                <button className="ghost compact-button" onClick={copyPreviousWeekTasks}><Copy size={16} />复制上周</button>
                 <button className="ghost compact-button" onClick={() => shiftVisiblePlanTasks(-1)}><ArrowLeft size={16} />提前一天</button>
                 <button className="ghost compact-button" onClick={() => shiftVisiblePlanTasks(1)}><ArrowRight size={16} />推后一天</button>
                 <button className="ghost compact-button" onClick={rolloverSelectedDateTasks}><ArrowRight size={16} />顺延未完成</button>
@@ -770,30 +1429,88 @@ function App() {
         )}
 
         {view === "progress" && (
-          <section className="panel">
-            <div className="panel-head">
-              <h2>进度对比</h2>
-              <div className="segmented">
-                {[7, 14, 30].map((days) => (
-                  <button key={days} className={progressDays === days ? "active" : ""} onClick={() => setProgressDays(days)}>
-                    {days} 天
-                  </button>
+          <section className="panel-grid progress-grid">
+            <section className="panel heatmap-panel">
+              <div className="panel-head">
+                <h2>学习热力</h2>
+                <div className="panel-actions">
+                  <div className="segmented compact">
+                    {[8, 12, 16].map((weeks) => (
+                      <button key={weeks} className={heatmapWeeks === weeks ? "active" : ""} onClick={() => setHeatmapWeeks(weeks)}>
+                        {weeks} 周
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <p className="subline">
+                以当前日期所在周为终点，向前看最近 {heatmapWeeks} 周。格子颜色按任务「实际学习」时长分档；悬停可看计划、专注与复盘。
+              </p>
+              <StudyHeatmapBoard
+                heatmap={studyHeatmap}
+                selectedDate={selectedDate}
+                onSelectDate={setSelectedDate}
+              />
+            </section>
+
+            <section className="panel progress-main">
+              <div className="panel-head">
+                <h2>进度对比</h2>
+                <div className="segmented">
+                  {[7, 14, 30].map((days) => (
+                    <button key={days} className={progressDays === days ? "active" : ""} onClick={() => setProgressDays(days)}>
+                      {days} 天
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="progress-list">
+                {progress.map((item) => (
+                  <div className="progress-row" key={item.subject.id}>
+                    <div>
+                      <strong style={{ color: item.subject.color }}>{item.subject.name}</strong>
+                      <span>实际 {minutesLabel(item.actualMinutes)} / 计划 {minutesLabel(item.plannedMinutes)} / 周目标 {item.subject.weeklyTargetHours} 小时</span>
+                    </div>
+                    <div className="bar"><i style={{ width: `${Math.min(item.completionRate, 100)}%`, background: item.subject.color }} /></div>
+                    <b>{item.completionRate}%</b>
+                    <input type="number" min="1" value={item.subject.weeklyTargetHours} onChange={(event) => updateSubject(item.subject.id, { weeklyTargetHours: Number(event.target.value) || 1 })} title="每周目标小时" />
+                  </div>
                 ))}
               </div>
-            </div>
-            <div className="progress-list">
-              {progress.map((item) => (
-                <div className="progress-row" key={item.subject.id}>
-                  <div>
-                    <strong style={{ color: item.subject.color }}>{item.subject.name}</strong>
-                    <span>实际 {minutesLabel(item.actualMinutes)} / 计划 {minutesLabel(item.plannedMinutes)} / 周目标 {item.subject.weeklyTargetHours} 小时</span>
-                  </div>
-                  <div className="bar"><i style={{ width: `${Math.min(item.completionRate, 100)}%`, background: item.subject.color }} /></div>
-                  <b>{item.completionRate}%</b>
-                  <input type="number" min="1" value={item.subject.weeklyTargetHours} onChange={(event) => updateSubject(item.subject.id, { weeklyTargetHours: Number(event.target.value) || 1 })} title="每周目标小时" />
+            </section>
+
+            <section className="panel weekly-report-panel">
+              <div className="panel-head">
+                <h2>本周周报</h2>
+                <div className="panel-actions">
+                  <button className="primary compact-button" onClick={generateWeeklyReportForSelectedDate}><ClipboardList size={16} />生成周报</button>
+                  <button className="ghost compact-button" onClick={appendWeeklyReportToSelectedReview}><ClipboardList size={16} />写入复盘</button>
+                  <button className="ghost compact-button" onClick={copyWeeklyReport} disabled={!weeklyReport}><Copy size={16} />复制</button>
+                  <button className="ghost compact-button" onClick={downloadWeeklyReport} disabled={!weeklyReport}><Download size={16} />下载 MD</button>
                 </div>
-              ))}
-            </div>
+              </div>
+              <p className="subline">按顶部当前日期所在周统计（周一至周日）。「写入复盘」会把摘要追加到当前日期的复盘，同一周不会重复写入。</p>
+              {weeklyReportStatus && <div className="notice inline-notice">{weeklyReportStatus}</div>}
+              {weeklyReport ? (
+                <>
+                  <div className="data-overview weekly-report-overview" aria-label="周报概览">
+                    <OverviewItem label="完成率" value={`${weeklyReport.completionRate}%`} />
+                    <OverviewItem label="执行率" value={`${weeklyReport.executionRate}%`} />
+                    <OverviewItem label="复盘" value={`${weeklyReport.reviewDays}/7`} />
+                    <OverviewItem label="偏弱科" value={weeklyReport.weakestSubjectName} />
+                    <OverviewItem label="周期" value={`${weeklyReport.weekStart.slice(5)}~${weeklyReport.weekEnd.slice(5)}`} />
+                  </div>
+                  <div className="weekly-focus-list">
+                    {weeklyReport.nextWeekFocus.map((line, index) => (
+                      <div className="advice" key={`${index}-${line.slice(0, 12)}`}>{index + 1}. {line}</div>
+                    ))}
+                  </div>
+                  <textarea className="weekly-report-text" readOnly value={weeklyReport.markdown} />
+                </>
+              ) : (
+                <p className="empty">还没有生成周报。点「生成周报」可得到完成率、分科执行、调整提示和下周三条重点。</p>
+              )}
+            </section>
           </section>
         )}
 
@@ -801,13 +1518,18 @@ function App() {
           <section className="panel coach-panel">
             <div className="panel-head">
               <h2>AI 教练</h2>
-              <button className="primary" onClick={askAiCoach} disabled={isAiLoading}><Sparkles size={18} />{isAiLoading ? "生成中..." : "生成明日建议"}</button>
+              <button className="primary" onClick={askAiCoach} disabled={isAiLoading}><Sparkles size={18} />{isAiLoading ? "生成中..." : "生成结构化建议"}</button>
             </div>
-            <p className="subline">模型状态：{health?.llm_configured ? `已配置 ${health.model}` : "未配置，失败时使用本地规则建议"}</p>
+            <p className="subline">
+              固定输出：补哪科 / 砍哪块 / 明日三件事。
+              模型状态：{health?.llm_configured ? `已配置 ${health.model}` : "未配置，失败时使用本地规则建议"}
+            </p>
             {aiStatus && <div className="notice">{aiStatus}</div>}
-            <div className="advice-stack large">
-              {(aiAdvice.length ? aiAdvice : ruleAdvice).map((item) => <div className="advice" key={item}>{item}</div>)}
-            </div>
+            <StructuredAdviceBoard
+              advice={displayedAdvice}
+              sourceLabel={aiAdvice ? "AI / 回退结果" : "本地规则预览"}
+              large
+            />
           </section>
         )}
 
@@ -824,12 +1546,76 @@ function App() {
               <OverviewItem label="复盘天数" value={`${dataOverview.reviewCount}`} />
               <OverviewItem label="最近任务" value={dataOverview.latestTaskDate} />
             </div>
+            <section className={`backup-card tone-${backupHealth.tone}`} aria-label="备份状态">
+              <div className="backup-card-copy">
+                <div className="panel-head compact-head">
+                  <h2>数据备份</h2>
+                  <span className={`pill ${backupHealth.needsAttention ? "" : "ok"}`}>{backupHealth.needsAttention ? "需关注" : "正常"}</span>
+                </div>
+                <p className="backup-card-title">{backupHealth.title}</p>
+                <p className="hint">{backupHealth.detail}</p>
+                <div className="backup-meta-grid">
+                  <OverviewItem label="最近导出" value={backupHealth.lastExportLabel} />
+                  <OverviewItem label="距今" value={backupHealth.daysSinceExport === null ? "—" : `${backupHealth.daysSinceExport} 天`} />
+                  <OverviewItem label="存储位置" value="浏览器 localStorage" />
+                </div>
+              </div>
+              <div className="backup-card-actions">
+                <button className="primary" onClick={() => downloadData("manual")}><Download size={18} />导出 JSON 备份</button>
+                <label className="ghost file-button"><Import size={18} />导入 JSON<input type="file" accept="application/json" onChange={importData} /></label>
+              </div>
+            </section>
+
+            <section className="panel focus-notify-panel" aria-label="专注提醒设置">
+              <div className="panel-head compact-head">
+                <h2>专注提醒</h2>
+                <span className="pill">番茄到点</span>
+              </div>
+              <p className="hint">番茄倒计时结束时，可播放提示音并弹出系统通知（需浏览器授权）。标签页在后台时尤其有用。</p>
+              <div className="focus-notify-options">
+                <label className="check-row">
+                  <input
+                    type="checkbox"
+                    checked={focusNotifyPrefs.soundEnabled}
+                    onChange={(event) => updateFocusNotifyPrefs({ soundEnabled: event.target.checked })}
+                  />
+                  <span>到点播放提示音</span>
+                </label>
+                <label className="check-row">
+                  <input
+                    type="checkbox"
+                    checked={focusNotifyPrefs.notificationEnabled}
+                    onChange={(event) => updateFocusNotifyPrefs({ notificationEnabled: event.target.checked })}
+                  />
+                  <span>到点系统通知</span>
+                </label>
+              </div>
+              <div className="backup-meta-grid focus-notify-meta">
+                <OverviewItem
+                  label="通知权限"
+                  value={
+                    notificationPermission === "granted" ? "已允许"
+                      : notificationPermission === "denied" ? "已拒绝"
+                        : notificationPermission === "unsupported" ? "不支持"
+                          : "未授权"
+                  }
+                />
+                <OverviewItem label="提示音" value={focusNotifyPrefs.soundEnabled ? "开" : "关"} />
+                <OverviewItem label="系统通知" value={focusNotifyPrefs.notificationEnabled ? "开" : "关"} />
+              </div>
+              <div className="button-row focus-notify-actions">
+                <button className="primary compact-button" onClick={() => void testFocusNotify()}><Sparkles size={16} />试听/测试通知</button>
+                <button className="ghost compact-button" onClick={() => void requestNotificationPermissionFromSettings()}>请求通知权限</button>
+              </div>
+              {focusNotifyStatus && <div className="notice inline-notice">{focusNotifyStatus}</div>}
+            </section>
+
             <section className="health-panel" aria-label="数据健康诊断">
               {dataHealth.map((item) => (
                 <HealthItem
                   item={item}
                   key={item.id}
-                  action={item.id === "overdue-tasks" ? { label: "整理到当前日期", onClick: resolveOverdueTasks } : undefined}
+                  action={item.id === "overdue-tasks" ? { label: "整理到当前日期", onClick: () => resolveOverdueTasks("settings") } : undefined}
                 />
               ))}
             </section>
@@ -894,10 +1680,11 @@ Model: 该服务支持的模型名`}</pre>
               ))}
             </div>
             <div className="settings-actions">
-              <button className="ghost" onClick={downloadData}><Download size={18} />导出 JSON</button>
+              <button className="primary" onClick={() => downloadData("manual")}><Download size={18} />导出 JSON 备份</button>
               <label className="ghost file-button"><Import size={18} />导入 JSON<input type="file" accept="application/json" onChange={importData} /></label>
               <button className="danger" onClick={resetData}><RefreshCw size={18} />重置示例数据</button>
             </div>
+            <p className="hint">学习数据只保存在本机浏览器。建议至少每周导出一次；导入前会自动再备份当前数据。</p>
           </section>
         )}
       </section>
@@ -905,211 +1692,5 @@ Model: 该服务支持的模型名`}</pre>
   );
 }
 
-function Metric({ title, value, icon, tone }: { title: string; value: string; icon: React.ReactNode; tone?: "warn" }) {
-  return (
-    <section className={`metric ${tone ?? ""}`}>
-      <span>{icon}{title}</span>
-      <strong>{value}</strong>
-    </section>
-  );
-}
-
-function OverviewItem({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="overview-item">
-      <span>{label}</span>
-      <strong>{value}</strong>
-    </div>
-  );
-}
-
-function HealthItem({ item, action }: { item: DataHealthItem; action?: { label: string; onClick: () => void } }) {
-  return (
-    <article className={`health-item ${item.tone}`}>
-      <span>{item.tone === "warn" ? <AlertTriangle size={16} /> : <CheckCircle2 size={16} />}</span>
-      <div>
-        <strong>{item.title}</strong>
-        <em>{item.detail}</em>
-        {action && <button className="mini-action" onClick={action.onClick}>{action.label}</button>}
-      </div>
-    </article>
-  );
-}
-
-function ClosureChecklist({ items }: { items: DailyClosureItem[] }) {
-  return (
-    <section className="closure-checklist" aria-label="每日收尾检查">
-      {items.map((item) => (
-        <article className={`closure-item ${item.done ? "done" : ""}`} key={item.id}>
-          <span>{item.done ? <CheckCircle2 size={16} /> : <AlertTriangle size={16} />}</span>
-          <div>
-            <strong>{item.title}</strong>
-            <em>{item.detail}</em>
-          </div>
-        </article>
-      ))}
-    </section>
-  );
-}
-
-function WeekPlanBoard({ weekOverview, selectedDate, setSelectedDate }: {
-  weekOverview: WeekDayOverview[];
-  selectedDate: string;
-  setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
-}) {
-  return (
-    <section className="week-board" aria-label="本周计划">
-      {weekOverview.map((day, index) => (
-        <button
-          key={day.date}
-          className={`week-day ${day.date === selectedDate ? "active" : ""}`}
-          onClick={() => setSelectedDate(day.date)}
-          title="切换当前日期"
-        >
-          <span>{weekdayLabels[index]}</span>
-          <strong>{day.date.slice(5)}</strong>
-          <i>{minutesLabel(day.plannedMinutes)} / {minutesLabel(day.actualMinutes)}</i>
-          <em>{day.doneTasks}/{day.totalTasks} 完成 · {day.completionRate}%</em>
-        </button>
-      ))}
-    </section>
-  );
-}
-
-const weeklyLoadLabels: Record<SubjectWeeklyLoad["status"], string> = {
-  empty: "未排",
-  light: "偏少",
-  balanced: "合适",
-  over: "超载"
-};
-
-function WeeklyLoadStrip({ weeklyLoad }: { weeklyLoad: SubjectWeeklyLoad[] }) {
-  return (
-    <section className="weekly-load-strip" aria-label="本周容量">
-      <div className="load-strip-head"><Gauge size={16} /><strong>本周容量</strong></div>
-      {weeklyLoad.map((item) => (
-        <article className={`load-chip ${item.status}`} key={item.subject.id}>
-          <div>
-            <span style={{ color: item.subject.color }}>{item.subject.name}</span>
-            <strong>{minutesLabel(item.plannedMinutes)} / {minutesLabel(item.targetMinutes)}</strong>
-          </div>
-          <div className="load-bar"><i style={{ width: `${Math.min(item.loadRate, 100)}%`, background: item.subject.color }} /></div>
-          <em>{item.loadRate}% · {weeklyLoadLabels[item.status]}</em>
-        </article>
-      ))}
-    </section>
-  );
-}
-
-function WeeklyAdjustmentPanel({ tips, canAddStudyBlock, canRelieveHeavyDay, onAddStudyBlock, onRelieveHeavyDay }: {
-  tips: WeeklyAdjustmentTip[];
-  canAddStudyBlock: boolean;
-  canRelieveHeavyDay: boolean;
-  onAddStudyBlock: () => void;
-  onRelieveHeavyDay: () => void;
-}) {
-  return (
-    <section className="weekly-adjustments" aria-label="本周调整建议">
-      <div className="adjustment-head">
-        <Sparkles size={16} />
-        <strong>本周调整建议</strong>
-        <div className="adjustment-actions">
-          <button className="mini-action" onClick={onAddStudyBlock} disabled={!canAddStudyBlock} title="给偏少科目补一个 60 分钟基础块">
-            <Plus size={14} />一键补块
-          </button>
-          <button className="mini-action" onClick={onRelieveHeavyDay} disabled={!canRelieveHeavyDay} title="自动推后一个低优先级未完成任务">
-            <ArrowRight size={14} />一键减负
-          </button>
-        </div>
-      </div>
-      <div className="adjustment-grid">
-        {tips.map((tip) => (
-          <article className={`adjustment-tip ${tip.tone}`} key={tip.id}>
-            <strong>{tip.title}</strong>
-            <span>{tip.detail}</span>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function TaskCreator({ data, newTask, setNewTask, addTask }: {
-  data: AppData;
-  newTask: { title: string; subjectId: string; estimatedMinutes: number; priority: StudyTask["priority"] };
-  setNewTask: React.Dispatch<React.SetStateAction<{ title: string; subjectId: string; estimatedMinutes: number; priority: StudyTask["priority"] }>>;
-  addTask: () => void;
-}) {
-  return (
-    <div className="task-creator">
-      <input value={newTask.title} onChange={(event) => setNewTask((current) => ({ ...current, title: event.target.value }))} onKeyDown={(event) => event.key === "Enter" && addTask()} placeholder="新增任务，例如：英语阅读 Text 1 精读" />
-      <select value={newTask.subjectId} onChange={(event) => setNewTask((current) => ({ ...current, subjectId: event.target.value }))}>
-        <option value="">默认科目</option>
-        {data.subjects.map((subject) => <option key={subject.id} value={subject.id}>{subject.name}</option>)}
-      </select>
-      <input type="number" min="10" step="5" value={newTask.estimatedMinutes} onChange={(event) => setNewTask((current) => ({ ...current, estimatedMinutes: Number(event.target.value) }))} />
-      <select value={newTask.priority} onChange={(event) => setNewTask((current) => ({ ...current, priority: event.target.value as StudyTask["priority"] }))} title="优先级">
-        <option value="高">高优先级</option>
-        <option value="中">中优先级</option>
-        <option value="低">低优先级</option>
-      </select>
-    </div>
-  );
-}
-
-function PlanTaskRow({ task, data, updateTask, deleteTask }: {
-  task: StudyTask;
-  data: AppData;
-  updateTask: (taskId: string, patch: Partial<StudyTask>) => void;
-  deleteTask: (taskId: string) => void;
-}) {
-  const subject = data.subjects.find((item) => item.id === task.subjectId);
-  return (
-    <article className="plan-edit-row">
-      <span className="subject-dot" style={{ background: subject?.color }} />
-      <input value={task.title} onChange={(event) => updateTask(task.id, { title: event.target.value })} title="任务标题" />
-      <input type="date" value={task.date} onChange={(event) => updateTask(task.id, { date: event.target.value })} title="计划日期" />
-      <select value={task.subjectId} onChange={(event) => updateTask(task.id, { subjectId: event.target.value })} title="科目">
-        {data.subjects.map((subjectItem) => <option key={subjectItem.id} value={subjectItem.id}>{subjectItem.name}</option>)}
-      </select>
-      <input type="number" min="10" step="5" value={task.estimatedMinutes} onChange={(event) => updateTask(task.id, { estimatedMinutes: Number(event.target.value) || 10 })} title="预计分钟" />
-      <select value={task.priority} onChange={(event) => updateTask(task.id, { priority: event.target.value as StudyTask["priority"] })} title="优先级">
-        <option value="高">高</option>
-        <option value="中">中</option>
-        <option value="低">低</option>
-      </select>
-      <select value={task.status} onChange={(event) => {
-        const status = event.target.value as StudyTask["status"];
-        updateTask(task.id, { status, actualMinutes: status === "done" ? task.actualMinutes || task.estimatedMinutes : task.actualMinutes });
-      }} title="状态">
-        <option value="todo">待完成</option>
-        <option value="done">已完成</option>
-      </select>
-      <button className="icon-button subtle" onClick={() => deleteTask(task.id)} title="删除任务"><Trash2 size={16} /></button>
-    </article>
-  );
-}
-
-function TaskRow({ task, data, toggleTask, updateTaskMinutes, deleteTask, compact }: {
-  task: StudyTask;
-  data: AppData;
-  toggleTask: (taskId: string) => void;
-  updateTaskMinutes: (taskId: string, actualMinutes: number) => void;
-  deleteTask: (taskId: string) => void;
-  compact?: boolean;
-}) {
-  const subject = data.subjects.find((item) => item.id === task.subjectId);
-  return (
-    <article className={`task-row ${task.status === "done" ? "done" : ""}`}>
-      <button className="check" onClick={() => toggleTask(task.id)} title="切换完成状态">{task.status === "done" ? <CheckCircle2 size={18} /> : null}</button>
-      <div className="task-main">
-        <strong>{task.title}</strong>
-        <span><i style={{ background: subject?.color }} />{subject?.name ?? "未分组"} · {task.date} · 预计 {minutesLabel(task.estimatedMinutes)} · {task.priority}优先级</span>
-      </div>
-      {!compact && <input type="number" min="0" step="5" value={task.actualMinutes} onChange={(event) => updateTaskMinutes(task.id, Number(event.target.value))} title="实际分钟" />}
-      <button className="icon-button subtle" onClick={() => deleteTask(task.id)} title="删除任务"><Trash2 size={16} /></button>
-    </article>
-  );
-}
-
 createRoot(document.getElementById("root")!).render(<App />);
+
