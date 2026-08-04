@@ -1,10 +1,12 @@
 from pathlib import Path
+HERE = Path(__file__).resolve().parent
+
 
 from pypdf import PdfReader
 
 
 PDF_PATH = Path(r"C:\Users\Administrator\Downloads\双创2026-[07]号  关于2026年大学生创新创业训练计划项目立项的通知 .pdf")
-OUT_PATH = Path(r"D:\xm\dachaung\notice_requirements.txt")
+OUT_PATH = HERE / "notice_requirements.txt"
 
 
 def main() -> None:

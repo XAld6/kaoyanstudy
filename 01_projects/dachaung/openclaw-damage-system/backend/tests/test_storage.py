@@ -73,5 +73,9 @@ def test_list_records_reads_only_summary_columns(monkeypatch, tmp_path):
             "detection_count": 3,
             "original_url": "/uploads/stored.png",
             "annotated_url": "/outputs/stored_annotated.png",
+            # invalid metrics_json falls back to zero counts
+            "crack_count": 0,
+            "spalling_count": 0,
+            "stain_count": 0,
         }
     ]

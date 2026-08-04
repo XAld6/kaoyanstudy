@@ -11,7 +11,7 @@ from xml.sax.saxutils import escape
 from PIL import Image, ImageDraw, ImageFont
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[1]  # presentation/
 SRC = ROOT / "ppt_visuals" / "scheme_c_single_pages" / "slide_01.png"
 OUT_DIR = ROOT / "ppt_rebuild" / "slide01"
 ASSET_DIR = OUT_DIR / "assets"

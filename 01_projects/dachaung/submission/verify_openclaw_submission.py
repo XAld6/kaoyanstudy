@@ -1,9 +1,11 @@
 from pathlib import Path
+HERE = Path(__file__).resolve().parent
+
 
 from docx import Document
 
 
-PATH = Path("D:/xm/dachaung/宁夏理工学院中国国际大学生创新大赛(2026)申报书-OpenClaw版.docx")
+PATH = HERE / "宁夏理工学院中国国际大学生创新大赛(2026)申报书-OpenClaw版.docx"
 OLD_NAME = "慧眼识裂——基础设施安全智能诊断系统"
 NEW_NAME = "智爪识损——基于OpenClaw的基础设施病害AI全自动识别与诊断系统"
 KEYWORDS = ["OpenClaw", "Lobster", "AI Agent", "工作流", "人工复核"]

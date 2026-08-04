@@ -1,9 +1,11 @@
 from pathlib import Path
+HERE = Path(__file__).resolve().parent
+
 
 from docx import Document
 
 
-DOCX = Path(r"D:\xm\dachaung\宁夏理工学院中国国际大学生创新大赛(2026)申报书-OpenClaw版.docx")
+DOCX = HERE / "宁夏理工学院中国国际大学生创新大赛(2026)申报书-OpenClaw版.docx"
 
 
 def main() -> None:

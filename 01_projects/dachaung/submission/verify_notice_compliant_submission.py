@@ -1,9 +1,11 @@
 from pathlib import Path
+HERE = Path(__file__).resolve().parent
+
 
 from docx import Document
 
 
-DOCX = Path(r"D:\xm\dachaung\智爪识损-基于OpenClaw的大创通知合规扩写版.docx")
+DOCX = HERE / "智爪识损-基于OpenClaw的大创通知合规扩写版.docx"
 
 
 REQUIRED_KEYWORDS = [

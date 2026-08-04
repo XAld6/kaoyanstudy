@@ -1,8 +1,10 @@
 import zipfile
 from pathlib import Path
+HERE = Path(__file__).resolve().parent
+
 from xml.etree import ElementTree as ET
 
-path = Path("D:/xm/dachaung/submission_review.docx")
+path = HERE / "submission_review.docx"
 ns = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
 
 with zipfile.ZipFile(path) as z:

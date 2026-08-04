@@ -36,6 +36,30 @@ def test_assess_risk_returns_medium_for_multiple_candidates():
     assert "结合现场情况" in reason
 
 
+def test_assess_risk_returns_medium_for_single_candidate():
+    level, reason = assess_risk(make_metrics(detection_count=1, crack_count=1, avg_confidence=0.7), {"readable": True})
+
+    assert level == "中"
+    assert "结合现场情况" in reason
+
+
+def test_assess_risk_returns_high_for_multi_type_damage():
+    level, reason = assess_risk(
+        make_metrics(
+            detection_count=3,
+            crack_count=1,
+            spalling_count=1,
+            stain_count=1,
+            total_area_ratio=0.03,
+            avg_confidence=0.7,
+        ),
+        {"readable": True},
+    )
+
+    assert level == "高"
+    assert "优先复核" in reason
+
+
 def test_assess_risk_returns_low_for_clean_readable_images():
     level, reason = assess_risk(make_metrics(), {"readable": True})
 
@@ -65,9 +89,19 @@ def test_run_damage_workflow_routes_low_risk_results_to_auto_pass(monkeypatch, t
 def test_run_damage_workflow_routes_high_risk_results_to_manual_review(monkeypatch, tmp_path):
     def fake_analyze_image(image_path, annotated_path):
         return {
-            "quality": {"readable": True},
-            "detections": [{"kind": "crack", "confidence": 0.8}],
-            "metrics": make_metrics(detection_count=8, avg_confidence=0.8),
+            "quality": {
+                "readable": True,
+                "width": 480,
+                "height": 320,
+                "brightness": 180,
+                "contrast": 20,
+                "blur_score": 100,
+            },
+            "detections": [
+                {"kind": "crack", "label": "裂缝疑似", "confidence": 0.8},
+                {"kind": "crack", "label": "裂缝疑似", "confidence": 0.75},
+            ],
+            "metrics": make_metrics(detection_count=8, crack_count=8, avg_confidence=0.8),
         }
 
     monkeypatch.setattr(workflow_module, "analyze_image", fake_analyze_image)
@@ -77,4 +111,7 @@ def test_run_damage_workflow_routes_high_risk_results_to_manual_review(monkeypat
     assert result["risk_level"] == "高"
     assert result["review_status"] == "待复核"
     assert result["confidence"] == 0.8
-    assert "优先复核" in result["workflow"][3]["summary"]
+    assert "优先复核" in result["risk_reason"]
+    assert "风险=高" in result["workflow"][3]["summary"]
+    assert "裂缝" in result["workflow"][2]["summary"]
+    assert "可识别" in result["workflow"][0]["summary"]

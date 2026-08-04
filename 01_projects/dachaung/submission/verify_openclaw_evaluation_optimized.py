@@ -1,9 +1,11 @@
 from pathlib import Path
+HERE = Path(__file__).resolve().parent
+
 
 from docx import Document
 
 
-DOCX = Path(r"D:\xm\dachaung\智爪识损-OpenClaw评审优化丰富版.docx")
+DOCX = HERE / "智爪识损-OpenClaw评审优化丰富版.docx"
 
 REQUIRED = [
     "创新性与前沿性30%",

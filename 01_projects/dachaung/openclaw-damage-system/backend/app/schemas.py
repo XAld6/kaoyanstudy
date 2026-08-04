@@ -16,6 +16,7 @@ class Detection(BaseModel):
     confidence: float
     area_ratio: float
     length_estimate: float
+    explanation: str = ""
 
 
 class RecordSummary(BaseModel):
@@ -28,6 +29,9 @@ class RecordSummary(BaseModel):
     detection_count: int
     original_url: str
     annotated_url: str
+    crack_count: int = 0
+    spalling_count: int = 0
+    stain_count: int = 0
 
 
 class DetectionRecord(RecordSummary):

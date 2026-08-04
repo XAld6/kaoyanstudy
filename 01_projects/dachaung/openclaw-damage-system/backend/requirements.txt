@@ -8,3 +8,7 @@ pydantic==2.10.5
 reportlab==4.2.5
 pytest==8.3.4
 httpx==0.28.1
+
+# Optional YOLO backend (install only when using OPENCLAW_DETECTOR=yolo):
+# ultralytics>=8.0.0
+# torch  # install the CUDA/CPU build matching your machine

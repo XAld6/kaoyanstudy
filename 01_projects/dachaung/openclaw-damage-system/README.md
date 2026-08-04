@@ -1,53 +1,160 @@
-# 智爪识损 - OpenClaw基础设施病害AI识别系统
+# 智爪识损 - OpenClaw 基础设施病害 AI 识别系统
 
-这是一个可本地运行的完整Web系统原型，实现“上传巡检图片 -> AI病害识别 -> OpenClaw/Lobster风格Agent工作流 -> 风险评估 -> 人工复核 -> 历史记录 -> PDF报告导出”的闭环。
+**版本 2.0.0** · 本地可运行 Web 原型，闭环：
 
-## 运行方式
+**上传巡检图片 → 图像质检 → 病害候选识别 → 量化分析 → 风险分级 → 人工复核 → 历史归档 → 多格式导出**
 
-先安装后端依赖：
+> 定位：智能辅助初筛与项目展示原型，不替代正式工程检测结论。
 
-```powershell
-cd D:\xm\dachaung\openclaw-damage-system\backend
-C:\Users\Administrator\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe -m pip install -r requirements.txt
+## 目录结构
+
+```text
+openclaw-damage-system/
+├── backend/          # FastAPI + OpenCV + SQLite + PDF
+├── frontend/         # React + Vite
+├── samples/          # 固定演示样例包
+├── scripts/
+│   ├── build_samples.py
+│   └── demo_run.py
+├── start-all.bat
+├── stop-all.bat
+├── start-backend.bat
+└── start-frontend.bat
 ```
 
-后端：
+## 快速启动
+
+### 方式 A：一键启动（推荐）
 
 ```powershell
-cd D:\xm\dachaung\openclaw-damage-system\backend
-C:\Users\Administrator\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+cd D:\xm\01_projects\dachaung\openclaw-damage-system
+.\start-all.bat
 ```
 
-前端：
+浏览器打开：`http://127.0.0.1:5173`
+
+结束服务：
 
 ```powershell
-cd D:\xm\dachaung\openclaw-damage-system\frontend
+.\stop-all.bat
+```
+
+### 方式 B：分别启动
+
+```powershell
+cd backend
+python -m pip install -r requirements.txt
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+```powershell
+cd frontend
+npm.cmd install
 npm.cmd run dev
 ```
 
-访问：
+- 前端：`http://127.0.0.1:5173`
+- 后端 API：`http://127.0.0.1:8000`
+- 健康检查：`http://127.0.0.1:8000/api/health`
+
+## 核心能力（v2）
+
+| 模块 | 能力 |
+|------|------|
+| 检测 | 裂缝 / 剥落 / 渗水·色差；OpenCV 默认，YOLO 可插拔 |
+| 工作流 | 6-Agent OpenClaw 兼容本地适配 |
+| 质检 | 质量等级 A/B/C、评分、欠曝/过曝/模糊等问题标签 |
+| 可解释 | 每个候选带中文解释说明 |
+| 历史 | 筛选 / 排序 / **分页** / 多选 / 删除 / 重检 |
+| 复核 | 单条复核、批量复核、复核后自动下一条 |
+| 导出 | CSV / PDF ZIP / **JSON**；按筛选或选中 ID |
+| 对比 | 双记录风险与量化对比 |
+| 参数 | 灵敏度等阈值可调，**落盘持久化** |
+| 运维 | 孤儿文件扫描清理、存储健康信息、WAL SQLite |
+| 界面 | 暗色模式、统计面板、缩略图条、键盘导航 |
+
+## 常用 API
 
 ```text
-http://127.0.0.1:5173
+GET  /api/health
+GET  /api/system
+GET  /api/stats
+GET  /api/records                 # 列表（可 sort/order/limit/offset）
+GET  /api/records/page            # 分页 {items,total,page,pages}
+GET  /api/records/{id}
+GET  /api/records/{id}/neighbors
+POST /api/detect
+POST /api/detect/batch
+POST /api/records/{id}/review
+POST /api/records/{id}/redetect
+POST /api/records/batch-redetect
+POST /api/records/batch-review
+POST /api/records/batch-delete
+GET  /api/export/csv
+GET  /api/export/pdf-zip
+GET  /api/export/json
+GET  /api/compare
+GET|PUT /api/settings
+POST /api/settings/reset
+GET|POST /api/maintenance/orphans
 ```
 
-## 核心能力
+## 快捷键
 
-- 图片上传与文件管理
-- OpenCV真实图像处理和病害候选区域识别
-- 裂缝、剥落、渗水/色差疑似区域提示
-- OpenClaw兼容式Agent工作流
-- 风险等级判断与复核路由
-- SQLite历史记录
-- 标注图生成
-- 人工复核状态保存
-- PDF报告导出
+| 键 | 功能 |
+|----|------|
+| `U` | 上传 |
+| `R` | 重新检测当前记录 |
+| `S` | 参数面板 |
+| `E` | 保存复核 |
+| `↑↓` / `J K` / `←→` | 切换记录 |
+| `Esc` | 关闭放大层 / 参数面板 |
 
-## 示例图片
+## 演示样例
 
-- `sample-crack.png`：轻量裂缝样例，可用于快速验证上传与识别流程。
-- `demo-concrete-crack.png`：展示用混凝土裂缝图片，可用于演示标注图和报告导出效果。
+样例目录：`samples/`
 
-## 定位说明
+| 文件 | 场景 |
+|------|------|
+| `01_plain_surface.png` | 正常表面 |
+| `02_crack_synthetic.png` | 合成裂缝 |
+| `03_spalling_synthetic.png` | 合成剥落 |
+| `04_stain_synthetic.png` | 合成渗水/色差 |
+| `05_mixed_damage.png` | 混合病害 |
+| `06_sample_crack.png` | 内置裂缝样例 |
+| `07_demo_concrete_crack.png` | 混凝土展示图 |
 
-本系统定位为基础设施巡检的智能辅助初筛与项目展示原型，不替代正式工程检测结论。
+```powershell
+python scripts\build_samples.py
+python scripts\demo_run.py
+python scripts\demo_run.py --pdf
+```
+
+### 建议答辩演示顺序
+
+1. 上传 `01_plain_surface.png` → 低风险  
+2. 上传 `02_crack_synthetic.png` → 裂缝标注 + 解释  
+3. 上传 `03` / `04` → 剥落 / 渗水  
+4. 上传 `05` 或 `07` → 多类型 + 风险 + 复核  
+5. 调参数 → 重检 → 对比两条记录  
+6. 导出 CSV / PDF 包 → 展示统计面板与暗色模式  
+
+## 环境变量（可选）
+
+| 变量 | 说明 |
+|------|------|
+| `OPENCLAW_DETECTOR` | `opencv`（默认）或 `yolo` |
+| `OPENCLAW_YOLO_WEIGHTS` | YOLO 权重路径 |
+| `OPENCLAW_YOLO_CONF` | YOLO 置信度阈值 |
+| `OPENCLAW_DATA_DIR` / `UPLOAD_DIR` / `OUTPUT_DIR` / `DB_PATH` | 数据路径 |
+| `OPENCLAW_SETTINGS_PATH` | 运行参数 JSON 路径 |
+| `OPENCLAW_PDF_FONT_PATH` | PDF 中文字体 |
+
+## 测试
+
+```powershell
+cd D:\xm\01_projects\dachaung\openclaw-damage-system
+python -m pytest backend/tests -q
+cd frontend
+npm.cmd run build
+```

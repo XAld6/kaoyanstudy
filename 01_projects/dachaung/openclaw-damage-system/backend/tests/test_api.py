@@ -30,6 +30,19 @@ def test_health_endpoint_reports_service_ready(client: TestClient):
     body = response.json()
     assert body["status"] == "ok"
     assert body["service"] == "openclaw-damage-system"
+    assert "version" in body
+    assert body["detector"]["active"] in {"opencv", "yolo"}
+    assert "label" in body["detector"]
+
+
+def test_system_endpoint_reports_capabilities(client: TestClient):
+    response = client.get("/api/system")
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["capabilities"]["pluggable_detector"] is True
+    assert "crack" in body["capabilities"]["damage_kinds"]
+    assert body["limits"]["max_upload_mb"] == 8
 
 
 def test_cors_preflight_does_not_enable_credentials(client: TestClient):
@@ -112,11 +125,21 @@ def test_report_endpoint_returns_pdf(client: TestClient):
         files={"file": ("report.png", image, "image/png")},
     ).json()
 
+    # detail payload should carry multi-type metrics used by PDF
+    assert "metrics" in detected
+    assert set(detected["metrics"]) >= {
+        "crack_count",
+        "spalling_count",
+        "stain_count",
+        "detection_count",
+    }
+
     response = client.get(f"/api/records/{detected['id']}/report")
 
     assert response.status_code == 200
     assert response.headers["content-type"] == "application/pdf"
     assert response.content.startswith(b"%PDF")
+    assert len(response.content) > 1500
 
 
 def test_rejects_non_image_uploads(client: TestClient):

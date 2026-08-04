@@ -9,7 +9,7 @@ from xml.sax.saxutils import escape
 from PIL import Image, ImageDraw, ImageFont
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[1]  # presentation/
 SRC_DIR = ROOT / "ppt_visuals" / "scheme_c_single_pages"
 OUT_DIR = ROOT / "ppt_rebuild" / "slides02_12"
 PPTX = OUT_DIR / "huiyan_pages02_12_rebuild.pptx"

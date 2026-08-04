@@ -29,6 +29,8 @@ logs/
 backend/uploads/
 backend/outputs/
 backend/data/*.db
+demo_results/
+backend/_t.png
 
 # 缓存 / 临时
 .codex_tmp/
