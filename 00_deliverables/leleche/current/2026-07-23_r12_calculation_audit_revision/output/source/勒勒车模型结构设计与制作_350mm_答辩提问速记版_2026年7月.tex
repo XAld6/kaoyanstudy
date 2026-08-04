@@ -1,0 +1,66 @@
+% !TeX program = xelatex
+\documentclass[UTF8,a4paper,11pt,fontset=none]{ctexart}
+\usepackage{geometry,fontspec,amsmath,enumitem,tabularx,array,xcolor,hyperref}
+\geometry{left=1.7cm,right=1.7cm,top=1.35cm,bottom=1.35cm}
+\setmainfont{Times New Roman}
+\setCJKmainfont[AutoFakeBold=2.2]{SimSun}
+\newCJKfontfamily\heiti[AutoFakeBold=2.0]{SimHei}
+\hypersetup{colorlinks=true,linkcolor=black}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.12em}
+\setlist[enumerate]{leftmargin=1.7em,itemsep=0.20em,topsep=0.12em}
+\newcommand{\mm}{\,\mathrm{mm}}
+\newcommand{\N}{\,\mathrm{N}}
+\newcommand{\g}{\,\mathrm{g}}
+\newcommand{\MPa}{\,\mathrm{MPa}}
+\newcommand{\q}[2]{\item \textbf{问：#1}\par\textbf{答：}#2}
+\begin{document}
+\begin{center}
+{\heiti\bfseries\zihao{2} 勒勒车模型答辩提问速记版}\par
+{\zihao{-4}基于 350 mm 最终提交版｜只背结论和关键数字}
+\end{center}
+
+\fbox{\begin{minipage}{0.96\linewidth}
+\textbf{开场一句话：}本作品采用两根 $350\mm$ 方形空心主梁和 4 根横向承托杆；其中 2 根为空心三角截面杆，2 根为 $2\times2\mm$ 普通小杆，配单根车轴、两个轮毂轴承和两只十二辐式车轮。模型质量 $203\g$，按 $40$ 袋满载设计。
+\end{minipage}}
+
+\section*{一、必须背熟的数字}
+\begin{tabularx}{\linewidth}{>{\bfseries}p{3.0cm} X}
+尺寸 & 主梁 $350\mm$；截面 $22\times22\mm$、壁厚 $1.2\mm$；承托杆 $250\mm$；车轮外径 $70\mm$、轮辐有效长度 $22\mm$。\\
+荷载 & 货物重 $196\N$；模型自重约 $1.99\N$；总荷载 $197.99\N$。\\
+主梁 & 基础应力 $9.89\MPa$、安全系数 $3.03$；严重冲击应力 $13.19\MPa$、安全系数 $2.27$。\\
+挠度 & 理想静载 $1.31\mm$；实测平均 $5.70\mm$；校准动力挠度 $8.55\mm$ 和 $11.40\mm$。\\
+连接与坡道 & 单端承托剪力 $47.78\N$；单螺丝合力 $38.25\N$；坡道需求牵引力 $19.74\N$。\\
+\end{tabularx}
+
+\section*{二、高频提问与一句话回答}
+\begin{enumerate}
+\q{为什么主梁按 $350\mm$ 计算？}{$350\mm$ 是最终实物两根纵向空心主梁的实际长度；虽然实物有短外伸段，正式验算采用全长 $350\mm$ 的等效简支模型，不依赖外伸段的有利卸载。}
+\q{总荷载如何分配？}{总荷载 $197.99\N$；每根主梁静载 $98.99\N$，取 $\gamma_d=1.5$ 后为 $148.49\N$；4 个承托点平均传入每根主梁 $37.12\N$，两端支反力各 $74.25\N$。}
+\q{$148.49\N$ 是单个车轮反力吗？}{不是。它是单根主梁设计荷载，也是后轴总设计反力；对称平均时单个后轮为 $74.25\N$，只有单桥极端包络才按一侧车轮承担 $148.49\N$。}
+\q{为什么安全系数通过？}{最不利 $\gamma_d=2.0$ 时应力为 $13.19\MPa$，安全系数 $30/13.19=2.27\ge2.0$；实物壁厚 $1.2\mm$ 大于所需最小壁厚 $1.03\mm$。}
+\q{为什么实测挠度比理论大？}{理想静载为 $1.31\mm$，实测为 $5.70\mm$；差异来自胶接滑移、横向构件柔度和制作误差，因此用实测反算等效弹性模量约 $1.38\mathrm{GPa}$，再校准动力挠度。}
+\q{MIDAS 云图能否证明应力？}{不能作定量证明。现有资料缺少原始工程、单位、截面和荷载组合；云图只作方案阶段定性分布说明，定量结论以手算和实物试验为准。}
+\end{enumerate}
+
+\newpage
+\section*{三、继续追问时的简短回答}
+\begin{enumerate}[start=7]
+\q{最终车架有几根横杆？}{承托布袋的横向承托杆共 4 根：2 根空心三角截面杆、2 根 $2\times2\mm$ 普通小杆；动力小车端连接横杆另计，不计入 4 个加载点。}
+\q{车轮如何验算？}{车轮外径 $70\mm$、轮辐有效长度 $22\mm$、十二辐；按单桥包络一根下部轮辐承担 $148.49\N$，并通过 1 次 $36$ 袋和 2 次 $40$ 袋试跑检查，未出现开裂、松动或卡滞。}
+\q{四颗螺丝为什么要算竖向力？}{因为动力小车连接端同时承担竖向支座反力；四颗螺丝同时承受 $36.9\N$ 水平牵引力和 $148.49\N$ 竖向支承力，单颗合力为 $38.25\N$。}
+\q{坡道能否通过？}{$4^\circ$ 坡道需求牵引力为 $19.74\N$；理论轴端牵引力 $36.9\N$，所需综合效率不低于 $53.5\%$、附着系数不低于 $0.20$；两次 $40$ 袋满载试跑均通过。}
+\q{为什么选择 40 袋？}{赛题允许 $20\sim40$ 袋，$40$ 袋有效货物质量最大；模型质量 $203\g$、有效货物质量 $20000\g$，载质比为 $98.52$，且满载试跑通过。}
+\q{最终如何证明通过？}{理论完成车身、轮轴、连接和专项工况计算；实物完成 1 次 $36$ 袋和 2 次 $40$ 袋试跑，行驶时间均为 $34\mathrm{s}$，无开裂、松动、偏斜、卡滞或非车轮部位碰撞。}
+\end{enumerate}
+
+\section*{四、三句话不要答错}
+\begin{enumerate}
+  \item 不要说“$148.49\N$ 是平均单轮反力”；应说它是后轴总设计反力或单根主梁设计荷载，平均单轮为 $74.25\N$。
+  \item 不要说“实测挠度小于理论值”；正确说法是理想静载 $1.31\mm$、实测 $5.70\mm$，已经用实测结果校准刚度。
+  \item 不要说“MIDAS 云图证明最大应力”；正确说法是云图只作定性说明，$9.89\MPa$ 和 $13.19\MPa$ 来自统一手算。
+\end{enumerate}
+
+\vfill
+\begin{center}\small\textbf{回答顺序：先说结论，再报数字，最后说验证证据。}\end{center}
+\end{document}

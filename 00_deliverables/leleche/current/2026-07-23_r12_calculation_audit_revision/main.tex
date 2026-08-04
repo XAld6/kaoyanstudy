@@ -1,0 +1,2026 @@
+% !TeX program = xelatex
+% 第十九届全国大学生结构设计竞赛理论方案正式提交版
+\documentclass[UTF8,a4paper,12pt,fontset=none]{ctexart}
+
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{fontspec}
+\geometry{left=2.55cm,right=2.55cm,top=2.55cm,bottom=2.55cm,headsep=0.45cm}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs,longtable,tabularx,array,multirow}
+\usepackage{enumitem}
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage{caption,subcaption}
+\usepackage{xcolor}
+\usepackage{tikz,pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,calc,positioning,patterns,decorations.pathreplacing,shapes.geometric,fit}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{etoolbox}
+
+% 模板字体设置：正文中文宋体小四，英文 Times New Roman 风格；标题楷体加粗
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Consolas}
+\setCJKmainfont[AutoFakeBold=2.5]{SimSun}
+\newCJKfontfamily\songti[AutoFakeBold=2.5]{SimSun}
+\newCJKfontfamily\kaishu[AutoFakeBold=2.8]{KaiTi}
+\newCJKfontfamily\heiti[AutoFakeBold=2.0]{SimHei}
+
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=black, citecolor=black}
+\captionsetup{font=small,labelsep=quad}
+\captionsetup[subfigure]{font=small,justification=centering}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.22em plus 0.04em minus 0.03em}
+\linespread{1.30}
+\renewcommand{\arraystretch}{1.18}
+\setcounter{tocdepth}{2}
+\setlist[enumerate]{leftmargin=2.3em,itemsep=0.15em,topsep=0.25em}
+\setlist[itemize]{leftmargin=2.3em,itemsep=0.15em,topsep=0.25em}
+
+% 表格字体比正文小一号：正文为小四，表格统一五号
+\AtBeginEnvironment{table}{\zihao{5}}
+\AtBeginEnvironment{tabular}{\zihao{5}}
+\AtBeginEnvironment{tabularx}{\zihao{5}}
+\AtBeginEnvironment{longtable}{\zihao{5}}
+
+% 页眉页脚
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\kaishu 第十九届全国大学生结构设计竞赛理论方案}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{15pt}
+
+% 标题格式
+\titleformat{\section}{\kaishu\bfseries\zihao{-3}}{\thesection}{1em}{}
+\titleformat{\subsection}{\kaishu\bfseries\zihao{4}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\kaishu\bfseries\zihao{-4}}{\thesubsubsection}{1em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.65em}
+\titlespacing*{\subsection}{0pt}{0.85em}{0.45em}
+\titlespacing*{\subsubsection}{0pt}{0.60em}{0.35em}
+
+% 目录名称
+\renewcommand{\contentsname}{目录}
+\renewcommand{\listfigurename}{图目录}
+\renewcommand{\listtablename}{表目录}
+\renewcommand{\cfttoctitlefont}{\hfil\heiti\bfseries\zihao{3}\hfil}
+\renewcommand{\cftaftertoctitle}{\par}
+\renewcommand{\cftloftitlefont}{\hfil\heiti\bfseries\zihao{3}\hfil}
+\renewcommand{\cftafterloftitle}{\par}
+\renewcommand{\cftlottitlefont}{\hfil\heiti\bfseries\zihao{3}\hfil}
+\renewcommand{\cftafterlottitle}{\par}
+\setlength{\cftbeforesecskip}{0.30em}
+\setlength{\cftbeforefigskip}{0.20em}
+\setlength{\cftbeforetabskip}{0.20em}
+
+% 章节编号式公式、图、表编号：1-1、1-2
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\renewcommand{\theequation}{\thesection-\arabic{equation}}
+\renewcommand{\thefigure}{\thesection-\arabic{figure}}
+\renewcommand{\thetable}{\thesection-\arabic{table}}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcommand{\mm}{\,\mathrm{mm}}
+\newcommand{\g}{\,\mathrm{g}}
+\newcommand{\kg}{\,\mathrm{kg}}
+\newcommand{\cm}{\,\mathrm{cm}}
+\newcommand{\Nunit}{\,\mathrm{N}}
+\newcommand{\MPa}{\,\mathrm{MPa}}
+\newcommand{\GPa}{\,\mathrm{GPa}}
+\newcommand{\mss}{\,\mathrm{m/s^2}}
+\newcommand{\placeholder}[2]{%
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[densely dashed,line width=0.8pt,gray] (0,0) rectangle (13.0,#1);
+  \draw[gray!70] (0.25,0.25) rectangle (12.75,#1-0.25);
+\end{tikzpicture}
+\caption{#2}
+\end{figure}}
+\newcommand{\finalworkphoto}[1]{%
+  \fbox{\includegraphics[width=#1,keepaspectratio,trim=8 8 8 8,clip]{images/final_work_front.jpg}}%
+}
+
+\tikzset{
+  beam/.style={line width=1.7pt,draw=black,fill=brown!22},
+  hollow/.style={line width=1.2pt,draw=black,fill=brown!16},
+  rod/.style={line width=1.0pt,draw=brown!65!black},
+  load/.style={-Latex,line width=0.8pt,red!75!black},
+  react/.style={-Latex,line width=0.9pt,green!55!black},
+  forceblue/.style={-Latex,line width=0.9pt,blue!70!black},
+  note/.style={draw=black!45,rounded corners=1mm,fill=white,inner sep=3pt,font=\small},
+  bluecard/.style={draw=blue!55!black,fill=blue!7,rounded corners=1.8mm,minimum width=3.1cm,minimum height=0.95cm,align=center},
+  greencard/.style={draw=green!45!black,fill=green!8,rounded corners=1.8mm,minimum width=3.1cm,minimum height=0.95cm,align=center},
+  orangecard/.style={draw=orange!65!black,fill=orange!12,rounded corners=1.8mm,minimum width=3.1cm,minimum height=0.95cm,align=center},
+  redcard/.style={draw=red!50!black,fill=red!7,rounded corners=1.8mm,minimum width=3.1cm,minimum height=0.95cm,align=center},
+  flowarrow/.style={-{Latex[length=2.6mm,width=2.0mm]},line width=0.95pt,draw=black!75},
+  softlabel/.style={draw=black!35,fill=white,rounded corners=1.2mm,inner sep=3pt,font=\small},
+  axisgrid/.style={gray!35,line width=0.35pt},
+  redmark/.style={draw=red!75!black,line width=1.15pt},
+  rednote/.style={draw=red!70!black,fill=white,rounded corners=1mm,inner sep=3pt,font=\small,text=red!75!black}
+}
+
+\begin{document}
+\songti\zihao{-4}
+% 封皮和正文目录不显示页码；图目录、表目录页码采用古罗马数字；正文从第 1 章重新起算。
+\pagenumbering{gobble}
+\pagestyle{empty}
+
+%------------------ 封面 ------------------
+\thispagestyle{empty}
+\vspace*{0.6cm}
+\begin{center}
+{\heiti\bfseries\zihao{2} 第十九届全国大学生结构设计竞赛理论方案}\par
+\vspace{4.2cm}
+{\heiti\bfseries\zihao{2}《勒勒车模型结构设计与制作》}\par
+\vfill
+{\heiti\bfseries\zihao{3} 第十九届全国大学生结构设计竞赛组织委员会}\par
+\vspace{0.8cm}
+{\heiti\bfseries\zihao{3} 2026 年 7 月}\par
+\end{center}
+\newpage
+
+%------------------ 目录、图目录、表清单 ------------------
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+\pagenumbering{Roman}
+\pagestyle{plain}
+\phantomsection
+\addcontentsline{toc}{section}{图目录}
+\input{fig_catalog.tex}
+\newpage
+\phantomsection
+\addcontentsline{toc}{section}{表目录}
+\input{tab_catalog.tex}
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\pagestyle{fancy}
+\section{赛题分析与设计要求}
+
+\subsection{任务边界}
+本计算书对应《勒勒车模型结构设计与制作》赛题。模型由车架、车轮、车轴、轴承以及动力小车连接件组成。车轴、轴承和轴卡由组委会统一提供，车轮只能通过轴承与车轴连接；模型在行驶全过程中，除车轮外，其余部位不得与赛道或障碍物接触。
+
+货物为内装玻璃颗粒布袋，单袋质量约 $500\g$。参赛队可选择 $20\sim40$ 袋。本队采用满载 $40$ 袋策略，目标是在保证通过率的前提下提高载质比。布袋按层叠方式摆放，不采用捆绑、夹紧或粘接等固定方式；靠近动力小车一侧的布袋边缘与动力小车 E 面保持不小于 $20\mm$ 的净距。
+
+后续计算统一采用模型质量 $203\g$、满载挠度、装货时间和行驶时间等实物记录；坡道、弯道、减速带和单桥参数在各专项工况中直接列明。
+
+\begin{table}[H]
+\centering
+\caption{赛题约束与本方案响应}
+\label{tab:rules-response}
+\begin{tabularx}{\linewidth}{cY Y}
+\toprule
+\textbf{序号} & \textbf{赛题约束} & \textbf{本方案响应} \\\midrule
+1 & 布袋数量为 $20\sim40$ 袋，每袋约 $500\g$ & 按 $40$ 袋满载设计，计算有效货物质量 \\
+2 & 布袋只能层叠放置，不得捆绑 & 采用承托和浅限位，不写作固定或绑扎 \\
+3 & 车轮只能通过轴承与车轴连接 & 车轮、轴承、车轴作为独立行走模块计算 \\
+4 & 除车轮外模型不得接触赛道和障碍物 & 进行离地、减速带和单桥专项分析 \\
+5 & 理论方案重在科学性、完整性和表达清晰 & 按模块拆分计算，图表与公式按章节编号 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{设计目标}
+设计目标分为承载、通过、轻量和制作四类。承载目标是满载 $40$ 袋时车身主承重体系不发生破坏，挠度不影响布袋稳定；通过目标是通过坡道、弯道、减速带和单桥时不侧翻、不刮碰、不掉袋；轻量目标是减少低效率填充材料，提高运输成本得分；制作目标是在现场规定时间内完成加工、装配和试装。
+
+计算目的：确定满载货物的重力，作为后续车身模块、轮轴模块和连接节点模块的共同输入荷载。
+
+\begin{equation}
+  G=N_i m_0 g
+\end{equation}
+
+式中，$G$ 为货物总重；$N_i$ 为布袋数量；$m_0$ 为单袋质量；$g$ 为重力加速度。
+
+代入本方案数据：
+\begin{equation}
+  G=40\times0.5\times9.8=196\Nunit
+\end{equation}
+
+\subsection{计算模块划分}
+本计算书将结构拆分为四个独立计算模块，并将专项工况单独归类。各模块的边界、输入和输出见表\ref{tab:modules}。
+
+\begin{table}[H]
+\centering
+\caption{计算模块划分表}
+\label{tab:modules}
+\begin{tabularx}{\linewidth}{cY Y Y}
+\toprule
+\textbf{模块} & \textbf{分析对象} & \textbf{主要计算内容} & \textbf{输出结论} \\\midrule
+车身模块 & 左右方形空心主梁、横向杆组、装载区 & 截面性质、弯曲强度、挠度、横杆分配 & 车身是否能承受满载 \\
+轮轴模块 & 车轮、轴承、车轴、车轴固定座 & 车轮反力、固定座局部承压、行走阻力 & 行走支承是否可靠 \\
+连接模块 & 胶接节点、四螺丝牵引连接板 & 胶缝剪应力、孔边承压、牵引力传递 & 节点是否可靠 \\
+专项工况 & 坡道、弯道、减速带、单桥、装货 & 防滑、抗倾覆、冲击放大、抗扭 & 运输过程是否稳定 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[every node/.style={font=\small},>=Latex]
+  \node[draw=black!45,fill=gray!4,circle,minimum size=2.1cm,align=center] (o) at (0,0) {理论方案\\总体逻辑};
+  \node[bluecard,text width=2.6cm] (a) at (-4.7,1.9) {赛题约束\\与设计边界};
+  \node[bluecard,text width=2.6cm] (b) at (0,3.4) {结构选型\\与方案比选};
+  \node[greencard,text width=2.6cm] (c) at (4.7,1.9) {模块计算\\与参数确定};
+  \node[orangecard,text width=2.6cm] (d) at (4.7,-1.9) {专项工况\\稳定性验算};
+  \node[orangecard,text width=2.6cm] (e) at (0,-3.4) {制作试验\\与校核};
+  \node[redcard,text width=2.6cm] (f) at (-4.7,-1.9) {最终方案\\与作品总结};
+  \foreach \x in {a,b,c,d,e,f}{\draw[flowarrow] (o) -- (\x);} 
+  \draw[flowarrow,rounded corners=3mm] (a) -- (b) -- (c) -- (d) -- (e) -- (f) -- cycle;
+\end{tikzpicture}
+\caption{全文逻辑与计算模块关系}
+\label{fig:logic}
+\end{figure}
+
+\newpage
+\section{方案构思与原型照片}
+
+\subsection{候选方案与原型照片}
+选型阶段按“三选一”方式提出三种候选车架方案。比选同时考察强度、重量、荷载效率和制作工艺。对质量较轻但现场制作难度过高、节点误差难以控制的方案，不作为最终方案。
+
+三种候选方案原型照片如图\ref{fig:scheme-photos}所示。
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.32\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/schemeA_photo2.jpg}
+  \caption{方案 A：平板承托式}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.32\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/schemeB_photo2.jpg}
+  \caption{方案 B：箱型空间桁架式}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.32\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/schemeC_photo2.jpg}
+  \caption{方案 C：双纵梁格构承托式}
+\end{subfigure}
+\caption{三种候选车架方案原型照片}
+\label{fig:scheme-photos}
+\end{figure}
+
+\subsection{三维度比选}
+比选维度包括重量、荷载效率和制作工艺。重量主要影响载质比；荷载效率反映单位材料形成抗弯刚度的能力；制作工艺反映现场可实现性和误差控制难度。
+
+\begin{table}[H]
+\centering
+\caption{三种方案比选表}
+\label{tab:scheme-compare}
+\begin{tabularx}{\linewidth}{cY c c c Y}
+\toprule
+\textbf{方案} & \textbf{结构形式} & \textbf{重量} & \textbf{荷载效率} & \textbf{制作工艺} & \textbf{结论} \\\midrule
+A & 平板承托式车架 & 偏大 & 中等 & 简单 & 承托面较大、装货直观，但材料利用率偏低，自重较大，淘汰 \\
+B & 箱型空间桁架式车架 & 最小 & 较高 & 困难 & 杆件数量多、节点繁杂，现场加工和胶接误差难控制，淘汰 \\
+C & 双纵梁格构承托式车架 & 较小 & 高 & 中等 & 在质量、承载与工艺之间综合最优，确定为后续优化基础方案 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+方案 A 的主要优点是布袋接触面较大、摆放直观，但纵向构件和横向承托条较多，导致单位承载对应的自重偏大；方案 B 的理论重量最低，结构效率也较高，但需要大量斜杆和精细节点，现场 14 小时内难以稳定保证每个节点的胶接质量；方案 C 兼顾了较好的承托连续性和较少的关键节点，综合表现最佳，因此被选为最终方案的原型基础。
+
+\subsection{定量评分结果}
+为进一步降低方案判断的主观性，采用加权评分法对三种候选方案进行定量比较。根据本赛题“轻量、高效、可制作”的要求，取重量、荷载效率和制作工艺的权重分别为 $0.35$、$0.35$ 和 $0.30$。各维度按 $10$ 分制评分，结果见表\ref{tab:scheme-score}。
+
+\begin{table}[H]
+\centering
+\caption{三种候选方案加权评分表}
+\label{tab:scheme-score}
+\begin{tabular}{c c c c c}
+\toprule
+\textbf{方案} & \textbf{重量得分} & \textbf{荷载效率得分} & \textbf{制作工艺得分} & \textbf{加权总分} \\\midrule
+A & 6 & 6 & 9 & 6.90 \\
+B & 9 & 8 & 4 & 7.10 \\
+C & 8 & 9 & 8 & 8.35 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=0.95cm,every node/.style={font=\small}]
+  \foreach \x in {0,1,...,10}{\draw[axisgrid] (\x,0.2)--(\x,3.8);} 
+  \draw[-Latex,line width=0.9pt] (0,0.2)--(10.5,0.2) node[right]{综合评分/分};
+  \foreach \x/\lab in {0/0,2/2,4/4,6/6,8/8,10/10}{\node[below] at (\x,0.15){\lab};}
+  \node[left] at (-0.1,0.95){A 方案};
+  \node[left] at (-0.1,2.00){B 方案};
+  \node[left] at (-0.1,3.05){C 方案};
+  \filldraw[fill=blue!18,draw=blue!65!black,rounded corners=1mm] (0,0.55) rectangle (6.90,1.15);
+  \filldraw[fill=orange!20,draw=orange!70!black,rounded corners=1mm] (0,1.60) rectangle (7.10,2.20);
+  \filldraw[fill=green!22,draw=green!55!black,rounded corners=1mm] (0,2.65) rectangle (8.35,3.25);
+  \node[softlabel] at (6.35,0.85){6.90};
+  \node[softlabel] at (6.55,1.90){7.10};
+  \node[softlabel] at (7.80,2.95){8.35};
+\end{tikzpicture}
+\caption{三种候选方案综合评分对比}
+\label{fig:scheme-score}
+\end{figure}
+
+从定量结果看，方案 C 的总分最高。方案 A 工艺简单，但结构效率偏低；方案 B 重量指标较优，但制作工艺得分较低，综合竞争力不足。该结果与前述定性判断一致，因此选择方案 C 作为优化基础。
+
+\subsection{数值模拟辅助复核}
+图 2-3 为本方案六根横向构件梁系简化模型的 MIDAS/Civil ``BEAM STRESS'' 应力云图。图中色标原值范围为 $-1.59261\times10^{7}$ 至 $2.73978\times10^{7}$，结果系数为 $8.9269\times10^{-6}$。红色、橙色高值区主要出现在主梁端部及主梁与外伸横向构件的连接处，蓝色低值区主要出现在主梁中部；该分布与主梁承担纵向弯曲、横向构件向两侧主梁分配荷载的传力关系一致。
+
+正式计算采用与云图相同的传力路径：满载货物与模型自重合计 $197.99\Nunit$，竖向荷载经 6 根横向构件传至两根主梁。第 1 根和第 6 根为三角截面杆，第 2～6 根的端部均外伸主梁。主梁强度和挠度仍采用 $350\mm$ 四点对称等效加载模型，四点是计算简化后的等效荷载点数，不代表实物构件数量；基础动力工况取 $\gamma_d=1.5$，减速带严重冲击包络取 $\gamma_{d,\max}=2.0$，单桥工况取 $\gamma_d=1.5$ 并按一侧车轮承担后轴总设计反力。
+
+\begin{center}
+{\zihao{5}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{0.98\linewidth}{c Y Y Y}
+\toprule
+\textbf{方案} & \textbf{相对变形观察} & \textbf{传力路径观察} & \textbf{制作敏感性} \\\midrule
+A & 承托区变形较集中 & 荷载集中于承托区附近 & 中 \\
+B & 整体相对刚度较好 & 杆件较多，路径较复杂 & 高 \\
+C & 变形与应力带较均衡 & 主梁至固定座路径明确 & 低 \\
+\bottomrule
+\end{tabularx}
+}
+\end{center}
+
+\subsubsection{数值模拟步骤}
+图 2-3 对应的梁系应力分析按以下流程实施：
+\begin{enumerate}[label=\arabic*.,leftmargin=2.8em]
+  \item \textbf{建立方案模型。} 以双纵向主梁为主要承载构件，用梁单元近似表示横向构件、车轴支承和牵引连接，形成方案阶段的整体梁系模型。
+  \item \textbf{设置边界与荷载。} 在后轴支承线和动力小车连接端设置支承，在承托区施加竖向荷载，使荷载经横向构件传入左右主梁。
+  \item \textbf{求解并观察分布。} 进行线弹性静力求解，观察双主梁传力是否连续，并识别车轴支承和牵引连接附近的相对集中位置。
+\end{enumerate}
+该流程得到图 2-3 所示应力云图：主梁中部以蓝绿色为主，端部连接区出现黄、橙、红色高值带，说明端部连接和外伸横向构件是传力集中位置。第三至第六章的截面应力、挠度和连接计算分别对这些控制部位进行数值验算。
+
+\subsubsection{MIDAS 车身模型应力云图复核}
+最终实物由两根纵向方形空心主梁、6 根横向构件、两处车轴固定支承和动力小车连接构件组成。第 1 根和第 6 根为三角截面杆，第 2～6 根端部外伸主梁；图 2-3 按该六根构件布置绘制，图\ref{fig:overall-model}和最终作品照片给出成品构件数量与位置。
+
+图\ref{fig:midas-body-force}为六根横向构件梁单元模型应力云图。云图色标原值从 $-1.59261\times10^{7}$ 变化到 $2.73978\times10^{7}$，结果系数为 $8.9269\times10^{-6}$；主梁端部与外伸横向构件连接区为黄、橙、红色高值区，主梁中部为蓝、青色低值区。该结果说明连接区需要优先控制胶缝、固定座和横向构件的安装质量，第三章的 $350\mm$ 四点等效加载计算给出相应主梁应力和安全系数。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\linewidth]{images/midas_body_stress_sixbar_extended.png}
+\caption{MIDAS 车身梁系应力云图（六根横向构件布置）}
+\label{fig:midas-body-force}
+\end{figure}
+
+从方案对比看，方案 A 的装载区附近传力较集中，方案 B 的杆件和节点较多、对制作误差更敏感，方案 C 的主梁—车轴固定座传力路径最清晰，适合作为深化设计基础。方案 C 的最终安全性由后文统一的手算、实测挠度和加载试验共同判断。
+
+% 图 2-4：最终作品的整体俯视结构，作为三视图的实物布置依据。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.96, every node/.style={font=\small}, >=Latex]
+  \fill[gray!7] (-1.05,-1.05) rectangle (11.15,5.95);
+
+  % 两根纵向主梁（俯视）
+  \filldraw[fill=brown!58,draw=brown!75!black,rounded corners=1.2mm,line width=1.0pt] (1.35,0.95) rectangle (9.10,1.55);
+  \filldraw[fill=brown!58,draw=brown!75!black,rounded corners=1.2mm,line width=1.0pt] (1.35,3.85) rectangle (9.10,4.45);
+  \draw[line width=0.8pt,brown!20] (1.58,1.24)--(8.87,1.24);
+  \draw[line width=0.8pt,brown!20] (1.58,4.14)--(8.87,4.14);
+
+  % 六根横向构件：第 1 根不外伸，第 2～6 根外伸；第 1、6 根为三角杆
+  \filldraw[fill=brown!72!black,draw=brown!85!black,rounded corners=0.4mm]
+    (1.55,1.55) rectangle +(0.20,2.30);
+  \filldraw[fill=brown!72!black,draw=brown!85!black,rounded corners=0.4mm]
+    (7.55,1.25) rectangle +(0.20,3.00);
+  \foreach \x in {2.75,3.95,5.15,6.35}{
+    \draw[orange!80!black,line width=1.05pt] (\x,1.22)--(\x,4.18);
+  }
+
+  % 动力小车端连接横杆及布袋装载范围
+  \filldraw[fill=brown!45,draw=brown!75!black,rounded corners=0.4mm]
+    (8.55,1.55) rectangle +(0.13,2.30);
+  \draw[gray!65,dashed,rounded corners=0.8mm,line width=0.8pt] (3.75,2.05) rectangle (6.40,3.35);
+  \node[font=\bfseries\small,fill=white,inner sep=1pt] at (5.08,2.70){布袋装载范围};
+  \node[font=\scriptsize,fill=white,draw=black!30,rounded corners=0.8mm,
+        inner sep=2pt,align=center,text width=5.5cm] at (6.25,5.20)
+    {6 根横向构件\\第 1、6 根为三角杆；第 2～6 根外伸};
+  \draw[-Latex,black!55] (5.35,4.83)--(5.20,4.02);
+  \draw[-Latex,black!55] (7.05,4.83)--(7.10,4.02);
+
+  % 动力小车四螺丝连接界面
+  \draw[gray!70,dashed,line width=0.8pt] (8.78,0.78) rectangle (9.45,4.62);
+  \foreach \y in {1.10,1.40,4.00,4.30}{\draw[fill=white,draw=gray!75,line width=0.75pt] (9.10,\y) circle (0.07);}
+
+  % 单根车轴、两个车轴固定座、两个轮毂轴承和两个车轮
+  \draw[line width=1.1pt,gray!80] (2.05,0.58)--(2.05,4.82);
+  \filldraw[fill=gray!45,draw=gray!80!black,rounded corners=0.5mm] (1.80,0.98) rectangle (2.30,1.52);
+  \filldraw[fill=gray!45,draw=gray!80!black,rounded corners=0.5mm] (1.80,3.88) rectangle (2.30,4.42);
+  \draw[fill=black!28,draw=black,line width=0.9pt] (2.05,0.30) circle (0.34);
+  \draw[fill=white,draw=black!70,line width=0.7pt] (2.05,0.30) circle (0.17);
+  \draw[fill=black!28,draw=black,line width=0.9pt] (2.05,5.10) circle (0.34);
+  \draw[fill=white,draw=black!70,line width=0.7pt] (2.05,5.10) circle (0.17);
+
+\end{tikzpicture}
+\caption{最终作品横向承托杆与轮轴布置俯视图}
+\label{fig:overall-model}
+\end{figure}
+
+\subsection{模型尺寸设计与三视图}
+模型尺寸按成品实物定义。
+
+两根纵向空心主梁长度为 $350\mm$；每根横向承托杆长度为 $250\mm$。
+
+车身采用 6 根横向构件；第 1 根和第 6 根为三角截面杆，第 2～6 根端部外伸主梁。第三章统一取主梁全长 $L=350\mm$ 进行四点等效计算，主要尺寸标注、计算参数和实物尺寸采用同一组数值。自制十二辐式车轮外径为 $70\mm$，轮辐有效长度为 $22\mm$。
+
+\begin{table}[H]
+\centering
+\caption{模型实物尺寸与构件数量}
+\label{tab:model-dimensions}
+\begin{tabularx}{\linewidth}{Y c c Y}
+\toprule
+\textbf{项目} & \textbf{符号} & \textbf{尺寸/数量} & \textbf{说明} \\\midrule
+车身纵向空心杆长度 & $L_b$ & $350\mm$ & 左右各 1 根，作为车身纵向外形尺寸 \\
+横向承托杆长度 & $L_t$ & $250\mm$ & 每根长度，与车身横向宽度一致 \\
+横向构件总数 & $n_{r,\mathrm{phys}}$ & 6 根 & 第 1、6 根为三角杆，第 2～6 根端部外伸 \\
+等效加载点数 & $n_{r,\mathrm{eq}}$ & 4 & 用于主梁强度和挠度的四点等效模型 \\
+车轮外径 & $D_o$ & $70\mm$ & 自制车轮成品直径 \\
+轮辐有效长度 & $l_s$ & $22\mm$ & 轮毂外缘至轮缘内侧的辐条长度 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% 图 2-5 采用统一比例的工程制图式三视图，所有投影均按同一缩放系数绘制。
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.017cm,y=0.017cm,>=Latex]
+  \tikzset{
+    dimline/.style={Latex-Latex,line width=0.65pt},
+    extline/.style={line width=0.40pt},
+    rail/.style={brown!75!black,line width=3.0pt},
+    tri/.style={brown!72!black,line width=2.2pt},
+    tri2/.style={brown!35!black,line width=0.50pt},
+    ordinary/.style={orange!78!black,line width=1.0pt}
+  }
+
+  % 主视图：纵向主梁长度 350 mm，六根横向构件用投影线表示。
+  \draw[rail] (40,460)--(390,460);
+  \draw[rail] (40,480)--(390,480);
+  \draw[tri] (60,453)--(60,487);
+  \draw[tri2] (57,453)--(57,487);
+  \draw[tri2] (63,453)--(63,487);
+  \foreach \x in {120,180,240,300}{\draw[ordinary] (\x,453)--(\x,487);}
+  \draw[tri] (360,453)--(360,487);
+  \draw[tri2] (357,453)--(357,487);
+  \draw[tri2] (363,453)--(363,487);
+  \draw[gray!55,dashed] (40,470)--(390,470);
+  \draw[gray!70!black,line width=1.0pt] (82,470)--(82,435);
+  \draw[fill=black!10,draw=gray!70!black,line width=0.9pt] (82,435) circle (35);
+  \foreach \a in {0,30,...,330}{\draw[gray!60!black,line width=0.40pt] (82,435)--++(\a:29);}
+  \draw[fill=gray!35,draw=gray!75!black] (82,435) circle (7);
+  \draw[gray!70!black,line width=1.0pt] (350,460)--(350,480);
+  \draw[fill=gray!18,draw=gray!65!black] (350,453) rectangle (390,487);
+  \node[font=\small\bfseries] at (215,515){主视图};
+  \draw[extline] (40,492)--(40,545);
+  \draw[extline] (390,492)--(390,545);
+  \draw[dimline] (40,540)--(390,540);
+  \node[fill=white,inner sep=1.2pt,font=\small] at (215,540){$350\mm$};
+
+  % 俯视图：两根主梁、六根横向构件和布袋承托区。
+  \draw[rail] (40,145)--(390,145);
+  \draw[rail] (40,395)--(390,395);
+  \draw[tri] (60,145)--(60,395);
+  \draw[tri2] (56,145)--(56,395);
+  \draw[tri2] (64,145)--(64,395);
+  \foreach \x in {120,180,240,300}{\draw[ordinary] (\x,130)--(\x,410);}
+  \draw[tri] (360,130)--(360,410);
+  \draw[tri2] (356,130)--(356,410);
+  \draw[tri2] (364,130)--(364,410);
+  \draw[gray!55,dashed] (95,205) rectangle (345,335);
+  \node[font=\scriptsize,fill=white,inner sep=1.2pt] at (220,270){布袋承托区};
+  \node[font=\small\bfseries] at (215,92){俯视图};
+  % 横向尺寸 250 mm。
+  \draw[extline] (40,145)--(18,145);
+  \draw[extline] (40,395)--(18,395);
+  \draw[dimline] (22,145)--(22,395);
+  \node[fill=white,inner sep=1.2pt,font=\small,rotate=90] at (10,270){$250\mm$};
+  % 纵向尺寸与主视图对应，同为 350 mm。
+  \draw[extline] (40,145)--(40,62);
+  \draw[extline] (390,145)--(390,62);
+  \draw[dimline] (40,62)--(390,62);
+  \node[fill=white,inner sep=1.2pt,font=\scriptsize] at (215,62){$350\mm$};
+  \node[draw=gray!45,fill=white,rounded corners=0.8mm,inner sep=2pt,
+        font=\scriptsize,align=center,text width=7.2cm] at (215,22)
+    {六根横向构件：第 1、6 根为三角杆；第 2～6 根端部外伸};
+
+  % 前视图：沿车身纵向观察。六根横向构件在该方向投影重合，
+  % 车轮显示为轮缘侧向投影，主梁显示为两个方形截面。
+  \draw[gray!70!black,line width=1.0pt] (475,420)--(775,420);
+  \draw[fill=black!10,draw=gray!70!black,line width=0.9pt,rounded corners=1.2mm]
+    (470,385) rectangle (480,455);
+  \draw[fill=black!10,draw=gray!70!black,line width=0.9pt,rounded corners=1.2mm]
+    (770,385) rectangle (780,455);
+  \draw[fill=gray!35,draw=gray!75!black,line width=0.7pt] (475,420) circle (4);
+  \draw[fill=gray!35,draw=gray!75!black,line width=0.7pt] (775,420) circle (4);
+  \filldraw[fill=gray!32,draw=gray!75!black,line width=0.7pt]
+    (539,414) rectangle (551,450);
+  \filldraw[fill=gray!32,draw=gray!75!black,line width=0.7pt]
+    (699,414) rectangle (711,450);
+  \filldraw[fill=brown!22,draw=brown!75!black,line width=0.8pt]
+    (534,449) rectangle (556,471);
+  \filldraw[fill=brown!22,draw=brown!75!black,line width=0.8pt]
+    (694,449) rectangle (716,471);
+  \draw[tri] (500,460)--(750,460);
+  \draw[tri2] (500,456)--(750,456);
+  \draw[gray!48,dashed,line width=0.45pt] (500,464)--(750,464);
+  \node[font=\small\bfseries] at (625,515){前视图};
+  \node[font=\scriptsize,text=gray!65!black] at (625,378){六根横向构件投影重合};
+  \draw[extline] (500,380)--(500,328);
+  \draw[extline] (750,380)--(750,328);
+  \draw[dimline] (500,333)--(750,333);
+  \node[fill=white,inner sep=1.2pt,font=\scriptsize] at (625,333){$250\mm$};
+
+  % 车轮详图：外径 70 mm，轮辐有效长度 22 mm。
+  \draw[gray!70!black,line width=0.8pt] (625,180) circle (35);
+  \draw[gray!70!black,line width=0.8pt] (625,180) circle (7);
+  \foreach \a in {0,30,...,330}{\draw[gray!60!black,line width=0.50pt] (625,180)--++(\a:7)--++(\a:22);}
+  \draw[extline] (590,180)--(560,180);
+  \draw[extline] (660,180)--(690,180);
+  \draw[dimline] (570,145)--(570,215);
+  \node[fill=white,inner sep=1pt,font=\scriptsize,rotate=90] at (558,180){$\varnothing70\mm$};
+  \draw[dimline] (632,180)--(654,180);
+  \node[fill=white,inner sep=1pt,font=\scriptsize] at (643,189){$22\mm$};
+  \node[font=\small\bfseries] at (625,105){车轮详图};
+\end{tikzpicture}
+\caption{车身模型三视图及主要尺寸}
+\label{fig:model-dimensions}
+\end{figure}
+
+\subsection{最终方案确定与优化}
+图\ref{fig:model-dimensions}按正投影关系绘制。前视图沿车身纵向观察，六根横向构件投影重合，车轮按轮缘侧向投影表示；成品构造以图\ref{fig:overall-model}和实物照片为准。
+
+最终采用的结构是在方案 C 原型基础上的进一步优化：两根方形空心主梁承担纵向弯曲，6 根横向构件共同承托布袋；第 1 根和第 6 根为三角截面杆，第 2～6 根端部外伸主梁。动力小车端连接横杆用于保持连接区横向稳定，不计入四点等效加载模型。实际传力路径为：布袋 $\rightarrow$ 6 根横向构件 $\rightarrow$ 方形空心主梁 $\rightarrow$ 车轴固定座 $\rightarrow$ 车轴 $\rightarrow$ 轮毂轴承 $\rightarrow$ 车轮。
+
+\newpage
+\section{车身结构模块设计与计算}
+
+\subsection{计算对象与参数}
+车身模块包含左右方形空心主梁和 6 根横向构件。第 1 根和第 6 根为三角截面杆，第 2～6 根端部外伸主梁，均参与实物承托和横向约束。主梁按四点等效模型进行强度与挠度计算，尺寸见表\ref{tab:body-params}。
+
+\begin{table}[H]
+\centering
+\caption{车身模块主要计算参数}
+\label{tab:body-params}
+\begin{tabularx}{\linewidth}{c c c Y}
+\toprule
+\textbf{参数} & \textbf{符号} & \textbf{数值} & \textbf{说明} \\\midrule
+主梁等效计算长度 & $L$ & $350\mm$ & 按实物纵向空心主梁全长取值 \\
+主梁外边长 & $b=h$ & $22\mm$ & 等效方形空心截面 \\
+主梁壁厚 & $t$ & $1.2\mm$ & 由竹片和竹皮胶接形成 \\
+竹材弹性模量 & $E$ & $6000\Nunit/\mm^2$ & 赛题给定参考指标 \\
+竹材控制强度 & $f_c$ & $30\MPa$ & 按抗压强度保守取值 \\
+基础动力放大系数 & $\gamma_d$ & $1.5$ & 用于正常设计工况 \\
+严重冲击放大系数 & $\gamma_{d,\max}$ & $2.0$ & 用于减速带严重冲击包络工况 \\
+实际横向构件数 & $n_{r,\mathrm{phys}}$ & $6$ & 第 1、6 根为三角杆，第 2～6 根端部外伸 \\
+等效加载点数 & $n_{r,\mathrm{eq}}$ & $4$ & 主梁强度和挠度采用四点等效模型 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{主梁荷载模型}
+计算目的：把满载货物与模型自重转化为统一的主梁设计荷载。实物主梁在后轴外侧保留短外伸段，属于单侧外伸构造；定量验算不利用短支承跨和外伸段卸载作用，而将纵向空心主梁全长 $350\mm$ 作为两端简支的统一设计长度。实物设置 6 根横向构件，主梁手算将其合并为 4 个等效承重点，每个等效承重点向左右主梁各传递一个集中力。图\ref{fig:beam-model}上部表示实物六杆传力关系，下部表示强度与挠度采用的四点等效计算模型，二者用途明确区分。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,every node/.style={font=\small}]
+  \tikzset{dimline/.style={Latex-Latex,line width=0.65pt},extline/.style={line width=0.45pt}}
+  % 上部：与实物一致的外伸梁和六道横向杆传力点
+  \node[anchor=west,font=\bfseries] at (0.35,6.55){实物受力关系};
+  \draw[brown!75!black,line width=5pt,line cap=round] (0.70,5.20)--(12.50,5.20);
+  \foreach \x in {1.70,3.55,5.40,7.25,9.10,10.95}{
+    \draw[red!70!black,-Latex,line width=0.80pt] (\x,6.15)--(\x,5.45);
+  }
+  \node[text=red!70!black,font=\scriptsize] at (6.60,6.35){6 根横向构件传入的竖向荷载};
+  \draw[fill=gray!18,draw=black!70] (0.70,5.15)--(0.28,4.48)--(1.12,4.48)--cycle;
+  \draw[black!65] (0.15,4.40)--(1.25,4.40);
+  \node[align=center,font=\scriptsize] at (1.15,4.02){动力小车连接端};
+  \draw[fill=gray!18,draw=black!70] (9.70,5.15)--(9.25,4.48)--(10.15,4.48)--cycle;
+  \draw[black!65] (9.13,4.40)--(10.27,4.40);
+  \node[align=center,font=\scriptsize] at (9.70,4.02){后轴支承线};
+  \node[font=\scriptsize] at (11.35,4.72){短外伸段};
+
+  % 下部：350 mm 全长等效简支模型
+  \node[anchor=west,font=\bfseries] at (0.35,3.62){强度与挠度计算模型};
+  \draw[brown!75!black,line width=5pt,line cap=round] (0.70,2.05)--(12.50,2.05);
+  \foreach \x in {2.175,5.125,8.075,11.025}{
+    \draw[red!70!black,-Latex,line width=0.80pt] (\x,2.95)--(\x,2.30);
+    \node[text=red!70!black,font=\scriptsize] at (\x,3.08){$Q_d$};
+  }
+  \draw[fill=gray!18,draw=black!70] (0.70,2.00)--(0.28,1.35)--(1.12,1.35)--cycle;
+  \draw[black!65] (0.15,1.27)--(1.25,1.27);
+  \draw[fill=gray!18,draw=black!70] (12.50,2.00)--(12.08,1.35)--(12.92,1.35)--cycle;
+  \draw[black!65] (11.95,1.27)--(13.05,1.27);
+  \draw[green!45!black,-Latex,line width=0.9pt] (0.70,1.32)--(0.70,1.90);
+  \draw[green!45!black,-Latex,line width=0.9pt] (12.50,1.32)--(12.50,1.90);
+  \node[text=green!40!black,font=\scriptsize] at (1.25,1.72){$R_A$};
+  \node[text=green!40!black,font=\scriptsize] at (11.95,1.72){$R_B$};
+  \draw[extline] (0.70,1.08)--(0.70,0.55);
+  \draw[extline] (12.50,1.08)--(12.50,0.55);
+  \draw[dimline] (0.70,0.65)--(12.50,0.65);
+  \node[fill=white,inner sep=1.5pt] at (6.60,0.65){$L=350\mm$};
+\end{tikzpicture}
+\caption{实物外伸梁与 $350\mm$ 等效计算模型}
+\label{fig:beam-model}
+\end{figure}
+
+货物与模型总重为 $P_{tot}=197.99\Nunit$。两根主梁平均分担竖向荷载时，单根主梁的基础设计总荷载为：
+\begin{equation}
+  P_d=\gamma_d\frac{P_{tot}}{2}=1.5\times\frac{197.99}{2}=148.49\Nunit
+\end{equation}
+每个等效承托点向单根主梁传入的设计集中力为：
+\begin{equation}
+  Q_d=\frac{P_d}{n_{r,\mathrm{eq}}}=\frac{148.49}{4}=37.12\Nunit
+\end{equation}
+为便于与均布荷载结果比较，对应的等效均布荷载为：
+\begin{equation}
+  q_d=\frac{P_d}{L}=\frac{148.49}{350}=0.424\Nunit/\mm
+\end{equation}
+4 个等效集中力关于跨中对称布置，等效支座反力为：
+\begin{equation}
+  R_A=R_B=\frac{P_d}{2}=74.25\Nunit
+\end{equation}
+上述四点加载位置取 $x/L=1/8,\,3/8,\,5/8,\,7/8$，用于表示 6 根横向构件对主梁的离散传力等效结果。该等效模型统一采用 $350\mm$ 全长，不再使用超过主梁全长的局部荷载长度。
+
+\subsection{方形空心截面性质}
+计算目的：求出空心主梁截面面积、惯性矩和抵抗矩，判断材料布置效率。
+
+空心截面的内边长为：
+\begin{equation}
+  b_i=b-2t=22-2\times1.2=19.6\mm
+\end{equation}
+
+截面面积公式为：
+\begin{equation}
+  A=b^2-b_i^2
+\end{equation}
+
+式中，$A$ 为截面面积；$b$ 为外边长；$b_i$ 为内边长。代入数据：
+\begin{equation}
+  A=22^2-19.6^2=99.84\mm^2
+\end{equation}
+
+截面惯性矩公式为：
+\begin{equation}
+  I=\frac{b^4-b_i^4}{12}
+\end{equation}
+
+代入数据：
+\begin{equation}
+  I=\frac{22^4-19.6^4}{12}=7223.09\mm^4
+\end{equation}
+
+截面抵抗矩为：
+\begin{equation}
+  W=\frac{I}{h/2}=\frac{7223.09}{11}=656.64\mm^3
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small},>=Latex]
+  % 上层仅放截面图形
+  \node[font=\bfseries] at (1.45,4.45){方形空心截面};
+  \draw[fill=brown!14,draw=black,line width=1.1pt] (0.55,1.90) rectangle (2.35,3.70);
+  \draw[fill=white,draw=black,line width=0.9pt] (0.85,2.20) rectangle (2.05,3.40);
+  \draw[<->] (0.55,1.58)--(2.35,1.58);
+  \node at (1.45,1.30){$22\mm$};
+  \draw[<->] (0.20,1.90)--(0.20,3.70);
+  \node[rotate=90] at (-0.15,2.80){$22\mm$};
+
+  \node[font=\bfseries] at (5.45,4.45){等面积实心杆};
+  \draw[fill=brown!14,draw=black,line width=1.1pt] (4.65,2.05) rectangle (6.25,3.65);
+  \draw[<->] (3.30,2.85)--(4.35,2.85);
+  \node[align=center] at (3.82,3.35){等面积\\换算};
+
+  \node[font=\bfseries,text=blue!65!black] at (9.40,4.45){截面效率结论};
+  \draw[-Latex,line width=1.0pt] (6.55,2.75)--(7.25,2.75);
+  \node[draw,fill=blue!6,rounded corners=1mm,align=center,text width=3.40cm,minimum height=1.10cm] at (9.40,2.75)
+    {同面积条件下\\空心截面惯性矩约为\\实心杆的 $8.70$ 倍};
+
+  % 下层统一放说明文字，与图形主体完全分开
+  \node[draw,fill=white,rounded corners=1mm,align=center,text width=3.00cm,minimum height=1.05cm] at (1.55,0.45)
+    {截面惯性矩\\$I=7223\mm^4$};
+  \node[draw,fill=white,rounded corners=1mm,align=center,text width=3.00cm,minimum height=1.05cm] at (5.35,0.45)
+    {截面惯性矩\\$I_s\approx830\mm^4$};
+  \node[draw,fill=green!6,rounded corners=1mm,align=center,text width=3.40cm,minimum height=1.05cm] at (9.40,0.45)
+    {材料远离中性轴\\抗弯效率更高};
+\end{tikzpicture}
+\caption{方形空心截面与等面积实心杆对比}
+\label{fig:section-compare}
+\end{figure}
+
+\subsection{主梁弯曲强度}
+计算目的：验算满载越障设计荷载下，方形空心主梁的最大弯曲应力是否小于竹材控制强度。
+
+四点对称加载时，跨中最大正弯矩为：
+\begin{equation}
+  M_{\max}=\frac{P_dL}{8}
+\end{equation}
+
+式中，$M_{\max}$ 为跨中最大弯矩；$P_d$ 为单根主梁设计总荷载；$L$ 为 $350\mm$ 等效计算长度。代入数据：
+\begin{equation}
+  M_{\max}=\frac{148.49\times350}{8}=6496.44\Nunit\cdot\mm
+\end{equation}
+
+最大弯曲应力公式为：
+\begin{equation}
+  \sigma_{\max}=\frac{M_{\max}}{W}
+\end{equation}
+
+代入数据：
+\begin{equation}
+  \sigma_{\max}=\frac{6496.44}{656.64}=9.89\MPa
+\end{equation}
+
+强度安全系数为：
+\begin{equation}
+  n_\sigma=\frac{f_c}{\sigma_{\max}}=\frac{30}{9.89}=3.03>2.0
+\end{equation}
+
+减速带严重冲击取 $\gamma_{d,\max}=2.0$，在相同四点加载模型下：
+\begin{equation}
+  \sigma_{2.0}=\frac{2.0}{1.5}\sigma_{\max}=13.19\MPa,
+  \qquad n_{\sigma,2.0}=\frac{30}{13.19}=2.27
+\end{equation}
+
+因此，四点加载基础工况和 $\gamma_{d,\max}=2.0$ 严重冲击工况的安全系数分别为 $3.03$ 和 $2.27$，均不低于 $2.0$。以严重冲击工况控制并要求安全系数不低于 $2.0$ 时，计算所需最小名义壁厚为 $1.03\mm$；实物采用 $1.2\mm$ 壁厚，满足控制要求。
+
+\subsection{截面参数敏感性分析}
+计算目的：考察主梁壁厚变化对截面惯性矩和弯曲应力的影响，从而说明“方形空心主梁”对几何尺寸较为敏感，制作时应重点控制侧壁厚度和截面方正度。
+
+\begin{table}[H]
+\centering
+\caption{主梁壁厚变化对受力性能的影响}
+\label{tab:thickness-sensitivity}
+\begin{tabular}{c c c c}
+\toprule
+\textbf{壁厚 $t$}/mm & \textbf{惯性矩 $I$}/mm$^4$ & \textbf{抵抗矩 $W$}/mm$^3$ & \textbf{最大弯曲应力}/MPa \\\midrule
+1.0 & 6188.00 & 562.55 & 11.55 \\
+1.2 & 7223.09 & 656.64 & 9.89 \\
+1.5 & 8661.25 & 787.39 & 8.25 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+  \begin{axis}[width=11.8cm,height=6.3cm,xlabel={主梁壁厚 $t$/mm},ylabel={最大弯曲应力/MPa},xmin=0.95,xmax=1.55,ymin=7,ymax=13,grid=both]
+    \addplot[mark=*,line width=1.2pt] coordinates {(1.0,11.55) (1.2,9.89) (1.5,8.25)};
+  \end{axis}
+\end{tikzpicture}
+\caption{主梁壁厚对弯曲应力的影响}
+\label{fig:thickness-sensitivity}
+\end{figure}
+
+由图\ref{fig:thickness-sensitivity}可见，壁厚由 $1.0\mm$ 增加到 $1.2\mm$ 时，应力下降较明显；增加至 $1.5\mm$ 可继续提高安全储备，同时会增加模型自重并降低载质比。因此，本方案将主梁名义壁厚确定为 $1.2\mm$。制作时若局部壁厚小于该设计值，应在该处补强，不通过整体加重替代局部质量控制。
+
+\subsection{主梁挠度}
+计算目的：估算满载时车身跨中变形，判断是否会影响布袋稳定和离地间隙。
+
+4 个等值集中力位于 $x/L=1/8,\,3/8,\,5/8,\,7/8$ 时，跨中静载挠度为：
+\begin{equation}
+  f_{s,\max}=\frac{41P_sL^3}{3072EI}
+\end{equation}
+
+式中，$P_s=P_{tot}/2=98.99\Nunit$ 为单根主梁承担的静载总荷载；$E$ 为竹材弹性模量；$I$ 为主梁截面惯性矩。代入数据：
+\begin{equation}
+  f_{s,\max}=\frac{41\times98.99\times350^3}{3072\times6000\times7223.09}=1.31\mm
+\end{equation}
+
+基础设计工况的挠度按动力系数放大为：
+\begin{equation}
+  f_{d,\max}=\gamma_d f_{s,\max}=1.5\times1.31=1.97\mm
+\end{equation}
+
+满载静置试验中左右主梁跨中挠度分别为 $5.6\mm$ 和 $5.8\mm$，平均实测值为：
+\begin{equation}
+  f_{\mathrm{test}}=\frac{5.6+5.8}{2}=5.70\mm
+\end{equation}
+
+由实测值反算车身的等效弹性模量：
+\begin{equation}
+  E_{\mathrm{eff}}=E\frac{f_{s,\max}}{f_{\mathrm{test}}}=6000\times\frac{1.31}{5.70}=1379\Nunit/\mm^2
+\end{equation}
+
+按实测刚度校准后的设计挠度为：
+\begin{equation}
+  f_{d,\mathrm{cal}}=\gamma_d f_{\mathrm{test}}=1.5\times5.70=8.55\mm,
+  \qquad f_{d,\mathrm{cal},2.0}=2.0\times5.70=11.40\mm
+\end{equation}
+
+实测静载挠度比理想四点加载理论值大 $335.1\%$，反映出胶接滑移、横向构件柔度和截面制作误差对整体刚度的影响。因此，离地和布袋稳定性采用实测值校准：正常动力工况取 $8.55\mm$，严重冲击工况取 $11.40\mm$。该取值直接来自实物加载记录，比理想梁公式更符合最终作品状态。
+
+\subsection{横向承托杆荷载分配}
+计算目的：确定六根横向构件向左右主梁传递的节点荷载。实物第 1、6 根为三角截面杆，第 2～6 根端部外伸；主梁整体仍采用四点等效模型，局部节点按不利构件包络验算。
+
+按四点等效模型，承托区设置 $n_{r,\mathrm{eq}}=4$ 个等效承托点，每个等效承托点的平均静载为：
+\begin{equation}
+  P_r=\frac{G}{n_{r,\mathrm{eq}}}=\frac{196}{4}=49.0\Nunit
+\end{equation}
+
+对任一横向承托杆作局部包络时，同时考虑不均匀系数 $\gamma_r=1.3$ 和基础动力系数 $\gamma_d=1.5$，单根承托杆设计荷载为：
+\begin{equation}
+  P_{rd}=\gamma_d\gamma_rP_r=1.5\times1.3\times49.0=95.55\Nunit
+\end{equation}
+
+单根横向承托杆两端与左右主梁连接，单端传入主梁和胶接节点的设计剪力为：
+\begin{equation}
+  V_{r,\mathrm{end}}=\frac{P_{rd}}{2}=\frac{95.55}{2}=47.78\Nunit
+\end{equation}
+第 1、6 根三角截面杆承担主要承托作用，第 2～5 根外伸横向杆辅助分配荷载并形成浅限位；六根实物构件在主梁整体计算中合并为四点等效加载。$\gamma_r=1.3$ 只用于任一横向构件及其端部节点的局部包络，不将六根构件的局部包络重复叠加到主梁整体荷载中。该构件分类与图\ref{fig:overall-model}及最终作品照片一致。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9,every node/.style={font=\small}]
+  \draw[line width=4pt,brown!55!black] (0,0)--(9,0); \draw[line width=4pt,brown!55!black] (0,3.2)--(9,3.2);
+  \draw[line width=3.0pt,brown!65!black] (1.0,-0.02)--(1.0,3.22);
+  \draw[line width=3.0pt,brown!65!black] (8.0,-0.28)--(8.0,3.48);
+  \foreach \x in {2.4,3.8,5.2,6.6}{\draw[line width=1.4pt,brown!65!black] (\x,-0.25)--(\x,3.45);}
+  \draw[fill=gray!12,draw=gray!60,rounded corners=1mm] (2.2,0.65) rectangle (6.8,2.55);
+  \node at (4.5,1.6){单袋布袋底面};
+  \foreach \x in {2.4,3.8,5.2,6.6}{\draw[load] (\x,2.8)--(\x,3.42);} 
+  \node[note] at (4.6,4.15){布袋柔性接触使荷载由多道横杆共同承担};
+  \draw[-Latex] (4.6,3.85)--(5.0,3.35);
+\end{tikzpicture}
+\caption{布袋底面与六根横向构件共同承托示意}
+\label{fig:rod-support}
+\end{figure}
+
+\subsection{横向承托布置优化}
+计算目的：说明横向承托点数量和间距的选择依据，避免布置过稀导致布袋局部下陷，也避免布置过密造成无效增重。
+
+\begin{table}[H]
+\centering
+\caption{横向承托点布置方案比较}
+\label{tab:crossbar-layout}
+\begin{tabularx}{\linewidth}{c c c Y Y}
+\toprule
+\textbf{方案} & \textbf{横向承托点数量} & \textbf{等效布置间距} & \textbf{特点} & \textbf{结论} \\\midrule
+I & 4 & $87.5\mm$ & 承托点较少，局部荷载较集中 & 比选方案 \\
+II & 5 & $70\mm$ & 荷载分布较密，构件数量适中 & 比选方案 \\
+III & 6 & $58.3\mm$ & 六根横向构件，首末为三角杆，其余端部外伸 & 实物采用 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.90,every node/.style={font=\small}]
+  % scheme I
+  \node[font=\bfseries] at (1.8,3.4){方案 I};
+  \draw[line width=3.2pt,brown!55!black] (0,0.2)--(3.6,0.2);
+  \draw[line width=3.2pt,brown!55!black] (0,2.8)--(3.6,2.8);
+  \foreach \x in {0.5,1.43,2.36,3.1}{\draw[line width=1.1pt,brown!65!black] (\x,0.1)--(\x,2.9);} 
+  \draw[fill=gray!14,draw=gray!50] (0.9,0.85) rectangle (2.7,2.15);
+  % scheme II
+  \node[font=\bfseries] at (6.8,3.4){方案 II};
+  \draw[line width=3.2pt,brown!55!black] (5.0,0.2)--(8.6,0.2);
+  \draw[line width=3.2pt,brown!55!black] (5.0,2.8)--(8.6,2.8);
+  \foreach \x in {5.4,6.1,6.8,7.5,8.2}{\draw[line width=1.1pt,brown!65!black] (\x,0.1)--(\x,2.9);} 
+  \draw[fill=gray!14,draw=gray!50] (5.8,0.85) rectangle (7.8,2.15);
+  % scheme III
+  \node[font=\bfseries] at (11.8,3.4){方案 III};
+  \draw[line width=3.2pt,brown!55!black] (10.0,0.2)--(13.6,0.2);
+  \draw[line width=3.2pt,brown!55!black] (10.0,2.8)--(13.6,2.8);
+  \foreach \x in {10.3,10.9,11.5,12.1,12.7,13.3}{\draw[line width=1.1pt,brown!65!black] (\x,0.1)--(\x,2.9);} 
+  \draw[fill=gray!14,draw=gray!50] (10.8,0.85) rectangle (12.8,2.15);
+\end{tikzpicture}
+\caption{不同横向承托点布置对比}
+\label{fig:crossbar-layout}
+\end{figure}
+
+综合实物尺寸、构件数量和装载稳定性，本方案采用“左右主梁 + 6 根横向构件”的布置方式，其中第 1、6 根为三角杆，第 2～6 根端部外伸。六根实物构件在主梁强度和挠度计算中合并为四点等效加载，构件形式与最终作品一致。
+
+\subsection{车身模块计算小结}
+\begin{table}[H]
+\centering
+\caption{车身模块关键结果汇总}
+\label{tab:body-summary}
+\begin{tabularx}{\linewidth}{c c c Y}
+\toprule
+\textbf{项目} & \textbf{符号} & \textbf{结果} & \textbf{评价} \\\midrule
+主梁等效计算长度 & $L$ & $350\mm$ & 与实物纵向空心主梁全长一致 \\
+单根主梁设计总荷载 & $P_d$ & $148.49\Nunit$ & 含模型自重，$\gamma_d=1.5$ \\
+单个等效承托点传入力 & $Q_d$ & $37.12\Nunit$ & 4 点对称等效加载 \\
+空心主梁截面惯性矩 & $I$ & $7223.09\mm^4$ & 高于等面积实心杆 \\
+最大弯曲应力 & $\sigma_{\max}$ & $9.89\MPa$ & 4 点加载基础工况 \\
+强度安全系数 & $n_\sigma$ & $3.03$ & 基础工况满足 $n\ge2.0$ \\
+严重工况应力 & $\sigma_{2.0}$ & $13.19\MPa$ & $\gamma_d=2.0$，安全系数 $2.27$ \\
+静载理论挠度 & $f_{s,\max}$ & $1.31\mm$ & 4 点加载理想梁结果 \\
+实测校准设计挠度 & $f_{d,\mathrm{cal}}$ & $8.55\mm$ & $\gamma_d=1.5$，用于离地复核 \\
+横向承托杆端部剪力 & $V_{r,\mathrm{end}}$ & $47.78\Nunit$ & 任一承托杆局部包络，用于胶接节点验算 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+\section{轮轴与车轮模块设计及验算}
+
+\subsection{轮轴模块边界}
+轮轴模块包括组委会提供的车轴、两个轴承、轴卡、自制车轮和车架车轴固定座。最终作品照片表明：两个轴承均安装在左右车轮轮毂内，车轴通过两个固定座与左右主梁连接；车轮与车轴之间的唯一转动连接为轮毂轴承。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small},>=Latex]
+  \fill[gray!4] (0.15,-0.10) rectangle (12.95,6.55);
+
+  % 车身主梁与连接端
+  \filldraw[fill=brown!25,draw=brown!75!black,line width=1.1pt,rounded corners=0.8mm]
+    (2.0,4.35) rectangle (10.4,4.85);
+  \node[above,font=\small] at (6.2,4.85){方形空心主梁};
+  \draw[forceblue,-Latex] (10.4,4.60)--(11.25,4.60);
+  \node[draw=blue!60!black,fill=white,rounded corners=1mm,inner sep=2pt,
+        font=\scriptsize,align=center] at (11.95,5.02){动力小车\\连接端};
+
+  % 竖向总荷载
+  \draw[load] (6.2,6.08)--(6.2,4.98);
+  \node[rednote,align=center] at (6.2,6.30){布袋与模型总重 $P_{tot}$};
+
+  % 左右车轴固定座
+  \filldraw[fill=gray!25,draw=black!70,line width=0.8pt,rounded corners=0.6mm]
+    (2.75,3.00) rectangle (3.65,4.35);
+  \draw[black!55,line width=0.6pt] (2.75,3.62)--(2.15,3.62);
+  \node[anchor=east,font=\scriptsize] at (2.05,3.62){左车轴固定座};
+
+  \filldraw[fill=gray!25,draw=black!70,line width=0.8pt,rounded corners=0.6mm]
+    (8.75,3.00) rectangle (9.65,4.35);
+  \draw[black!55,line width=0.6pt] (9.65,3.62)--(10.25,3.62);
+  \node[anchor=west,font=\scriptsize] at (10.35,3.62){右车轴固定座};
+
+  % 统一传力说明放在中部空白区，两根箭头分别指向固定座
+  \node[draw=red!60!black,fill=white,rounded corners=1mm,inner sep=2.5pt,
+        font=\scriptsize,align=center] (transfer) at (6.2,3.72)
+        {主梁支承力传至\\两侧车轴固定座};
+  \draw[red!60!black,-Latex,line width=0.75pt] (transfer.west)--(3.72,3.72);
+  \draw[red!60!black,-Latex,line width=0.75pt] (transfer.east)--(8.68,3.72);
+
+  % 车轴、轮毂轴承和车轮
+  \draw[gray!80!black,line width=2.0pt] (0.75,1.92)--(11.65,1.92);
+  \node[below,font=\small] at (6.2,1.70){车轴};
+  \foreach \x/\name in {1.20/左车轮,11.20/右车轮}{
+    \draw[fill=black!12,draw=black,line width=1.0pt] (\x,1.92) circle (0.82);
+    \foreach \a in {0,30,...,330}{\draw[gray!70!black,line width=0.55pt] (\x,1.92)--++(\a:0.68);}
+    \draw[fill=black!28,draw=black!75] (\x,1.92) circle (0.28);
+    \draw[fill=white,draw=black!70] (\x,1.92) circle (0.13);
+    \node[above,font=\scriptsize] at (\x,2.92){\name};
+    \draw[react] (\x,0.18)--(\x,0.68);
+    \node[below,align=center,font=\scriptsize,text=green!45!black] at (\x,0.14){对称工况\\$74.25\Nunit$};
+  }
+  \draw[black!55,line width=0.7pt] (0.92,1.60)--(0.35,1.25);
+  \node[anchor=east,font=\scriptsize] at (0.30,1.22){左轮毂轴承};
+  \draw[black!55,line width=0.7pt] (11.48,1.60)--(12.05,1.25);
+  \node[anchor=west,font=\scriptsize] at (12.10,1.22){右轮毂轴承};
+\end{tikzpicture}
+\caption{轮轴模块组成与竖向传力关系}
+\label{fig:wheel-reaction}
+\end{figure}
+
+\subsection{车轮设计反力}
+计算目的：统一后轴、动力小车连接端和单个车轮的受力口径。主梁模型的两个竖向支承分别为后轴和动力小车连接端，因此不能把系统总重直接平均给两只后轮。
+
+系统总竖向荷载为：
+\begin{equation}
+  P_{tot}=G+M_i g
+\end{equation}
+
+式中，$P_{tot}$ 为货物与模型总重；$M_i$ 为模型总质量，本方案取 $203\g=0.203\kg$。代入数据：
+\begin{equation}
+  P_{tot}=196+0.203\times9.8=197.99\Nunit
+\end{equation}
+
+在重心位于两支承中部的对称静载工况下，后轴总静反力和动力小车连接端静反力分别为：
+\begin{equation}
+  R_{r}=R_{f}=\frac{P_{tot}}{2}=\frac{197.99}{2}=98.99\Nunit
+\end{equation}
+
+基础动力工况的后轴总设计反力和对称单轮设计反力为：
+\begin{equation}
+  R_{r,d}=\gamma_dR_r=1.5\times98.99=148.49\Nunit,
+  \qquad R_{w,\mathrm{avg},d}=\frac{R_{r,d}}{2}=74.25\Nunit
+\end{equation}
+
+单桥、单轮抬升或一侧车轮完全承担后轴反力时，取单轮局部承压包络：
+\begin{equation}
+  R_{w,\mathrm{env}}=R_{r,d}=148.49\Nunit
+\end{equation}
+
+因此，$74.25\Nunit$ 是对称单轮设计反力，$148.49\Nunit$ 用于单轮极端包络、轮毂轴承和车轴固定座局部承压复核。反力由车轮经轮毂轴承传入车轴，再通过左右车轴固定座传入主梁。
+
+\subsection{车轴固定座局部承压}
+计算目的：估算车轴固定座加厚区的平均承压应力。
+
+车轴固定座有效承压面积按实物加厚区 $A_b=18\mm\times18\mm=324\mm^2$ 计算，则对称单轮和单轮包络下的平均承压应力分别为：
+\begin{equation}
+  \sigma_{b,\mathrm{avg}}=\frac{R_{w,\mathrm{avg},d}}{A_b}=0.23\MPa,
+  \qquad
+  \sigma_{b,\mathrm{env}}=\frac{R_{w,\mathrm{env}}}{A_b}=0.46\MPa
+\end{equation}
+
+式中，$A_b$ 为车轴固定座有效承压面积。单轮包络承压应力为 $0.46\MPa$；实物固定座采用多层竹片交错胶接，并把局部反力扩散到主梁上下壁。1 次 $36$ 袋试跑和 2 次 $40$ 袋满载试跑后，固定座未出现压痕扩展、开胶或车轴偏斜，局部承压满足实物验收要求。
+
+\subsection{车轮与离地要求}
+最终作品采用十二辐式竹制车轮，外径 $D_o=70\mm$，轮辐有效长度 $l_s=22\mm$，轴承安装在轮毂中心。为避免依赖未经实测的多轮辐分配比例，按单轮极端包络 $R_{w,\mathrm{env}}=148.49\Nunit$，取一根下部控制轮辐承担全部包络反力，则其径向设计力为：
+\begin{equation}
+  F_{s,d}=R_{w,\mathrm{env}}=148.49\Nunit
+\end{equation}
+十二根轮辐均匀连接轮毂和轮缘，左右车轮结构与最终作品照片一致。满载静置后车轮未出现可见径向变形；1 次 $36$ 袋试跑和 2 次 $40$ 袋满载试跑后，轮辐、轮缘和轮毂均无开裂或松动。上述 3 次试跑过程中，除车轮外其余构件均未接触赛道、减速带或单桥障碍，满足比赛通行要求。
+
+\begin{table}[H]
+\centering
+\caption{轮轴模块控制项目}
+\label{tab:wheel-control}
+\begin{tabularx}{\linewidth}{cY Y}
+\toprule
+\textbf{控制项目} & \textbf{检查方式} & \textbf{合格要求} \\\midrule
+轴承转动 & 手拨车轮观察空转 & 转动顺畅，无明显卡滞 \\
+车轴固定座承压 & 满载静置观察 & 无压痕扩展，无开胶 \\
+车轴固定 & 轴卡安装后检查 & 车轮不松脱，轴卡不过度夹紧 \\
+车轮几何 & 核对外径、轮辐长度和数量 & $D_o=70\mm$，$l_s=22\mm$，十二辐均匀布置 \\
+轮辐与轮毂 & 单轮包络及试跑检查 & 单根控制轮辐设计力 $148.49\Nunit$，无开裂、无松动 \\
+离地间隙 & 1 次 36 袋和 2 次 40 袋通行试验 & 除车轮外不接触赛道和障碍物 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+\subsection{滚动阻力与轮轴校正}
+计算目的：说明车轮转动状态和轴承同轴度对行驶效率的影响，并给出赛前校正重点。
+
+滚动阻力可按下式近似估算：
+\begin{equation}
+  F_r=\mu_r m_{tot}g
+\end{equation}
+
+当总质量 $m_{tot}=20.203\kg$ 时，不同滚动阻力系数下的阻力见表\ref{tab:rolling-resistance}。
+
+\begin{table}[H]
+\centering
+\caption{滚动阻力系数对行驶阻力的影响}
+\label{tab:rolling-resistance}
+\begin{tabular}{c c c c}
+\toprule
+\textbf{滚动阻力系数 $\mu_r$} & \textbf{0.02} & \textbf{0.03} & \textbf{0.05} \\\midrule
+滚动阻力 $F_r$/N & 3.96 & 5.94 & 9.90 \\
+相对 0.02 的增幅 & -- & 50\% & 150\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small},>=Latex]
+  % 左侧：合格状态
+  \node[font=\bfseries] at (2.85,3.55){合格校正状态};
+  \draw[line width=1.1pt] (0.55,1.75)--(5.15,1.75);
+  \draw[line width=1.2pt,brown!65!black] (1.25,2.45)--(4.45,2.45);
+  \foreach \x in {1.25,4.45}{
+    \draw[fill=black!20,draw=black] (\x,1.75) circle (0.38);
+    \draw[fill=white,draw=black!70] (\x,1.75) circle (0.16);
+    \draw[dashed,blue!65!black] (\x,1.20)--(\x,2.80);
+  }
+  \node[draw,fill=blue!5,rounded corners=1mm,align=center,text width=4.30cm] at (2.85,0.45)
+    {车轴保持平行；\\左右固定座同高，车轮受力均匀};
+  \draw[-Latex,blue!65!black,line width=0.8pt] (2.85,0.98)--(2.85,1.55);
+
+  % 右侧：偏斜风险
+  \node[font=\bfseries,text=red!70!black] at (9.20,3.55){偏斜风险状态};
+  \draw[line width=1.1pt] (6.90,1.75)--(11.50,1.75);
+  \draw[line width=1.2pt,brown!65!black] (7.60,2.25)--(10.80,2.65);
+  \foreach \x/\y in {7.60/1.75,10.80/1.75}{
+    \draw[fill=black!20,draw=black] (\x,\y) circle (0.38);
+    \draw[fill=white,draw=black!70] (\x,\y) circle (0.16);
+  }
+  \draw[dashed,red!70!black] (7.60,1.20)--(7.60,2.80);
+  \draw[dashed,red!70!black] (10.80,1.20)--(10.80,2.80);
+  \draw[-Latex,red!70!black,line width=0.9pt] (9.20,2.95)--(10.10,2.58);
+  \node[draw,fill=yellow!10,rounded corners=1mm,align=center,text width=4.30cm] at (9.20,0.45)
+    {若固定座高度或方向偏差，\\车轮滚动阻力会明显增大};
+\end{tikzpicture}
+\caption{轮轴同轴度校正示意}
+\label{fig:axle-align}
+\end{figure}
+
+由表\ref{tab:rolling-resistance}可见，滚动阻力系数从 $0.02$ 增大到 $0.05$ 时，阻力会增加约 $6\Nunit$。该增量小于满载牵引能力，但会明显拉长行驶时间。因此，制作完成后应优先检查轮轴平行度、轴承自由转动情况以及左右轮受力是否均匀。
+
+\subsection{轮轴受力路径及结构示意}
+为进一步核对轮轴与车轮模块的构造关系，绘制车轮、轮毂、轮辐、轴承和车轴的结构示意图。图中尺寸按实物设计值标注，受力输入仍采用统一荷载模型：基础对称工况采用 $R_{w,\mathrm{avg},d}=74.25\Nunit$，单桥局部承压包络采用 $R_{w,\mathrm{env}}=148.49\Nunit$。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small},>=Latex]
+  \fill[gray!5] (0,0) rectangle (13.2,6.0);
+  \node[font=\bfseries] at (6.6,5.90){十二辐式车轮—轮毂轴承—车轴结构};
+
+  % 车轮轮盘、轮缘和轮辐
+  \draw[fill=black!10,draw=black!75,line width=1.0pt] (3.6,3.0) circle (1.75);
+  \draw[draw=black!55,line width=1.0pt] (3.6,3.0) circle (1.58);
+  \draw[fill=black!25,draw=black!70,line width=0.9pt] (3.6,3.0) circle (0.48);
+  \draw[fill=white,draw=black!70,line width=0.8pt] (3.6,3.0) circle (0.22);
+  \foreach \a in {0,30,...,330}{
+    \draw[gray!70!black,line width=1.3pt] (3.6,3.0) -- ++(\a:1.48);
+  }
+  \node[draw=black!45,fill=white,rounded corners=1mm,align=center,font=\scriptsize] at (1.15,4.65){轮缘\\外径 $D_o=70\mm$};
+  \draw[-Latex,black!60] (1.85,4.35)--(2.35,4.00);
+  \node[draw=black!45,fill=white,rounded corners=1mm,align=center,font=\scriptsize] at (0.95,1.25){轮辐\\$l_s=22\mm$};
+  \draw[<->,blue!65!black] (3.6,3.0)--(4.55,3.0);
+  \node[blue!65!black,fill=white,inner sep=1pt,font=\scriptsize] at (4.08,3.20){$l_s$};
+
+  \node[draw=black!45,fill=white,rounded corners=1mm,align=center,font=\scriptsize] at (5.00,4.65){轮毂内\\轴承};
+  \draw[-Latex,black!60] (4.70,4.30)--(3.95,3.40);
+
+  % 车轴和车架固定支承
+  \draw[gray!80!black,line width=2.4pt] (3.60,3.0)--(11.65,3.0);
+  \node[below,font=\scriptsize] at (8.35,2.82){车轴};
+  \draw[fill=gray!24,draw=black!70,rounded corners=0.6mm] (7.25,3.42) rectangle (8.20,4.25);
+  \node[align=center,font=\scriptsize] at (7.72,3.84){车轴固定座\\与主梁};
+  \draw[forceblue] (8.20,3.85)--(9.25,3.85);
+  \node[draw=blue!60!black,fill=white,rounded corners=1mm,font=\scriptsize] at (10.15,3.85){车架传力};
+
+  % 竖向荷载与地面反力
+  \draw[load] (7.72,5.15)--(7.72,4.35);
+  \node[rednote,font=\scriptsize] at (7.72,5.25){主梁传下的竖向荷载};
+  \draw[react] (3.6,0.45)--(3.6,1.20);
+  \node[green!45!black,fill=white,inner sep=1pt,font=\scriptsize] at (3.6,0.20){$R_{w,\mathrm{env}}=148.49\Nunit$};
+  \draw[gray!70!black,line width=1.0pt] (1.8,1.22)--(5.35,1.22);
+  \node[below,font=\scriptsize] at (5.9,1.08){赛道接触线};
+\end{tikzpicture}
+\caption{十二辐式车轮及轮轴受力图}
+\label{fig:midas-wheel-force}
+\end{figure}
+
+图中标明了轮缘、十二根轮辐、轮毂轴承、车轴、车轴固定座、主梁传力和赛道反力。实物检查重点为轮辐根部、轮毂孔壁、固定座胶缝和车轴平直度。最终作品两只车轮转动顺畅，1 次 $36$ 袋试跑和 2 次 $40$ 袋满载试跑后，未出现轮辐开裂、轮毂松动或固定座偏斜。
+
+\newpage
+\section{连接节点模块设计与计算}
+
+\subsection{胶接节点计算}
+连接模块中的胶接节点主要用于 6 根横向构件与空心主梁之间的连接。由于构件端部胶缝对剥离敏感，计算时验算平均剪应力，并采用端部包覆降低剥离风险。
+
+计算目的：估算任一横向承托杆端部胶缝的平均剪应力。
+
+\begin{equation}
+  A_g=l_gw_g
+\end{equation}
+
+式中，$A_g$ 为单侧胶接面积；$l_g$ 为胶接长度；$w_g$ 为胶接宽度。取 $l_g=15\mm$，$w_g=6\mm$，代入：
+\begin{equation}
+  A_g=15\times6=90\mm^2
+\end{equation}
+
+横杆设计荷载按前文统一取 $P_{rd}=95.55\Nunit$，单端反力取 $P_{rd}/2$，胶缝平均剪应力为：
+\begin{equation}
+  \tau_g=\frac{P_{rd}/2}{A_g}=\frac{95.55/2}{90}=0.53\MPa
+\end{equation}
+
+该值较低，说明平均剪切不是控制问题。节点控制重点应放在端部剥离和局部压痕上，制作时应采用搭接、包覆和补胶，尽量让胶缝以剪切传力。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,every node/.style={font=\small}]
+  \node[font=\bfseries] at (2,3.3){不利节点};
+  \draw[fill=brown!15,draw=black] (0.7,0.8) rectangle (1.3,2.8);
+  \draw[line width=2pt,brown!65!black] (1.3,1.8)--(3.6,1.8);
+  \draw[load] (3.2,2.8)--(3.2,1.95); \node[red!70!black] at (2.4,2.45){易剥离};
+  \node[font=\bfseries] at (8,3.3){优化节点};
+  \draw[fill=brown!15,draw=black] (6.7,0.8) rectangle (7.3,2.8);
+  \draw[line width=2pt,brown!65!black] (7.0,1.8)--(9.6,1.8);
+  \draw[fill=brown!25,draw=black] (6.95,1.45) rectangle (8.1,2.15);
+  \draw[load] (9.2,2.8)--(9.2,1.95);
+  \node[green!45!black] at (8.6,2.45){搭接+包覆};
+\end{tikzpicture}
+\caption{横向承托杆端部胶接节点优化示意}
+\label{fig:joint-peel}
+\end{figure}
+
+\subsection{四螺丝牵引连接}
+动力小车通过 4 颗 M4 螺丝与模型连接。连接处既传递牵引力，也承受转向时的横向扰动。本方案采用最长 $8\mm$ 螺丝，单颗质量 $1.6\g$，4 颗合计 $6.4\g$，已计入模型总质量。
+
+计算目的：同时验算牵引连接中单颗螺丝的水平牵引剪力、竖向支承剪力和合力剪应力。由于主梁计算把动力小车连接端作为竖向支座，连接板不能只按水平牵引力设计。
+
+动力小车电机额定转矩为 $16\,\mathrm{kgf\cdot cm}$。连接强度按该额定值换算的轴端理论牵引力计算，并在坡道章节另计传动效率，因此不会低估螺丝组的水平剪力。
+\begin{equation}
+  T_{\mathrm{motor}}=16\times9.8\times10^{-2}=1.568\Nunit\cdot\mathrm{m}
+\end{equation}
+
+动力轮半径取实物值 $r=0.0425\mathrm{m}$，未计传动损失的轴端理论牵引力为：
+\begin{equation}
+  F_{t,0}=\frac{T_{\mathrm{motor}}}{r}=\frac{1.568}{0.0425}=36.9\Nunit
+\end{equation}
+
+考虑减速器、轴承和轮胎（车轮）滚动损失后，真正可用于坡道的牵引力应为：
+\begin{equation}
+  F_{t,\mathrm{avail}}=\eta_tF_{t,0}=36.9\eta_t\Nunit
+\end{equation}
+
+连接端的竖向设计支承力取与前文支承模型一致的动力小车端反力：
+\begin{equation}
+  F_{v,d}=R_{f,d}=\gamma_dR_f=1.5\times98.99=148.49\Nunit
+\end{equation}
+
+四颗螺丝平均承担时，单颗螺丝的水平、竖向剪力及合力分别为：
+\begin{equation}
+  V_{h,s}=\frac{F_{t,0}}{4}=\frac{36.9}{4}=9.23\Nunit,
+  \qquad V_{v,s}=\frac{F_{v,d}}{4}=\frac{148.49}{4}=37.12\Nunit,
+\end{equation}
+\begin{equation}
+  V_s=\sqrt{V_{h,s}^2+V_{v,s}^2}
+      =\sqrt{9.23^2+37.12^2}=38.25\Nunit
+\end{equation}
+
+按 M4 螺丝有效剪切面积 $A_s\approx8.8\mm^2$，剪应力为：
+\begin{equation}
+  \tau_s=\frac{V_s}{A_s}=\frac{38.25}{8.8}=4.35\MPa
+\end{equation}
+
+实物连接板采用四孔上下、左右对称布置，牵引作用线通过螺丝组中部，计算按四颗螺丝平均分配。单颗螺丝合力 $38.25\Nunit$、剪应力 $4.35\MPa$；满载牵引试验后螺丝未松动，孔边和连接板胶缝均无裂纹或开胶，连接节点满足实物验收要求。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.86,every node/.style={font=\small},>=Latex]
+  \draw[line width=2pt,brown!60!black] (0.0,0.7)--(0.0,3.7);
+  \draw[line width=2pt,brown!60!black] (1.8,0.7)--(1.8,3.7);
+  \draw[line width=1.2pt,brown!70!black] (-0.5,1.3)--(2.3,1.3);
+  \draw[line width=1.2pt,brown!70!black] (-0.5,3.1)--(2.3,3.1);
+  \node[draw,fill=white,rounded corners=1mm,align=center,text width=1.35cm] at (0.9,4.15){主梁\\连接区};
+  \draw[fill=brown!18,draw=black,line width=1pt] (3.2,1.0) rectangle (4.7,3.4);
+  \foreach \x/\y in {3.55/1.35,4.35/1.35,3.55/3.05,4.35/3.05}{\draw[fill=white] (\x,\y) circle (0.10);} 
+  \node[draw,fill=white,rounded corners=1mm,align=center,text width=1.75cm] at (3.95,4.55){竹片加厚\\连接板};
+  \draw[fill=gray!22,draw=black,line width=1pt] (6.2,0.85) rectangle (8.1,3.55);
+  \foreach \x/\y in {6.55/1.35,7.45/1.35,6.55/3.05,7.45/3.05}{\draw[fill=white] (\x,\y) circle (0.10);} 
+  \node[draw,fill=white,rounded corners=1mm,align=center,text width=1.75cm] at (7.15,4.15){动力小车\\连接面};
+  \foreach \y in {1.35,3.05}{\draw[dashed] (4.35,\y)--(6.55,\y); \draw[dashed] (3.55,\y)--(7.45,\y);} 
+  \node[draw,fill=white,rounded corners=1mm,text width=4.5cm,align=center] at (4.45,0.20){四孔对称布置，提高抗扭能力，便于现场快速安装};
+  \draw[redmark] (6.55,3.05) circle (0.28);
+  \draw[redmark,-Latex] (6.75,3.18)--(8.25,3.35);
+  \draw[fill=white,draw=red!75!black,line width=1.15pt] (8.85,3.35) circle (0.55);
+  \draw[fill=gray!22,draw=black] (8.61,3.11) rectangle (9.09,3.59);
+  \draw[fill=white,draw=black] (8.85,3.35) circle (0.15);
+  \draw[redmark] (8.85,3.35) circle (0.27);
+  \node[rednote,align=center,text width=1.7cm] at (10.18,3.35){孔边承压\\重点检查};
+\end{tikzpicture}
+\caption{四螺丝牵引连接节点示意}
+\label{fig:screw-node}
+\end{figure}
+
+\subsection{孔边承压验算}
+计算目的：验算竹制连接板在螺丝孔边的平均承压应力。
+
+孔边承压应力按螺丝合力保守估算，公式为：
+\begin{equation}
+  \sigma_{p,\mathrm{hole}}=\frac{V_s}{dt_p}
+\end{equation}
+
+式中，$\sigma_{p,\mathrm{hole}}$ 为孔边承压应力；$d=4\mm$ 为螺丝直径；$t_p$ 为连接板等效厚度。取 $t_p=3\mm$，代入：
+\begin{equation}
+  \sigma_{p,\mathrm{hole}}=\frac{38.25}{4\times3}=3.19\MPa
+\end{equation}
+
+该值为对称四孔布置下的平均承压应力。实物连接板等效厚度按 $3\mm$ 制作，孔位上下、左右对称，孔边采用双面贴片并保留完整连续竹纤维；满载牵引试验后孔边无裂纹、净截面无撕裂、贴片无开胶，连接板按实物试验判据验收合格。
+
+\begin{table}[H]
+\centering
+\caption{连接模块计算结果汇总}
+\label{tab:joint-summary}
+\begin{tabularx}{\linewidth}{c c c Y}
+\toprule
+\textbf{项目} & \textbf{符号} & \textbf{结果} & \textbf{评价} \\\midrule
+单侧胶接面积 & $A_g$ & $90\mm^2$ & 端部采用搭接和包覆 \\
+胶缝平均剪应力 & $\tau_g$ & $0.53\MPa$ & 满载试验后无剥离和开胶 \\
+轴端理论牵引力 & $F_{t,0}$ & $36.9\Nunit$ & 未计传动效率的上限 \\
+连接端竖向设计支承力 & $F_{v,d}$ & $148.49\Nunit$ & 与主梁支承模型一致 \\
+单颗水平/竖向剪力 & $V_{h,s}/V_{v,s}$ & $9.23/37.12\Nunit$ & 四孔对称，作用线通过螺丝组中部 \\
+单颗螺丝合力 & $V_s$ & $38.25\Nunit$ & 水平与竖向剪力合成 \\
+螺丝剪应力 & $\tau_s$ & $4.35\MPa$ & M4 螺丝平均剪切 \\
+孔边承压应力 & $\sigma_{p,\mathrm{hole}}$ & $3.19\MPa$ & 双面贴片，满载牵引后无裂纹 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{连接构造控制}
+在现场制作中，节点失效往往早于杆件本体失效，因此牵引连接板采用“双面贴片 + 中间承力板”的夹层形式，横杆端部采用顺纹贴片包覆，车轴固定座采用局部加厚，以减小剥离和局部压痕风险。
+
+图中按“整体位置 + 局部放大 + 红色框选”表达螺丝孔、车轴固定座和横杆端部，构件名称与最终作品保持一致。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,every node/.style={font=\small}]
+  \draw[line width=2.2pt,brown!60!black] (0.2,1.0)--(3.2,1.0);
+  \draw[line width=1.3pt,brown!80!black] (3.2,1.0)--(4.6,1.6);
+  \draw[line width=1.3pt,brown!80!black] (3.2,1.0)--(4.6,0.4);
+  \draw[fill=orange!18,draw=orange!55!black] (2.85,0.78) rectangle (3.55,1.22);
+  \node[draw,fill=white,rounded corners=1mm] at (2.0,2.35){横杆端部包覆贴片};
+  \draw[-Latex] (2.0,2.05)--(3.2,1.22);
+  \draw[fill=brown!18,draw=brown!65!black] (6.0,0.4) rectangle (9.0,2.0);
+  \draw[fill=white] (6.6,1.4) circle (0.10);
+  \draw[fill=white] (6.6,0.8) circle (0.10);
+  \draw[fill=white] (8.4,1.4) circle (0.10);
+  \draw[fill=white] (8.4,0.8) circle (0.10);
+  \draw[line width=1.8pt,brown!60!black] (9.0,1.2)--(10.8,1.2);
+  \node[draw,fill=white,rounded corners=1mm] at (7.5,2.65){四螺丝牵引连接板};
+  \draw[-Latex] (7.5,2.35)--(7.5,2.0);
+\end{tikzpicture}
+\caption{关键连接构造优化示意}
+\label{fig:connection-detail}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{关键节点构造控制表}
+\label{tab:connection-control}
+\begin{tabularx}{\linewidth}{Y Y Y}
+\toprule
+\textbf{节点部位} & \textbf{主要风险} & \textbf{构造控制} \\\midrule
+横杆端部 & 剪切后转化为剥离破坏 & 增加顺纹贴片或竹皮包覆，扩大搭接长度 \\
+车轴固定座 & 局部压痕导致变形集中 & 固定座局部加厚，并保证与主梁贴合严密 \\
+牵引连接板 & 孔距偏差、孔边撕裂 & 采用双面对称贴片，孔边留足边距 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+\section{典型工况专项验算}
+
+\subsection{坡道牵引与布袋防滑}
+计算目的：判断坡道上行动力是否足够，并判断布袋是否容易沿坡向滑动。
+
+设总质量为：
+\begin{equation}
+  m_{tot}=20.0+0.203=20.203\kg
+\end{equation}
+
+坡角取 $\alpha=4^\circ$，沿坡向重力分力为：
+\begin{equation}
+  F_\alpha=m_{tot}g\sin\alpha
+\end{equation}
+
+代入数据：
+\begin{equation}
+  F_\alpha=20.203\times9.8\times\sin4^\circ=13.81\Nunit
+\end{equation}
+
+专项验算取滚动阻力系数 $\mu_r=0.03$，滚动阻力为：
+\begin{equation}
+  F_r=\mu_rm_{tot}g\cos\alpha=0.03\times20.203\times9.8\times\cos4^\circ=5.93\Nunit
+\end{equation}
+
+坡道匀速上行所需牵引力为：
+\begin{equation}
+  F_{req}=F_\alpha+F_r=13.81+5.93=19.74\Nunit
+\end{equation}
+
+电机转矩不能直接等同于轮地牵引力。设传动、轴承和车轮滚动的综合效率为 $\eta_t$，驱动轮法向力为 $N_d$，轮地附着系数为 $\mu_w$，则真正可用的牵引力上限为：
+\begin{equation}
+  F_{t,\mathrm{usable}}=\min\left(\eta_tF_{t,0},\,\mu_wN_d\right)>F_{req}
+\end{equation}
+
+动力小车驱动轮静态支承力按前文对称模型取 $N_d=R_f=98.99\Nunit$，则理论上至少需要：
+\begin{equation}
+  \eta_{t,\min}=\frac{F_{req}}{F_{t,0}}=\frac{19.74}{36.9}=0.535,
+  \qquad
+  \mu_{w,\min}=\frac{F_{req}}{N_d}=\frac{19.74}{98.99}=0.199
+\end{equation}
+
+由此得到理论控制条件：传动系统总效率不低于 $53.5\%$，驱动轮与赛道的等效附着系数不低于 $0.20$。表\ref{tab:run-record}记录的 2 次 $40$ 袋满载全程试跑均完成坡道、弯道和障碍路段，行驶时间均为 $34\mathrm{s}$，未出现驱动轮持续打滑或上坡停滞。因此，牵引能力最终按实物满载通行结果判定为满足要求。
+
+布袋防滑条件为：
+\begin{equation}
+  \mu>\tan\alpha
+\end{equation}
+
+当 $\alpha=4^\circ$ 时，布袋防滑所需的最低等效摩擦系数为 $\tan4^\circ=0.070$。2 次 $40$ 袋满载全程试跑中布袋未沿坡向滑落，实物满足该工况要求。布袋与竹材之间的摩擦系数和驱动轮与赛道之间的附着系数属于不同接触界面，计算中分别使用。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small},>=Latex]
+  \draw[fill=gray!10,draw=black!60] (0.8,0.6)--(8.6,0.6)--(8.6,1.9)--(0.8,1.35)--cycle;
+  \draw[line width=3.0pt,brown!55!black] (2.0,2.55)--(6.9,2.92);
+  \draw[line width=3.0pt,brown!55!black] (2.0,3.68)--(6.9,4.05);
+  \foreach \x/\yb/\yt in {2.55/2.59/3.72,4.05/2.70/3.83,5.55/2.81/3.94}{\draw[line width=1.1pt,brown!65!black] (\x,\yb)--(\x,\yt);} 
+  \draw[fill=gray!16,draw=gray!60] (3.75,3.00) rectangle +(1.55,0.86);
+  \draw[blue!70!black,-Latex,line width=1.0pt] (6.1,4.28)--(7.55,4.66);
+  \node[draw,fill=white,rounded corners=1mm,text=blue!70!black] at (8.25,4.98){牵引方向};
+  \draw[red!75!black,-Latex,line width=1.0pt] (4.52,4.70)--(4.52,3.90);
+  \node[draw,fill=white,rounded corners=1mm,text=red!75!black] at (4.52,5.18){重力};
+  \draw[red!75!black,-Latex,line width=1.0pt] (4.25,3.52)--(3.10,3.30);
+  \node[draw,fill=white,rounded corners=1mm,text=red!75!black] at (2.15,4.05){坡向分力};
+  \draw[green!45!black,-Latex,line width=1.0pt] (4.25,2.90)--(5.50,3.00);
+  \node[draw,fill=white,rounded corners=1mm,text=green!45!black] at (6.55,2.45){摩擦阻滑};
+  \node[draw,fill=white,rounded corners=1mm,text width=2.35cm,align=center] at (1.85,2.10){坡道上坡\\保持匀速};
+\end{tikzpicture}
+\caption{坡道牵引与布袋防滑示意}
+\label{fig:slope-force}
+\end{figure}
+
+\subsection{弯道抗倾覆}
+计算目的：验算模型转弯时重心是否会越出支承范围。
+
+专项工况取车轮支承宽度 $B=300\mm$、满载重心高度 $h_c=120\mm$、弯道控制速度 $v=0.30\mathrm{m/s}$ 和弯道半径 $R=0.30\mathrm{m}$，则侧向加速度为：
+\begin{equation}
+  a_y=\frac{v^2}{R}=\frac{0.30^2}{0.30}=0.30\mss
+\end{equation}
+
+抗倾覆条件为：
+\begin{equation}
+  \frac{a_y}{g}<\frac{B/2}{h_c}
+\end{equation}
+
+代入数据：
+\begin{equation}
+  \frac{a_y}{g}=\frac{0.30}{9.8}=0.031,\qquad \frac{B/2}{h_c}=\frac{150}{120}=1.25
+\end{equation}
+
+因 $0.031<1.25$，模型整体抗倾覆裕度充足。实际风险主要是布袋相对滑移，因此第 2～5 根外伸横向杆与主梁边缘共同形成浅限位，确保布袋不向车轮和动力小车方向移动。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95,every node/.style={font=\small}]
+  \fill[gray!6] (0.4,0.0) rectangle (8.7,5.5);
+  \filldraw[fill=green!8,draw=green!45!black,dashed,line width=1pt] (0.9,0.55)--(7.1,0.55)--(6.25,2.55)--(1.75,2.55)--cycle;
+  \node[green!45!black] at (4.0,0.15){支承范围};
+  \draw[line width=4pt,brown!55!black] (1.6,1.1)--(1.6,5.0);
+  \draw[line width=4pt,brown!55!black] (6.4,1.1)--(6.4,5.0);
+  \foreach \y in {2.0,3.2,4.4}{\draw[line width=1.4pt,brown!65!black] (1.2,\y)--(6.8,\y);} 
+  \draw[fill=gray!15,draw=gray!60] (2.8,2.3) rectangle (5.2,4.1);
+  \draw[fill=black!25,draw=black] (1.0,1.1) circle (0.42);
+  \draw[fill=black!25,draw=black] (7.0,1.1) circle (0.42);
+  \draw[red!75!black,dashed,line width=1pt] (4.0,4.75)--(4.0,0.60);
+  \draw[fill=red!75!black] (4.0,3.25) circle (0.08);
+  \node[softlabel,text=red!75!black] at (4.75,3.35){重心投影};
+  \draw[forceblue] (8.05,3.2)--(6.95,3.2);
+  \node[softlabel,text=blue!70!black] at (8.0,3.55){侧向扰动};
+\end{tikzpicture}
+\caption{弯道抗倾覆与重心投影示意}
+\label{fig:stability}
+\end{figure}
+
+\subsection{减速带冲击}
+计算目的：说明动力放大系数选取对支承反力的影响，并给出操控要求。
+
+对称静载下后轴总反力为 $R_r=98.99\Nunit$。当动力放大系数取不同数值时，后轴总设计反力和对称单轮反力分别为：
+\begin{equation}
+  R_{r,d}=\gamma_d R_r,
+  \qquad R_{w,\mathrm{avg},d}=\frac{R_{r,d}}{2}
+\end{equation}
+
+\begin{table}[H]
+\centering
+\caption{动力放大系数对后轴与单轮反力的影响}
+\label{tab:dynamic-reaction}
+\begin{tabular}{c c c c c}
+\toprule
+\textbf{动力放大系数 $\gamma_d$} & \textbf{1.0} & \textbf{1.3} & \textbf{1.5} & \textbf{2.0} \\\midrule
+后轴总设计反力/N & 98.99 & 128.69 & 148.49 & 197.99 \\
+对称单轮设计反力/N & 49.50 & 64.35 & 74.25 & 98.99 \\
+相对静载增幅 & -- & 30\% & 50\% & 100\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+通过减速带时采用 $\gamma_{d,\max}=2.0$ 包络，主梁应力为 $13.19\MPa$、安全系数为 $2.27$。操控采用低速连续通过，车轮保持顺畅，重点检查车轴固定座和横杆端部胶缝。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+  \begin{axis}[width=12cm,height=6.2cm,xlabel={动力放大系数 $\gamma_d$},ylabel={后轴总设计反力/N},xmin=1,xmax=2.05,ymin=80,ymax=210,grid=both]
+  \addplot[mark=*,line width=1.2pt] coordinates {(1.0,98.99) (1.3,128.69) (1.5,148.49) (2.0,197.99)};
+  \end{axis}
+\end{tikzpicture}
+\caption{动力放大系数与后轴总反力关系}
+\label{fig:dynamic-reaction}
+\end{figure}
+
+\subsection{单桥抗扭}
+计算目的：用单轮包络反力建立非对称荷载，并核对单桥工况下的车架抗扭能力。
+
+按现有车轮支承宽度取 $B_f=300\mm$。对称基础工况每个后轮承担 $74.25\Nunit$；单桥一侧完全承担后轴设计反力时取 $R_{w,\mathrm{env}}=148.49\Nunit$，相对对称工况增加的差额为：
+\begin{equation}
+  \Delta R=R_{w,\mathrm{env}}-R_{w,\mathrm{avg},d}=148.49-74.25=74.24\Nunit
+\end{equation}
+
+该单侧反力相对车架中心线形成的扭转载荷包络为：
+\begin{equation}
+  M_t=R_{w,\mathrm{env}}\frac{B_f}{2}
+      =148.49\times\frac{300}{2}=22274\Nunit\cdot\mm
+      =22.27\Nunit\cdot\mathrm{m}
+\end{equation}
+
+该工况的扭转载荷包络为 $22.27\Nunit\cdot\mathrm{m}$。实物由 6 根横向构件跨接左右主梁，第 1、6 根三角杆提供主要横向刚度，第 2～5 根外伸横向杆辅助约束相对位移；1 次 $36$ 袋专项试跑和 2 次 $40$ 袋全程试跑通过单桥路段后，左右主梁无永久错位，胶接节点无开裂，车架最低点和布袋均未接触障碍物，抗扭性能满足实物验收要求。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.98,every node/.style={font=\small}]
+  \draw[fill=gray!12] (0,0) rectangle (11,0.35);
+  \draw[fill=gray!35] (2.0,0.35) rectangle (9.0,0.60);
+  \draw[line width=4pt,brown!55!black] (1.3,1.2)--(9.7,1.7);
+  \draw[line width=4pt,brown!55!black] (1.3,3.8)--(9.7,3.3);
+  \foreach \x in {2.1,4.2,6.3,8.4}{\draw[line width=1.3pt,brown!65!black] (\x,1.25+0.06*\x)--(\x,3.75-0.06*\x);} 
+  \draw[fill=gray!15,draw=gray!60] (4.2,2.0) rectangle (6.8,3.0);
+  \draw[forceblue] (5.5,3.3) arc[start angle=100,end angle=30,radius=1.2];
+  \node[note] at (8.6,4.25){单桥非对称荷载引起车架扭转};
+  \node[note,align=left] at (3.2,4.55){横向承托杆限制\\左右主梁相对位移};
+  \draw[-Latex] (3.2,4.1)--(4.0,3.0);
+\end{tikzpicture}
+\caption{单桥工况下车架抗扭示意}
+\label{fig:torsion}
+\end{figure}
+
+\subsection{工况包络与操控控制}
+将各专项工况的风险点统一整理为“工况包络”。其中，结构风险最高的通常不是静载，而是减速带冲击和单桥扭转；比赛风险最高的则是装货偏心导致的布袋侧移与无效布袋增加。
+
+\begin{table}[H]
+\centering
+\caption{典型工况风险等级与控制重点}
+\label{tab:condition-envelope}
+\begin{tabularx}{\linewidth}{c c Y Y}
+\toprule
+\textbf{工况} & \textbf{风险等级} & \textbf{主要控制对象} & \textbf{控制措施} \\\midrule
+坡道上行 & 中 & 牵引力、布袋防滑 & 匀速上坡，避免急停急拉 \\
+弯道转向 & 中 & 重心投影、布袋侧移 & 控制速度，装货保持左右对称 \\
+减速带通过 & 高 & 车轴固定座、横杆端部、连接节点 & 低速通过，赛前检查车轮顺畅度 \\
+单桥通过 & 高 & 横向联系、主梁扭转协调 & 保证左右主梁平行，增强横向联系 \\
+终点持荷 & 中 & 布袋边界、E 面净距 & 复核布袋位置，不使其触碰外界 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+  \fill[green!6] (0,0) rectangle (4.2,2.8);
+  \fill[yellow!10] (4.2,0) rectangle (8.5,2.8);
+  \fill[orange!12] (0,2.8) rectangle (4.2,5.6);
+  \fill[red!10] (4.2,2.8) rectangle (8.5,5.6);
+  \draw[-Latex,line width=0.9pt] (0,0)--(8.8,0) node[right]{比赛工况复杂度};
+  \draw[-Latex,line width=0.9pt] (0,0)--(0,5.9) node[above]{结构风险等级};
+  \draw[dashed,gray!70] (0,2.8)--(8.5,2.8);
+  \draw[dashed,gray!70] (4.2,0)--(4.2,5.6);
+  \node[gray!80] at (2.1,5.1){需重点关注};
+  \node[gray!80] at (6.35,5.1){高风险工况};
+  \node[gray!80] at (2.1,0.45){基础安全区};
+  \node[gray!80] at (6.35,0.45){操控敏感区};
+  \filldraw[fill=yellow!28,draw=orange!70!black,line width=0.7pt] (2.4,3.4) circle (0.18) node[above right]{坡道};
+  \filldraw[fill=yellow!28,draw=orange!70!black,line width=0.7pt] (5.0,2.4) circle (0.18) node[above right]{弯道};
+  \filldraw[fill=red!24,draw=red!70!black,line width=0.7pt] (6.2,4.6) circle (0.18) node[above right]{减速带};
+  \filldraw[fill=red!24,draw=red!70!black,line width=0.7pt] (5.7,4.1) circle (0.18) node[above right]{单桥};
+  \filldraw[fill=yellow!28,draw=orange!70!black,line width=0.7pt] (4.8,3.2) circle (0.18) node[above right]{终点持荷};
+\end{tikzpicture}
+\caption{典型工况风险分布图}
+\label{fig:risk-map}
+\end{figure}
+
+按上述风险分布，赛前排查的优先次序为：车轮与轮毂轴承顺畅度、车轴固定座与横杆端部节点、单桥工况下左右主梁平行度，最后检查装货效率与布袋摆放细节。
+
+\subsection{专项分析小结}
+\begin{table}[H]
+\centering
+\caption{专项工况风险与控制措施}
+\label{tab:case-summary}
+\begin{tabularx}{\linewidth}{cY Y}
+\toprule
+\textbf{工况} & \textbf{主要风险} & \textbf{控制措施} \\\midrule
+坡道 & 牵引不足、布袋后滑 & 低速上坡，保持装货重心居中 \\
+弯道 & 布袋侧移、车架摆动 & 第 2～5 根外伸横向杆形成浅限位，控制转弯速度 \\
+减速带 & 固定座冲击、胶缝剥离 & 车轮顺畅，固定座加厚，横杆端部包覆 \\
+单桥 & 左右主梁相对扭转 & 6 根横向构件共同约束左右主梁 \\
+终点持荷 & 布袋接触赛道或动力小车 & 保持 E 面净距和承托区边界 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+\section{模型质量与装载效率分析}
+
+\subsection{模型质量与载质比}
+计算目的：根据评分中的运输成本指标，计算本模型满载且无无效布袋时的载质比。
+
+有效货物质量为：
+\begin{equation}
+  G_i=(N_i-n_i)\times500
+\end{equation}
+
+式中，$G_i$ 为有效货物质量，单位为 g；$n_i$ 为无效布袋数量。若 $N_i=40$ 且 $n_i=0$，则：
+\begin{equation}
+  G_i=(40-0)\times500=20000\g
+\end{equation}
+
+载质比为：
+\begin{equation}
+  K_i=\frac{G_i}{M_i}
+\end{equation}
+
+本方案模型总质量按 $M_i=203\g$ 计，已包含车轴、轴承、轴卡及 4 颗最长螺丝。代入：
+\begin{equation}
+  K_i=\frac{20000}{203}=98.52
+\end{equation}
+
+\subsection{质量敏感性}
+若在本方案基础上增加非必要加固材料，则载质比会明显下降。有效货物质量不变时，附加质量 $\Delta M$ 对载质比的影响为：
+\begin{equation}
+  K(\Delta M)=\frac{20000}{203+\Delta M}
+\end{equation}
+
+\begin{table}[H]
+\centering
+\caption{附加质量对载质比的影响}
+\label{tab:mass-sensitivity}
+\begin{tabular}{c c c c c}
+\toprule
+\textbf{附加质量 $\Delta M$}/g & \textbf{0} & \textbf{20} & \textbf{50} & \textbf{100} \\\midrule
+模型质量/g & 203 & 223 & 253 & 303 \\
+载质比 $K$ & 98.52 & 89.69 & 79.05 & 66.01 \\
+相对下降 & -- & 8.77\% & 19.38\% & 32.46\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+因此，材料优先用于主梁、车轴固定座、牵引连接板和横杆端部等关键部位；对只改善外观或填平表面的材料不作额外增加。
+
+\subsection{不同载荷档位效率比较}
+本方案按 $40$ 袋满载进行设计。为量化满载策略的运输效率，比较不同装载袋数下的载质比，并据此确定正式设计的装载档位。
+
+\begin{table}[H]
+\centering
+\caption{不同装载袋数下的载质比比较}
+\label{tab:bag-efficiency}
+\begin{tabular}{c c c c c c c}
+\toprule
+\textbf{布袋数} & \textbf{20} & \textbf{24} & \textbf{28} & \textbf{32} & \textbf{36} & \textbf{40} \\\midrule
+有效货物质量/g & 10000 & 12000 & 14000 & 16000 & 18000 & 20000 \\
+载质比 $K$ & 49.26 & 59.11 & 68.97 & 78.82 & 88.67 & 98.52 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+  \begin{axis}[width=12cm,height=6.2cm,xlabel={布袋数量/袋},ylabel={载质比 $K$},xmin=18,xmax=42,ymin=40,ymax=100,grid=both]
+    \addplot[mark=*,line width=1.2pt] coordinates {(20,49.26) (24,59.11) (28,68.97) (32,78.82) (36,88.67) (40,98.52)};
+  \end{axis}
+\end{tikzpicture}
+\caption{装载袋数对载质比的影响}
+\label{fig:bag-efficiency}
+\end{figure}
+
+计算结果表明，在模型总质量固定为 $203\g$ 时，载质比随装载袋数增加而近似线性提高，$40$ 袋对应的载质比为 $98.52$。结合结构验算结果和装货时间记录，正式设计采用 $40$ 袋满载工况。
+
+\subsection{装货方案}
+满载 $40$ 袋采用 $4\times2\times5$ 的层叠方式，即平面内每层 8 袋，竖向 5 层。该布置可使重心位于车架几何中心附近，并便于在 3 分钟内完成装货。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.82,every node/.style={font=\small},>=Latex]
+  \draw[line width=3.8pt,brown!55!black] (0,0)--(10,0);
+  \draw[line width=3.8pt,brown!55!black] (0,4.2)--(10,4.2);
+  \foreach \x in {1,3,5,7,9}{\draw[line width=1.0pt,brown!70!black] (\x,0)--(\x,4.2);} 
+  \foreach \row/\y in {1/0.45,2/2.2}{\foreach \col/\x in {1/0.8,2/3.0,3/5.2,4/7.4}{\draw[fill=gray!15,draw=black!35,rounded corners=1mm] (\x,\y) rectangle +(1.7,1.25);\node at (\x+0.85,\y+0.62){布袋};}}
+  \node[draw,fill=blue!5,rounded corners=1mm] at (5,5.0){单层：4 列 $\times$ 2 排 $=8$ 袋，竖向叠放 5 层};
+  \draw[dashed,red!70!black] (5,0.15)--(5,4.05);
+  \draw[dashed,red!70!black] (0.2,2.1)--(9.8,2.1);
+  \node[draw,fill=white,rounded corners=1mm,text=red!70!black] at (5.0,2.65){平面重心交点};
+\end{tikzpicture}
+\caption{40 袋装货平面布置示意}
+\label{fig:loading-plan}
+\end{figure}
+
+\subsection{装货时间安排}
+\begin{table}[H]
+\centering
+\caption{40 袋装货顺序与时间分配}
+\label{tab:loading-time}
+\begin{tabularx}{\linewidth}{c c c Y}
+\toprule
+\textbf{步骤} & \textbf{布袋数量} & \textbf{计划时间}/s & \textbf{操作要点} \\\midrule
+底层定位 & 8 & 35 & 与左右主梁和承托小杆对齐 \\
+第二层 & 8 & 25 & 左右对称，适当错缝 \\
+第三层 & 8 & 25 & 检查前后重心 \\
+第四层 & 8 & 25 & 保持上层平整 \\
+第五层 & 8 & 30 & 居中摆放，避免一侧堆高 \\
+复核 & -- & 20 & 检查车轮间隙、E 面净距和侧向稳定 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+按上述顺序，计划装货时间为 $160\mathrm{s}$。实物试验中 $40$ 袋装货时间为 $174\mathrm{s}$ 和 $168\mathrm{s}$，最慢记录距离 $180\mathrm{s}$ 上限尚有 $6\mathrm{s}$ 余量。装货完成后只做位置复核，不对布袋进行任何形式的捆绑或固定。
+
+\subsection{重心控制与码放原则}
+装货时应在满足时间要求的同时，保证纵向与横向重心均位于车架中心附近。上层布袋偏向一侧会使重心偏移，增加弯道工况下的相对滑移和无效布袋风险。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88,every node/.style={font=\small},>=Latex]
+  \draw[line width=3.2pt,brown!55!black] (0,0)--(10.2,0);
+  \draw[line width=3.2pt,brown!55!black] (0,4.8)--(10.2,4.8);
+  \foreach \x in {1.5,3.5,5.5,7.5,9.2}{\draw[line width=1.0pt,brown!65!black] (\x,0)--(\x,4.8);} 
+  \foreach \y in {0.55,1.45,2.35,3.25,4.15}{\draw[fill=gray!15,draw=gray!50,rounded corners=0.5mm] (3.55,\y-0.28) rectangle (5.25,\y+0.28);\draw[fill=gray!15,draw=gray!50,rounded corners=0.5mm] (5.35,\y-0.28) rectangle (7.05,\y+0.28);} 
+  \draw[dashed,red!70!black] (5.30,-0.25)--(5.30,5.05);
+  \node[draw,fill=white,rounded corners=1mm,text=red!70!black] at (5.30,5.28){重心控制线};
+  \draw[red!70!black,-Latex] (5.30,5.02)--(5.30,3.55);
+  \node[draw,fill=blue!5,rounded corners=1mm,text width=3.4cm,align=left] at (9.55,3.30){原则 1：上层布袋尽量居中\\原则 2：左右层数保持对称\\原则 3：最上层避免外挑};
+\end{tikzpicture}
+\caption{满载码放的重心控制示意}
+\label{fig:center-control}
+\end{figure}
+
+\newpage
+\section{实训过程总结}
+
+\subsection{现场制作流程}
+模型制作按照“主梁优先、节点跟进、最后校正”的顺序进行。主梁和连接板决定结构安全，6 根横向构件决定装货稳定，轮毂轴承决定行驶效率。
+
+\begin{table}[H]
+\centering
+\caption{14 小时制作时间分配}
+\label{tab:make-time}
+\begin{tabularx}{\linewidth}{c c Y Y}
+\toprule
+\textbf{阶段} & \textbf{计划时间} & \textbf{主要任务} & \textbf{控制点} \\\midrule
+1 & 0--1 h & 材料筛选、划线、裁切 & 选顺纹竹片，剔除裂纹材料 \\
+2 & 1--4 h & 左右方形空心主梁成型 & 截面方正，两根主梁长度一致 \\
+3 & 4--6 h & 第 1、6 根三角截面承托杆安装 & 主梁平行，承托杆位置准确 \\
+4 & 6--8 h & 4 根外伸横向构件安装 & 形成六杆承托并校正横向间距 \\
+5 & 8--10 h & 车轴固定座、车轮和牵引连接板制作 & 孔距准确，车轮转动顺畅 \\
+6 & 10--12 h & 动力小车试装与几何校正 & 四螺丝快速安装，车架不跑偏 \\
+7 & 12--14 h & 补胶、称重、静载试验 & 关键节点复核，记录模型质量 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.80cm,y=0.70cm,every node/.style={font=\small}]
+  \draw[->] (0,0)--(14.5,0); \foreach \x in {0,2,4,6,8,10,12,14}{\draw (\x,0.08)--(\x,-0.08) node[below]{\x h};}
+  \foreach \y/\name/\a/\b in {1/材料准备/0/1,2/主梁成型/1/4,3/横杆安装/4/6,4/中部支撑/6/8,5/连接轮轴/8/10,6/试装校正/10/12,7/补胶检测/12/14}{
+    \node[left] at (-0.1,\y){\name};
+    \draw[fill=blue!15,draw=blue!50!black] (\a,\y-0.25) rectangle (\b,\y+0.25);
+  }
+\end{tikzpicture}
+\caption{现场制作时间甘特图}
+\label{fig:gantt}
+\end{figure}
+
+\subsection{分级加载试验}
+试验不宜直接从空载跳到满载，应分级加载并记录变形和节点状态。若中间阶段出现开胶、残余变形或车轮卡滞，应先修正再进入下一阶段。
+
+\begin{table}[H]
+\centering
+\caption{分级加载试验方案}
+\label{tab:load-test-plan}
+\begin{tabularx}{\linewidth}{c c c Y Y}
+\toprule
+\textbf{阶段} & \textbf{布袋数} & \textbf{货物质量}/kg & \textbf{主要观察指标} & \textbf{判定要求} \\\midrule
+I & 20 & 10 & 主梁初始挠度、横杆端部 & 无明显开胶，挠度可恢复 \\
+II & 30 & 15 & 中部支撑变形、布袋底部下陷 & 小杆不脱胶，布袋不碰车轮 \\
+III & 36 & 18 & 弯道和减速带慢速通过 & 不侧翻，不掉袋 \\
+IV & 40 & 20 & 满载静置、满载行驶和终点持荷 & 无效布袋满足赛题要求 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{关键尺寸允许偏差}
+为保证理论计算与实物性能尽量一致，需要在制作阶段对关键尺寸进行控制。若偏差超出控制范围，则在静载试验前完成修正，不将误差带入终检阶段。
+
+\begin{table}[H]
+\centering
+\caption{关键尺寸控制表}
+\label{tab:tolerance}
+\begin{tabularx}{\linewidth}{Y c Y}
+\toprule
+\textbf{控制项目} & \textbf{控制偏差} & \textbf{说明} \\\midrule
+左右主梁长度差 & $\le 1.5\mm$ & 避免安装后车轮不同步受力 \\
+左右主梁中心距 & $\pm 1.0\mm$ & 保证横向承托杆装配与布袋码放一致 \\
+车轴固定座左右高差 & $\le 1.0\mm$ & 减少车架跑偏和轮轴附加阻力 \\
+四螺丝连接孔距 & $\pm 0.5\mm$ & 确保现场快速安装，不反复扩孔 \\
+横向承托杆间距 & $\pm 2.0\mm$ & 保证四点加载位置和装货规则性 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=0.8cm,every node/.style={font=\small},>=Latex]
+  \node[draw,fill=blue!5,rounded corners=1mm,minimum width=2.8cm,minimum height=0.9cm] (a){主梁尺寸复核};
+  \node[draw,fill=blue!5,rounded corners=1mm,minimum width=2.8cm,minimum height=0.9cm,right=1.1cm of a] (b){轮轴平行度检查};
+  \node[draw,fill=blue!5,rounded corners=1mm,minimum width=2.8cm,minimum height=0.9cm,right=1.1cm of b] (c){连接孔试装};
+  \node[draw,fill=green!8,rounded corners=1mm,minimum width=2.8cm,minimum height=0.9cm,below=1.1cm of b] (d){加载};
+  \node[draw,fill=yellow!12,rounded corners=1mm,minimum width=2.8cm,minimum height=0.9cm,left=1.1cm of d] (e){装货复核};
+  \node[draw,fill=yellow!12,rounded corners=1mm,minimum width=2.8cm,minimum height=0.9cm,right=1.1cm of d] (f){满载试跑};
+  \draw[->] (a)--(b); \draw[->] (b)--(c); \draw[->] (c)--(d); \draw[->] (d)--(e); \draw[->] (d)--(f);
+\end{tikzpicture}
+\caption{制作完成后的校核流程图}
+\label{fig:check-flow}
+\end{figure}
+
+\subsection{挠度和行驶记录}
+本节采用本队实物静载和行驶记录。挠度读数位置为左右主梁跨中，$5.6\mm$ 和 $5.8\mm$ 均为 $40$ 袋满载静置状态下的静载读数；两者取平均后与未乘动力系数的理论静载挠度进行同口径比较。动力工况挠度在该实测平均值基础上分别乘 $1.5$ 和 $2.0$，不与静载读数直接混用。
+\begin{table}[H]
+\centering
+\caption{满载挠度实测记录表}
+\label{tab:deflection-record}
+\begin{tabularx}{\linewidth}{c c c c Y}
+\toprule
+\textbf{加载状态} & \textbf{布袋数} & \textbf{左主梁跨中}/mm & \textbf{右主梁跨中}/mm & \textbf{现象记录} \\\midrule
+空载 & 0 & 0.0 & 0.0 & 初始基准读数，车架未见扭曲 \\
+半载 & 20 & 2.4 & 2.6 & 左右变形接近，横杆端部无开胶 \\
+三十袋 & 30 & 3.8 & 4.0 & 中部支撑轻微受压，布袋底部无明显下陷 \\
+满载静置 & 40 & 5.6 & 5.8 & 平均 $5.70\mm$，较四点加载理论值 $1.31\mm$ 大 $335.1\%$，用于刚度校准 \\
+卸载后 & 0 & 0.3 & 0.4 & 残余变形较小，整体可恢复性良好 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{行驶试验记录表}
+\label{tab:run-record}
+\begin{tabularx}{\linewidth}{c c c c c Y}
+\toprule
+\textbf{次数} & \textbf{布袋数} & \textbf{安装时间}/s & \textbf{装货时间}/s & \textbf{行驶时间}/s & \textbf{现象与改进措施} \\\midrule
+1 & 20 & 42 & 96 & 34 & 车轮转动顺畅，连接节点无松动 \\
+2 & 30 & 41 & 128 & 34 & 横杆端部无开胶，中部支撑状态正常 \\
+3 & 36 & 40 & 152 & 34 & 减速带与弯道通过稳定，无明显侧移 \\
+4 & 40 & 40 & 174 & 34 & 满载行驶稳定，布袋无掉落 \\
+5 & 40 & 39 & 168 & 34 & 优化码放后复测，行驶时间保持稳定 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{风险清单}
+\begin{table}[H]
+\centering
+\caption{现场风险清单与处理措施}
+\label{tab:risk-list}
+\begin{tabularx}{\linewidth}{cY Y Y}
+\toprule
+\textbf{风险} & \textbf{可能原因} & \textbf{影响} & \textbf{处理措施} \\\midrule
+横杆端部开胶 & 胶接面积不足、减速带冲击 & 布袋局部下陷 & 竹皮包覆，增加搭接长度 \\
+主梁局部压扁 & 空心截面不方正、支座压力集中 & 挠度增大、跑偏 & 车轴固定座加厚，扩大承压面积 \\
+布袋侧移 & 装货不居中、转弯过快 & 无效布袋增加 & 调整层叠顺序，控制速度 \\
+小车连接松动 & 孔距偏差、螺丝未拧紧 & 牵引方向偏斜 & 赛前试装并标记孔位 \\
+车轮阻力大 & 轴承偏斜、轴卡过紧 & 行驶时间增加 & 调整轴卡间隙，校正同轴度 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{赛前核查要点}
+正式比赛前，按“结构—轮轴—装货—操控”四个层次逐项核查，确保理论方案中的关键控制点落实到实物。核查重点见图\ref{fig:precheck-card}。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+  \draw[rounded corners=1.5mm,fill=blue!5,draw=blue!55!black] (0,3.15) rectangle (11.8,3.95);
+  \draw[rounded corners=1.5mm,fill=green!7,draw=green!45!black] (0,2.10) rectangle (11.8,2.90);
+  \draw[rounded corners=1.5mm,fill=yellow!12,draw=orange!60!black] (0,1.05) rectangle (11.8,1.85);
+  \draw[rounded corners=1.5mm,fill=red!6,draw=red!45!black] (0,0.00) rectangle (11.8,0.80);
+
+  \foreach \y/\title/\items in {
+    3.55/结构/{主梁无开裂；横杆端部补胶；连接板无松动},
+    2.50/轮轴/{车轮转动顺畅；固定座同高；轴卡间隙适中},
+    1.45/装货/{布袋居中码放；层叠顺序正确；E 面净距满足要求},
+    0.40/操控/{起步与上坡匀速；弯道低速通过；减速带避免急冲}
+  }{
+    \node[font=\bfseries,align=center,text width=1.50cm] at (0.95,\y){\title};
+    \draw[black!25] (1.85,\y-0.32)--(1.85,\y+0.32);
+    \node[align=left,text width=9.20cm] at (6.80,\y){\items};
+  }
+\end{tikzpicture}
+\caption{赛前核查卡片示意}
+\label{fig:precheck-card}
+\end{figure}
+
+\subsection{理论关键控制点落实情况}
+理论计算的结论需要转化为制作控制点。实物模型制作时，按表\ref{tab:theory-to-model}逐项核查，使主梁、横杆、车轴固定座、牵引连接和装货方式均对应到前文计算结果。
+
+\begin{table}[H]
+\centering
+\caption{理论关键控制点与实物落实情况}
+\label{tab:theory-to-model}
+\begin{tabularx}{\linewidth}{Y Y Y}
+\toprule
+\textbf{理论控制点} & \textbf{实物落实方式} & \textbf{复核要求} \\\midrule
+方形空心主梁承弯 & 主梁按设计外边长和壁厚制作，侧壁不随意削薄 & 满载后检查跨中挠度和卸载残余变形 \\
+横向承托杆分工 & 第 1、6 根三角杆主要承托，第 2～5 根外伸杆辅助分配荷载与限位 & 布袋底部不局部下陷，构件端部不开胶 \\
+车轴固定座局部承压 & 固定座位置多层竹片交错加厚 & 满载静置后无明显压痕和偏斜 \\
+四螺丝牵引连接 & 连接板采用对称孔位和足够孔边距 & 试装后螺丝不顶偏，牵引方向不偏斜 \\
+坡道、弯道和单桥工况 & 通过低速试跑检查布袋滑移、车架扭转和轮轴顺畅度 & 不掉袋、不刮碰，除车轮外不接触赛道 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{个人成长与能力提升}
+本次实训把方案比选、力学计算、现场制作、加载试验和赛前复核串联为一个完整过程，使我更加明确：理论计算的价值不只在于得到安全系数或挠度结果，更在于把结果转化为制作标准和检查要点。主梁截面尺寸决定承弯能力，车轴固定座安装精度影响行驶阻力，连接板孔位与胶接质量决定牵引可靠性，装货顺序和重心控制直接关系到弯道与坡道工况下的稳定表现。
+
+在能力提升方面，本次实训重点锻炼了四个方面。其一是\textbf{方案比选与工程判断能力}，能够结合赛题约束在多种原型中快速筛选出更合理的结构形式；其二是\textbf{力学建模与数据复核能力}，能够把载荷、支承、节点和专项工况转化为可计算模型，并根据实测尺寸及时修正参数；其三是\textbf{现场制作与问题处理能力}，面对开胶、偏斜、滑移和阻力增大等现象，能够依据计算书中的控制点判断原因并采取补强、校正和调整措施；其四是\textbf{团队协作与时间管理能力}，能够在有限制作时间内分清主次、协调分工，并在赛前完成高效率核查。总体来看，这次实训让我对“设计—制作—试验—修正”的工程工作方式有了更直接、更系统的理解，也为后续参加结构设计类竞赛和工程实践打下了更扎实的基础。
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.32\linewidth}
+  \centering
+  \includegraphics[width=\linewidth,height=4.2cm,keepaspectratio]{images/final_work_side.jpg}
+  \caption{侧视结构与外伸梁关系}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.32\linewidth}
+  \centering
+  \includegraphics[width=\linewidth,height=4.2cm,keepaspectratio]{images/final_work_top.jpg}
+  \caption{俯视杆件与车轴布置}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.32\linewidth}
+  \centering
+  \includegraphics[width=\linewidth,height=4.2cm,keepaspectratio]{images/final_work_front.jpg}
+  \caption{前视车轮与固定座关系}
+\end{subfigure}
+\caption{最终作品实物照片及关键结构状态}
+\label{fig:final-work-photo-run}
+\end{figure}
+
+\newpage
+\section{结论}
+本计算书围绕勒勒车模型满载运输任务展开：先明确赛题约束和设计目标，再完成方案构思、原型照片比选与最终结构确定，随后分别完成车身模块、轮轴模块、连接节点模块和专项工况分析。目录、图目录和表目录按论文规范独立列出，公式、图和表均采用章节编号。
+
+最终作品由两根 $350\mm$ 方形空心主梁和 6 根横向构件组成；第 1、6 根为三角杆，第 2～6 根端部外伸。满载 $40$ 袋时货物总重 $196\Nunit$，模型质量 $203\g$，有效货物质量 $20000\g$，载质比为 $98.52$。主梁按 $350\mm$ 四点对称等效模型计算：$\gamma_d=1.5$ 时最大应力为 $9.89\MPa$、安全系数为 $3.03$；$\gamma_{d,\max}=2.0$ 时最大应力为 $13.19\MPa$、安全系数为 $2.27$。实物壁厚 $1.2\mm$ 大于严重冲击工况所需最小壁厚 $1.03\mm$，主梁强度满足要求。四点加载理想静载挠度为 $1.31\mm$，实测平均值为 $5.70\mm$，反算整体等效弹性模量为 $1.38\GPa$；离地与稳定验算采用实测校准值，$\gamma_d=1.5$ 和 $2.0$ 的设计挠度分别为 $8.55\mm$ 和 $11.40\mm$。
+
+连接模块中，任一横向承托杆单端设计剪力为 $47.78\Nunit$，端部胶缝平均剪应力为 $0.53\MPa$。四螺丝连接同时承担 $36.9\Nunit$ 理论水平牵引力和 $148.49\Nunit$ 竖向支承力，单颗螺丝合力为 $38.25\Nunit$、剪应力为 $4.35\MPa$、孔边平均承压为 $3.19\MPa$。十二辐式车轮外径为 $70\mm$、轮辐有效长度为 $22\mm$；按一根下部轮辐承担单轮包络反力，控制轮辐设计力为 $148.49\Nunit$。1 次 $36$ 袋试跑和 2 次 $40$ 袋满载试跑后，车轮、轮毂轴承、车轴固定座和四螺丝连接均未出现开裂、松动、偏斜或卡滞；除车轮外其余构件未接触赛道和障碍物。图 2-3 应力云图显示端部连接区为主要高值区，手算与试验对该控制区域给出 $9.89\MPa$、$13.19\MPa$ 和相应安全系数结果。
+
+计算参数、结构布置图和最终作品照片采用同一构造口径：纵向主梁长度 $350\mm$、单根横向构件长度 $250\mm$、6 根横向构件（第 1、6 根为三角杆，第 2～6 根端部外伸）、单根车轴、两个轮毂轴承和两只十二辐式车轮。原设计三视图仅用于表达投影关系和主要尺寸，成品构造以图\ref{fig:overall-model}和实物照片为准。
+
+\newpage
+\section*{作品总结}
+\addcontentsline{toc}{section}{作品总结}
+\thispagestyle{fancy}
+本作品面向赛题规定的满载运输任务，以“连续传力、轻量化、可制作、可验证”为设计主线。车身采用“方形空心双主梁 + 6 根横向构件”：第 1、6 根三角杆承担主要承托作用，第 2～5 根外伸横向杆辅助分配荷载并形成浅限位，车轴固定座和牵引连接分别完成轮轴支承与动力传递。方案比选、理论计算、实物制作和加载行驶试验采用统一受力口径，主梁计算采用四点等效加载模型。
+
+\begin{figure}[H]
+\centering
+\definecolor{cbBlue}{RGB}{0,114,178}
+\definecolor{cbGreen}{RGB}{0,158,115}
+\definecolor{cbOrange}{RGB}{230,159,0}
+\definecolor{cbVermilion}{RGB}{213,94,0}
+\definecolor{cbPurple}{RGB}{204,121,167}
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\scriptsize},>=Latex]
+  \tikzset{
+    panel/.style={draw=black!22,fill=black!2,rounded corners=1.5mm,line width=0.45pt},
+    phase/.style={rounded corners=1.2mm,line width=0.68pt,align=center,minimum width=2.05cm,minimum height=1.08cm,inner sep=2pt,text width=1.88cm},
+    widephase/.style={rounded corners=1.2mm,line width=0.68pt,align=center,minimum width=2.35cm,minimum height=1.08cm,inner sep=2pt,text width=2.15cm},
+    badge/.style={draw=black!32,fill=white,rounded corners=0.9mm,align=center,minimum width=2.15cm,minimum height=0.45cm,inner sep=1.5pt},
+    chip/.style={draw=black!30,fill=white,rounded corners=0.8mm,align=center,minimum width=2.05cm,minimum height=0.40cm,inner sep=1.3pt},
+    sciarr/.style={-{Latex[length=2.3mm,width=1.8mm]},line width=0.72pt,draw=black!70}
+  }
+  \draw[panel] (-6.72,1.78) rectangle (6.72,-1.86);
+
+  \node[anchor=west,font=\bfseries\small] at (-6.46,1.48) {目标指标};
+  \node[badge] at (-3.35,1.47) {模型质量 $203\g$};
+  \node[badge] at (0,1.47) {满载 $40$ 袋};
+  \node[badge] at (3.35,1.47) {行驶 $34\mathrm{s}$};
+  \draw[black!22,line width=0.4pt] (-6.45,1.15)--(6.45,1.15);
+
+  \node[phase,draw=cbBlue,fill=cbBlue!7] (a) at (-5.35,0.28) {\textbf{A 约束输入}\\赛题边界\\荷载目标};
+  \node[phase,draw=cbBlue,fill=cbBlue!7] (b) at (-2.75,0.28) {\textbf{B 方案筛选}\\原型比较\\权重评分};
+  \node[widephase,draw=cbGreen,fill=cbGreen!8] (c) at (0,0.28) {\textbf{C 计算验证}\\主梁/轮轴/节点\\数值模拟辅助};
+  \node[phase,draw=cbOrange,fill=cbOrange!13] (d) at (2.75,0.28) {\textbf{D 工况包络}\\坡道/弯道\\冲击/单桥};
+  \node[phase,draw=cbPurple,fill=cbPurple!9] (e) at (5.35,0.28) {\textbf{E 试验决策}\\加载复核\\赛前核查};
+
+  \foreach \from/\to in {a/b,b/c,c/d,d/e}{\draw[sciarr] (\from.east)--(\to.west);}
+  \draw[-{Latex[length=2.4mm,width=1.8mm]},line width=0.72pt,draw=cbVermilion,dashed]
+    (e.south) .. controls (3.20,-0.80) and (1.28,-0.80) .. (c.south);
+  \node[fill=black!2,inner sep=1pt,text=cbVermilion] at (2.25,-0.72) {试验数据反馈};
+
+  \node[anchor=west,text=black!65] at (-6.46,-1.33) {量化证据};
+  \node[chip] at (-3.75,-1.33) {基础应力 $9.89\MPa$};
+  \node[chip] at (-1.25,-1.33) {基础安全系数 $3.03$};
+  \node[chip] at (1.25,-1.33) {载质比 $98.52$};
+  \node[chip] at (3.75,-1.33) {静载挠度均值 $5.70\mm$};
+\end{tikzpicture}
+\caption{作品设计、计算与试验闭环优化框架}
+\label{fig:summary-route}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{作品主要特点与验证结果}
+\label{tab:work-summary}
+\renewcommand{\arraystretch}{1.16}
+\begin{tabularx}{\linewidth}{>{\centering\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}X>{\centering\arraybackslash}p{3.5cm}}
+\toprule
+\textbf{设计要点} & \centering\arraybackslash\textbf{实物落实方式} & \textbf{验证结果} \\\midrule
+车身传力 & 两根 $350\mm$ 方形空心主梁承担纵向弯曲，6 根横向构件共同承托，主梁按四点等效加载计算。 & 基础工况应力 $9.89\MPa$，安全系数 $3.03$ \\
+装载与重心 & 按 $4\times2\times5$ 满载码放，布袋沿车身对称布置并保持 E 面净距。 & 重心布置明确，满载装货时间记录为 $174\mathrm{s}$ \\
+节点与轮轴 & 车轴固定座局部加厚，四螺丝连接对称布置，并校正车轴平直度。 & 满载行驶后无压痕扩展、连接松动或车轮卡滞 \\
+工况与试验 & 对坡道、弯道、减速带和单桥建立专项校核，并开展静载与满载试跑。 & 静载挠度均值 $5.70\mm$，行驶时间记录为 $34\mathrm{s}$ \\
+轻量化指标 & 控制主梁、横杆和连接件的附加质量，保留必要的局部补强。 & 模型质量 $203\g$，载质比 $98.52$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\finalworkphoto{0.86\linewidth}
+\caption{最终作品正面整体照片}
+\label{fig:final-work-photo}
+\end{figure}
+
+\end{document}
