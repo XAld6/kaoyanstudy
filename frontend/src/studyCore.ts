@@ -76,6 +76,34 @@ export type WeekDayOverview = {
   completionRate: number;
 };
 
+/** 热力图单日：实际学习为主，专注分钟为辅 */
+export type HeatmapDay = {
+  date: string;
+  actualMinutes: number;
+  plannedMinutes: number;
+  focusMinutes: number;
+  taskCount: number;
+  doneTasks: number;
+  hasReview: boolean;
+  /** 0 空 / 1 少 / 2 中 / 3 多 / 4 很满 */
+  level: 0 | 1 | 2 | 3 | 4;
+};
+
+export type StudyHeatmap = {
+  days: HeatmapDay[];
+  /** 按周分组，每周 7 天（周一→周日） */
+  weeks: HeatmapDay[][];
+  startDate: string;
+  endDate: string;
+  weekCount: number;
+  totalActualMinutes: number;
+  activeDays: number;
+  /** 截止 endDate 的当前连续学习天数（actualMinutes > 0） */
+  currentStreak: number;
+  /** 窗口内最长连续学习天数 */
+  bestStreak: number;
+};
+
 export type PlanScope = "week" | "all";
 
 export type PlanTaskFilters = {
@@ -136,6 +164,35 @@ export type WeekCopyResult = {
   copiedCount: number;
   sourceWeekStart: string;
   targetWeekStart: string;
+};
+
+export type DailyClosureResult = {
+  data: AppData;
+  reviewFilled: boolean;
+  filledActualCount: number;
+  movedCount: number;
+  targetDate: string;
+  tomorrowTaskCount: number;
+  checklist: DailyClosureItem[];
+};
+
+export type WeeklyReport = {
+  weekStart: string;
+  weekEnd: string;
+  totalTasks: number;
+  doneTasks: number;
+  completionRate: number;
+  plannedMinutes: number;
+  actualMinutes: number;
+  executionRate: number;
+  reviewDays: number;
+  overdueCarryCount: number;
+  strongestSubjectName: string;
+  weakestSubjectName: string;
+  subjectLines: string[];
+  tipLines: string[];
+  nextWeekFocus: string[];
+  markdown: string;
 };
 
 export type DataOverview = {
@@ -235,6 +292,10 @@ export function getDataOverview(data: AppData): DataOverview {
     reviewCount: data.reviews.length,
     latestTaskDate: data.tasks.map((task) => task.date).sort((a, b) => b.localeCompare(a))[0] ?? "暂无"
   };
+}
+
+export function countOverdueTasks(data: AppData, date = formatDate()) {
+  return data.tasks.filter((task) => task.date < date && task.status !== "done").length;
 }
 
 export function getDataHealth(data: AppData, date = formatDate()): DataHealthItem[] {
@@ -409,6 +470,97 @@ export function getWeekOverview(data: AppData, selectedDate = formatDate()): Wee
   });
 }
 
+/** 按任务实际时长映射热力等级（约：1h / 2h / 4h 分档） */
+export function getHeatmapLevel(actualMinutes: number): HeatmapDay["level"] {
+  if (actualMinutes <= 0) return 0;
+  if (actualMinutes < 60) return 1;
+  if (actualMinutes < 120) return 2;
+  if (actualMinutes < 240) return 3;
+  return 4;
+}
+
+function countStreaks(days: HeatmapDay[], endDate: string) {
+  let bestStreak = 0;
+  let run = 0;
+  for (const day of days) {
+    if (day.actualMinutes > 0) {
+      run += 1;
+      bestStreak = Math.max(bestStreak, run);
+    } else {
+      run = 0;
+    }
+  }
+
+  let currentStreak = 0;
+  for (let index = days.length - 1; index >= 0; index -= 1) {
+    const day = days[index];
+    if (day.date > endDate) continue;
+    if (day.actualMinutes > 0) currentStreak += 1;
+    else break;
+  }
+
+  return { bestStreak, currentStreak };
+}
+
+/**
+ * 学习热力日历：以 selectedDate 所在周为终点，向前 weekCount 周（周一至周日）。
+ * focusMinutesByDate 可选，来自计时器专注统计。
+ */
+export function buildStudyHeatmap(
+  data: AppData,
+  endDate = formatDate(),
+  weekCount = 12,
+  focusMinutesByDate: Record<string, number> = {}
+): StudyHeatmap {
+  const weeks = Math.max(1, Math.min(26, Math.round(weekCount) || 12));
+  const endWeekStart = getWeekStart(endDate);
+  const startDate = formatDate(addDays(parseDate(endWeekStart), -(weeks - 1) * 7));
+  const totalDays = weeks * 7;
+  const reviewDates = new Set(
+    data.reviews.filter((review) => review.text.trim().length >= 8).map((review) => review.date)
+  );
+
+  const days: HeatmapDay[] = Array.from({ length: totalDays }, (_, index) => {
+    const date = formatDate(addDays(parseDate(startDate), index));
+    const tasks = getTasksForDate(data, date);
+    const plannedMinutes = tasks.reduce((sum, task) => sum + task.estimatedMinutes, 0);
+    const actualMinutes = tasks.reduce((sum, task) => sum + task.actualMinutes, 0);
+    const doneTasks = tasks.filter((task) => task.status === "done").length;
+    const focusMinutes = Math.max(0, Math.round(focusMinutesByDate[date] ?? 0));
+    return {
+      date,
+      actualMinutes,
+      plannedMinutes,
+      focusMinutes,
+      taskCount: tasks.length,
+      doneTasks,
+      hasReview: reviewDates.has(date),
+      level: getHeatmapLevel(actualMinutes)
+    };
+  });
+
+  const weekColumns: HeatmapDay[][] = [];
+  for (let week = 0; week < weeks; week += 1) {
+    weekColumns.push(days.slice(week * 7, week * 7 + 7));
+  }
+
+  const totalActualMinutes = days.reduce((sum, day) => sum + day.actualMinutes, 0);
+  const activeDays = days.filter((day) => day.actualMinutes > 0).length;
+  const { bestStreak, currentStreak } = countStreaks(days, endDate);
+
+  return {
+    days,
+    weeks: weekColumns,
+    startDate,
+    endDate: formatDate(addDays(parseDate(startDate), totalDays - 1)),
+    weekCount: weeks,
+    totalActualMinutes,
+    activeDays,
+    currentStreak,
+    bestStreak
+  };
+}
+
 export function getTasksForWeek(data: AppData, selectedDate = formatDate()) {
   const weekDates = new Set(getWeekOverview(data, selectedDate).map((day) => day.date));
   return [...data.tasks]
@@ -522,6 +674,153 @@ export function generateWeeklyAdjustmentTips(data: AppData, selectedDate = forma
   return tips.slice(0, 5);
 }
 
+export function buildWeeklyReport(data: AppData, selectedDate = formatDate()): WeeklyReport {
+  const weekStart = getWeekStart(selectedDate);
+  const weekEnd = formatDate(addDays(parseDate(weekStart), 6));
+  const weekDates = new Set(getWeekOverview(data, selectedDate).map((day) => day.date));
+  const weekTasks = getTasksForWeek(data, selectedDate);
+  const totalTasks = weekTasks.length;
+  const doneTasks = weekTasks.filter((task) => task.status === "done").length;
+  const plannedMinutes = weekTasks.reduce((sum, task) => sum + task.estimatedMinutes, 0);
+  const actualMinutes = weekTasks.reduce((sum, task) => sum + task.actualMinutes, 0);
+  const completionRate = totalTasks ? Math.round((doneTasks / totalTasks) * 100) : 0;
+  const executionRate = plannedMinutes ? Math.round((actualMinutes / plannedMinutes) * 100) : 0;
+  const reviewDays = data.reviews.filter((review) => weekDates.has(review.date) && review.text.trim().length >= 8).length;
+  const overdueCarryCount = data.tasks.filter((task) => task.date < weekStart && task.status !== "done").length;
+
+  const subjectStats = data.subjects.map((subject) => {
+    const tasks = weekTasks.filter((task) => task.subjectId === subject.id);
+    const planned = tasks.reduce((sum, task) => sum + task.estimatedMinutes, 0);
+    const actual = tasks.reduce((sum, task) => sum + task.actualMinutes, 0);
+    const done = tasks.filter((task) => task.status === "done").length;
+    const rate = planned ? Math.round((actual / planned) * 100) : 0;
+    return { subject, planned, actual, done, total: tasks.length, rate };
+  });
+
+  const ranked = [...subjectStats].filter((item) => item.planned > 0).sort((a, b) => b.rate - a.rate);
+  const strongestSubjectName = ranked[0]?.subject.name ?? "暂无";
+  const weakestSubjectName = ranked.length ? ranked[ranked.length - 1].subject.name : "暂无";
+
+  const subjectLines = subjectStats.map((item) => {
+    if (!item.total) {
+      return `- ${item.subject.name}：本周未排任务（周目标 ${item.subject.weeklyTargetHours} 小时）`;
+    }
+    return `- ${item.subject.name}：完成 ${item.done}/${item.total}，实际/计划 ${minutesText(item.actual)} / ${minutesText(item.planned)}（${item.rate}%），周目标 ${item.subject.weeklyTargetHours} 小时`;
+  });
+
+  const tips = generateWeeklyAdjustmentTips(data, selectedDate);
+  const tipLines = tips.map((tip) => `- ${tip.title}：${tip.detail}`);
+
+  const nextWeekFocus: string[] = [];
+  if (weakestSubjectName !== "暂无") {
+    nextWeekFocus.push(`优先补强 ${weakestSubjectName}：安排 2 个 45-60 分钟固定块，不要只排大而无当的任务。`);
+  }
+  if (reviewDays < 3) {
+    nextWeekFocus.push("下周把复盘做成固定动作：每晚 5 分钟，写清偏差原因和次日第一件事。");
+  } else {
+    nextWeekFocus.push("复盘节奏不错，下周继续保留；可把复盘里反复出现的薄弱点升级成专项任务。");
+  }
+  if (overdueCarryCount > 0) {
+    nextWeekFocus.push(`先清空 ${overdueCarryCount} 个历史未完成任务，再加新计划，避免旧债滚雪球。`);
+  } else if (executionRate < 70 && plannedMinutes > 0) {
+    nextWeekFocus.push("本周执行率偏低，下周总计划量先砍 15%-20%，保证完成率回升。");
+  } else {
+    nextWeekFocus.push("保持本周主科强度，另加 1 个错题/真题复盘块巩固成果。");
+  }
+
+  const markdown = [
+    `# 考研周报（${weekStart} ~ ${weekEnd}）`,
+    "",
+    "## 总览",
+    `- 任务完成：${doneTasks}/${totalTasks}（${completionRate}%）`,
+    `- 时长执行：${minutesText(actualMinutes)} / ${minutesText(plannedMinutes)}（${executionRate}%）`,
+    `- 有效复盘：${reviewDays}/7 天`,
+    `- 历史未完成遗留：${overdueCarryCount} 个`,
+    `- 相对更稳的科目：${strongestSubjectName}`,
+    `- 相对偏弱的科目：${weakestSubjectName}`,
+    "",
+    "## 分科",
+    ...subjectLines,
+    "",
+    "## 本周调整提示",
+    ...tipLines,
+    "",
+    "## 下周三条重点",
+    ...nextWeekFocus.map((line, index) => `${index + 1}. ${line}`),
+    ""
+  ].join("\n");
+
+  return {
+    weekStart,
+    weekEnd,
+    totalTasks,
+    doneTasks,
+    completionRate,
+    plannedMinutes,
+    actualMinutes,
+    executionRate,
+    reviewDays,
+    overdueCarryCount,
+    strongestSubjectName,
+    weakestSubjectName,
+    subjectLines,
+    tipLines,
+    nextWeekFocus,
+    markdown
+  };
+}
+
+export type AppendWeeklyReportResult = {
+  data: AppData;
+  report: WeeklyReport;
+  date: string;
+  appended: boolean;
+  reason: "appended" | "already-present";
+};
+
+/** 把周报摘要写入指定日期的复盘（默认选中日），避免重复粘贴同一周 */
+export function appendWeeklyReportToReview(
+  data: AppData,
+  selectedDate = formatDate(),
+  report?: WeeklyReport
+): AppendWeeklyReportResult {
+  const weekly = report ?? buildWeeklyReport(data, selectedDate);
+  const marker = `【周报 ${weekly.weekStart}`;
+  const existing = data.reviews.find((review) => review.date === selectedDate)?.text.trim() ?? "";
+
+  if (existing.includes(marker)) {
+    return {
+      data,
+      report: weekly,
+      date: selectedDate,
+      appended: false,
+      reason: "already-present"
+    };
+  }
+
+  const block = [
+    `${marker} ~ ${weekly.weekEnd}】`,
+    `完成 ${weekly.doneTasks}/${weekly.totalTasks}（${weekly.completionRate}%）· 执行 ${minutesText(weekly.actualMinutes)} / ${minutesText(weekly.plannedMinutes)}（${weekly.executionRate}%）· 偏弱 ${weekly.weakestSubjectName}`,
+    "下周三条重点：",
+    ...weekly.nextWeekFocus.map((line, index) => `${index + 1}. ${line}`)
+  ].join("\n");
+
+  const text = existing ? `${existing}\n\n${block}` : block;
+  return {
+    data: {
+      ...data,
+      reviews: [
+        ...data.reviews.filter((review) => review.date !== selectedDate),
+        { date: selectedDate, text }
+      ]
+    },
+    report: weekly,
+    date: selectedDate,
+    appended: true,
+    reason: "appended"
+  };
+}
+
 export function getPlanTasks(data: AppData, selectedDate = formatDate(), filters: PlanTaskFilters = { scope: "week" }) {
   const baseTasks = filters.scope === "week" ? getTasksForWeek(data, selectedDate) : [...data.tasks].sort((a, b) => a.date.localeCompare(b.date));
   const query = filters.query?.trim().toLowerCase() ?? "";
@@ -575,6 +874,73 @@ export function prepareTomorrowPlan(data: AppData, sourceDate: string): Tomorrow
   return {
     ...result,
     tomorrowTaskCount: getTasksForDate(result.data, result.targetDate).length
+  };
+}
+
+export function patchTaskActualMinutes(data: AppData, taskId: string, actualMinutes: number): AppData {
+  const minutes = Math.max(0, Math.round(Number.isFinite(actualMinutes) ? actualMinutes : 0));
+  return {
+    ...data,
+    tasks: data.tasks.map((task) =>
+      task.id === taskId
+        ? { ...task, actualMinutes: minutes, status: minutes > 0 ? task.status : "todo" }
+        : task
+    )
+  };
+}
+
+export function bumpTaskActualMinutes(data: AppData, taskId: string, delta: number): AppData {
+  const task = data.tasks.find((item) => item.id === taskId);
+  if (!task) return data;
+  return patchTaskActualMinutes(data, taskId, task.actualMinutes + delta);
+}
+
+export function fillTaskActualMinutes(data: AppData, taskId: string): AppData {
+  const task = data.tasks.find((item) => item.id === taskId);
+  if (!task) return data;
+  return patchTaskActualMinutes(data, taskId, task.estimatedMinutes);
+}
+
+export function fillMissingDoneActualMinutes(data: AppData, date: string): { data: AppData; filledCount: number } {
+  let filledCount = 0;
+  const tasks = data.tasks.map((task) => {
+    if (task.date !== date || task.status !== "done" || task.actualMinutes > 0) return task;
+    filledCount += 1;
+    return { ...task, actualMinutes: task.estimatedMinutes };
+  });
+  return { data: { ...data, tasks }, filledCount };
+}
+
+export function ensureReviewTemplate(data: AppData, date: string): { data: AppData; filled: boolean } {
+  const existing = data.reviews.find((review) => review.date === date)?.text.trim() ?? "";
+  if (existing.length >= 8) {
+    return { data, filled: false };
+  }
+
+  const template = buildReviewTemplate(data, date);
+  const text = existing ? `${existing}\n\n${template}` : template;
+  return {
+    data: {
+      ...data,
+      reviews: [...data.reviews.filter((review) => review.date !== date), { date, text }]
+    },
+    filled: true
+  };
+}
+
+export function runDailyClosure(data: AppData, date: string): DailyClosureResult {
+  const reviewResult = ensureReviewTemplate(data, date);
+  const actualResult = fillMissingDoneActualMinutes(reviewResult.data, date);
+  const tomorrow = prepareTomorrowPlan(actualResult.data, date);
+
+  return {
+    data: tomorrow.data,
+    reviewFilled: reviewResult.filled,
+    filledActualCount: actualResult.filledCount,
+    movedCount: tomorrow.movedCount,
+    targetDate: tomorrow.targetDate,
+    tomorrowTaskCount: tomorrow.tomorrowTaskCount,
+    checklist: getDailyClosureChecklist(tomorrow.data, date)
   };
 }
 
@@ -706,44 +1072,224 @@ export function updateTasksByIds(data: AppData, taskIds: string[], patch: Partia
   };
 }
 
-export function generateRuleAdvice(data: AppData, date: string): string[] {
+export type AdviceSectionId = "boost" | "cut" | "tomorrow";
+
+export type AdviceSection = {
+  id: AdviceSectionId;
+  title: string;
+  items: string[];
+};
+
+export type StructuredAdvice = {
+  sections: AdviceSection[];
+  flat: string[];
+};
+
+const ADVICE_SECTION_META: Array<{ id: AdviceSectionId; title: string; aliases: string[] }> = [
+  { id: "boost", title: "补哪科", aliases: ["补哪科", "补强", "需补", "薄弱"] },
+  { id: "cut", title: "砍哪块", aliases: ["砍哪块", "减负", "砍掉", "降载"] },
+  { id: "tomorrow", title: "明日三件事", aliases: ["明日三件事", "明天三件事", "明日重点", "明天重点", "明日"] }
+];
+
+function emptyAdviceSections(): AdviceSection[] {
+  return ADVICE_SECTION_META.map((meta) => ({ id: meta.id, title: meta.title, items: [] }));
+}
+
+export function flattenStructuredAdvice(advice: StructuredAdvice): string[] {
+  if (advice.flat.length) return advice.flat;
+  return advice.sections.flatMap((section) => section.items.map((item) => `【${section.title}】${item}`));
+}
+
+export function buildStructuredAdvice(sections: AdviceSection[]): StructuredAdvice {
+  const normalized = emptyAdviceSections().map((empty) => {
+    const found = sections.find((section) => section.id === empty.id);
+    return {
+      ...empty,
+      items: (found?.items ?? []).map((item) => item.trim()).filter(Boolean).slice(0, 3)
+    };
+  });
+  return {
+    sections: normalized,
+    flat: normalized.flatMap((section) => section.items.map((item) => `【${section.title}】${item}`))
+  };
+}
+
+function matchAdviceSectionTitle(line: string): AdviceSectionId | null {
+  const cleaned = line
+    .replace(/^[#*\-\d.、\s]+/, "")
+    .replace(/[【\[]/g, "")
+    .replace(/[】\]]/g, "")
+    .replace(/[:：\-]+$/g, "")
+    .trim();
+  for (const meta of ADVICE_SECTION_META) {
+    if (meta.aliases.some((alias) => cleaned === alias || cleaned.startsWith(alias))) {
+      return meta.id;
+    }
+  }
+  return null;
+}
+
+function stripAdviceSectionPrefix(line: string): string {
+  return line
+    .replace(/^[#*\-\d.、\s]+/, "")
+    .replace(/^[【\[]?\s*(补哪科|补强|需补|薄弱|砍哪块|减负|砍掉|降载|明日三件事|明天三件事|明日重点|明天重点|明日)\s*[】\]]?\s*[:：\-]?\s*/, "")
+    .replace(/^\d+[.、)\s]+/, "")
+    .trim();
+}
+
+export function parseStructuredAdvice(lines: string[]): StructuredAdvice {
+  const buckets: Record<AdviceSectionId, string[]> = { boost: [], cut: [], tomorrow: [] };
+  let current: AdviceSectionId | null = null;
+
+  for (const raw of lines) {
+    const line = raw.trim().replace(/^[-*•]\s*/, "");
+    if (!line) continue;
+
+    const tagged = line.match(/^【\s*(补哪科|砍哪块|明日三件事)\s*】\s*(.*)$/);
+    if (tagged) {
+      const id = matchAdviceSectionTitle(tagged[1]);
+      if (id) {
+        current = id;
+        const rest = tagged[2].trim();
+        if (rest) buckets[id].push(rest);
+      }
+      continue;
+    }
+
+    const sectionId = matchAdviceSectionTitle(line);
+    if (sectionId) {
+      current = sectionId;
+      const rest = stripAdviceSectionPrefix(line);
+      if (rest && !matchAdviceSectionTitle(rest)) {
+        buckets[sectionId].push(rest);
+      }
+      continue;
+    }
+
+    const content = line.replace(/^\d+[.、)\s]+/, "").trim();
+    if (!content) continue;
+    if (current) {
+      buckets[current].push(content);
+    } else {
+      buckets.tomorrow.push(content);
+    }
+  }
+
+  const structured = buildStructuredAdvice([
+    { id: "boost", title: "补哪科", items: buckets.boost },
+    { id: "cut", title: "砍哪块", items: buckets.cut },
+    { id: "tomorrow", title: "明日三件事", items: buckets.tomorrow }
+  ]);
+
+  // 若模型只回了扁平建议，至少保证明日区有内容
+  if (!structured.sections.some((section) => section.items.length)) {
+    return buildStructuredAdvice([
+      { id: "tomorrow", title: "明日三件事", items: lines.map((line) => line.trim()).filter(Boolean).slice(0, 5) }
+    ]);
+  }
+  return structured;
+}
+
+export function generateStructuredRuleAdvice(data: AppData, date: string): StructuredAdvice {
   const stats = getTodayStats(data, date);
   const todayTasks = getTasksForDate(data, date);
   const review = data.reviews.find((item) => item.date === date)?.text ?? "";
-  const unfinished = todayTasks.filter((task) => task.status !== "done");
-  const advice = new Set<string>();
-
-  if (!todayTasks.length) {
-    advice.add("今天还没有计划任务，先安排 3 个最小任务：主科、英语、复盘各一个。");
-  }
-
-  if (stats.completionRate < 60) {
-    advice.add(`今日完成率 ${stats.completionRate}%，明天先补 ${stats.laggingSubjectName}，把任务切成 45-60 分钟的小块。`);
-  } else {
-    advice.add(`今日完成率 ${stats.completionRate}%，节奏不错，明天可以保留同等强度并增加 20 分钟错题复盘。`);
-  }
-
-  if (unfinished.length) {
-    const top = unfinished[0];
-    advice.add(`未完成任务优先顺延：${subjectName(data, top.subjectId)}「${top.title}」，不要让同一任务连续拖过 2 天。`);
-  }
-
+  const unfinished = todayTasks
+    .filter((task) => task.status !== "done")
+    .sort((a, b) => priorityWeight[b.priority] - priorityWeight[a.priority] || b.estimatedMinutes - a.estimatedMinutes);
   const subjectProgress = getSubjectProgress(data, 7, date);
   const weakest = subjectProgress.filter((item) => item.plannedMinutes > 0).sort((a, b) => a.completionRate - b.completionRate)[0];
-  if (weakest) {
-    advice.add(`${weakest.subject.name} 最近 7 天实际/计划为 ${weakest.completionRate}%，建议明天给它安排一个固定时间段。`);
-  }
-
-  if (/拖延|没做完|焦虑|很乱|效率低/.test(review)) {
-    advice.add("复盘里出现拖延或低效信号，明天只保留 1 个高压任务，其余改成可快速完成的保底任务。");
-  }
+  const lowPriorityOpen = unfinished.filter((task) => task.priority === "低");
+  const boost: string[] = [];
+  const cut: string[] = [];
+  const tomorrow: string[] = [];
 
   const mentionedSubject = data.subjects.find((subject) => review.includes(subject.name));
   if (mentionedSubject) {
-    advice.add(`复盘中特别提到了${mentionedSubject.name}，明天给它安排一个不被打断的黄金时间段。`);
+    boost.push(`复盘提到了 ${mentionedSubject.name}，明天把它放进黄金时间段。`);
+  }
+  if (weakest) {
+    boost.push(`${weakest.subject.name} 近 7 天执行率 ${weakest.completionRate}%，明天给它留一个不被打断的 45-60 分钟固定块。`);
+  }
+  if (stats.laggingSubjectName && stats.laggingSubjectName !== "暂无" && stats.laggingSubjectName !== weakest?.subject.name && stats.laggingSubjectName !== mentionedSubject?.name) {
+    boost.push(`今天缺口最大的是 ${stats.laggingSubjectName}，明天优先补这块，不要先做零碎杂事。`);
+  } else if (stats.laggingSubjectName && stats.laggingSubjectName !== "暂无" && !boost.some((item) => item.includes(stats.laggingSubjectName))) {
+    boost.push(`今天缺口最大的是 ${stats.laggingSubjectName}，明天优先补这块，不要先做零碎杂事。`);
+  }
+  if (!boost.length) {
+    boost.push("各科暂时没有明显短板，明天保持主科强度，并加 20 分钟错题复盘。");
   }
 
-  advice.add("晚上用 5 分钟写一句复盘：今天偏差最大的是哪科，以及明天第一件事是什么。");
+  if (lowPriorityOpen.length) {
+    cut.push(`先拿掉或推后低优先级「${lowPriorityOpen[0].title}」，给主科和补弱留位置。`);
+  }
+  if (stats.completionRate < 60 && unfinished.length >= 2) {
+    cut.push(`今日完成率仅 ${stats.completionRate}%，明天总任务数压到 3 个以内，去掉可延后的大块。`);
+  }
+  if (/拖延|没做完|焦虑|很乱|效率低/.test(review)) {
+    cut.push("复盘有拖延/低效信号：明天只保留 1 个高压任务，其余改成 30-45 分钟保底块。");
+  }
+  if (!cut.length) {
+    cut.push("当前没有必须硬砍的块；若明天计划超过 6 小时，优先砍掉最低优先级的一项。");
+  }
 
-  return [...advice].slice(0, 5);
+  if (!todayTasks.length) {
+    tomorrow.push("先排 3 个最小任务：主科、英语、复盘各一个。");
+  } else if (unfinished[0]) {
+    tomorrow.push(`第一件事：完成或续做 ${subjectName(data, unfinished[0].subjectId)}「${unfinished[0].title}」。`);
+  } else {
+    tomorrow.push("第一件事：沿用今天节奏，先做最高优先级主科块。");
+  }
+  if (weakest) {
+    tomorrow.push(`第二件事：${weakest.subject.name} 专项 45-60 分钟（可拆成两段）。`);
+  } else {
+    tomorrow.push("第二件事：主科错题/真题复盘 30-45 分钟。");
+  }
+  tomorrow.push("第三件事：晚上 5 分钟复盘——写清偏差科目和后天第一件事。");
+
+  return buildStructuredAdvice([
+    { id: "boost", title: "补哪科", items: boost.slice(0, 2) },
+    { id: "cut", title: "砍哪块", items: cut.slice(0, 2) },
+    { id: "tomorrow", title: "明日三件事", items: tomorrow.slice(0, 3) }
+  ]);
+}
+
+export function generateRuleAdvice(data: AppData, date: string): string[] {
+  return flattenStructuredAdvice(generateStructuredRuleAdvice(data, date));
+}
+
+export function buildCoachAdvicePayload(data: AppData, date: string) {
+  const stats = getTodayStats(data, date);
+  const todayTasks = getTasksForDate(data, date);
+  const recentDates = Array.from({ length: 7 }, (_, index) => formatDate(addDays(parseDate(date), index - 6)));
+  const recentTasks = data.tasks.filter((task) => recentDates.includes(task.date));
+  const structured = generateStructuredRuleAdvice(data, date);
+
+  return {
+    date,
+    today_stats: stats,
+    today_tasks: todayTasks.map((task) => ({
+      title: task.title,
+      subject: subjectName(data, task.subjectId),
+      estimatedMinutes: task.estimatedMinutes,
+      actualMinutes: task.actualMinutes,
+      priority: task.priority,
+      status: task.status
+    })),
+    recent_subject_progress: getSubjectProgress(data, 7, date).map((item) => ({
+      subject: item.subject.name,
+      plannedMinutes: item.plannedMinutes,
+      actualMinutes: item.actualMinutes,
+      completionRate: item.completionRate
+    })),
+    review: data.reviews.find((item) => item.date === date)?.text ?? "",
+    local_structured_advice: structured.sections,
+    recent_task_count: recentTasks.length,
+    output_format: [
+      "请严格按下面三个小节输出，每节 1-3 条短句：",
+      "【补哪科】",
+      "【砍哪块】",
+      "【明日三件事】"
+    ].join("\n")
+  };
 }

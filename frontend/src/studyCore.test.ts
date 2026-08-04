@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addLightSubjectStudyBlock, buildReviewTemplate, copyWeekTasks, createDefaultData, formatDate, generateRuleAdvice, generateWeeklyAdjustmentTips, getDailyClosureChecklist, getDataHealth, getDataOverview, getPlanTasks, getSubjectProgress, getSubjectWeeklyLoad, getTasksForWeek, getTodayStats, getWeekOverview, prepareTomorrowPlan, relieveHeaviestDay, resolveOverdueTasksToDate, resolveSubjectIdByKeywords, rolloverUnfinishedTasks, shiftTasksByIds, updateTasksByIds } from "./studyCore";
+import { addLightSubjectStudyBlock, appendWeeklyReportToReview, buildCoachAdvicePayload, buildReviewTemplate, buildStudyHeatmap, buildWeeklyReport, bumpTaskActualMinutes, copyWeekTasks, countOverdueTasks, createDefaultData, fillMissingDoneActualMinutes, fillTaskActualMinutes, formatDate, generateRuleAdvice, generateStructuredRuleAdvice, generateWeeklyAdjustmentTips, getDailyClosureChecklist, getDataHealth, getDataOverview, getHeatmapLevel, getPlanTasks, getSubjectProgress, getSubjectWeeklyLoad, getTasksForWeek, getTodayStats, getWeekOverview, parseStructuredAdvice, patchTaskActualMinutes, prepareTomorrowPlan, relieveHeaviestDay, resolveOverdueTasksToDate, resolveSubjectIdByKeywords, rolloverUnfinishedTasks, runDailyClosure, shiftTasksByIds, updateTasksByIds } from "./studyCore";
 
 describe("studyCore", () => {
   it("creates a useful default考研 data set", () => {
@@ -38,6 +38,48 @@ describe("studyCore", () => {
 
     expect(advice.length).toBeGreaterThanOrEqual(3);
     expect(advice.join("")).toContain("英语");
+    expect(advice.join("")).toContain("补哪科");
+  });
+
+  it("generates structured local advice with boost/cut/tomorrow sections", () => {
+    const data = createDefaultData();
+    const today = data.tasks[0].date;
+    data.tasks = data.tasks.map((task) => task.date === today ? { ...task, status: "todo", actualMinutes: 0 } : task);
+    data.reviews = [{ date: today, text: "今天有点拖延，英语阅读没有做完。" }];
+
+    const structured = generateStructuredRuleAdvice(data, today);
+    const ids = structured.sections.map((section) => section.id);
+
+    expect(ids).toEqual(["boost", "cut", "tomorrow"]);
+    expect(structured.sections.every((section) => section.items.length > 0)).toBe(true);
+    expect(structured.flat.join("")).toContain("补哪科");
+    expect(structured.flat.join("")).toContain("英语");
+    expect(structured.sections.find((section) => section.id === "tomorrow")?.items.length).toBe(3);
+  });
+
+  it("parses structured AI advice sections from mixed line formats", () => {
+    const parsed = parseStructuredAdvice([
+      "【补哪科】",
+      "明天优先补英语阅读",
+      "【砍哪块】低优先级政治选择题先推后",
+      "明日三件事",
+      "1. 先做高数极限",
+      "2. 英语长难句 45 分钟",
+      "3. 晚上写复盘"
+    ]);
+
+    expect(parsed.sections.find((section) => section.id === "boost")?.items.join("")).toContain("英语");
+    expect(parsed.sections.find((section) => section.id === "cut")?.items.join("")).toContain("政治");
+    expect(parsed.sections.find((section) => section.id === "tomorrow")?.items).toHaveLength(3);
+  });
+
+  it("builds a compact coach payload with required output format", () => {
+    const data = createDefaultData();
+    const payload = buildCoachAdvicePayload(data, data.tasks[0].date);
+
+    expect(payload.output_format).toContain("【补哪科】");
+    expect(payload.local_structured_advice).toHaveLength(3);
+    expect(payload.today_stats.completionRate).toBeTypeOf("number");
   });
 
   it("builds a review template from today's completion and next first task", () => {
@@ -77,6 +119,108 @@ describe("studyCore", () => {
 
     const closedChecklist = getDailyClosureChecklist(data, today);
     expect(closedChecklist.every((item) => item.done)).toBe(true);
+  });
+
+  it("supports quick actual-minute patches, bumps and fill-to-plan", () => {
+    const data = createDefaultData();
+    const math = data.subjects.find((subject) => subject.name === "数学")!;
+    data.tasks = [
+      { id: "t1", subjectId: math.id, title: "高数", date: "2026-06-10", estimatedMinutes: 90, actualMinutes: 0, priority: "高", status: "todo" }
+    ];
+
+    const patched = patchTaskActualMinutes(data, "t1", 20);
+    expect(patched.tasks[0].actualMinutes).toBe(20);
+
+    const bumped = bumpTaskActualMinutes(patched, "t1", 15);
+    expect(bumped.tasks[0].actualMinutes).toBe(35);
+
+    const filled = fillTaskActualMinutes(bumped, "t1");
+    expect(filled.tasks[0].actualMinutes).toBe(90);
+    expect(data.tasks[0].actualMinutes).toBe(0);
+  });
+
+  it("fills missing actual minutes only for completed tasks", () => {
+    const data = createDefaultData();
+    const math = data.subjects.find((subject) => subject.name === "数学")!;
+    data.tasks = [
+      { id: "done-empty", subjectId: math.id, title: "完成未记", date: "2026-06-10", estimatedMinutes: 60, actualMinutes: 0, priority: "高", status: "done" },
+      { id: "done-ok", subjectId: math.id, title: "完成已记", date: "2026-06-10", estimatedMinutes: 45, actualMinutes: 40, priority: "中", status: "done" },
+      { id: "todo", subjectId: math.id, title: "未完成", date: "2026-06-10", estimatedMinutes: 30, actualMinutes: 0, priority: "低", status: "todo" }
+    ];
+
+    const result = fillMissingDoneActualMinutes(data, "2026-06-10");
+    expect(result.filledCount).toBe(1);
+    expect(result.data.tasks.find((task) => task.id === "done-empty")?.actualMinutes).toBe(60);
+    expect(result.data.tasks.find((task) => task.id === "done-ok")?.actualMinutes).toBe(40);
+    expect(result.data.tasks.find((task) => task.id === "todo")?.actualMinutes).toBe(0);
+  });
+
+  it("runs one-click daily closure for review, actual time and tomorrow plan", () => {
+    const data = createDefaultData();
+    const math = data.subjects.find((subject) => subject.name === "数学")!;
+    data.tasks = [
+      { id: "done", subjectId: math.id, title: "已完成", date: "2026-06-10", estimatedMinutes: 60, actualMinutes: 0, priority: "高", status: "done" },
+      { id: "todo", subjectId: math.id, title: "未完成", date: "2026-06-10", estimatedMinutes: 90, actualMinutes: 0, priority: "中", status: "todo" }
+    ];
+    data.reviews = [];
+
+    const result = runDailyClosure(data, "2026-06-10");
+
+    expect(result.reviewFilled).toBe(true);
+    expect(result.filledActualCount).toBe(1);
+    expect(result.movedCount).toBe(1);
+    expect(result.targetDate).toBe("2026-06-11");
+    expect(result.tomorrowTaskCount).toBeGreaterThanOrEqual(1);
+    expect(result.data.tasks.find((task) => task.id === "done")?.actualMinutes).toBe(60);
+    expect(result.data.tasks.find((task) => task.id === "todo")?.date).toBe("2026-06-11");
+    expect(result.data.reviews.find((review) => review.date === "2026-06-10")?.text).toContain("今日完成率");
+    expect(result.checklist.filter((item) => item.done).length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("counts overdue unfinished tasks for the selected date", () => {
+    const data = createDefaultData();
+    const math = data.subjects.find((subject) => subject.name === "数学")!;
+    data.tasks = [
+      { id: "old", subjectId: math.id, title: "逾期", date: "2026-06-08", estimatedMinutes: 60, actualMinutes: 0, priority: "高", status: "todo" },
+      { id: "today", subjectId: math.id, title: "今天", date: "2026-06-10", estimatedMinutes: 60, actualMinutes: 0, priority: "中", status: "todo" }
+    ];
+
+    expect(countOverdueTasks(data, "2026-06-10")).toBe(1);
+    expect(countOverdueTasks(data, "2026-06-08")).toBe(0);
+  });
+
+  it("builds a weekly report with totals, weak subject and next-week focus", () => {
+    const data = createDefaultData();
+    const math = data.subjects.find((subject) => subject.name === "数学")!;
+    const english = data.subjects.find((subject) => subject.name === "英语")!;
+    // 2026-06-10 is Wednesday; week is 2026-06-08 ~ 2026-06-14
+    data.tasks = [
+      { id: "m1", subjectId: math.id, title: "高数", date: "2026-06-09", estimatedMinutes: 120, actualMinutes: 120, priority: "高", status: "done" },
+      { id: "e1", subjectId: english.id, title: "阅读", date: "2026-06-10", estimatedMinutes: 60, actualMinutes: 20, priority: "中", status: "todo" },
+      { id: "old", subjectId: math.id, title: "历史遗留", date: "2026-06-01", estimatedMinutes: 45, actualMinutes: 0, priority: "低", status: "todo" }
+    ];
+    data.reviews = [
+      { date: "2026-06-09", text: "今天数学完成不错，继续保持。" },
+      { date: "2026-06-10", text: "英语偏弱，明天先补阅读。" }
+    ];
+
+    const report = buildWeeklyReport(data, "2026-06-10");
+
+    expect(report.weekStart).toBe("2026-06-08");
+    expect(report.weekEnd).toBe("2026-06-14");
+    expect(report.totalTasks).toBe(2);
+    expect(report.doneTasks).toBe(1);
+    expect(report.completionRate).toBe(50);
+    expect(report.plannedMinutes).toBe(180);
+    expect(report.actualMinutes).toBe(140);
+    expect(report.reviewDays).toBe(2);
+    expect(report.overdueCarryCount).toBe(1);
+    expect(report.weakestSubjectName).toBe("英语");
+    expect(report.strongestSubjectName).toBe("数学");
+    expect(report.nextWeekFocus.length).toBe(3);
+    expect(report.markdown).toContain("# 考研周报（2026-06-08 ~ 2026-06-14）");
+    expect(report.markdown).toContain("下周三条重点");
+    expect(report.markdown).toContain("英语");
   });
 
   it("summarizes data overview for settings and backups", () => {
@@ -204,7 +348,7 @@ describe("studyCore", () => {
 
     const advice = generateRuleAdvice(data, "2026-06-10");
 
-    expect(advice.some((item) => item.startsWith("数学 最近 7 天实际/计划为 0%"))).toBe(true);
+    expect(advice.some((item) => item.includes("数学") && item.includes("近 7 天执行率 0%"))).toBe(true);
   });
 
   it("summarizes a Monday-to-Sunday week around the selected date", () => {
@@ -520,5 +664,59 @@ describe("studyCore", () => {
     expect(result.data.tasks.find((task) => task.id === "second")).toMatchObject({ priority: "高", status: "done", actualMinutes: 30 });
     expect(result.data.tasks.find((task) => task.id === "third")).toMatchObject({ priority: "低", status: "todo", actualMinutes: 0 });
     expect(data.tasks.find((task) => task.id === "first")).toMatchObject({ priority: "低", status: "todo", actualMinutes: 0 });
+  });
+
+  it("appends weekly report summary into the selected day review once", () => {
+    const data = createDefaultData();
+    const today = data.tasks[0].date;
+    data.reviews = [{ date: today, text: "今天状态还行。" }];
+
+    const first = appendWeeklyReportToReview(data, today);
+    expect(first.appended).toBe(true);
+    expect(first.reason).toBe("appended");
+    const reviewText = first.data.reviews.find((review) => review.date === today)?.text ?? "";
+    expect(reviewText).toContain("今天状态还行。");
+    expect(reviewText).toContain(`【周报 ${first.report.weekStart}`);
+    expect(reviewText).toContain("下周三条重点：");
+
+    const second = appendWeeklyReportToReview(first.data, today, first.report);
+    expect(second.appended).toBe(false);
+    expect(second.reason).toBe("already-present");
+    expect(second.data.reviews.find((review) => review.date === today)?.text).toBe(reviewText);
+  });
+
+  it("maps actual minutes to heatmap levels", () => {
+    expect(getHeatmapLevel(0)).toBe(0);
+    expect(getHeatmapLevel(30)).toBe(1);
+    expect(getHeatmapLevel(90)).toBe(2);
+    expect(getHeatmapLevel(180)).toBe(3);
+    expect(getHeatmapLevel(300)).toBe(4);
+  });
+
+  it("builds a study heatmap with week columns and streaks", () => {
+    const data = createDefaultData();
+    const math = data.subjects.find((subject) => subject.name === "数学")!;
+    data.tasks = [
+      { id: "h1", subjectId: math.id, title: "D1", date: "2026-06-09", estimatedMinutes: 60, actualMinutes: 90, priority: "高", status: "done" },
+      { id: "h2", subjectId: math.id, title: "D2", date: "2026-06-10", estimatedMinutes: 60, actualMinutes: 150, priority: "高", status: "done" },
+      { id: "h3", subjectId: math.id, title: "D3", date: "2026-06-11", estimatedMinutes: 60, actualMinutes: 0, priority: "中", status: "todo" },
+      { id: "h4", subjectId: math.id, title: "D4", date: "2026-06-12", estimatedMinutes: 60, actualMinutes: 45, priority: "中", status: "done" }
+    ];
+    data.reviews = [{ date: "2026-06-10", text: "今天节奏不错，继续保持。" }];
+
+    const heatmap = buildStudyHeatmap(data, "2026-06-12", 2, { "2026-06-10": 50 });
+    expect(heatmap.weekCount).toBe(2);
+    expect(heatmap.days).toHaveLength(14);
+    expect(heatmap.weeks).toHaveLength(2);
+    expect(heatmap.weeks[0]).toHaveLength(7);
+    expect(heatmap.activeDays).toBe(3);
+    expect(heatmap.totalActualMinutes).toBe(285);
+    expect(heatmap.currentStreak).toBe(1);
+    expect(heatmap.bestStreak).toBe(2);
+
+    const day = heatmap.days.find((item) => item.date === "2026-06-10")!;
+    expect(day.level).toBe(3);
+    expect(day.focusMinutes).toBe(50);
+    expect(day.hasReview).toBe(true);
   });
 });
