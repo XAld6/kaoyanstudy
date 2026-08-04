@@ -1,0 +1,51 @@
+<h2>为「十堰运维札记」选一个首页气质</h2>
+<p class="subtitle">三种方向都保留文章阅读和后台编辑，差别在于第一眼的氛围与信息密度。</p>
+
+<div class="cards" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch;">
+  <div class="card" data-choice="editorial" onclick="toggleSelect(this)" style="padding:0;overflow:hidden;background:#f8f5ee;border:1px solid #d8d0c0;">
+    <div style="height:260px;background:#eee6d6;padding:18px;color:#1c2428;font-family:Georgia,serif;">
+      <div style="display:flex;justify-content:space-between;font:600 11px/1.2 system-ui;letter-spacing:.08em;text-transform:uppercase;color:#a34e32;"><span>十堰运维札记</span><span>2026 / 07</span></div>
+      <div style="height:120px;margin:20px 0;background:linear-gradient(135deg,#b7c4bd,#d9a56f);position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:linear-gradient(145deg,transparent 40%,rgba(24,48,54,.5) 40%,rgba(24,48,54,.5) 44%,transparent 44%),linear-gradient(45deg,transparent 58%,rgba(255,255,255,.45) 58%,rgba(255,255,255,.45) 62%,transparent 62%);"></div>
+      </div>
+      <div style="font-size:25px;line-height:1.06;max-width:280px;">把一台 NAT 主机，变成可靠的工作台</div>
+      <div style="margin-top:12px;font:12px/1.4 system-ui;color:#566268;">配置记录 · 网络观察 · 小型服务</div>
+    </div>
+    <div class="card-body" style="background:#fffdf8;color:#243238;">
+      <h3 style="color:#243238;">A · 编辑部</h3>
+      <p>纸张感、宽留白、铜色细节。像一本持续更新的技术杂志，适合长文和经验总结。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="console" onclick="toggleSelect(this)" style="padding:0;overflow:hidden;background:#151c1f;border:1px solid #304044;">
+    <div style="height:260px;background:#101719;padding:18px;color:#e8f2eb;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#8cc8a0;"><span>root@shiyan:~</span><span>● online</span></div>
+      <div style="margin-top:24px;font-size:13px;color:#b7c8c1;">$ journalctl -u blog.service</div>
+      <div style="margin-top:18px;font-size:12px;line-height:1.8;color:#8dd6a2;">[ok] ssh online<br>[ok] domestic route stable<br>[ok] article published</div>
+      <div style="margin-top:22px;border-left:2px solid #efa75d;padding-left:12px;font:24px/1.15 system-ui;color:#f3f4e7;">把故障写成<br>下一次的答案</div>
+    </div>
+    <div class="card-body" style="background:#182124;color:#e8f2eb;">
+      <h3 style="color:#f3f4e7;">B · 终端</h3>
+      <p style="color:#b7c8c1;">深色运维台、状态信息和代码感更强。适合命令记录、排障日志和快速浏览。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="fieldnotes" onclick="toggleSelect(this)" style="padding:0;overflow:hidden;background:#f2f0e8;border:1px solid #c8c9c2;">
+    <div style="height:260px;background:#e4e9e3;padding:18px;color:#263a3c;font-family:system-ui;">
+      <div style="display:flex;gap:8px;align-items:center;font:700 12px/1.2 system-ui;color:#315d63;"><span style="width:10px;height:10px;border-radius:50%;background:#e17c57;display:inline-block;"></span> FIELD NOTES / SHIYAN</div>
+      <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:20px;">
+        <div style="height:126px;background:linear-gradient(150deg,#72969a,#d7aa77 58%,#f1d4a7);position:relative;"><div style="position:absolute;bottom:10px;left:10px;color:#fff;font:700 20px/1.05 system-ui;">线路<br>与日常</div></div>
+        <div style="padding:10px;background:#fffaf0;border:1px solid #d1d3c8;font-size:12px;line-height:1.6;">本周记录<br><b style="font-size:20px;">03</b><br>新文章</div>
+      </div>
+      <div style="margin-top:16px;font-size:24px;line-height:1.08;font-weight:700;">在一座小城里<br>把服务跑稳</div>
+    </div>
+    <div class="card-body" style="background:#fbfaf5;color:#263a3c;">
+      <h3 style="color:#263a3c;">C · 野外笔记</h3>
+      <p>更有个人气息，图像和短篇并置。适合把技术实践写成带地点感的长期记录。</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:22px;">
+  <p class="subtitle">我推荐 A：它能保留技术内容的可信度，又不会像运维面板；长文、代码和后台编辑都容易保持清晰。</p>
+</div>

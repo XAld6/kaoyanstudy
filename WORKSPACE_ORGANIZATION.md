@@ -20,6 +20,7 @@
 | `leleche/` | 勒勒车竞赛方案：`current/` 当前版 + `archive/` 历史快照；见 `leleche/MANIFEST.md` |
 | `resumes/postgraduate_reexam_resume/` | 考研复试个人简历 |
 | `resumes/resume_competition_intern/` | 竞赛导向通用实习简历 |
+| `linear_algebra_solutions/` | 线性代数解答集 |
 | `mz_linear_solution/` | 线代解题 Overleaf 包 ZIP |
 | `rc_sampling_solutions/` | RC sampling 解答 Overleaf 包 ZIP |
 
@@ -38,7 +39,8 @@
 |---|---|
 | `chatgpt-register-k12/` | ChatGPT 注册/登录 K12 流水线（CLI + WebUI） |
 | `CodexCont/` | Codex 中间件 / 代理 |
-| `dachaung/` | 大创「智爪识损」：前后端、申报书、PPT、脚本 |
+| `dachaung/` | 大创「智爪识损」：`openclaw-damage-system/` 原型、`submission/` 申报、`presentation/` PPT、`sidecars/` 旁支；见 `dachaung/README.md` |
+| `grok-register-panel/` | Grok 注册自动化与实时监控面板源码 |
 | `jglx_latex_project/` | 结构力学 LaTeX 题本（含 Overleaf 上传包） |
 | `kaoyan-study-console/` | 考研学习控制台（前后端） |
 | `mz_linear_solution_project/` | 线性代数解题 LaTeX 工程 |
@@ -69,8 +71,13 @@
 | `zy_latex_work/cache_20260619/` | 桥梁 LaTeX 渲染缓存 |
 | `lyl660_ocr_20260609/` | 线代书 OCR/检查产物 |
 | `latex_review_20260705/` | 一次性审阅包与脚本 |
-| `misc_downloads/` | 从学习资料中移出的安装包、种子等杂项 |
+| `misc_downloads/` | 从学习资料中移出的安装包、种子、第三方源码（含 `nucleo-5b74652e-src/`）等杂项 |
+| `grok/` | hermes/grok 网关相关一次性脚本与日志（`fix_hermes_auth.py`、`start_hermes_gateway.ps1` 等） |
+| `nat-exhibition/` | 全国展览一次性页面（index.html + server.pl） |
+| `transcript_ocr/` | 成绩单 OCR 产物 |
+| `tmp/` | r12 渲染中间物（已被 gitignore） |
 | `skills-audit-report.md` | Codex skills 审计报告（2026-06-20） |
+| `_private/` | 本地凭据备份、SSH 辅助文件与机器专属配置；仅本机保留，不提交 |
 | `README.md` | 本目录补充说明 |
 
 ---
@@ -83,9 +90,10 @@
 - **临时物**：编译缓存、OCR、预览、一次性审阅 → `90_temp_work/`。**清理前须单独确认。**
 - **工程 vs 交付**：可维护源码在 `01_projects/`；完成交付副本在 `00_deliverables/`。
 - **工具目录**：`.git/`、`.opencode/`、`.claude/`、`.codex-playwright/` 等保持原位，不作日常归档。
-- **嵌套仓库**：`CodexCont/`、`chatgpt-register-k12/`、`dachaung/skill/` 为独立 git 仓库；父仓不跟踪其内容，见 `01_projects/NESTED_REPOS.md`。整理时勿动其内部状态。
+- **嵌套仓库**：`CodexCont/`、`chatgpt-register-k12/`、`dachaung/sidecars/skill/`、`90_temp_work/grok-build-zh-20260801/` 为独立 git 仓库；父仓不跟踪其内容，见 `01_projects/NESTED_REPOS.md`。整理时勿动其内部状态。
 
 ## 整理记录
 
 - 2026-07-06：初次按四类目录归档（见 commit `249b27b` 相关说明）。
 - 2026-07-11：收尾整理——交付 ZIP/简历归入子目录；安装包等移至 `90_temp_work/misc_downloads/`；审计报告迁入 `90_temp_work/`；更新本说明。未删除任何缓存或 OCR 产物。
+- 2026-08-04：`grok-register-panel/` 迁入 `01_projects/`（父仓忽略，敏感 config 不入库）；`docs/` 的 superpowers 计划/规格并入 `.superpowers/brainstorm/blog-20260731/`；nucleo 源码归入 `misc_downloads/`；hermes 网关脚本归入 `90_temp_work/grok/`；`coding-workspace/` 为 coding-tools-mcp 运行目录，保留。
