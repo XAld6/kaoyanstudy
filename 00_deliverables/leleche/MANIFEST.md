@@ -2,7 +2,7 @@
 
 ## 当前交付
 
-- 当前目录：`current/2026-07-07_r08_ch09_science_v10/`
+- 当前目录：`current/2026-07-23_r12_calculation_audit_revision/`
 - 当前 PDF：`勒勒车模型结构设计与制作_第19届竞赛_v10.pdf`
 - 当前源码 ZIP：`勒勒车模型理论方案_v9_第9章科研图优化版_LaTeX源码.zip`
 
@@ -18,6 +18,10 @@
 | r06 | 2026-07-07 | `archive/2026-07-07_r06_layout/` | `leleche_v9_revision_20260707_layout` | 排版调整 |
 | r07 | 2026-07-07 | `archive/2026-07-07_r07_chapter_9/` | `leleche_v9_revision_20260707_ch9` | 第 9 章 |
 | r08 | 2026-07-07 | `current/2026-07-07_r08_ch09_science_v10/` | `leleche_v9_revision_20260707_ch9_science` | 第 9 章科研图优化 v10 |
+| r09 | 2026-07-22 | `current/2026-07-22_r09_midas_frame_analysis/` | — | Midas 框架分析 |
+| r10 | 2026-07-22 | `current/2026-07-22_r10_numerical_simulation_step/` | — | 数值模拟分步 |
+| r11 | 2026-07-22 | `current/2026-07-22_r11_midas_wheel_analysis/` | — | Midas 车轮分析 |
+| r12 | 2026-07-23 | `current/2026-07-23_r12_calculation_audit_revision/` | — | 计算审计修订 |
 
 ## 保留约定
 

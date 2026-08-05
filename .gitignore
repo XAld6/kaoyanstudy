@@ -109,17 +109,19 @@ final_render_check/
 # 独立嵌套 Git 仓库：由各自仓库管理，父仓仅保留路径占位说明
 01_projects/CodexCont/
 01_projects/chatgpt-register-k12/
+
+# 父仓忽略的独立项目目录（非嵌套仓库）
 01_projects/grok-register-panel/
 
 # Isolated feature worktrees
 .worktrees/
 
+# 本地计划/草稿类工具目录
+.hermes/
+
 # Local workspace artifacts and sensitive machine data
 **/.codex_tmp/
-workbuddy/
 /90_temp_work/_private/
-/restored_codex_tokens (1)/
-/74c77e93-aaf7-40df-8e55-ffd5d0f6b3cc-sub2api.json
 **/id_ed25519*
 
 # Nested repositories kept outside the parent workspace index

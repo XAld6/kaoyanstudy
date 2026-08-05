@@ -97,3 +97,4 @@
 - 2026-07-06：初次按四类目录归档（见 commit `249b27b` 相关说明）。
 - 2026-07-11：收尾整理——交付 ZIP/简历归入子目录；安装包等移至 `90_temp_work/misc_downloads/`；审计报告迁入 `90_temp_work/`；更新本说明。未删除任何缓存或 OCR 产物。
 - 2026-08-04：`grok-register-panel/` 迁入 `01_projects/`（父仓忽略，敏感 config 不入库）；`docs/` 的 superpowers 计划/规格并入 `.superpowers/brainstorm/blog-20260731/`；nucleo 源码归入 `misc_downloads/`；hermes 网关脚本归入 `90_temp_work/grok/`；`coding-workspace/` 为 coding-tools-mcp 运行目录，保留。
+- 2026-08-05：四 agent 并行审计整理——含明文凭据的根目录 SSH 脚本移入 `90_temp_work/_private/ssh_helpers/`（不入库）；`00_deliverables/grok-register-panel.zip` 归入 `00_deliverables/grok-register-panel/`；`leleche/active/` 根目录 `contact_*.jpg` 移入 `images/`；`leleche/MANIFEST.md` 补登 r09–r12、当前交付指向 r12；`.gitignore` 清理 3 条过期条目、修正 grok-register-panel 注释、新增 `.hermes/` 忽略；审计报告存于 `90_temp_work/cleanup_report_t1..t4.md`（详见各报告与 commit 说明）。未删除任何文件；`grok-build-zh-20260801/target/`（约 1.4 GB 构建缓存）、`tmp/pdfs/` 线性代数 OCR 块等清理类建议待单独确认。
