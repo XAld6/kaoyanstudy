@@ -9,6 +9,10 @@ mkdir -p "$BASE/backups"
 sqlite3 "$BASE/data/app.db" ".backup '$BASE/backups/app-$TS.db'"
 gzip -f "$BASE/backups/app-$TS.db"
 # 直连后端（127.0.0.1 无 Basic Auth），导出网页可直接读回的 JSON
-curl -fsS http://127.0.0.1:8018/api/state/export -o "$BASE/backups/app-$TS.json"
-gzip -f "$BASE/backups/app-$TS.json"
+# 空库时 export 返回 404（还没有数据）→ 跳过 JSON 副本，不视为备份失败
+if curl -fsS http://127.0.0.1:8018/api/state/export -o "$BASE/backups/app-$TS.json"; then
+  gzip -f "$BASE/backups/app-$TS.json"
+else
+  echo "skip json export: server state empty or unavailable"
+fi
 find "$BASE/backups" -name 'app-*.gz' -mtime +30 -delete
