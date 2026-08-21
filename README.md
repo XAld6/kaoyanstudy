@@ -1,8 +1,20 @@
 # 考研学习控制台
 
-一个本地自用的考研学习网页工具，聚焦“今日任务、执行记录、复盘、计划调整、进度对比、AI 建议”。前端数据保存在浏览器 `localStorage`，API Key 只保存在本地后端配置文件里。
+一个自用的考研学习网页工具，聚焦“今日任务、执行记录、复盘、计划调整、进度对比、AI 建议”。
 
-## 一键启动
+两种运行形态：
+
+- **线上（VPS）**：部署到有域名的 VPS，前端静态产物由 Caddy 托管并自动 HTTPS，后端 FastAPI 由 systemd 守护，**学习数据保存在服务端 SQLite**，手机/电脑多端访问同一份数据。详见下文「线上部署」。
+- **本地（Windows 本机开发）**：双击 `kaoyan-console.bat` 即可启动，数据仍走服务端 API；没有后端时前端会退化为“本地只读缓存”模式。
+
+## 数据存储说明
+
+- **唯一数据源是服务端 SQLite**（`/opt/kaoyan-console/data/app.db`）。
+- 浏览器 localStorage 只保留**只读缓存**（离线可看、不可编辑），键为 `kaoyan-study-console:cache:v1`。
+- 旧版 localStorage 数据（键 `kaoyan-study-console:v1`）不会被写入或删除，可在设置页「从本机旧数据一键迁移」导入服务器。
+- 服务器每天 03:17 自动备份（`.db.gz` + `.json.gz` 双份，保留 30 天）。
+
+## 一键启动（仅 Windows 本机）
 
 推荐双击：
 
@@ -22,14 +34,12 @@ kaoyan-console.bat
 - 前端：`http://127.0.0.1:5188`
 - 后端：`http://127.0.0.1:8018`
 
-学习数据会自动保存在浏览器里。额外备份请到网页“设置”页点击“导出 JSON”。
-
-## 手动启动
+## 手动启动（本机开发）
 
 前端：
 
 ```powershell
-cd D:\xm\01_projects\kaoyan-study-console\frontend
+cd kaoyan-study-console\frontend
 npm.cmd install
 npm.cmd run dev
 ```
@@ -37,10 +47,36 @@ npm.cmd run dev
 后端：
 
 ```powershell
-cd D:\xm\01_projects\kaoyan-study-console\backend
+cd kaoyan-study-console\backend
 python -m pip install -r requirements.txt
+$env:KAOYAN_DB_PATH = "$PWD\data\app.db"   # 可选；默认 backend/data/app.db
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8018
 ```
+
+> `.bat` / `.ps1` 启动脚本仅用于 Windows 本机开发；服务器部署见 `deploy/README.md`。
+
+## 线上部署
+
+前置条件：Ubuntu 类 VPS、一个已解析到 VPS 的域名、`/opt/kaoyan-console` 目录、GitHub 私有仓（deploy key 拉取）。
+
+架构：
+
+```text
+浏览器 --HTTPS--> Caddy(自动证书 + Basic Auth)
+                    ├── /api/*  → 127.0.0.1:8018（FastAPI/uvicorn，systemd 守护）
+                    └── 静态文件 → /opt/kaoyan-console/web（前端构建产物）
+数据：/opt/kaoyan-console/data/app.db（SQLite，WAL）
+备份：/opt/kaoyan-console/backups/（每日 .db.gz + .json.gz，保留 30 天）
+密钥：/etc/kaoyan-console.env（OPENAI_API_KEY 等，0640，不入库）
+```
+
+部署步骤、systemd unit、Caddyfile、备份/更新脚本与故障排查见 **`deploy/README.md`**。
+
+首次启用流程：
+
+1. 浏览器打开线上地址，登录 Basic Auth（用户名/口令在 Caddyfile 里配置的哈希）；
+2. 设置页「从本机旧数据一键迁移」把旧版 localStorage 数据搬上服务器，或直接「导入 JSON 到服务器」；
+3. 手机访问同一地址，能看到同一份数据。
 
 ## 功能地图
 
@@ -94,93 +130,82 @@ AI 教练：
 - 修改目标日期
 - 新增、改名、删除科目
 - 调整科目颜色和每周目标
-- 配置 OpenAI 兼容 API
+- 配置 OpenAI 兼容 API（服务器上 Key 只读，只能通过 `/etc/kaoyan-console.env` 配置）
 - 测试 API 连接
-- 查看备份状态（最近导出时间、距今天数）
-- 导出/导入 JSON 数据
+- 查看同步状态与数据概览
+- 从本机旧数据一键迁移 / 导入 JSON 到服务器 / 从服务器下载备份 / 导出 JSON
+- 导入 JSON 数据
 
 ## API 配置
 
-启动前端和后端后，进入“设置”页的“API 配置”区域填写：
+**服务器（线上）**：API Key 只能写在服务器 `/etc/kaoyan-console.env`，网页只读、不回显：
 
 ```text
-API Key: sk-xxxxxxxx
-Base URL: https://api.openai.com/v1
-Model: gpt-4.1-mini
+OPENAI_API_KEY=sk-xxxx
+OPENAI_BASE_URL=https://api.openai.com/v1
+OPENAI_MODEL=gpt-4.1-mini
 ```
 
-OpenAI 兼容服务也可以使用自己的地址：
-
-```text
-Base URL: https://你的服务地址/v1
-Model: 该服务支持的模型名
-```
-
-配置会保存到：
-
-```text
-backend/llm_config.local.json
-```
-
-该文件已加入 `.gitignore`，不会写入前端，也不会在页面回显 API Key。保存过 API Key 后，只想修改 `Base URL` 或 `Model` 时，可以把 API Key 输入框留空，后端会保留旧 Key。
+**本机开发**：可以通过环境变量（同上）或沿用 `backend/llm_config.local.json`（只读回退）。设置页的 Base URL / Model 可调整，用「测试连接」验证。
 
 ## 数据备份
 
-常规使用时，学习数据保存在浏览器 `localStorage`。
+**服务端自动备份**：每日 03:17 由 systemd timer 执行，产出双份：
 
-导出入口：
+- `app-<时间>.db.gz`：SQLite 一致快照（WAL 安全），可整机恢复
+- `app-<时间>.json.gz`：网页可直接读回的 JSON 备份
 
-- **今日页**：顶部「导出备份」条、任务区「备份」按钮
-- **设置页**：「数据备份」卡片、底部「导出 JSON 备份」
+保留 30 天。手动备份与恢复命令见 `deploy/README.md`。
 
-系统会记录最近一次导出时间：
-
-- 从未导出：打开时顶部提示「立即备份」
-- 超过 7 天：建议更新备份
-- 超过 14 天：升级为过期提醒
-
-建议在这些时机导出：
-
-- 大量调整计划后
-- 导入外部数据前
-- 清理浏览器缓存前
-- 更换浏览器或设备前
-
-恢复数据时，在“设置”页点击“导入 JSON”即可。
-
-导入 JSON 前，系统会先自动下载一份当前数据备份，文件名形如 `kaoyan-study-backup-before-import-2026-06-10.json`。
+**网页导出**（额外保险）：设置页「导出 JSON 备份」随时可用，导入前系统会先自动下载一份当前数据备份。
 
 ## 验证
 
 前端测试和构建：
 
 ```powershell
-cd D:\xm\01_projects\kaoyan-study-console\frontend
+cd frontend
 npm.cmd test
 npm.cmd run build
+```
+
+端到端同步验证（需先启动前后端）：
+
+```powershell
+node scripts/verify_sync.mjs            # online：水合/去抖推送/刷新持久
+$env:VERIFY_PHASE="offline"; node scripts/verify_sync.mjs    # 离线只读
+$env:VERIFY_PHASE="conflict"; node scripts/verify_sync.mjs   # 双标签页冲突
 ```
 
 后端测试：
 
 ```powershell
-cd D:\xm\01_projects\kaoyan-study-console\backend
-python -m pytest --basetemp ..\.runtime\pytest-temp
+cd backend
+python -m pytest
 ```
-
-`--basetemp` 会把 pytest 临时目录放到项目内，避免 Windows 系统临时目录权限异常。
 
 ## 项目结构
 
 ```text
 kaoyan-study-console/
   frontend/              React + Vite + TypeScript 前端
-    src/main.tsx         应用状态与页面编排
-    src/uiComponents.tsx 可复用 UI 组件
+    src/main.tsx         应用状态与页面编排（含服务端同步数据流）
+    src/remoteStore.ts   服务端同步网络层（fetch/push/import + 去抖）
+    src/storage.ts       本地只读缓存与旧数据迁移读取
     src/studyCore.ts     学习业务纯函数
     src/focusTimer.ts    专注计时
-    src/storage.ts       本地存储与备份
   backend/               FastAPI 后端
-  kaoyan-console.bat     推荐入口：打开中文菜单
-  kaoyan-console.ps1     启动、关闭、状态管理脚本
+    app/main.py          API 入口（state/config/advice/health）
+    app/db.py            SQLite 数据层（WAL、每请求连接、备份）
+    app/state.py         数据校验与读写/合并（镜像前端校验规则）
+  deploy/                VPS 部署物：Caddyfile、systemd unit、备份/更新脚本、运维文档
+  docs/迁移说明.md        localStorage → 服务端迁移步骤
+  kaoyan-console.bat     推荐入口（仅 Windows 本机）：打开中文菜单
   .runtime/              启动日志、PID、测试临时目录
 ```
+
+## 常见问题
+
+- **页面顶部出现「离线只读」红条**：连不上后端。检查 `systemctl status kaoyan-api` 与 `journalctl -u kaoyan-api`；恢复后页面会自动重试。
+- **出现「数据冲突」**：另一台设备更新过数据。页面已自动下载本机版本，选择「加载服务器版本」或「用本机版本覆盖」即可。
+- **提示音/系统通知不弹**：浏览器通知需要 HTTPS 安全上下文；线上域名必须启用 HTTPS（Caddy 自动提供），并到设置页「请求通知权限」。
