@@ -26,7 +26,7 @@ import {
   Timer,
   Trash2
 } from "lucide-react";
-import { ApiForm, Health, fetchConfig, requestAdvice, saveConfig, testConfig } from "./api";
+import { ApiForm, Health, fetchConfig, requestAdvice, testConfig } from "./api";
 import {
   AppData,
   PlanTaskFilters,
@@ -41,6 +41,7 @@ import {
   bumpTaskActualMinutes,
   copyWeekTasks,
   countOverdueTasks,
+  createDefaultData,
   fillTaskActualMinutes,
   formatDate,
   StructuredAdvice,
@@ -71,12 +72,10 @@ import {
 } from "./studyCore";
 import {
   BackupMeta,
-  clearAppData,
   clearBackupMeta,
   createAppDataExport,
   formatBackupTimestamp,
   getBackupHealth,
-  loadAppData,
   loadAppDataWithStatus,
   loadBackupMeta,
   loadFocusNotifyPrefs,
@@ -84,6 +83,8 @@ import {
   loadPomodoroMinutes,
   markBackupExported,
   parseImportedData,
+  readLegacyFocusStats,
+  readLegacyLocalData,
   recordFocusSession,
   restoreFocusTimerSession,
   saveAppData,
@@ -120,13 +121,17 @@ import {
 } from "./focusNotify";
 import {
   FocusStatsStore,
+  createEmptyFocusStatsStore,
   formatFocusStatsSummary,
   getDailyFocusStats,
-  getFocusMinutesByDate
+  getFocusMinutesByDate,
+  recordFocusSession as recordFocusSessionPure
 } from "./focusStats";
 import { daysLeft, minutesLabel } from "./format";
 import { useSelectedDate } from "./hooks/useSelectedDate";
 import { View, useView } from "./hooks/useView";
+import { createStateSync, fetchState, importStateFile, pushState } from "./remoteStore";
+import type { RemoteState, StateSync } from "./remoteStore";
 import {
   ClosureChecklist,
   FocusStickyBar,
@@ -207,12 +212,8 @@ function App() {
   const [initialLoad] = useState(() => loadAppDataWithStatus());
   const [pomodoroMinutes, setPomodoroMinutes] = useState(() => loadPomodoroMinutes());
   const [focusRestore] = useState(() => restoreFocusTimerSession(Date.now(), DEFAULT_BREAK_MINUTES, loadPomodoroMinutes()));
-  const [data, setData] = useState<AppData>(() => {
-    if (focusRestore.logTaskId && focusRestore.logMinutes > 0) {
-      return bumpTaskActualMinutes(structuredClone(initialLoad.data), focusRestore.logTaskId, focusRestore.logMinutes);
-    }
-    return initialLoad.data;
-  });
+  // 数据源在服务器；本地缓存只用于首屏与离线兜底，水合完成后会被服务器状态替换
+  const [data, setData] = useState<AppData>(() => initialLoad.data);
   const [view, setView] = useView();
   const [selectedDate, setSelectedDate] = useSelectedDate();
   const [newTask, setNewTask] = useState({ title: "", subjectId: "", estimatedMinutes: 60, priority: "中" as StudyTask["priority"] });
@@ -231,12 +232,15 @@ function App() {
   const [aiStatus, setAiStatus] = useState("");
   const [health, setHealth] = useState<Health | null>(null);
   const [apiForm, setApiForm] = useState<ApiForm>({ api_key: "", base_url: "https://api.openai.com/v1", model: "gpt-4.1-mini" });
-  const [apiSaveStatus, setApiSaveStatus] = useState("");
   const [apiTestStatus, setApiTestStatus] = useState("");
   const [isAiLoading, setIsAiLoading] = useState(false);
-  const [isApiSaving, setIsApiSaving] = useState(false);
   const [isApiTesting, setIsApiTesting] = useState(false);
-  const [storageWarning, setStorageWarning] = useState(initialLoad.recovered ? "检测到浏览器里的学习数据异常，已回退到示例数据。若你有备份，请在设置页导入 JSON。" : "");
+  const [storageWarning, setStorageWarning] = useState(initialLoad.recovered ? "检测到本地缓存数据异常，已回退到示例数据。若你有备份，可在设置页导入 JSON。" : "");
+  // 服务端同步状态：loading=水合中 / ready=正常 / saving=保存中 / offline=离线只读 / conflict=多端冲突
+  const [syncStatus, setSyncStatus] = useState<"loading" | "ready" | "saving" | "offline" | "conflict">("loading");
+  const [syncMessage, setSyncMessage] = useState("");
+  const [conflictState, setConflictState] = useState<RemoteState | null>(null);
+  const [revision, setRevision] = useState(0);
   const [focusTimer, setFocusTimer] = useState<FocusTimerState>(() => {
     if (focusRestore.restored) return focusRestore.state;
     // 无会话时保留上次选择的番茄时长（模式仍为正计时，切换番茄即可用）
@@ -246,12 +250,8 @@ function App() {
   const [focusStatusMessage, setFocusStatusMessage] = useState(() => focusRestore.message);
   const [focusNotifyPrefs, setFocusNotifyPrefs] = useState<FocusNotifyPrefs>(() => loadFocusNotifyPrefs());
   const [focusNotifyStatus, setFocusNotifyStatus] = useState("");
-  const [focusStatsStore, setFocusStatsStore] = useState<FocusStatsStore>(() => {
-    if (focusRestore.logMinutes > 0) {
-      return recordFocusSession({ minutes: focusRestore.logMinutes, isPomodoro: true });
-    }
-    return loadFocusStatsStore();
-  });
+  // 专注统计的真实来源在服务器；水合后会用服务器数据替换这里的本地缓存值
+  const [focusStatsStore, setFocusStatsStore] = useState<FocusStatsStore>(() => loadFocusStatsStore());
   const focusStats = useMemo(() => getDailyFocusStats(focusStatsStore, formatDate()), [focusStatsStore]);
   const [weeklyReport, setWeeklyReport] = useState<WeeklyReport | null>(null);
   const [weeklyReportStatus, setWeeklyReportStatus] = useState("");
@@ -259,6 +259,17 @@ function App() {
   const focusNotifyPrefsRef = useRef(focusNotifyPrefs);
   const pomodoroMinutesRef = useRef(pomodoroMinutes);
   const focusRestoreNotifiedRef = useRef(false);
+  // 服务端同步 refs（供去抖任务读取最新值，避免闭包过期）
+  const dataRef = useRef<AppData>(data);
+  const focusStatsStoreRef = useRef<FocusStatsStore>(focusStatsStore);
+  const revisionRef = useRef(0);
+  const syncStatusRef = useRef<"loading" | "ready" | "saving" | "offline" | "conflict">("loading");
+  const suppressNextSyncRef = useRef(false);
+  const hydratedRef = useRef(false);
+  const focusRestoreAppliedRef = useRef(false);
+  const stateSyncRef = useRef<StateSync | null>(null);
+  if (!stateSyncRef.current) stateSyncRef.current = createStateSync();
+  const stateSync = stateSyncRef.current;
   const focusActionRefs = useRef({
     pauseOrResume: () => {},
     finish: () => {},
@@ -269,9 +280,118 @@ function App() {
   focusNotifyPrefsRef.current = focusNotifyPrefs;
   pomodoroMinutesRef.current = pomodoroMinutes;
 
+  // 本地只读缓存：数据变化立即写入（离线兜底用；服务器才是唯一数据源）
   useEffect(() => {
     saveAppData(data);
   }, [data]);
+
+  // ref 镜像（必须声明在去抖调度 effect 之前，保证调度执行时读到最新值）
+  useEffect(() => {
+    dataRef.current = data;
+  }, [data]);
+  useEffect(() => {
+    focusStatsStoreRef.current = focusStatsStore;
+  }, [focusStatsStore]);
+  useEffect(() => {
+    revisionRef.current = revision;
+  }, [revision]);
+
+  // 水合：以服务器为唯一数据源；失败则用本地缓存只读兜底
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      let nextData: AppData;
+      let nextStats: FocusStatsStore = createEmptyFocusStatsStore();
+      let nextRevision = 0;
+      let needPush = false;
+      try {
+        const remote = await fetchState();
+        if (cancelled) return;
+        if (remote === null) {
+          // 空库：用默认数据播种并立即推送（baseRevision 0）
+          nextData = createDefaultData();
+          nextRevision = 0;
+          needPush = true;
+        } else {
+          nextData = remote.data;
+          nextStats = remote.focusStats;
+          nextRevision = remote.revision;
+        }
+      } catch {
+        if (cancelled) return;
+        const cached = loadAppDataWithStatus();
+        nextData = cached.data;
+        nextStats = loadFocusStatsStore();
+        syncStatusRef.current = "offline";
+        setSyncStatus("offline");
+        setSyncMessage("无法连接服务器，当前显示本地缓存（只读）。恢复连接后会自动重试。");
+      }
+
+      // 刷新恢复的番茄：把离开期间完成的时长补到最新数据上（一次性）
+      if (focusRestore.logTaskId && focusRestore.logMinutes > 0 && !focusRestoreAppliedRef.current) {
+        focusRestoreAppliedRef.current = true;
+        nextData = bumpTaskActualMinutes(structuredClone(nextData), focusRestore.logTaskId, focusRestore.logMinutes);
+        nextStats = recordFocusSessionPure(nextStats, { minutes: focusRestore.logMinutes, isPomodoro: true, date: formatDate() });
+        needPush = true;
+      }
+
+      if (cancelled) return;
+      dataRef.current = nextData;
+      focusStatsStoreRef.current = nextStats;
+      revisionRef.current = nextRevision;
+      setData(nextData);
+      setFocusStatsStore(nextStats);
+      setRevision(nextRevision);
+      if (syncStatusRef.current !== "offline") {
+        syncStatusRef.current = "ready";
+        setSyncStatus("ready");
+      }
+      hydratedRef.current = true;
+      // 水合后的数据与服务器一致（或已在上面显式推送），首个调度直接跳过，避免每次刷新都 bump revision
+      if (!needPush) suppressNextSyncRef.current = true;
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // 去抖推送到服务器：任何数据变化 800ms 合并一次 PUT（水合完成前不推）
+  useEffect(() => {
+    if (!hydratedRef.current) return;
+    stateSync.schedule(() => {
+      if (suppressNextSyncRef.current) {
+        suppressNextSyncRef.current = false;
+        return;
+      }
+      void syncNow();
+    });
+  }, [data, focusStatsStore]);
+
+  // 页面隐藏时强制 flush，避免关标签页丢最后一次改动
+  useEffect(() => {
+    function flushOnHide() {
+      void stateSync.flush();
+    }
+    document.addEventListener("visibilitychange", flushOnHide);
+    window.addEventListener("pagehide", flushOnHide);
+    return () => {
+      document.removeEventListener("visibilitychange", flushOnHide);
+      window.removeEventListener("pagehide", flushOnHide);
+    };
+  }, []);
+
+  // 断线重连：online 事件 + 每 30s 重试一次
+  useEffect(() => {
+    const tryReconnect = () => {
+      if (syncStatusRef.current === "offline") retryConnection();
+    };
+    window.addEventListener("online", tryReconnect);
+    const intervalId = window.setInterval(tryReconnect, 30000);
+    return () => {
+      window.removeEventListener("online", tryReconnect);
+      window.clearInterval(intervalId);
+    };
+  }, []);
 
   useEffect(() => {
     saveFocusTimerSession(focusTimer);
@@ -396,8 +516,83 @@ function App() {
     };
   }, [focusSnapshot]);
 
+  /** 同步未就绪（加载中/离线/冲突未决）时锁定所有编辑入口 */
+  const editsLocked = syncStatus === "loading" || syncStatus === "offline" || syncStatus === "conflict";
+
   function updateData(updater: (current: AppData) => AppData) {
+    if (editsLocked) {
+      setSyncMessage(
+        syncStatus === "loading"
+          ? "正在从服务器加载数据，暂时不能编辑。"
+          : syncStatus === "conflict"
+            ? "请先解决数据冲突后再编辑。"
+            : "当前离线模式，编辑已暂停；恢复连接后自动重试同步。"
+      );
+      return;
+    }
     setData((current) => updater(structuredClone(current)));
+  }
+
+  /** 把当前内存快照推送到服务器（去抖任务的真正执行体） */
+  async function syncNow(forceBaseRevision?: number) {
+    const current = dataRef.current;
+    if (!current) return;
+    if (syncStatusRef.current === "conflict") return;
+    syncStatusRef.current = "saving";
+    setSyncStatus("saving");
+    setSyncMessage("");
+    try {
+      const result = await pushState({
+        baseRevision: forceBaseRevision ?? revisionRef.current,
+        data: current,
+        focusStats: focusStatsStoreRef.current
+      });
+      if (result.ok) {
+        revisionRef.current = result.revision;
+        setRevision(result.revision);
+        syncStatusRef.current = "ready";
+        setSyncStatus("ready");
+      } else {
+        // 冲突：先自动下载本机版本（不丢数据），再让用户选择
+        downloadExportFile(createAppDataExport(current, "before-import", undefined, focusStatsStoreRef.current));
+        setConflictState(result.conflict);
+        syncStatusRef.current = "conflict";
+        setSyncStatus("conflict");
+        setSyncMessage("检测到其他设备已更新服务器数据。已自动下载本机版本备份，请选择保留哪一份。");
+      }
+    } catch (error) {
+      syncStatusRef.current = "offline";
+      setSyncStatus("offline");
+      setSyncMessage(error instanceof Error ? `保存到服务器失败：${error.message}` : "保存到服务器失败，已暂停编辑。");
+    }
+  }
+
+  function retryConnection() {
+    if (syncStatusRef.current !== "offline") return;
+    setSyncMessage("正在重试连接...");
+    void syncNow();
+  }
+
+  function loadServerVersion() {
+    if (!conflictState) return;
+    suppressNextSyncRef.current = true; // 服务器版本无需再推回去
+    dataRef.current = conflictState.data;
+    focusStatsStoreRef.current = conflictState.focusStats;
+    revisionRef.current = conflictState.revision;
+    setData(conflictState.data);
+    setFocusStatsStore(conflictState.focusStats);
+    setRevision(conflictState.revision);
+    setConflictState(null);
+    syncStatusRef.current = "ready";
+    setSyncStatus("ready");
+    setSyncMessage("");
+  }
+
+  function overwriteWithLocalVersion() {
+    if (!conflictState) return;
+    const base = conflictState.revision;
+    setConflictState(null);
+    void syncNow(base);
   }
 
   function toggleTask(taskId: string) {
@@ -989,22 +1184,6 @@ function App() {
     }
   }
 
-  async function saveApiConfig() {
-    if (isApiSaving) return;
-    setIsApiSaving(true);
-    setApiSaveStatus("正在保存 API 配置...");
-    try {
-      const config = await saveConfig(apiForm);
-      setHealth(config);
-      setApiForm((current) => ({ ...current, api_key: "" }));
-      setApiSaveStatus("API 配置已保存到本地后端。");
-    } catch (error) {
-      setApiSaveStatus(error instanceof Error ? error.message : "API 配置保存失败。");
-    } finally {
-      setIsApiSaving(false);
-    }
-  }
-
   async function testApiConfig() {
     if (isApiTesting) return;
     setIsApiTesting(true);
@@ -1030,7 +1209,7 @@ function App() {
   }
 
   function downloadData(kind: "manual" | "before-import" = "manual") {
-    downloadExportFile(createAppDataExport(data, kind));
+    downloadExportFile(createAppDataExport(data, kind, undefined, focusStatsStore));
     const nextMeta = markBackupExported(kind);
     setBackupMeta(nextMeta);
     setBackupBannerDismissed(false);
@@ -1040,14 +1219,28 @@ function App() {
     }
   }
 
+  /** 导入 JSON 文件到服务器（replace 语义，等价「恢复备份」） */
   function importData(event: ChangeEvent<HTMLInputElement>) {
+    if (editsLocked) return;
     const file = event.target.files?.[0];
     if (!file) return;
     downloadData("before-import");
-    file.text().then((text) => {
-      setData(parseImportedData(text));
-      setStorageWarning("导入前已自动下载当前数据备份；新数据已导入。");
-      setSettingsActionStatus("导入成功。导入前的旧数据已自动导出一份。");
+    file.text().then(async (text) => {
+      // 先走前端现有校验（错误信息与旧版一致），再发到服务器
+      parseImportedData(text);
+      const remote = await importStateFile(text, "replace");
+      suppressNextSyncRef.current = true; // 服务器已是这份数据，无需再推
+      dataRef.current = remote.data;
+      focusStatsStoreRef.current = remote.focusStats;
+      revisionRef.current = remote.revision;
+      setData(remote.data);
+      setFocusStatsStore(remote.focusStats);
+      setRevision(remote.revision);
+      syncStatusRef.current = "ready";
+      setSyncStatus("ready");
+      setSyncMessage("");
+      setStorageWarning("导入前已自动下载当前数据备份；服务器数据已更新。");
+      setSettingsActionStatus(`导入成功（revision ${remote.revision}）。导入前已自动备份当前数据。`);
       event.target.value = "";
     }).catch((error) => {
       alert(error instanceof Error ? error.message : "导入失败");
@@ -1055,14 +1248,67 @@ function App() {
     });
   }
 
+  /** 从本机旧版 localStorage 一键迁移到服务器（replace；老键全程只读，迁移后仍保留） */
+  async function migrateLegacyData() {
+    if (editsLocked) return;
+    const legacy = readLegacyLocalData();
+    if (!legacy) {
+      setSettingsActionStatus("本机浏览器没有找到旧版本地数据，无需迁移。");
+      return;
+    }
+    setSettingsActionStatus("正在把本机旧数据导入服务器...");
+    try {
+      const legacyStats = readLegacyFocusStats();
+      const remote = await importStateFile(JSON.stringify({ ...legacy, focusStats: legacyStats ?? undefined }), "replace");
+      suppressNextSyncRef.current = true;
+      dataRef.current = remote.data;
+      focusStatsStoreRef.current = remote.focusStats;
+      revisionRef.current = remote.revision;
+      setData(remote.data);
+      setFocusStatsStore(remote.focusStats);
+      setRevision(remote.revision);
+      syncStatusRef.current = "ready";
+      setSyncStatus("ready");
+      setSyncMessage("");
+      setSettingsActionStatus(`已把本机旧数据迁移到服务器（revision ${remote.revision}）。旧数据仍保留在本机浏览器里。`);
+    } catch (error) {
+      setSettingsActionStatus(`迁移失败：${error instanceof Error ? error.message : "未知错误"}。`);
+    }
+  }
+
+  /** 从服务器下载当前数据备份（可离线读回的 JSON） */
+  async function downloadServerBackup() {
+    try {
+      const response = await fetch("/api/state/export");
+      const text = await response.text();
+      if (!response.ok) {
+        let detail = "下载服务器备份失败。";
+        try {
+          detail = String(JSON.parse(text).detail ?? detail);
+        } catch {
+          // keep default
+        }
+        throw new Error(detail);
+      }
+      downloadExportFile({ content: text, filename: `kaoyan-study-server-${formatDate()}.json`, mimeType: "application/json;charset=utf-8" });
+      setSettingsActionStatus("已从服务器下载当前数据备份。");
+    } catch (error) {
+      setSettingsActionStatus(error instanceof Error ? error.message : "下载服务器备份失败。");
+    }
+  }
+
   function resetData() {
-    if (!window.confirm("确定要重置为示例数据吗？当前浏览器里的学习记录会被清空。")) return;
-    clearAppData();
+    if (editsLocked) return;
+    if (!window.confirm("确定要重置为示例数据吗？服务器上的学习记录会被替换成示例数据。")) return;
     clearBackupMeta();
     setBackupMeta(loadBackupMeta());
     setBackupBannerDismissed(false);
-    setData(loadAppData());
-    setSettingsActionStatus("已重置为示例数据。备份记录也已清空，请尽快重新导出。");
+    const fresh = createDefaultData();
+    dataRef.current = fresh;
+    focusStatsStoreRef.current = createEmptyFocusStatsStore();
+    setData(fresh);
+    setFocusStatsStore(createEmptyFocusStatsStore()); // 数据变化 effect 会自动调度推送
+    setSettingsActionStatus("已重置为示例数据并同步到服务器。备份记录已清空，请尽快重新导出。");
   }
 
   return (
@@ -1126,6 +1372,24 @@ function App() {
         </nav>
 
         {storageWarning && <div className="notice storage-warning">{storageWarning}<button className="ghost mini" onClick={() => setStorageWarning("")}>知道了</button></div>}
+
+        {syncStatus === "loading" && <div className="notice sync-notice">正在从服务器加载数据…</div>}
+        {syncStatus === "saving" && <div className="notice sync-notice sync-saving">正在保存到服务器…</div>}
+        {syncStatus === "offline" && (
+          <div className="notice sync-notice sync-offline">
+            <strong>离线只读</strong>
+            <span>{syncMessage}</span>
+            <button className="ghost mini" onClick={retryConnection}>重试连接</button>
+          </div>
+        )}
+        {syncStatus === "conflict" && conflictState && (
+          <div className="notice sync-notice sync-conflict">
+            <strong>数据冲突</strong>
+            <span>{syncMessage}</span>
+            <button className="primary compact-button" onClick={loadServerVersion}>加载服务器版本</button>
+            <button className="ghost compact-button" onClick={overwriteWithLocalVersion}>用本机版本覆盖</button>
+          </div>
+        )}
 
         {showBackupBanner && (
           <div className={`notice backup-banner tone-${backupHealth.tone}`}>
@@ -1537,7 +1801,7 @@ function App() {
           <section className="panel settings-panel">
             <div className="panel-head">
               <h2>设置与数据</h2>
-              <span className="pill">localStorage v{data.version}</span>
+              <span className="pill">服务端 v{data.version} · rev {revision}</span>
             </div>
             <div className="data-overview" aria-label="数据概览">
               <OverviewItem label="科目数" value={`${dataOverview.subjectCount}`} />
@@ -1557,7 +1821,7 @@ function App() {
                 <div className="backup-meta-grid">
                   <OverviewItem label="最近导出" value={backupHealth.lastExportLabel} />
                   <OverviewItem label="距今" value={backupHealth.daysSinceExport === null ? "—" : `${backupHealth.daysSinceExport} 天`} />
-                  <OverviewItem label="存储位置" value="浏览器 localStorage" />
+                  <OverviewItem label="存储位置" value="服务器 SQLite（本地只读缓存）" />
                 </div>
               </div>
               <div className="backup-card-actions">
@@ -1627,7 +1891,7 @@ function App() {
               </div>
               <label className="field">
                 <span>API Key</span>
-                <input type="password" value={apiForm.api_key} onChange={(event) => setApiForm((current) => ({ ...current, api_key: event.target.value }))} placeholder={health?.llm_configured ? "已保存，留空不会显示旧 Key" : "sk-..."} autoComplete="off" />
+                <input type="password" readOnly value={apiForm.api_key} placeholder="服务器上由 /etc/kaoyan-console.env 配置（网页只读）" autoComplete="off" />
               </label>
               <label className="field">
                 <span>Base URL</span>
@@ -1638,12 +1902,10 @@ function App() {
                 <input value={apiForm.model} onChange={(event) => setApiForm((current) => ({ ...current, model: event.target.value }))} placeholder="gpt-4.1-mini" />
               </label>
               <div className="button-row">
-                <button className="primary" onClick={saveApiConfig} disabled={isApiSaving}><Sparkles size={18} />{isApiSaving ? "保存中..." : "保存 API 配置"}</button>
                 <button className="ghost" onClick={testApiConfig} disabled={isApiTesting}><CheckCircle2 size={18} />{isApiTesting ? "测试中..." : "测试连接"}</button>
               </div>
-              {apiSaveStatus && <div className="notice inline-notice">{apiSaveStatus}</div>}
               {apiTestStatus && <div className="notice inline-notice">{apiTestStatus}</div>}
-              <p className="hint">API Key 会发送到本地后端保存，不写入浏览器 localStorage，也不会回显。</p>
+              <p className="hint">服务器上 API Key 只能通过 /etc/kaoyan-console.env 配置，网页不可修改；Base URL / Model 可在这里调整后用「测试连接」验证效果。</p>
               <pre className="example-box">{`示例：
 API Key: sk-xxxxxxxx
 Base URL: https://api.openai.com/v1
@@ -1681,10 +1943,12 @@ Model: 该服务支持的模型名`}</pre>
             </div>
             <div className="settings-actions">
               <button className="primary" onClick={() => downloadData("manual")}><Download size={18} />导出 JSON 备份</button>
-              <label className="ghost file-button"><Import size={18} />导入 JSON<input type="file" accept="application/json" onChange={importData} /></label>
+              <label className="ghost file-button"><Import size={18} />导入 JSON 到服务器<input type="file" accept="application/json" onChange={importData} /></label>
+              <button className="ghost" onClick={() => void downloadServerBackup()}><Download size={18} />从服务器下载备份</button>
+              <button className="ghost" onClick={() => void migrateLegacyData()}><Import size={18} />从本机旧数据一键迁移</button>
               <button className="danger" onClick={resetData}><RefreshCw size={18} />重置示例数据</button>
             </div>
-            <p className="hint">学习数据只保存在本机浏览器。建议至少每周导出一次；导入前会自动再备份当前数据。</p>
+            <p className="hint">学习数据保存在服务器 SQLite（本地浏览器保留只读缓存供离线查看）。服务器会自动每日备份；建议仍定期用「导出 JSON 备份」留一份文件。</p>
           </section>
         )}
       </section>

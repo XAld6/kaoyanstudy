@@ -19,12 +19,18 @@ import {
   reconcileFocusTimer
 } from "./focusTimer";
 
-const STORAGE_KEY = "kaoyan-study-console:v1";
+/** 旧版数据键：一键迁移的数据源；全程只读，永不写入、永不删除 */
+const LEGACY_STORAGE_KEY = "kaoyan-study-console:v1";
+/** 新版缓存键：服务器数据的本地只读副本（离线可看不可改） */
+const CACHE_KEY = "kaoyan-study-console:cache:v1";
 const BACKUP_META_KEY = "kaoyan-study-console:backup-meta:v1";
 const FOCUS_NOTIFY_PREFS_KEY = "kaoyan-study-console:focus-notify:v1";
 const FOCUS_TIMER_SESSION_KEY = "kaoyan-study-console:focus-timer:v1";
 const POMODORO_MINUTES_KEY = "kaoyan-study-console:pomodoro-minutes:v1";
-const FOCUS_STATS_KEY = "kaoyan-study-console:focus-stats:v1";
+/** 旧版专注统计键：迁移时随数据一起读走 */
+const LEGACY_FOCUS_STATS_KEY = "kaoyan-study-console:focus-stats:v1";
+/** 新版专注统计缓存键 */
+const FOCUS_STATS_CACHE_KEY = "kaoyan-study-console:focus-stats-cache:v1";
 
 /** 超过该天数未导出时提示建议备份 */
 export const BACKUP_WARN_AFTER_DAYS = 7;
@@ -115,8 +121,9 @@ function isValidAppData(value: unknown): value is AppData {
     && value.reviews.every(isValidReview);
 }
 
+/** 读服务端数据的本地只读缓存；数据源在服务器，这里只做离线兜底展示 */
 export function loadAppDataWithStatus(): LoadAppDataResult {
-  const raw = localStorage.getItem(STORAGE_KEY);
+  const raw = localStorage.getItem(CACHE_KEY);
   if (!raw) return { data: createDefaultData(), recovered: false };
 
   try {
@@ -134,23 +141,53 @@ export function loadAppData(): AppData {
   return loadAppDataWithStatus().data;
 }
 
+/** 写入只读缓存（服务器是唯一数据源；缓存仅用于离线查看） */
 export function saveAppData(data: AppData) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  localStorage.setItem(CACHE_KEY, JSON.stringify(data));
 }
 
 export function clearAppData() {
-  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(CACHE_KEY);
 }
 
-export function exportAppData(data: AppData) {
-  return JSON.stringify(data, null, 2);
+/** 读旧版 localStorage 数据（一键迁移用）；读取失败或不合法返回 null */
+export function readLegacyLocalData(): AppData | null {
+  try {
+    const raw = localStorage.getItem(LEGACY_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as unknown;
+    if (!isValidAppData(parsed)) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
 }
 
-export function createAppDataExport(data: AppData, kind: AppDataExportKind = "manual", date = formatDate()): AppDataExportPackage {
+/** 读旧版专注统计（随旧数据一起迁移）；没有或非法返回 null */
+export function readLegacyFocusStats(): FocusStatsStore | null {
+  try {
+    const raw = localStorage.getItem(LEGACY_FOCUS_STATS_KEY);
+    if (!raw) return null;
+    return parseFocusStatsStore(JSON.parse(raw) as unknown);
+  } catch {
+    return null;
+  }
+}
+
+export function exportAppData(data: AppData, focusStats?: FocusStatsStore) {
+  const payload: Record<string, unknown> = { ...data };
+  // focusStats 作为额外键并入导出对象：旧版导入器会忽略多余字段，双向兼容
+  if (focusStats) {
+    payload.focusStats = focusStats;
+  }
+  return JSON.stringify(payload, null, 2);
+}
+
+export function createAppDataExport(data: AppData, kind: AppDataExportKind = "manual", date = formatDate(), focusStats?: FocusStatsStore): AppDataExportPackage {
   const name = kind === "before-import" ? `kaoyan-study-backup-before-import-${date}.json` : `kaoyan-study-${date}.json`;
   return {
     filename: name,
-    content: exportAppData(data),
+    content: exportAppData(data, focusStats),
     mimeType: "application/json;charset=utf-8"
   };
 }
@@ -275,7 +312,7 @@ export function savePomodoroMinutes(minutes: number): number {
 
 export function loadFocusStatsStore(): FocusStatsStore {
   try {
-    const raw = localStorage.getItem(FOCUS_STATS_KEY);
+    const raw = localStorage.getItem(FOCUS_STATS_CACHE_KEY);
     if (!raw) return createEmptyFocusStatsStore();
     const parsed = parseFocusStatsStore(JSON.parse(raw) as unknown);
     return parsed ?? createEmptyFocusStatsStore();
@@ -286,7 +323,7 @@ export function loadFocusStatsStore(): FocusStatsStore {
 
 export function saveFocusStatsStore(store: FocusStatsStore): FocusStatsStore {
   try {
-    localStorage.setItem(FOCUS_STATS_KEY, JSON.stringify(store));
+    localStorage.setItem(FOCUS_STATS_CACHE_KEY, JSON.stringify(store));
   } catch {
     // ignore
   }

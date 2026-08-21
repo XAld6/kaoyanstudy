@@ -78,7 +78,7 @@ describe("studyCore", () => {
     const payload = buildCoachAdvicePayload(data, data.tasks[0].date);
 
     // output_format 与 system prompt 重复，已从 payload 移除（P1-B）
-    expect(payload.output_format).toBeUndefined();
+    expect(payload).not.toHaveProperty("output_format");
     expect(payload.local_structured_advice).toHaveLength(3);
     expect(payload.today_stats.completionRate).toBeTypeOf("number");
   });
