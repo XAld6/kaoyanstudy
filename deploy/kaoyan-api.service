@@ -1,0 +1,37 @@
+# 考研学习控制台 — 后端 systemd unit 模板
+# 安装位置：/etc/systemd/system/kaoyan-api.service
+# 安全要件：必须 --host 127.0.0.1，由 Caddy 反代；绑定 0.0.0.0 会绕过 Basic Auth。
+
+[Unit]
+Description=Kaoyan Study Console API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=kaoyan
+Group=kaoyan
+WorkingDirectory=/opt/kaoyan-console/repo/backend
+Environment=TZ=Asia/Shanghai
+Environment=KAOYAN_DB_PATH=/opt/kaoyan-console/data/app.db
+Environment=KAOYAN_BACKUP_DIR=/opt/kaoyan-console/backups
+EnvironmentFile=/etc/kaoyan-console.env
+ExecStart=/opt/kaoyan-console/venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8018
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+# 加固
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/kaoyan-console/data /opt/kaoyan-console/backups
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target

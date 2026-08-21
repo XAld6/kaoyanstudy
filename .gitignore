@@ -13,3 +13,12 @@ frontend/*.log
 __pycache__/
 *.py[cod]
 *.log
+
+# VPS 部署相关（数据与构建产物不入库）
+data/
+web/
+backups/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite3

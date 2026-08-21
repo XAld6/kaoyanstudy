@@ -1,0 +1,12 @@
+## 考研学习控制台 — 每日备份 service 模板
+## 安装位置：/etc/systemd/system/kaoyan-backup.service
+[Unit]
+Description=Daily backup for kaoyan study console
+After=kaoyan-api.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/kaoyan-backup.sh
+
+[Install]
+WantedBy=multi-user.target

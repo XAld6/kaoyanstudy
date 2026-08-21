@@ -1,0 +1,11 @@
+## 考研学习控制台 — 每日备份 timer 模板
+## 安装位置：/etc/systemd/system/kaoyan-backup.timer
+[Unit]
+Description=Daily backup for kaoyan study console
+
+[Timer]
+OnCalendar=*-*-* 03:17:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
