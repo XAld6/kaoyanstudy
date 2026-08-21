@@ -1,3 +1,6 @@
+from pathlib import Path
+
+import app.main as app_main_module
 from fastapi.testclient import TestClient
 from app.main import app, extract_advice_lines, normalize_base_url
 
@@ -11,6 +14,10 @@ def test_health_reports_llm_configuration_state():
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
     assert "llm_configured" in response.json()
+    # 扩展（L3）：数据库健康与状态
+    assert response.json()["db_ok"] is True
+    assert response.json()["revision"] == 0
+    assert response.json()["task_count"] == 0
 
 
 def test_advice_returns_clear_error_without_api_key(monkeypatch):
@@ -22,7 +29,8 @@ def test_advice_returns_clear_error_without_api_key(monkeypatch):
     assert "OPENAI_API_KEY" in response.json()["detail"]
 
 
-def test_config_endpoint_accepts_openai_compatible_settings(monkeypatch, tmp_path):
+def test_config_write_is_forbidden_on_server(monkeypatch, tmp_path):
+    """H7：服务器上 API Key 只能通过 /etc/kaoyan-console.env 配置，网页写 Key 必须 403。"""
     config_path = tmp_path / "test_llm_config.local.json"
     monkeypatch.setattr("app.main.CONFIG_PATH", config_path)
 
@@ -35,11 +43,8 @@ def test_config_endpoint_accepts_openai_compatible_settings(monkeypatch, tmp_pat
         },
     )
 
-    assert response.status_code == 200
-    assert response.json()["llm_configured"] is True
-    assert response.json()["base_url"] == "https://api.example.com/v1"
-    assert response.json()["model"] == "gpt-test"
-    assert "api_key" not in response.json()
+    assert response.status_code == 403
+    assert "/etc/kaoyan-console.env" in response.json()["detail"]
 
 
 def test_normalize_base_url_accepts_full_chat_completions_url():
@@ -47,7 +52,7 @@ def test_normalize_base_url_accepts_full_chat_completions_url():
     assert normalize_base_url("https://api.example.com/v1/") == "https://api.example.com/v1"
 
 
-def test_config_endpoint_keeps_existing_key_when_key_input_is_blank(monkeypatch, tmp_path):
+def test_config_write_forbidden_also_when_key_input_is_blank(monkeypatch, tmp_path):
     config_path = tmp_path / "test_llm_config.local.json"
     config_path.write_text(
         '{"api_key":"sk-existing","base_url":"https://api.old.example/v1","model":"old-model"}',
@@ -64,11 +69,8 @@ def test_config_endpoint_keeps_existing_key_when_key_input_is_blank(monkeypatch,
         },
     )
 
-    assert response.status_code == 200
-    assert response.json()["llm_configured"] is True
-    assert response.json()["base_url"] == "https://api.new.example/v1"
-    assert response.json()["model"] == "new-model"
-    assert "sk-existing" in config_path.read_text(encoding="utf-8")
+    assert response.status_code == 403
+    assert "/etc/kaoyan-console.env" in response.json()["detail"]
 
 
 def test_config_test_returns_clear_error_without_api_key(monkeypatch, tmp_path):
@@ -89,3 +91,10 @@ def test_extract_advice_lines_rejects_unexpected_provider_response():
         assert "choices" in str(exc)
     else:
         raise AssertionError("expected invalid provider response to raise ValueError")
+
+
+def test_no_server_side_today_defaults_in_source():
+    """防回归（M5）：日期语义必须由客户端决定，后端禁止出现 date.today 类默认值。"""
+    source = Path(app_main_module.__file__).read_text(encoding="utf-8")
+    assert "date.today" not in source
+    assert "datetime.now().date()" not in source

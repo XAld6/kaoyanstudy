@@ -1,20 +1,45 @@
-import os
 import json
+import logging
+import os
+from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
-app = FastAPI(title="Kaoyan Study Console API")
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5188", "http://localhost:5188"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+from app import db, state
+
+logger = logging.getLogger("kaoyan.api")
+if not logger.handlers:
+    _handler = logging.StreamHandler()
+    _handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+    logger.addHandler(_handler)
+logger.setLevel(logging.INFO)
+logger.propagate = False
+
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    db.init_db()
+    yield
+
+
+app = FastAPI(title="Kaoyan Study Console API", lifespan=lifespan)
+
+# 生产环境同源反代（Caddy 同域下发静态文件 + 转发 /api），CORS 中间件完全多余；
+# 仅开发模式（本机 vite dev 需跨端口直连调试）通过 KAOYAN_DEV_CORS=1 开启。
+if os.getenv("KAOYAN_DEV_CORS") == "1":
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["http://127.0.0.1:5188", "http://localhost:5188"],
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 CONFIG_PATH = Path(__file__).resolve().parent.parent / "llm_config.local.json"
 
@@ -42,6 +67,26 @@ class ConfigTestResponse(BaseModel):
     base_url: str
 
 
+class StateUpdate(BaseModel):
+    """PUT /api/state 请求体。前端按 camelCase 发送（baseRevision/focusStats），
+    这里用 model_validator 显式重命名，避免依赖 Field(alias) 在个别
+    pydantic 版本上的歧义行为。"""
+
+    base_revision: int
+    data: state.AppDataModel
+    focus_stats: state.FocusStatsModel | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _accept_camel_case(cls, value: Any) -> Any:
+        if isinstance(value, dict):
+            if "baseRevision" in value and "base_revision" not in value:
+                value["base_revision"] = value.pop("baseRevision")
+            if "focusStats" in value and "focus_stats" not in value:
+                value["focus_stats"] = value.pop("focusStats")
+        return value
+
+
 def normalize_base_url(base_url: str) -> str:
     normalized = base_url.strip().rstrip("/") or "https://api.openai.com/v1"
     for suffix in ("/chat/completions", "/responses"):
@@ -51,6 +96,8 @@ def normalize_base_url(base_url: str) -> str:
 
 
 def load_local_config() -> dict[str, str]:
+    """只读回退：仅 Windows 本机开发用 llm_config.local.json；
+    服务器上该文件不存在，密钥一律走 /etc/kaoyan-console.env。"""
     if not CONFIG_PATH.exists():
         return {}
     try:
@@ -124,9 +171,42 @@ def extract_advice_lines(body: Any) -> list[str]:
     return (lines or [content.strip()])[:5]
 
 
+def _first_validation_msg(exc: ValidationError) -> str:
+    try:
+        first = exc.errors()[0]
+        loc = ".".join(str(part) for part in first.get("loc", ()))
+        return f"{loc} {first.get('msg', '')}".strip()
+    except Exception:
+        return str(exc)
+
+
+def trim_advice_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    """服务端裁剪：控制 token 成本；output_format 与 system prompt 重复，直接丢弃。"""
+    trimmed = dict(payload)
+    today_tasks = trimmed.get("today_tasks")
+    if isinstance(today_tasks, list):
+        trimmed["today_tasks"] = today_tasks[:20]
+    review = trimmed.get("review")
+    if isinstance(review, str):
+        trimmed["review"] = review[:500]
+    trimmed.pop("output_format", None)
+    return trimmed
+
+
 @app.get("/api/health")
 def health() -> dict[str, Any]:
-    return public_config(get_llm_config())
+    result = public_config(get_llm_config())
+    try:
+        with db.connect() as conn:
+            full = state.read_full_state(conn)
+        result["db_ok"] = True
+        result["revision"] = full["revision"]
+        result["task_count"] = len(full["data"]["tasks"]) if full["data"] else 0
+    except Exception:
+        result["db_ok"] = False
+        result["revision"] = -1
+        result["task_count"] = -1
+    return result
 
 
 @app.get("/api/config")
@@ -135,33 +215,27 @@ def read_config() -> dict[str, Any]:
 
 
 @app.post("/api/config")
-def save_config(config: LlmConfigUpdate) -> dict[str, Any]:
-    existing = load_local_config()
-    payload = {
-        "api_key": config.api_key.strip() or existing.get("api_key", ""),
-        "base_url": normalize_base_url(config.base_url),
-        "model": config.model.strip() or "gpt-4.1-mini",
-    }
-    try:
-        CONFIG_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    except OSError as exc:
-        raise HTTPException(status_code=500, detail=f"API 配置保存失败：{exc}") from exc
-    return public_config(get_llm_config())
+def save_config(_config: LlmConfigUpdate) -> dict[str, Any]:
+    raise HTTPException(
+        status_code=403,
+        detail="服务器上的 API Key 只能通过 /etc/kaoyan-console.env 配置，网页不可修改。",
+    )
 
 
 @app.post("/api/config/test", response_model=ConfigTestResponse)
 async def test_config(config: LlmConfigUpdate | None = None) -> ConfigTestResponse:
     existing = get_llm_config()
+    # 服务器上 Key 只能来自环境变量/本机文件；请求体里的 api_key 一律忽略
     runtime = {
-        "api_key": config.api_key.strip() if config and config.api_key.strip() else existing["api_key"],
+        "api_key": existing["api_key"],
         "base_url": normalize_base_url(config.base_url) if config and config.base_url.strip() else existing["base_url"],
         "model": config.model.strip() if config and config.model.strip() else existing["model"],
     }
     if not runtime["api_key"]:
-        raise HTTPException(status_code=503, detail="请先填写并保存 API Key，再测试连接。")
+        raise HTTPException(status_code=503, detail="请先配置 API Key（服务器上写入 /etc/kaoyan-console.env），再测试连接。")
 
     try:
-        async with httpx.AsyncClient(timeout=20) as client:
+        async with httpx.AsyncClient(timeout=httpx.Timeout(connect=5.0, read=30.0, write=10.0, pool=5.0)) as client:
             response = await client.post(
                 f"{runtime['base_url']}/chat/completions",
                 headers={
@@ -208,12 +282,15 @@ async def advice(request: AdviceRequest) -> AdviceResponse:
         },
         {
             "role": "user",
-            "content": f"日期：{request.date}\n学习数据：{request.payload}",
+            "content": (
+                f"日期：{request.date}\n"
+                f"学习数据：{json.dumps(trim_advice_payload(request.payload), ensure_ascii=False)}"
+            ),
         },
     ]
 
     try:
-        async with httpx.AsyncClient(timeout=30) as client:
+        async with httpx.AsyncClient(timeout=httpx.Timeout(connect=5.0, read=30.0, write=10.0, pool=5.0)) as client:
             response = await client.post(
                 f"{config['base_url']}/chat/completions",
                 headers={
@@ -224,15 +301,95 @@ async def advice(request: AdviceRequest) -> AdviceResponse:
                     "model": config["model"],
                     "messages": messages,
                     "temperature": 0.4,
+                    "max_tokens": 400,
                 },
             )
             response.raise_for_status()
     except httpx.HTTPError as exc:
         raise HTTPException(status_code=502, detail=provider_error_message(exc)) from exc
 
+    body = response.json()
+    usage = body.get("usage") if isinstance(body, dict) else None
+    if isinstance(usage, dict):
+        logger.info("AI advice usage model=%s %s", config["model"], json.dumps(usage, ensure_ascii=False))
+
     try:
-        lines = extract_advice_lines(response.json())
+        lines = extract_advice_lines(body)
     except ValueError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
     return AdviceResponse(advice=lines, source="llm")
+
+
+# ---------- 状态读写（同步 def：FastAPI 丢进线程池，不阻塞事件循环） ----------
+
+
+@app.get("/api/state")
+def read_state() -> dict[str, Any]:
+    with db.connect() as conn:
+        return state.read_full_state(conn)
+
+
+@app.put("/api/state")
+def update_state(update: StateUpdate) -> dict[str, Any]:
+    with db.connect() as conn:
+        current = state.read_full_state(conn)
+        if current["revision"] != update.base_revision:
+            return JSONResponse(
+                status_code=409,
+                content={
+                    "detail": "数据已被其他设备更新，请选择「加载服务器版本」或「用本机版本覆盖」。",
+                    "server": current,
+                },
+            )
+        state.write_state(conn, update.data, update.focus_stats)
+        return state.read_full_state(conn)
+
+
+@app.post("/api/state/import")
+def import_state(body: dict[str, Any]) -> dict[str, Any]:
+    """兼容两种输入：
+    1) {data, focusStats?, mode}（前端新格式）
+    2) 裸 AppData / {...AppData, focusStats}（老备份文件，等价 replace）
+    """
+    mode = body.get("mode", "replace")
+    if mode not in ("replace", "merge"):
+        raise HTTPException(status_code=422, detail="mode 只能是 replace 或 merge。")
+
+    data_raw = body.get("data") if isinstance(body.get("data"), dict) else body
+    stats_raw = body.get("focusStats")
+    try:
+        data = state.AppDataModel.model_validate(data_raw)
+    except ValidationError as exc:
+        raise HTTPException(status_code=422, detail=f"学习数据格式不合法：{_first_validation_msg(exc)}") from exc
+    focus_stats = None
+    if isinstance(stats_raw, dict):
+        try:
+            focus_stats = state.FocusStatsModel.model_validate(stats_raw)
+        except ValidationError as exc:
+            raise HTTPException(status_code=422, detail=f"专注统计格式不合法：{_first_validation_msg(exc)}") from exc
+
+    # 写入前自动落一份数据库快照，对应前端「导入前自动导出」行为
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    db.backup_db_to(db.BACKUP_DIR / f"pre-import-{ts}.db")
+
+    with db.connect() as conn:
+        if mode == "replace":
+            state.write_state(conn, data, focus_stats)
+        else:
+            state.merge_state(conn, data, focus_stats)
+        return state.read_full_state(conn)
+
+
+@app.get("/api/state/export")
+def export_state() -> JSONResponse:
+    with db.connect() as conn:
+        full = state.read_full_state(conn)
+    if full["data"] is None:
+        raise HTTPException(status_code=404, detail="服务器上还没有学习数据。")
+    payload = {**full["data"], "focusStats": full["focusStats"]}
+    filename = f"kaoyan-study-server-{datetime.now(timezone.utc).strftime('%Y-%m-%d')}.json"
+    return JSONResponse(
+        content=payload,
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
