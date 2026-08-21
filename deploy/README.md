@@ -113,6 +113,18 @@ sudo caddy validate --config /etc/caddy/Caddyfile    # 预期 Valid configuratio
 sudo systemctl reload caddy
 ```
 
+**端口 80 已被占用时（如已有 nginx）**：在 Caddyfile 顶部加全局块，Caddy 只监听 443、不抢 80，证书走 443 的 TLS-ALPN 挑战（无需 80）：
+
+```caddyfile
+{
+	auto_https disable_redirects
+}
+```
+
+**日志**：官方 apt 的 `caddy.service` 带 `ProtectSystem=strict`，不会放行 `/var/log/caddy` 的文件日志；直接把 Caddyfile 里的 `log { output file ... }` 块去掉，用 `journalctl -u caddy` 看日志即可（journald 自带上限）。
+
+**实测部署（2026-08-21，Ubuntu 24.04 + 官方源 Caddy v2.11）**：`apt install caddy`（官方 apt 源）→ 按上面配置 → Let's Encrypt 证书经 TLS-ALPN 自动签发成功；nginx 的 80 端口不受影响。
+
 **必做验证**（任一条不符即鉴权被绕过，禁止上线）：
 
 ```bash
@@ -153,6 +165,8 @@ gunzip -c /opt/kaoyan-console/backups/app-<时间>.db.gz > /tmp/restore-test.db
 sqlite3 /tmp/restore-test.db "select count(*) from tasks;"   # 与线上任务数一致
 ```
 
+> 备份时间：timer 按 **03:17 Asia/Shanghai** 触发。若服务器系统时区是 UTC，模板里的 `OnCalendar=*-*-* 19:17:00`（UTC）= 次日 03:17 +0800，且 service 带 `Environment=TZ=Asia/Shanghai` 让备份文件名按北京时间。空库时 JSON 副本会跳过（export 返回 404 属正常），`.db.gz` 不受影响。
+
 更新（一条命令；更新前自动备份）：
 
 ```bash
@@ -162,6 +176,15 @@ sudo tee /etc/sudoers.d/kaoyan-update >/dev/null <<'EOF'
 kaoyan ALL=(root) NOPASSWD: /bin/systemctl restart kaoyan-api
 EOF
 sudo -u kaoyan /usr/local/bin/kaoyan-update.sh
+```
+
+**私有仓拉取**：VPS 上生成 deploy key 后把公钥加到 GitHub 仓库（Settings → Deploy keys，只读）：
+
+```bash
+ssh-keygen -t ed25519 -f /root/.ssh/kaoyan_deploy -N ""
+cat /root/.ssh/kaoyan_deploy.pub
+# 把输出加到 GitHub 仓库 Deploy keys 后，给 origin 换 SSH 地址：
+cd /opt/kaoyan-console/repo && git remote set-url origin git@github.com:<你的用户名>/<仓库名>.git
 ```
 
 > `update.sh` 会 `git reset --hard origin/main`：**不要在服务器上直接改代码**，改动一律提交到 GitHub 后更新。

@@ -46,21 +46,21 @@
 
 | 阶段 | 状态 | 证据 |
 |---|---|---|
-| P0 独立出仓 + VPS 基础环境 | ✅（GitHub push ⏳ 待用户） | 独立仓 5 commits；subtree split 保留历史；deploy 模板；基线 82+7 测试 |
-| P1-A 后端 SQLite 数据层与 API | ✅ | pytest 20/20 + uvicorn 冒烟（revision/409/403/幂等） |
+| P0 独立出仓 + VPS 基础环境 | ✅ | 独立仓 6 commits；已推 GitHub 私有仓 `XAld6/kaoyanstudy`；deploy 模板；基线 82+7 测试 |
+| P1-A 后端 SQLite 数据层与 API | ✅ | pytest 20/20 + 冒烟（revision/409/403/幂等） |
 | P1-B AI 接口与本地规则优化 | ✅ | output_format 移除 + 测试同步修改；其余代码评审 |
 | P2 前端接入服务端数据 | ✅ | vitest 98/98 + build；E2E online 7 / offline 3 / conflict 8 |
-| P3 systemd + Caddy + HTTPS + Basic Auth 上线 | ⏳ 待用户输入 | 见下「P3 待用户输入」 |
-| P5 备份与更新运维 | ⏳ 模板 ✅ | backup.sh/update.sh/timer/service；恢复演练在 P3 后执行 |
-| P6 回归测试与中文文档 | ✅（手机端人工回归待上线） | README / deploy/README / docs/迁移说明 / verify_focus_sticky 认证适配 |
+| P3 systemd + Caddy + HTTPS + Basic Auth 上线 | ✅（2026-08-21） | Ubuntu 24.04 + Caddy 2.11（官方源）+ Let's Encrypt（TLS-ALPN，90 天自动续期）；401/401/200/200/401 验证通过；自愈测试通过；nginx 80 未受影响；线上 E2E：verify_sync 18/18 + verify_focus_sticky 16/16 |
+| P5 备份与更新运维 | ✅ 已装机 | 每日 03:17（CST）双备份 + 恢复演练通过；update.sh 就绪（待 deploy key 加入 GitHub 后启用 git 拉取） |
+| P6 回归测试与中文文档 | ✅（数据迁移待用户在浏览器操作） | README / deploy/README / docs/迁移说明 / PLAN_COVERAGE；线上回归 34/34 |
 
-## 3) P3 待用户输入（阻塞项）
+## 3) P3 之后的用户待办（不阻塞运行）
 
-1. GitHub 私有仓 URL（配置 remote + Deploy key 说明）
-2. VPS：SSH 方式、`uname -a && cat /etc/os-release && free -h`、域名（A 记录已解析）
-3. Basic Auth 用户名 + 口令（仅生成 bcrypt 哈希）
-4. OpenAI Key / Base URL / Model（写入 `/etc/kaoyan-console.env`）
-5. 旧数据浏览器：迁移前先导出 JSON（一键迁移入口上线后同样可用）
+1. **加入 GitHub Deploy key**（让 VPS 的 update.sh 能 git 拉取）：仓库 Settings → Deploy keys → 粘贴
+   `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIUVkmPVTCUHWcjZLQyqiE8yaNSU0Zo565zXsKAwUe6Z root@dedirock-730748626`
+2. **数据迁移**：浏览器打开 https://ky.nxlg.de5.net（studyowner / 生成的口令）→ 设置页「从本机旧数据一键迁移」或「导入 JSON 到服务器」
+3. **OpenAI Key**（可选）：提供后写入 `/etc/kaoyan-console.env` 并 `systemctl restart kaoyan-api`；未配置时 AI 教练自动用本地规则
+4. **Cloudflare 代理**（可选）：证书已签发，可随时重新开启代理；CF SSL 模式建议 Full (strict)
 
 ## 4) 上线后人工回归清单（P6 预留）
 

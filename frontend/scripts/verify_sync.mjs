@@ -22,7 +22,11 @@ function fail(name, detail = "") {
 }
 
 async function serverState() {
-  const response = await fetch(`${API}/api/state`);
+  const headers = {};
+  if (process.env.FOCUS_VERIFY_USER && process.env.FOCUS_VERIFY_PASS) {
+    headers.Authorization = "Basic " + Buffer.from(`${process.env.FOCUS_VERIFY_USER}:${process.env.FOCUS_VERIFY_PASS}`).toString("base64");
+  }
+  const response = await fetch(`${API}/api/state`, { headers });
   return response.json();
 }
 
@@ -41,15 +45,27 @@ async function addTask(page, title) {
 }
 
 async function launch() {
-  return chromium.launch({ headless: true }).catch(async (error) => {
+  const browser = await chromium.launch({ headless: true }).catch(async (error) => {
     console.warn("default launch failed, trying chrome channel:", error.message);
     return chromium.launch({ headless: true, channel: "chrome" });
   });
+  return browser;
+}
+
+function newPage(browser) {
+  const contextOptions = {};
+  if (process.env.FOCUS_VERIFY_USER && process.env.FOCUS_VERIFY_PASS) {
+    contextOptions.httpCredentials = {
+      username: process.env.FOCUS_VERIFY_USER,
+      password: process.env.FOCUS_VERIFY_PASS
+    };
+  }
+  return browser.newPage(contextOptions);
 }
 
 async function phaseOnline() {
   const browser = await launch();
-  const page = await browser.newPage();
+  const page = await newPage(browser);
   page.setDefaultTimeout(15000);
   const downloads = [];
   page.on("download", (download) => downloads.push(download.suggestedFilename()));
@@ -101,7 +117,7 @@ async function phaseOnline() {
 
 async function phaseOffline() {
   const browser = await launch();
-  const page = await browser.newPage();
+  const page = await newPage(browser);
   page.setDefaultTimeout(15000);
   try {
     await page.goto(BASE, { waitUntil: "networkidle" });
@@ -132,8 +148,8 @@ async function phaseOffline() {
 
 async function phaseConflict() {
   const browser = await launch();
-  const pageA = await browser.newPage();
-  const pageB = await browser.newPage();
+  const pageA = await newPage(browser);
+  const pageB = await newPage(browser);
   pageA.setDefaultTimeout(15000);
   pageB.setDefaultTimeout(15000);
   const downloadsB = [];
