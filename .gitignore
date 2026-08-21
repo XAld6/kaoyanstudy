@@ -127,3 +127,8 @@ final_render_check/
 # Nested repositories kept outside the parent workspace index
 01_projects/dachaung/sidecars/skill/
 90_temp_work/grok-build-zh-20260801/
+
+# 本地临时目录（不推送）
+90_temp_work/
+_desktop_profile_backup_20260821/
+_pnpm_test/
