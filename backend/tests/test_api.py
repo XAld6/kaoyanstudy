@@ -2,7 +2,13 @@ from pathlib import Path
 
 import app.main as app_main_module
 from fastapi.testclient import TestClient
-from app.main import app, extract_advice_lines, normalize_base_url
+from app.main import (
+    LlmConfigUpdate,
+    app,
+    extract_advice_lines,
+    normalize_base_url,
+    resolve_runtime_config,
+)
 
 
 client = TestClient(app)
@@ -91,6 +97,40 @@ def test_extract_advice_lines_rejects_unexpected_provider_response():
         assert "choices" in str(exc)
     else:
         raise AssertionError("expected invalid provider response to raise ValueError")
+
+
+def test_resolve_runtime_config_uses_current_config_when_body_is_empty():
+    existing = {
+        "api_key": "sk-env-key",
+        "base_url": "https://api.deepseek.com",
+        "model": "deepseek-v4-flash-vision-exp",
+    }
+    # 空请求体（全默认 None）→ 必须沿用当前生效配置，绝不落到 OpenAI 默认
+    runtime = resolve_runtime_config(LlmConfigUpdate(), existing)
+    assert runtime == existing
+
+
+def test_resolve_runtime_config_none_body_uses_current_config():
+    existing = {"api_key": "sk-env-key", "base_url": "https://x.example/v1", "model": "m1"}
+    assert resolve_runtime_config(None, existing) == existing
+
+
+def test_resolve_runtime_config_explicit_values_override():
+    existing = {"api_key": "sk-env-key", "base_url": "https://x.example/v1", "model": "m1"}
+    runtime = resolve_runtime_config(
+        LlmConfigUpdate(base_url="https://api.deepseek.com", model="deepseek-chat"),
+        existing,
+    )
+    assert runtime["base_url"] == "https://api.deepseek.com"
+    assert runtime["model"] == "deepseek-chat"
+    # api_key 永远来自当前配置，忽略请求体
+    assert runtime["api_key"] == "sk-env-key"
+
+
+def test_resolve_runtime_config_blank_values_fall_back():
+    existing = {"api_key": "sk-env-key", "base_url": "https://x.example/v1", "model": "m1"}
+    runtime = resolve_runtime_config(LlmConfigUpdate(base_url="", model="  "), existing)
+    assert runtime == existing
 
 
 def test_no_server_side_today_defaults_in_source():

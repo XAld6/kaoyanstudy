@@ -56,8 +56,10 @@ class AdviceResponse(BaseModel):
 
 class LlmConfigUpdate(BaseModel):
     api_key: str = ""
-    base_url: str = "https://api.openai.com/v1"
-    model: str = "gpt-4.1-mini"
+    # base_url/model 默认 None：空值表示「沿用当前生效配置」（环境变量/本地文件），
+    # 避免把 OpenAI 默认值误当用户显式输入（否则空请求体会拿着现 key 去测 api.openai.com）
+    base_url: str | None = None
+    model: str | None = None
 
 
 class ConfigTestResponse(BaseModel):
@@ -222,15 +224,24 @@ def save_config(_config: LlmConfigUpdate) -> dict[str, Any]:
     )
 
 
+def resolve_runtime_config(config: LlmConfigUpdate | None, existing: dict[str, str]) -> dict[str, str]:
+    """决定 /api/config/test 实际使用的连接参数。
+
+    - api_key 永远取当前生效配置（环境变量/本地文件），忽略请求体；
+    - base_url/model 仅在请求体提供了非空值时覆盖，空值/缺省沿用当前配置。
+    """
+    return {
+        "api_key": existing["api_key"],
+        "base_url": normalize_base_url(config.base_url) if config and (config.base_url or "").strip() else existing["base_url"],
+        "model": (config.model or "").strip() if config and (config.model or "").strip() else existing["model"],
+    }
+
+
 @app.post("/api/config/test", response_model=ConfigTestResponse)
 async def test_config(config: LlmConfigUpdate | None = None) -> ConfigTestResponse:
     existing = get_llm_config()
     # 服务器上 Key 只能来自环境变量/本机文件；请求体里的 api_key 一律忽略
-    runtime = {
-        "api_key": existing["api_key"],
-        "base_url": normalize_base_url(config.base_url) if config and config.base_url.strip() else existing["base_url"],
-        "model": config.model.strip() if config and config.model.strip() else existing["model"],
-    }
+    runtime = resolve_runtime_config(config, existing)
     if not runtime["api_key"]:
         raise HTTPException(status_code=503, detail="请先配置 API Key（服务器上写入 /etc/kaoyan-console.env），再测试连接。")
 
