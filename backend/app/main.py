@@ -300,38 +300,47 @@ async def advice(request: AdviceRequest) -> AdviceResponse:
         },
     ]
 
-    try:
-        async with httpx.AsyncClient(timeout=httpx.Timeout(connect=5.0, read=30.0, write=10.0, pool=5.0)) as client:
-            response = await client.post(
-                f"{config['base_url']}/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {config['api_key']}",
-                    "Content-Type": "application/json",
-                },
-                json={
-                    "model": config["model"],
-                    "messages": messages,
-                    "temperature": 0.4,
-                    # 推理模型（如 DeepSeek v4 系列）的 reasoning 也计入 max_tokens；
-                    # 400 常被推理吃光导致正文为空，放宽到 1000 保证三段式正文能产出
-                    "max_tokens": 1000,
-                },
-            )
-            response.raise_for_status()
-    except httpx.HTTPError as exc:
-        raise HTTPException(status_code=502, detail=provider_error_message(exc)) from exc
+    # 推理模型偶发「正文为空」（推理 token 吃光预算）：仅此类情况自动重试一次；
+    # 网络错误与其他格式错误直接返回，不重复消费额度。
+    for attempt in range(2):
+        try:
+            async with httpx.AsyncClient(timeout=httpx.Timeout(connect=5.0, read=30.0, write=10.0, pool=5.0)) as client:
+                response = await client.post(
+                    f"{config['base_url']}/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {config['api_key']}",
+                        "Content-Type": "application/json",
+                    },
+                    json={
+                        "model": config["model"],
+                        "messages": messages,
+                        "temperature": 0.4,
+                        # 推理模型（如 DeepSeek v4 系列）的 reasoning 也计入 max_tokens；
+                        # 400 常被推理吃光导致正文为空，放宽到 1000 保证三段式正文能产出
+                        "max_tokens": 1000,
+                    },
+                )
+                response.raise_for_status()
+        except httpx.HTTPError as exc:
+            raise HTTPException(status_code=502, detail=provider_error_message(exc)) from exc
 
-    body = response.json()
-    usage = body.get("usage") if isinstance(body, dict) else None
-    if isinstance(usage, dict):
-        logger.info("AI advice usage model=%s %s", config["model"], json.dumps(usage, ensure_ascii=False))
+        body = response.json()
+        usage = body.get("usage") if isinstance(body, dict) else None
+        if isinstance(usage, dict):
+            logger.info("AI advice usage model=%s %s", config["model"], json.dumps(usage, ensure_ascii=False))
 
-    try:
-        lines = extract_advice_lines(body)
-    except ValueError as exc:
-        raise HTTPException(status_code=502, detail=str(exc)) from exc
+        try:
+            lines = extract_advice_lines(body)
+        except ValueError as exc:
+            message_content = (body.get("choices") or [{}])[0].get("message", {}).get("content")
+            empty_content = isinstance(message_content, str) and not message_content.strip()
+            if attempt == 0 and empty_content:
+                logger.info("AI advice empty content, retrying (attempt 2)")
+                continue
+            raise HTTPException(status_code=502, detail=str(exc)) from exc
+        return AdviceResponse(advice=lines, source="llm")
 
-    return AdviceResponse(advice=lines, source="llm")
+    raise HTTPException(status_code=502, detail="AI 模型连续两次未返回可用内容，请稍后重试。")
 
 
 # ---------- 状态读写（同步 def：FastAPI 丢进线程池，不阻塞事件循环） ----------
