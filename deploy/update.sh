@@ -12,7 +12,7 @@ cd "$BASE/repo"
 git fetch --prune origin && git reset --hard origin/main
 "$BASE/venv/bin/pip" install -q -r backend/requirements.txt
 cd frontend && npm ci && npm run build
-rsync -a --delete frontend/dist/ "$BASE/web/"                     # 构建成功后才切产物
+rsync -a --delete dist/ "$BASE/web/"                                # 当前已在 frontend/ 内
 sudo systemctl restart kaoyan-api
 sleep 3
 curl -fsS http://127.0.0.1:8018/api/health                        # 烟囱测试，失败则脚本非零退出
