@@ -22,7 +22,15 @@ async function main() {
     return chromium.launch({ headless: true, channel: "chrome" });
   });
 
-  const page = await browser.newPage();
+  // 线上地址带 Basic Auth 时用 FOCUS_VERIFY_USER / FOCUS_VERIFY_PASS 提供凭据
+  const contextOptions = {};
+  if (process.env.FOCUS_VERIFY_USER && process.env.FOCUS_VERIFY_PASS) {
+    contextOptions.httpCredentials = {
+      username: process.env.FOCUS_VERIFY_USER,
+      password: process.env.FOCUS_VERIFY_PASS
+    };
+  }
+  const page = await browser.newPage(contextOptions);
   page.setDefaultTimeout(15000);
 
   try {

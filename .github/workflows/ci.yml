@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  backend:
+    name: Backend (pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          pip install -r 01_projects/kaoyan-study-console/backend/requirements.txt
+          pip install -r 01_projects/kaoyan-study-console/backend/requirements-dev.txt
+      - name: Run backend tests
+        run: |
+          cd 01_projects/kaoyan-study-console/backend
+          pytest -q
+
+  frontend:
+    name: Frontend (vitest + build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: 01_projects/kaoyan-study-console/frontend/package-lock.json
+      - name: Install dependencies
+        run: |
+          cd 01_projects/kaoyan-study-console/frontend
+          npm ci
+      - name: Run tests
+        run: |
+          cd 01_projects/kaoyan-study-console/frontend
+          npm test
+      - name: Build
+        run: |
+          cd 01_projects/kaoyan-study-console/frontend
+          npm run build

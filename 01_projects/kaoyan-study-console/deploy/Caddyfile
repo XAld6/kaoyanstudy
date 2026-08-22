@@ -1,0 +1,37 @@
+# 考研学习控制台 — Caddy 反向代理模板
+# 安装位置：/etc/caddy/Caddyfile
+# 使用前替换：
+#   1. kaoyan.example.com → 你的真实域名
+#   2. studyowner → 你的 Basic Auth 用户名
+#   3. $2a$14$REPLACE_WITH_REAL_BCRYPT_HASH → `caddy hash-password --plaintext '口令'` 的输出
+# 注意：Caddy ≥ 2.8 用 basic_auth；旧版本用 basicauth（执行前先 `caddy version` 确认）。
+# 必须用 route 包裹：route 内按书写顺序执行，保证鉴权先于 handle 路由。
+# 若 80 端口已被其他服务占用：文件顶部加全局块 { auto_https disable_redirects }，
+# 并删掉下方 log 块（官方 apt unit 的 ProtectSystem 会拒绝写 /var/log/caddy，改走 journalctl）。
+
+kaoyan.example.com {
+	encode zstd gzip
+
+	route {
+		basic_auth {
+			studyowner $2a$14$REPLACE_WITH_REAL_BCRYPT_HASH
+		}
+
+		handle /api/* {
+			reverse_proxy 127.0.0.1:8018
+		}
+
+		handle {
+			root * /opt/kaoyan-console/web
+			try_files {path} /index.html
+			file_server
+		}
+	}
+
+	log {
+		output file /var/log/caddy/kaoyan.log {
+			roll_size 10MiB
+			roll_keep 5
+		}
+	}
+}

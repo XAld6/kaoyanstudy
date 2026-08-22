@@ -73,11 +73,12 @@ describe("studyCore", () => {
     expect(parsed.sections.find((section) => section.id === "tomorrow")?.items).toHaveLength(3);
   });
 
-  it("builds a compact coach payload with required output format", () => {
+  it("builds a compact coach payload without redundant output format", () => {
     const data = createDefaultData();
     const payload = buildCoachAdvicePayload(data, data.tasks[0].date);
 
-    expect(payload.output_format).toContain("【补哪科】");
+    // output_format 与 system prompt 重复，已从 payload 移除（P1-B）
+    expect(payload).not.toHaveProperty("output_format");
     expect(payload.local_structured_advice).toHaveLength(3);
     expect(payload.today_stats.completionRate).toBeTypeOf("number");
   });

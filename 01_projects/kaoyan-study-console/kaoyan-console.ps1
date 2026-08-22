@@ -215,6 +215,11 @@ function Wait-Enter {
 
 if ($Action -eq "start") {
     Start-App
+    # Register-ObjectEvent 的事件接收器持有子进程管道句柄，脚本化调用（-Action start）
+    # 时 powershell.exe 不会随 Start-App 返回而退出（服务本身已正常启动）。
+    # 这里强制退出父进程：子进程（uvicorn / npm）独立运行，不受影响。
+    # 菜单模式（默认 Action）不经过这里，行为不变。
+    [Environment]::Exit(0)
     exit 0
 }
 if ($Action -eq "stop") {

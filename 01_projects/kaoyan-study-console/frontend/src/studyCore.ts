@@ -1284,12 +1284,6 @@ export function buildCoachAdvicePayload(data: AppData, date: string) {
     })),
     review: data.reviews.find((item) => item.date === date)?.text ?? "",
     local_structured_advice: structured.sections,
-    recent_task_count: recentTasks.length,
-    output_format: [
-      "请严格按下面三个小节输出，每节 1-3 条短句：",
-      "【补哪科】",
-      "【砍哪块】",
-      "【明日三件事】"
-    ].join("\n")
+    recent_task_count: recentTasks.length
   };
 }
