@@ -1,11 +1,12 @@
 ## 考研学习控制台 — 每日备份 timer 模板
 ## 安装位置：/etc/systemd/system/kaoyan-backup.timer
-## 系统时区为 UTC 时的写法：03:17 Asia/Shanghai = 19:17 UTC（前一天）。
+## 时区写死在 OnCalendar 里（systemd ≥ 245 支持内联时区），与系统时钟无关，
+## 无论系统是 UTC 还是 Asia/Shanghai，都在北京时间 03:17 触发。
 [Unit]
 Description=Daily backup for kaoyan study console
 
 [Timer]
-OnCalendar=*-*-* 19:17:00
+OnCalendar=*-*-* 03:17:00 Asia/Shanghai
 Persistent=true
 
 [Install]

@@ -17,3 +17,5 @@ else
   echo "skip json export: server state empty or unavailable"
 fi
 find "$BASE/backups" -name 'app-*.gz' -mtime +30 -delete
+# P2-14：预导入备份（pre-import-*.db）纳入统一清理，避免目录持续增长
+find "$BASE/backups" -name 'pre-import-*.db' -mtime +30 -delete

@@ -167,18 +167,20 @@ sqlite3 /tmp/restore-test.db "select count(*) from tasks;"   # 与线上任务�
 
 > 备份时间：timer 按 **03:17 Asia/Shanghai** 触发。若服务器系统时区是 UTC，模板里的 `OnCalendar=*-*-* 19:17:00`（UTC）= 次日 03:17 +0800，且 service 带 `Environment=TZ=Asia/Shanghai` 让备份文件名按北京时间。空库时 JSON 副本会跳过（export 返回 404 属正常），`.db.gz` 不受影响。
 
-更新（一条命令；更新前自动备份）：
+更新（一条命令；更新前自动备份；**以 root 执行**）：
 
 ```bash
 sudo cp deploy/update.sh /usr/local/bin/kaoyan-update.sh
+sudo chown root:root /usr/local/bin/kaoyan-update.sh
 sudo chmod 750 /usr/local/bin/kaoyan-update.sh
-sudo tee /etc/sudoers.d/kaoyan-update >/dev/null <<'EOF'
-kaoyan ALL=(root) NOPASSWD: /bin/systemctl restart kaoyan-api
-EOF
-sudo -u kaoyan /usr/local/bin/kaoyan-update.sh
+sudo /usr/local/bin/kaoyan-update.sh            # 更新到最新
+sudo /usr/local/bin/kaoyan-update.sh <提交SHA>    # 回滚到指定提交（不会被强制拉回最新）
 ```
 
-**私有仓拉取**：VPS 上生成 deploy key 后把公钥加到 GitHub 仓库（Settings → Deploy keys，只读）：
+> `update.sh` 与 `backup.sh` 都应由 **root** 运行（backup 由 systemd timer 默认以 root 执行）。
+> 若确实要让 `kaoyan` 用户执行，需 `chown root:kaoyan` 并配置 sudoers 窄授权。
+
+**私有仓拉取**：deploy key 放在运行 `git fetch` 的用户目录下（root 运行 → `/root/.ssh`），把公钥加到 GitHub 仓库（Settings → Deploy keys，只读）：
 
 ```bash
 ssh-keygen -t ed25519 -f /root/.ssh/kaoyan_deploy -N ""
@@ -187,9 +189,9 @@ cat /root/.ssh/kaoyan_deploy.pub
 cd /opt/kaoyan-console/repo && git remote set-url origin git@github.com:<你的用户名>/<仓库名>.git
 ```
 
-> `update.sh` 会 `git reset --hard origin/main`：**不要在服务器上直接改代码**，改动一律提交到 GitHub 后更新。
+> `update.sh` 会 `git reset --hard $TARGET_REVISION`：**不要在服务器上直接改代码**，改动一律提交到 GitHub 后更新。
 
-回滚：`cd /opt/kaoyan-console/repo && git reset --hard <上一个commit>`，然后重跑 update 脚本（或手动 `sudo systemctl restart kaoyan-api` + rsync 旧 dist）。
+回滚：`sudo /usr/local/bin/kaoyan-update.sh <上一个commit>`（脚本先备份再切版本，`curl /api/health` 烟囱测试兜底）。
 
 ## 七、常用运维命令
 
