@@ -312,7 +312,9 @@ async def advice(request: AdviceRequest) -> AdviceResponse:
                     "model": config["model"],
                     "messages": messages,
                     "temperature": 0.4,
-                    "max_tokens": 400,
+                    # 推理模型（如 DeepSeek v4 系列）的 reasoning 也计入 max_tokens；
+                    # 400 常被推理吃光导致正文为空，放宽到 1000 保证三段式正文能产出
+                    "max_tokens": 1000,
                 },
             )
             response.raise_for_status()
