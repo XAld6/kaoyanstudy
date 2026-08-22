@@ -1,6 +1,7 @@
 """FastAPI 应用入口与路由定义。"""
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 
 from fastapi import FastAPI, File, Form, Request, UploadFile
@@ -24,11 +25,15 @@ from app.services import (
 )
 from models.detector import WallDefectDetector
 from models.risk import RISK_LABELS
+from utils.cleanup import prune_stale_files
 from utils.config import ensure_project_dirs, project_path
 from utils.sample_generator import generate_samples
 
 # ── 初始化 ──────────────────────────────────────────────────────────
 ensure_project_dirs()
+pruned = prune_stale_files()
+if pruned:
+    logging.getLogger(__name__).info("Cleaned %d expired upload/result files.", pruned)
 init_db()
 seed_demo_tasks()
 
@@ -95,16 +100,16 @@ def records_page(request: Request) -> HTMLResponse:
 
 
 @app.post("/detect", response_class=HTMLResponse)
-async def detect_page(request: Request, file: UploadFile = File(...)) -> HTMLResponse:
-    record = await process_upload(file, detector)
+def detect_page(request: Request, file: UploadFile = File(...)) -> HTMLResponse:
+    record = process_upload(file, detector)
     return templates.TemplateResponse(
         request, "result.html", {"record": record, "risk_labels": RISK_LABELS}
     )
 
 
 @app.post("/detect-batch", response_class=HTMLResponse)
-async def detect_batch_page(request: Request, files: list[UploadFile] = File(...)) -> HTMLResponse:
-    records = await process_uploads(files, detector)
+def detect_batch_page(request: Request, files: list[UploadFile] = File(...)) -> HTMLResponse:
+    records = process_uploads(files, detector)
     return templates.TemplateResponse(
         request, "batch_result.html", {"records": records}
     )
@@ -146,13 +151,13 @@ def generate_samples_page() -> RedirectResponse:
 
 # ── API 路由 ────────────────────────────────────────────────────────
 @app.post("/api/detect")
-async def api_detect(file: UploadFile = File(...)) -> dict:
-    return {"record": await process_upload(file, detector)}
+def api_detect(file: UploadFile = File(...)) -> dict:
+    return {"record": process_upload(file, detector)}
 
 
 @app.post("/api/detect-batch")
-async def api_detect_batch(files: list[UploadFile] = File(...)) -> dict:
-    return {"records": await process_uploads(files, detector)}
+def api_detect_batch(files: list[UploadFile] = File(...)) -> dict:
+    return {"records": process_uploads(files, detector)}
 
 
 @app.post("/api/detect-sample")

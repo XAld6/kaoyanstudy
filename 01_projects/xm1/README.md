@@ -12,7 +12,8 @@
 cd d:\xm\xm1
 python -m venv .venv
 .venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r requirements.txt          # Web 服务依赖（含 OpenCV，规则引擎加速）
+pip install -r requirements-yolo.txt     # 仅训练/真实推理需要（torch 等，体积较大）
 python scripts\init_db.py
 python scripts\generate_samples.py
 python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
@@ -30,11 +31,17 @@ python scripts\predict.py data\samples\sample_01_crack.jpg
 
 ## 规则检测性能
 
-演示模式优先使用 OpenCV 的 `connectedComponentsWithStats` 加速连通域检测，无 OpenCV 时自动回退 NumPy。提升性能可安装：
+规则引擎会先把图片降采样到最长边 1280 再做连通域分析（`configs/settings.yaml` → `rules.max_side`），阈值与拍摄分辨率解耦；裂缝额外做了形态学闭运算和细长形状过滤以减少误报。连通域优先使用 OpenCV 加速，无 OpenCV 时自动回退 NumPy：
 
 ```bash
 pip install opencv-python
 ```
+
+## 运行维护
+
+- 单张上传默认上限 15MB（`server.max_upload_mb`）。
+- 每次启动自动清理超过 `cleanup.max_age_days`（默认 7 天）的上传图与结果图。
+- 推理在独立线程中执行并通过锁串行化，不会阻塞其他请求；GPU 可用时可设置 `model.device` / `model.half`。
 
 ## API
 
@@ -71,11 +78,14 @@ npm.cmd run dev
 ```bash
 pip install -r requirements-yolo.txt
 # 1. 准备数据放入 data/datasets/wall_defects/
-# 2. 训练
-python scripts\train.py --epochs 80 --imgsz 960 --batch 8
-# 3. 复制 best.pt 到 data/models/best.pt
-# 4. 重启服务，自动切换 YOLO 引擎
+# 2. 训练（裂缝为细长目标，建议 imgsz >= 1280；已内置 close_mosaic/低 HSV 抖动等针对性增强）
+python scripts\train.py --copy-best
+# 3. 评估（mAP、各类别指标、混淆矩阵输出到 runs/）
+python scripts\eval.py --split test
+# 4. 重启服务，自动切换 YOLO 引擎（--copy-best 已自动放置权重）
 ```
+
+> 数据集较小或裂缝目标过细时，推荐滑窗切片方案（SAHI 思路）：训练与推理均按 ~640 窗口 + 20% 重叠切图，合并时做 NMS 去重，可显著提升小裂缝召回。
 
 ## 项目结构
 

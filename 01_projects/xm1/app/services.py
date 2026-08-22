@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from fastapi import HTTPException, UploadFile
+from sqlalchemy import func
 
 from app.database import (
     InspectionRecord,
@@ -17,30 +18,75 @@ from app.database import (
     to_web_path,
 )
 from app.serializers import record_to_dict, task_to_dict, work_order_to_dict
-from models.detector import WallDefectDetector
+from models.detector import DetectionResult, WallDefectDetector
 from models.risk import RISK_LABELS
 from utils.config import load_settings, project_path
 from utils.image import is_allowed_image, verify_image
 
 settings = load_settings()
+CHUNK_SIZE = 1024 * 1024
 
 
-async def process_upload(file: UploadFile, detector: WallDefectDetector) -> dict:
+def max_upload_bytes() -> int:
+    return int(settings.get("server", {}).get("max_upload_mb", 15)) * 1024 * 1024
+
+
+def _save_upload(file: UploadFile) -> tuple[str, Path]:
     if not file.filename or not is_allowed_image(file.filename):
         raise HTTPException(status_code=400, detail="请上传 jpg、png、bmp 或 webp 图片。")
 
     upload_dir = project_path(settings["paths"]["uploads_dir"])
     suffix = Path(file.filename).suffix.lower()
     image_path = upload_dir / f"{uuid.uuid4().hex}{suffix}"
-    with image_path.open("wb") as output:
-        shutil.copyfileobj(file.file, output)
-    return _process_saved_image(file.filename, image_path, detector)
+    limit = max_upload_bytes()
+    written = 0
+    try:
+        with image_path.open("wb") as output:
+            while chunk := file.file.read(CHUNK_SIZE):
+                written += len(chunk)
+                if written > limit:
+                    raise HTTPException(
+                        status_code=413,
+                        detail=f"图片过大，单个文件不能超过 {limit // (1024 * 1024)}MB。",
+                    )
+                output.write(chunk)
+    except HTTPException:
+        image_path.unlink(missing_ok=True)
+        raise
+    except OSError as exc:
+        image_path.unlink(missing_ok=True)
+        raise HTTPException(status_code=500, detail="保存上传文件失败。") from exc
+    return file.filename, image_path
 
 
-async def process_uploads(files: list[UploadFile], detector: WallDefectDetector) -> list[dict]:
+def process_upload(file: UploadFile, detector: WallDefectDetector) -> dict:
+    original_filename, image_path = _save_upload(file)
+    return _process_saved_image(original_filename, image_path, detector)
+
+
+def process_uploads(files: list[UploadFile], detector: WallDefectDetector) -> list[dict]:
     if not files:
         raise HTTPException(status_code=400, detail="请至少上传一张图片。")
-    return [await process_upload(file, detector) for file in files]
+
+    saved: list[tuple[str, Path]] = [_save_upload(file) for file in files]
+    pairs: list[tuple[Path, Path]] = []
+    for _, image_path in saved:
+        result_path = project_path(settings["paths"]["results_dir"]) / f"{image_path.stem}_result.jpg"
+        pairs.append((image_path, result_path))
+
+    for image_path, _ in pairs:
+        try:
+            verify_image(image_path)
+        except Exception as exc:
+            for pending_path, _ in pairs:
+                pending_path.unlink(missing_ok=True)
+            raise HTTPException(status_code=400, detail="文件不是有效图片。") from exc
+
+    results: list[DetectionResult] = detector.predict_batch(pairs)
+    return [
+        _save_record(original_filename, image_path, result.result_image_path, result)
+        for (original_filename, image_path), result in zip(saved, results)
+    ]
 
 
 def process_sample(sample: str, detector: WallDefectDetector) -> dict:
@@ -129,9 +175,14 @@ def latest_records(limit: int) -> list[dict]:
 def risk_stats() -> dict[str, int]:
     stats = {key: 0 for key in RISK_LABELS}
     with get_session() as session:
-        records = session.query(InspectionRecord).all()
-        for record in records:
-            stats[record.risk_level] = stats.get(record.risk_level, 0) + 1
+        rows = (
+            session.query(InspectionRecord.risk_level, func.count())
+            .group_by(InspectionRecord.risk_level)
+            .all()
+        )
+    for level, count in rows:
+        if level in stats:
+            stats[level] = int(count)
     return stats
 
 

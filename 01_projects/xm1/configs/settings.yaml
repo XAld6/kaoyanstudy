@@ -1,10 +1,11 @@
 project:
   name: "校园建筑外墙 AI 图像识别巡检系统"
-  version: "1.0.0"
+  version: "1.1.0"
 
 server:
   cors_origins:
     - "*"
+  max_upload_mb: 15
 
 paths:
   samples_dir: "data/samples"
@@ -17,11 +18,19 @@ model:
   use_yolo_when_available: true
   confidence_threshold: 0.25
   image_size: 960
+  device: auto        # auto / cpu / 0,1 ...
+  half: false         # GPU 上启用 FP16 推理
   classes:
     crack: "裂缝"
     peeling: "墙皮脱落"
     seepage: "渗水"
     hollowing: "鼓包空鼓"
+
+rules:
+  max_side: 1280      # 规则引擎先降采样到该边长，阈值与分辨率解耦
+
+cleanup:
+  max_age_days: 7     # 启动时清理超过 N 天的 uploads/results 文件，0 表示禁用
 
 risk:
   urgent_area_ratio: 0.18
