@@ -4,6 +4,7 @@
 # 注意：WAL 模式下绝不能 cp app.db，必须用 sqlite3 .backup 得到一致快照。
 set -euo pipefail
 BASE=/opt/kaoyan-console
+cd "$BASE"   # 脱离调用者 CWD（如 root 的 /root），避免 find 等工具无权限恢复目录
 TS=$(date +%Y%m%d-%H%M)
 mkdir -p "$BASE/backups"
 sqlite3 "$BASE/data/app.db" ".backup '$BASE/backups/app-$TS.db'"

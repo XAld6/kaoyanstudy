@@ -6,6 +6,7 @@
 # 注意：git reset --hard 会丢弃 VPS 上的本地改动 —— 有意为之，不要在服务器上直接改代码。
 set -euo pipefail
 BASE=/opt/kaoyan-console
+cd "$BASE"                                                            # 脱离调用者 CWD（如 /root）
 /usr/local/bin/kaoyan-backup.sh                                   # 更新前先备份
 cd "$BASE/repo"
 git fetch --prune origin && git reset --hard origin/main
