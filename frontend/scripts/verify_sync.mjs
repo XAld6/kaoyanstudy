@@ -30,6 +30,28 @@ async function serverState() {
   return response.json();
 }
 
+async function serverPut(payload) {
+  const headers = { "Content-Type": "application/json" };
+  if (process.env.FOCUS_VERIFY_USER && process.env.FOCUS_VERIFY_PASS) {
+    headers.Authorization = "Basic " + Buffer.from(`${process.env.FOCUS_VERIFY_USER}:${process.env.FOCUS_VERIFY_PASS}`).toString("base64");
+  }
+  const response = await fetch(`${API}/api/state`, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(payload)
+  });
+  return response.status;
+}
+
+async function serverStateValue() {
+  const headers = {};
+  if (process.env.FOCUS_VERIFY_USER && process.env.FOCUS_VERIFY_PASS) {
+    headers.Authorization = "Basic " + Buffer.from(`${process.env.FOCUS_VERIFY_USER}:${process.env.FOCUS_VERIFY_PASS}`).toString("base64");
+  }
+  const response = await fetch(`${API}/api/state`, { headers });
+  return response.json();
+}
+
 async function waitHydrated(page) {
   // 水合完成后 loading 条消失；离线/冲突时条仍在
   await page.waitForSelector(".sync-notice", { state: "detached", timeout: 12000 }).catch(() => {});
@@ -141,6 +163,116 @@ async function phaseOffline() {
     } else {
       fail("editing locked while offline", "task input not found");
     }
+
+    // P1-10：离线时番茄/计时结束不得改数据 —— 正计时 61 秒后结束，必须拒绝记入
+    const startBtn = page.locator("button.minute-chip.focus-chip", { hasText: "开始" }).first();
+    if ((await startBtn.count()) === 1) {
+      await startBtn.click();
+      await page.waitForSelector(".focus-sticky-bar", { timeout: 8000 });
+      await page.waitForTimeout(61_500); // elapsed >= 1 分钟才会触发「记入」判断
+      const msgBefore = await page.locator("body").innerText();
+      await page.locator(".focus-sticky-bar").getByRole("button", { name: /结束并记入/ }).click();
+      await page.waitForTimeout(800);
+      const msgAfter = await page.locator("body").innerText();
+      if (msgAfter.includes("未记入")) pass("offline focus finish refused (no data written)", "提示已展示");
+      else fail("offline focus finish refused", "未出现拒绝提示");
+      // 恢复后再验证任务分钟数未被污染
+    } else {
+      fail("offline focus finish refused", "no start button on today tasks");
+    }
+  } finally {
+    await browser.close();
+  }
+}
+
+/** P0-1：新设备（无任何本地缓存）加载服务器统计后再记录专注，必须是叠加而不是覆盖 */
+async function phaseStatsInherit() {
+  const browser = await launch();
+  const page = await newPage(browser);
+  page.setDefaultTimeout(15000);
+  try {
+    // 预置服务器统计：今天已有 1000 分钟
+    const today = new Date().toISOString().slice(0, 10);
+    const putStatus = await serverPut({
+      baseRevision: (await serverState()).revision,
+      data: {
+        version: 1,
+        examDate: "2026-12-20",
+        subjects: [{ id: "s1", name: "数学", color: "#ff0000", weeklyTargetHours: 10 }],
+        tasks: [
+          { id: "t1", subjectId: "s1", title: "高数强化", date: today, estimatedMinutes: 120, actualMinutes: 0, priority: "高", status: "todo" }
+        ],
+        reviews: []
+      },
+      focusStats: { version: 1, byDate: { [today]: { date: today, focusMinutes: 1000, pomodoroCount: 10, sessionCount: 10 } } }
+    });
+    if (putStatus !== 200) fail("seed stats via API", `http ${putStatus}`);
+
+    // 新 context：本地没有任何缓存（browser.newPage 默认干净上下文）
+    await page.goto(BASE, { waitUntil: "networkidle" });
+    if (!(await waitHydrated(page))) fail("stats-inherit: hydration");
+
+    // 水合后本地缓存必须已同步服务器统计（否则后续 record 基于空缓存覆盖服务器）
+    const cacheRaw = await page.evaluate(() => localStorage.getItem("kaoyan-study-console:focus-stats-cache:v1") ?? "");
+    if (cacheRaw.includes('"focusMinutes":1000')) pass("hydration syncs focus stats cache", "cache has 1000");
+    else fail("hydration syncs focus stats cache", cacheRaw.slice(0, 120) || "cache empty");
+
+    // 新设备记录一次正计时（>=1 分钟）→ 服务器统计必须叠加
+    const startBtn = page.locator("button.minute-chip.focus-chip", { hasText: "开始" }).first();
+    await startBtn.click();
+    await page.waitForSelector(".focus-sticky-bar", { timeout: 8000 });
+    await page.waitForTimeout(61_500);
+    await page.locator(".focus-sticky-bar").getByRole("button", { name: /结束并记入/ }).click();
+    await page.waitForTimeout(2500); // 去抖推送
+    const after = await serverState();
+    const todayStats = after.focusStats?.byDate?.[today];
+    if (todayStats && todayStats.focusMinutes >= 1001) {
+      pass("new device session adds to server history", `focusMinutes=${todayStats.focusMinutes} (>= 1001)`);
+    } else {
+      fail("new device session adds to server history", `got ${todayStats?.focusMinutes} (覆盖 bug)`);
+    }
+  } finally {
+    await browser.close();
+  }
+}
+
+/** P0-3：「用本机版本覆盖」按钮必须真实发出 PUT 并成功覆盖服务器 */
+async function phaseConflictOverwrite() {
+  const browser = await launch();
+  const pageA = await newPage(browser);
+  const pageB = await newPage(browser);
+  pageA.setDefaultTimeout(15000);
+  pageB.setDefaultTimeout(15000);
+  try {
+    await pageA.goto(BASE, { waitUntil: "networkidle" });
+    await pageB.goto(BASE, { waitUntil: "networkidle" });
+    if (!(await waitHydrated(pageA))) fail("page A hydration");
+    if (!(await waitHydrated(pageB))) fail("page B hydration");
+    const revB0 = (await serverState()).revision;
+
+    const titleA = `${TASK_TITLE}-overwrite-A`;
+    await addTask(pageA, titleA);
+    await pageA.waitForTimeout(1800);
+    const revA1 = (await serverState()).revision;
+    if (revA1 > revB0) pass("page A push succeeded", `revision ${revB0} -> ${revA1}`);
+
+    const titleB = `${TASK_TITLE}-overwrite-B`;
+    await addTask(pageB, titleB);
+    await pageB.waitForSelector(".sync-notice.sync-conflict", { timeout: 10000 });
+    pass("conflict banner shown on page B");
+
+    // 点「用本机版本覆盖」→ 必须发出 PUT（allowConflict）并以服务器最新 revision 为基准
+    await pageB.getByRole("button", { name: /用本机版本覆盖/ }).click();
+    await pageB.waitForSelector(".sync-notice.sync-conflict", { state: "detached", timeout: 10000 });
+    const after = await serverState();
+    const tasks = (after.data?.tasks ?? []).map((task) => task.title);
+    if (after.revision > revA1) pass("overwrite issued real PUT (revision bumped)", `${revA1} -> ${after.revision}`);
+    else fail("overwrite issued real PUT", `revision stayed ${after.revision}`);
+    if (tasks.includes(titleB)) pass("server now has B's data after overwrite");
+    else fail("server now has B's data after overwrite", tasks.join(" | ").slice(0, 120));
+    const bText = await pageB.locator("body").innerText();
+    if (bText.includes(titleB) && !bText.includes("数据冲突")) pass("page B shows own data and sync restored");
+    else fail("page B shows own data and sync restored");
   } finally {
     await browser.close();
   }
@@ -205,7 +337,9 @@ async function phaseConflict() {
 const phases = {
   online: phaseOnline,
   offline: phaseOffline,
-  conflict: phaseConflict
+  conflict: phaseConflict,
+  "conflict-overwrite": phaseConflictOverwrite,
+  "stats-inherit": phaseStatsInherit
 };
 
 phases[PHASE]().catch((error) => {

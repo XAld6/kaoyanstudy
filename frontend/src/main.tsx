@@ -85,10 +85,10 @@ import {
   parseImportedData,
   readLegacyFocusStats,
   readLegacyLocalData,
-  recordFocusSession,
   restoreFocusTimerSession,
   saveAppData,
   saveFocusNotifyPrefs,
+  saveFocusStatsStore,
   saveFocusTimerSession,
   savePomodoroMinutes
 } from "./storage";
@@ -285,6 +285,12 @@ function App() {
     saveAppData(data);
   }, [data]);
 
+  // P0-1：专注统计缓存跟随内存最新值 —— 水合后不写缓存会导致新设备
+  // 「服务器 1000 分钟 → 缓存空 → 本地 +25 → 整包覆盖」的数据丢失
+  useEffect(() => {
+    saveFocusStatsStore(focusStatsStore);
+  }, [focusStatsStore]);
+
   // ref 镜像（必须声明在去抖调度 effect 之前，保证调度执行时读到最新值）
   useEffect(() => {
     dataRef.current = data;
@@ -358,12 +364,13 @@ function App() {
   // 去抖推送到服务器：任何数据变化 800ms 合并一次 PUT（水合完成前不推）
   useEffect(() => {
     if (!hydratedRef.current) return;
-    stateSync.schedule(() => {
+    stateSync.schedule(async () => {
       if (suppressNextSyncRef.current) {
         suppressNextSyncRef.current = false;
         return;
       }
-      void syncNow();
+      // P1-8：返回 Promise —— 同步队列必须真实等待网络请求，flush() 才会等它完成
+      await syncNow();
     });
   }, [data, focusStatsStore]);
 
@@ -445,9 +452,17 @@ function App() {
       // 番茄工作结束 → 记入时长 → 自动进入 5 分钟休息
       if (current.mode !== "pomodoro" || current.phase !== "work") return;
       const result = stopFocusTimer(current, now, preferred);
-      if (result.taskId && result.elapsedMinutes > 0) {
+      // P0-1/P1-10：基于内存最新统计叠加；离线/加载中/冲突时拒绝写入（只读约束）
+      const canRecord = syncStatusRef.current === "ready" || syncStatusRef.current === "saving";
+      if (result.taskId && result.elapsedMinutes > 0 && canRecord) {
         setData((dataCurrent) => bumpTaskActualMinutes(structuredClone(dataCurrent), result.taskId!, result.elapsedMinutes));
-        setFocusStatsStore(recordFocusSession({ minutes: result.elapsedMinutes, isPomodoro: true, date: formatDate() }));
+        focusStatsStoreRef.current = recordFocusSessionPure(
+          focusStatsStoreRef.current,
+          { minutes: result.elapsedMinutes, isPomodoro: true, date: formatDate() }
+        );
+        setFocusStatsStore(focusStatsStoreRef.current);
+      } else if (result.taskId && result.elapsedMinutes > 0) {
+        setFocusStatusMessage("当前离线或同步未就绪：本次番茄时长未记入（避免覆盖服务器数据）。");
       }
       void notifyFocusComplete(
         focusNotifyPrefsRef.current,
@@ -467,7 +482,9 @@ function App() {
         setFocusTimer(breakState);
         setFocusStatusMessage(
           result.elapsedMinutes > 0
-            ? `番茄完成：已记入 ${result.elapsedMinutes} 分钟。已开始 ${DEFAULT_BREAK_MINUTES} 分钟休息。`
+            ? canRecord
+              ? `番茄完成：已记入 ${result.elapsedMinutes} 分钟。已开始 ${DEFAULT_BREAK_MINUTES} 分钟休息。`
+              : `番茄时间到，已开始 ${DEFAULT_BREAK_MINUTES} 分钟休息。当前离线或同步未就绪，本次时长未记入。`
             : `番茄时间到。已开始 ${DEFAULT_BREAK_MINUTES} 分钟休息。`
         );
       } else {
@@ -534,10 +551,11 @@ function App() {
   }
 
   /** 把当前内存快照推送到服务器（去抖任务的真正执行体） */
-  async function syncNow(forceBaseRevision?: number) {
+  async function syncNow(forceBaseRevision?: number, options?: { allowConflict?: boolean }) {
     const current = dataRef.current;
     if (!current) return;
-    if (syncStatusRef.current === "conflict") return;
+    // P0-3：常规调度在冲突状态下不推；「用本机版本覆盖」显式放行（allowConflict）
+    if (syncStatusRef.current === "conflict" && !options?.allowConflict) return;
     syncStatusRef.current = "saving";
     setSyncStatus("saving");
     setSyncMessage("");
@@ -592,7 +610,8 @@ function App() {
     if (!conflictState) return;
     const base = conflictState.revision;
     setConflictState(null);
-    void syncNow(base);
+    // P0-3：必须显式放行，否则 syncNow 会在 conflict 状态下直接返回（按钮失效）
+    void syncNow(base, { allowConflict: true });
   }
 
   function toggleTask(taskId: string) {
@@ -618,10 +637,21 @@ function App() {
     updateData((current) => fillTaskActualMinutes(current, taskId));
   }
 
-  function applyFocusSessionLog(minutes: number, isPomodoro: boolean) {
-    if (minutes <= 0) return;
-    const next = recordFocusSession({ minutes, isPomodoro, date: formatDate() });
+  /** 记录一次专注会话（P0-1 / P1-10 统一入口）：
+   * - 基于内存最新统计（ref）叠加，而不是浏览器旧缓存 —— 新设备不会把服务器历史覆盖成 25 分钟；
+   * - 离线/加载中/冲突（editsLocked）时拒绝写入，保持「只读」约束，避免本地与服务器分叉。
+   * 返回是否已记入。
+   */
+  function applyFocusSessionLog(minutes: number, isPomodoro: boolean): boolean {
+    if (minutes <= 0) return false;
+    if (editsLocked) {
+      setFocusStatusMessage("当前离线或同步未就绪：本次专注时长未记入（避免覆盖服务器数据）。");
+      return false;
+    }
+    const next = recordFocusSessionPure(focusStatsStoreRef.current, { minutes, isPomodoro, date: formatDate() });
+    focusStatsStoreRef.current = next;
     setFocusStatsStore(next);
+    return true;
   }
 
   function changeFocusMode(mode: FocusMode) {
@@ -691,9 +721,12 @@ function App() {
 
     const wasPomodoro = focusTimer.mode === "pomodoro";
     const result = stopFocusTimer(focusTimer, now, pomodoroMinutes);
+    // P1-10：applyFocusSessionLog 返回是否真正记入（离线/同步未就绪时会被拒绝），
+    // 后续消息必须尊重该结果，不得再显示「已记入」
+    let logged = false;
     if (result.taskId && result.elapsedMinutes > 0) {
       updateData((current) => bumpTaskActualMinutes(current, result.taskId!, result.elapsedMinutes));
-      applyFocusSessionLog(result.elapsedMinutes, wasPomodoro);
+      logged = applyFocusSessionLog(result.elapsedMinutes, wasPomodoro);
     }
 
     if (result.shouldStartBreak && result.elapsedMinutes > 0) {
@@ -705,12 +738,16 @@ function App() {
         result.lastWorkTaskTitle
       );
       setFocusTimer(breakState);
-      setFocusStatusMessage(`已记入 ${result.elapsedMinutes} 分钟，并开始 ${DEFAULT_BREAK_MINUTES} 分钟休息。`);
+      setFocusStatusMessage(
+        logged
+          ? `已记入 ${result.elapsedMinutes} 分钟，并开始 ${DEFAULT_BREAK_MINUTES} 分钟休息。`
+          : `已开始 ${DEFAULT_BREAK_MINUTES} 分钟休息。当前离线或同步未就绪，本次时长未记入。`
+      );
       return;
     }
 
     setFocusTimer(result.state);
-    if (result.taskId && result.elapsedMinutes > 0) {
+    if (result.taskId && result.elapsedMinutes > 0 && logged) {
       setFocusStatusMessage(`已结束计时：给「${focusTimer.taskTitle || "当前任务"}」记入 ${result.elapsedMinutes} 分钟。`);
     } else {
       setFocusStatusMessage("计时已结束，本次不足 1 分钟，未记入时长。");
@@ -1905,7 +1942,7 @@ function App() {
                 <button className="ghost" onClick={testApiConfig} disabled={isApiTesting}><CheckCircle2 size={18} />{isApiTesting ? "测试中..." : "测试连接"}</button>
               </div>
               {apiTestStatus && <div className="notice inline-notice">{apiTestStatus}</div>}
-              <p className="hint">服务器上 API Key 只能通过 /etc/kaoyan-console.env 配置，网页不可修改；Base URL / Model 可在这里调整后用「测试连接」验证效果。</p>
+              <p className="hint">服务器上 API Key 只能通过 /etc/kaoyan-console.env 配置，网页不可修改；「测试连接」只测试服务器当前生效的配置（Key 不会发送到其他地址）。</p>
               <pre className="example-box">{`示例：
 API Key: sk-xxxxxxxx
 Base URL: https://api.openai.com/v1
