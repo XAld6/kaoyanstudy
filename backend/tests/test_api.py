@@ -115,16 +115,15 @@ def test_resolve_runtime_config_none_body_uses_current_config():
     assert resolve_runtime_config(None, existing) == existing
 
 
-def test_resolve_runtime_config_explicit_values_override():
+def test_resolve_runtime_config_explicit_values_do_not_override():
+    """P0-4/SSRF：显式提供的 base_url / model 也一律不覆盖生效配置——
+    测试连接不可能把生产 Key 发给请求方可控地址。"""
     existing = {"api_key": "sk-env-key", "base_url": "https://x.example/v1", "model": "m1"}
     runtime = resolve_runtime_config(
-        LlmConfigUpdate(base_url="https://api.deepseek.com", model="deepseek-chat"),
+        LlmConfigUpdate(base_url="https://attacker.example/v1", model="evil-model"),
         existing,
     )
-    assert runtime["base_url"] == "https://api.deepseek.com"
-    assert runtime["model"] == "deepseek-chat"
-    # api_key 永远来自当前配置，忽略请求体
-    assert runtime["api_key"] == "sk-env-key"
+    assert runtime == existing
 
 
 def test_resolve_runtime_config_blank_values_fall_back():
@@ -138,3 +137,63 @@ def test_no_server_side_today_defaults_in_source():
     source = Path(app_main_module.__file__).read_text(encoding="utf-8")
     assert "date.today" not in source
     assert "datetime.now().date()" not in source
+
+
+def test_config_test_only_uses_active_config_not_body_url(monkeypatch):
+    """P0-4/SSRF：测试连接只允许请求「当前生效配置」；
+    body 里传的 base_url / api_key 必须被忽略——防止把生产 Key 发给任意地址。"""
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-active-env")
+    monkeypatch.setenv("OPENAI_BASE_URL", "https://api.example.com/v1")
+    monkeypatch.setenv("OPENAI_MODEL", "gpt-active")
+
+    captured: dict[str, str] = {}
+
+    class FakeResponse:
+        status_code = 200
+
+        def raise_for_status(self):
+            return None
+
+    class FakeClient:
+        def __init__(self, *_args, **_kwargs):
+            return None
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *_args):
+            return False
+
+        async def post(self, url, **_kwargs):
+            captured["url"] = url
+            return FakeResponse()
+
+    monkeypatch.setattr("app.main.httpx.AsyncClient", FakeClient)
+
+    response = client.post(
+        "/api/config/test",
+        json={
+            "api_key": "sk-from-body",
+            "base_url": "https://attacker.example/v1",
+            "model": "evil-model",
+        },
+    )
+
+    assert response.status_code == 200
+    assert captured["url"] == "https://api.example.com/v1/chat/completions", (
+        f"测试请求必须发往生效配置地址，实际 {captured['url']}"
+    )
+
+
+def test_health_returns_503_when_database_fails(monkeypatch):
+    """P2-13：数据库故障时健康检查必须返回 503，部署脚本的 curl -f 才能真实感知。"""
+
+    def boom(*_args, **_kwargs):
+        raise RuntimeError("db down")
+
+    monkeypatch.setattr("app.main.db.connect", boom)
+
+    response = client.get("/api/health")
+
+    assert response.status_code == 503
+    assert response.json()["db_ok"] is False

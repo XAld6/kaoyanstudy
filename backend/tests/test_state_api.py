@@ -1,3 +1,5 @@
+from concurrent.futures import ThreadPoolExecutor
+
 from fastapi.testclient import TestClient
 
 from app.main import app
@@ -105,7 +107,7 @@ def test_task_and_subject_order_is_preserved():
         },
     ]
 
-    client.put("/api/state", json={"baseRevision": 0, "data": data})
+    client.put("/api/state", json={"baseRevision": 0, "data": data, "focusStats": sample_focus_stats()})
     got = client.get("/api/state").json()
 
     assert [s["id"] for s in got["data"]["subjects"]] == ["sB", "sA"]
@@ -114,10 +116,11 @@ def test_task_and_subject_order_is_preserved():
 
 def test_put_with_stale_revision_returns_409_with_server_state():
     data = sample_appdata()
-    first = client.put("/api/state", json={"baseRevision": 0, "data": data})
+    stats = sample_focus_stats()
+    first = client.put("/api/state", json={"baseRevision": 0, "data": data, "focusStats": stats})
     assert first.status_code == 200
 
-    stale = client.put("/api/state", json={"baseRevision": 0, "data": data})
+    stale = client.put("/api/state", json={"baseRevision": 0, "data": data, "focusStats": stats})
     assert stale.status_code == 409
     body = stale.json()
     assert body["server"]["revision"] == 1
@@ -127,7 +130,10 @@ def test_put_with_stale_revision_returns_409_with_server_state():
 def test_put_forward_revision_is_rejected_not_silently_accepted():
     """baseRevision 若解析失败会退化为 0 并直接覆盖（数据丢失）。
     空库 revision=0 时提交 baseRevision=7 必须 409，证明 camelCase 字段解析有效。"""
-    response = client.put("/api/state", json={"baseRevision": 7, "data": sample_appdata()})
+    response = client.put(
+        "/api/state",
+        json={"baseRevision": 7, "data": sample_appdata(), "focusStats": sample_focus_stats()},
+    )
     assert response.status_code == 409
 
 
@@ -229,3 +235,162 @@ def test_export_returns_full_backup_package():
 def test_export_on_empty_db_returns_404():
     response = client.get("/api/state/export")
     assert response.status_code == 404
+
+
+# ---- 审查修复回归测试（P0-2 / P1-9 / P1-11 / P2-15） ----
+
+
+def test_concurrent_put_same_base_only_one_succeeds():
+    """P0-2：两个设备基于同一 revision 并发提交，只能有一个成功（另一个 409）。"""
+    data = sample_appdata()
+    payload = {"baseRevision": 0, "data": data, "focusStats": sample_focus_stats()}
+
+    def put_once(_index: int) -> int:
+        own = TestClient(app)
+        return own.put("/api/state", json=payload).status_code
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        codes = sorted(pool.map(put_once, range(2)))
+
+    assert codes == [200, 409], f"并发同版本提交应该恰好一个成功，实际 {codes}"
+
+
+def test_put_without_focus_stats_is_rejected():
+    """P1-9：普通快照 PUT 的 focusStats 必须显式提供，缺失直接拒绝（不再被当成清空）。"""
+    data = sample_appdata()
+
+    response = client.put("/api/state", json={"baseRevision": 0, "data": data})
+
+    assert response.status_code == 422
+
+
+def test_import_replace_without_focus_stats_preserves_existing_stats():
+    """P1-9：导入旧备份（没有 focusStats）时，已有专注统计必须保留，不能被清空。"""
+    first = client.put(
+        "/api/state",
+        json={"baseRevision": 0, "data": sample_appdata(), "focusStats": sample_focus_stats()},
+    )
+    assert first.status_code == 200
+
+    # 裸旧备份文件：只有 AppData，无 focusStats
+    second = client.post("/api/state/import", json={"data": sample_appdata()})
+    assert second.status_code == 200
+
+    got = second.json()
+    assert got["focusStats"]["byDate"] == sample_focus_stats()["byDate"], "导入旧备份不应清空专注统计"
+
+
+def test_import_replace_with_explicit_empty_stats_clears():
+    """P1-9：显式提供空 byDate 才表示主动清空统计。"""
+    first = client.put(
+        "/api/state",
+        json={"baseRevision": 0, "data": sample_appdata(), "focusStats": sample_focus_stats()},
+    )
+    assert first.status_code == 200
+
+    explicit = client.post(
+        "/api/state/import",
+        json={"data": sample_appdata(), "focusStats": {"version": 1, "byDate": {}}},
+    )
+    assert explicit.status_code == 200
+    assert explicit.json()["focusStats"]["byDate"] == {}
+
+
+def test_import_rejects_non_date_exam_date():
+    """P1-11：examDate 必须是合法日期字符串。"""
+    bad = sample_appdata()
+    bad["examDate"] = "not-a-date"
+
+    response = client.post("/api/state/import", json={"data": bad})
+
+    assert response.status_code == 422
+
+
+def test_import_rejects_non_date_task_date():
+    bad = sample_appdata()
+    bad["tasks"][0]["date"] = "2026/06/10"
+
+    response = client.post("/api/state/import", json={"data": bad})
+
+    assert response.status_code == 422
+
+
+def test_import_rejects_orphan_subject_reference():
+    """P1-11：任务引用的科目必须存在。"""
+    bad = sample_appdata()
+    bad["tasks"][0]["subjectId"] = "missing-subject"
+
+    response = client.post("/api/state/import", json={"data": bad})
+
+    assert response.status_code == 422
+
+
+def test_import_rejects_duplicate_subject_ids():
+    bad = sample_appdata()
+    bad["subjects"].append(dict(bad["subjects"][0]))
+
+    response = client.post("/api/state/import", json={"data": bad})
+
+    assert response.status_code == 422
+
+
+def test_import_rejects_duplicate_task_ids():
+    """重复任务 ID 现在必须返回清晰的 422，而不是 SQLite 主键异常 500。"""
+    bad = sample_appdata()
+    bad["tasks"].append(dict(bad["tasks"][0]))
+
+    response = client.post("/api/state/import", json={"data": bad})
+
+    assert response.status_code == 422
+
+
+def test_import_rejects_focus_key_date_mismatch():
+    """P1-11：focusStats 的 byDate key 必须与条目里的 date 一致。"""
+    stats = sample_focus_stats()
+    stats["byDate"]["2026-06-10"] = {
+        "date": "1999-01-01",
+        "focusMinutes": 45,
+        "pomodoroCount": 2,
+        "sessionCount": 3,
+    }
+
+    response = client.post("/api/state/import", json={"data": sample_appdata(), "focusStats": stats})
+
+    assert response.status_code == 422
+
+
+def test_import_rejects_overlong_title():
+    bad = sample_appdata()
+    bad["tasks"][0]["title"] = "长" * 300
+
+    response = client.post("/api/state/import", json={"data": bad})
+
+    assert response.status_code == 422
+
+
+def test_import_rejects_overlong_review():
+    bad = sample_appdata()
+    bad["reviews"] = [{"date": "2026-06-10", "text": "x" * 25_000}]
+
+    response = client.post("/api/state/import", json={"data": bad})
+
+    assert response.status_code == 422
+
+
+def test_import_rejects_invalid_subject_color():
+    bad = sample_appdata()
+    bad["subjects"][0]["color"] = "red"  # 不是 #rrggbb
+
+    response = client.post("/api/state/import", json={"data": bad})
+
+    assert response.status_code == 422
+
+
+def test_oversized_payload_rejected_with_413():
+    """P2-15：超大请求体（>20MB）应返回 413 而不是耗尽内存。"""
+    big = sample_appdata()
+    big["reviews"] = [{"date": "2026-06-10", "text": "x" * (21 * 1024 * 1024)}]
+
+    response = client.post("/api/state/import", json={"data": big})
+
+    assert response.status_code == 413

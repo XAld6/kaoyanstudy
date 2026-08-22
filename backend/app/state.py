@@ -8,56 +8,81 @@
 from __future__ import annotations
 
 import sqlite3
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 Priority = Literal["高", "中", "低"]
 Status = Literal["todo", "done"]
 
 
 class Subject(BaseModel):
-    id: str
-    name: str
-    color: str
-    weeklyTargetHours: float = Field(gt=0)
+    id: str = Field(min_length=1, max_length=64)
+    name: str = Field(min_length=1, max_length=50)
+    color: str = Field(pattern=r"^#[0-9a-fA-F]{6}$")
+    weeklyTargetHours: float = Field(gt=0, le=168)
 
 
 class Task(BaseModel):
-    id: str
-    subjectId: str
-    title: str
-    date: str
-    estimatedMinutes: int = Field(gt=0)
-    actualMinutes: int = Field(ge=0)
+    id: str = Field(min_length=1, max_length=64)
+    subjectId: str = Field(min_length=1, max_length=64)
+    title: str = Field(min_length=1, max_length=200)
+    date: date
+    estimatedMinutes: int = Field(gt=0, le=10080)
+    actualMinutes: int = Field(ge=0, le=10080)
     priority: Priority
     status: Status
 
 
 class Review(BaseModel):
-    date: str
-    text: str
+    date: date
+    text: str = Field(max_length=20_000)
 
 
 class FocusStatEntry(BaseModel):
-    date: str
-    focusMinutes: int = Field(ge=0)
-    pomodoroCount: int = Field(ge=0)
-    sessionCount: int = Field(ge=0)
+    date: date
+    focusMinutes: int = Field(ge=0, le=1440)
+    pomodoroCount: int = Field(ge=0, le=1000)
+    sessionCount: int = Field(ge=0, le=10_000)
 
 
 class AppDataModel(BaseModel):
     version: Literal[1] = 1
-    examDate: str
-    subjects: list[Subject]
-    tasks: list[Task]
-    reviews: list[Review]
+    examDate: date
+    subjects: list[Subject] = Field(max_length=100)
+    tasks: list[Task] = Field(max_length=20_000)
+    reviews: list[Review] = Field(max_length=20_000)
+
+    @model_validator(mode="after")
+    def check_relationships(self) -> "AppDataModel":
+        """引用关系与唯一性校验（P1-11）：重复 ID / 孤儿引用 / 重复复盘 → 422。"""
+        subject_ids = [subject.id for subject in self.subjects]
+        if len(set(subject_ids)) != len(subject_ids):
+            raise ValueError("科目 ID 不能重复")
+        task_ids = [task.id for task in self.tasks]
+        if len(set(task_ids)) != len(task_ids):
+            raise ValueError("任务 ID 不能重复")
+        subject_set = set(subject_ids)
+        for task in self.tasks:
+            if task.subjectId not in subject_set:
+                raise ValueError(f"任务引用了不存在的科目：{task.subjectId}")
+        review_dates = [review.date.isoformat() for review in self.reviews]
+        if len(set(review_dates)) != len(review_dates):
+            raise ValueError("同一天复盘不能重复")
+        return self
 
 
 class FocusStatsModel(BaseModel):
     version: Literal[1] = 1
-    byDate: dict[str, FocusStatEntry]
+    byDate: dict[date, FocusStatEntry] = Field(max_length=2_000)
+
+    @model_validator(mode="after")
+    def check_key_date_match(self) -> "FocusStatsModel":
+        for key, entry in self.byDate.items():
+            if key.isoformat() != entry.date.isoformat():
+                raise ValueError(f"专注统计日期键与条目不一致：{key} vs {entry.date}")
+        return self
 
 
 def _now_iso() -> str:
@@ -154,13 +179,18 @@ def write_state(
 ) -> int:
     """整快照写入（replace 语义）：单事务内先 DELETE 后批量 INSERT，返回新 revision。
 
-    调用方负责事务边界（with conn:），异常时整体回滚。
+    调用方负责事务边界与显式关闭连接，异常时整体回滚。
+    focus_stats 语义（P1-9）：
+    - 显式提供（含空 byDate）→ 整表替换（主动清空 = 传空 byDate）；
+    - 未提供（旧备份导入等）→ 保留现有专注统计，绝不静默清空。
     """
     updated_at = _now_iso()
     conn.execute("DELETE FROM subjects")
     conn.execute("DELETE FROM tasks")
     conn.execute("DELETE FROM reviews")
-    conn.execute("DELETE FROM focus_stats")
+    if focus_stats is not None:
+        conn.execute("DELETE FROM focus_stats")
+        _write_focus_stats(conn, focus_stats)
     conn.executemany(
         "INSERT INTO subjects (id, name, color, weekly_target_hours, sort_order) VALUES (?, ?, ?, ?, ?)",
         [(s.id, s.name, s.color, s.weeklyTargetHours, i) for i, s in enumerate(data.subjects)],
@@ -186,7 +216,6 @@ def write_state(
         "INSERT INTO reviews (date, text) VALUES (?, ?)",
         [(r.date, r.text) for r in data.reviews],
     )
-    _write_focus_stats(conn, focus_stats)
     conn.execute(
         "INSERT OR REPLACE INTO meta (key, value) VALUES ('exam_date', ?)",
         (data.examDate,),

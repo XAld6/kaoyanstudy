@@ -6,7 +6,9 @@
 
 import os
 import sqlite3
+from contextlib import contextmanager
 from pathlib import Path
+from typing import Iterator
 
 DB_PATH = Path(
     os.getenv("KAOYAN_DB_PATH", str(Path(__file__).resolve().parent.parent / "data" / "app.db"))
@@ -56,12 +58,28 @@ def connect() -> sqlite3.Connection:
     """每请求新建连接；连接本身廉价，且天然线程安全。
 
     不设 check_same_thread=False —— 每个请求在自己的线程里使用独立连接。
+    注意：sqlite3.Connection 的 `with conn:` 只管理事务（提交/回滚），
+    **不会关闭连接**。业务端点请使用下方的 connection()。
     """
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA busy_timeout=5000")
     conn.execute("PRAGMA synchronous=NORMAL")
     return conn
+
+
+@contextmanager
+def connection() -> Iterator[sqlite3.Connection]:
+    """业务端点统一入口：提交 / 回滚 / 显式关闭（P2-12）。"""
+    conn = connect()
+    try:
+        yield conn
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
 
 
 def init_db() -> None:

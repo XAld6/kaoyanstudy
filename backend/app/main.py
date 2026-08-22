@@ -7,10 +7,10 @@ from pathlib import Path
 from typing import Any
 
 import httpx
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
+from pydantic import BaseModel, Field, ValidationError, model_validator
 
 from app import db, state
 
@@ -40,6 +40,17 @@ if os.getenv("KAOYAN_DEV_CORS") == "1":
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+# P2-15：快照类接口的请求体上限（几千条任务远小于该值；防止超大 JSON 耗尽内存）
+MAX_BODY_BYTES = 20 * 1024 * 1024
+
+
+@app.middleware("http")
+async def limit_body_size(request: Request, call_next: Any) -> Any:
+    length = request.headers.get("content-length")
+    if length and length.isdigit() and int(length) > MAX_BODY_BYTES:
+        return JSONResponse(status_code=413, content={"detail": "请求体过大（超过 20MB），请精简数据后重试。"})
+    return await call_next(request)
 
 CONFIG_PATH = Path(__file__).resolve().parent.parent / "llm_config.local.json"
 
@@ -76,7 +87,8 @@ class StateUpdate(BaseModel):
 
     base_revision: int
     data: state.AppDataModel
-    focus_stats: state.FocusStatsModel | None = None
+    # 快照 PUT 必须显式提供 focusStats（P1-9）：缺失 = 请求不合法，而不是「清空统计」
+    focus_stats: state.FocusStatsModel
 
     @model_validator(mode="before")
     @classmethod
@@ -199,16 +211,16 @@ def trim_advice_payload(payload: dict[str, Any]) -> dict[str, Any]:
 def health() -> dict[str, Any]:
     result = public_config(get_llm_config())
     try:
-        with db.connect() as conn:
+        with db.connection() as conn:
             full = state.read_full_state(conn)
-        result["db_ok"] = True
-        result["revision"] = full["revision"]
-        result["task_count"] = len(full["data"]["tasks"]) if full["data"] else 0
     except Exception:
-        result["db_ok"] = False
-        result["revision"] = -1
-        result["task_count"] = -1
-    return result
+        logger.exception("Database health check failed")
+        # P2-13：数据库故障必须返回 503，部署脚本的 curl -f 才能真实感知
+        return JSONResponse(
+            status_code=503,
+            content={**result, "db_ok": False, "revision": -1, "task_count": -1},
+        )
+    return {**result, "db_ok": True, "revision": full["revision"], "task_count": len(full["data"]["tasks"]) if full["data"] else 0}
 
 
 @app.get("/api/config")
@@ -225,16 +237,14 @@ def save_config(_config: LlmConfigUpdate) -> dict[str, Any]:
 
 
 def resolve_runtime_config(config: LlmConfigUpdate | None, existing: dict[str, str]) -> dict[str, str]:
-    """决定 /api/config/test 实际使用的连接参数。
+    """决定 /api/config/test 实际使用的连接参数（P0-4/SSRF 加固）。
 
-    - api_key 永远取当前生效配置（环境变量/本地文件），忽略请求体；
-    - base_url/model 仅在请求体提供了非空值时覆盖，空值/缺省沿用当前配置。
+    - api_key 永远取当前生效配置（环境变量/本地文件）；
+    - base_url / model 也一律取当前生效配置，请求体里的任何地址与模型都被忽略——
+      否则「测试连接」会把生产 Key 自动发给任意可控地址（SSRF / Key 泄露）。
+      需要测试其他端点时，修改 /etc/kaoyan-console.env（或本机环境变量）后重启后端。
     """
-    return {
-        "api_key": existing["api_key"],
-        "base_url": normalize_base_url(config.base_url) if config and (config.base_url or "").strip() else existing["base_url"],
-        "model": (config.model or "").strip() if config and (config.model or "").strip() else existing["model"],
-    }
+    return dict(existing)
 
 
 @app.post("/api/config/test", response_model=ConfigTestResponse)
@@ -346,15 +356,34 @@ async def advice(request: AdviceRequest) -> AdviceResponse:
 # ---------- 状态读写（同步 def：FastAPI 丢进线程池，不阻塞事件循环） ----------
 
 
+def state_transaction(handler: Any) -> Any:
+    """原子状态事务（P0-2 + P2-12）：
+    BEGIN IMMEDIATE 在读取 revision 前就拿下写锁，杜绝「读-判-写」竞态
+    （两个设备同版本并发提交时，后到者阻塞后读到新 revision → 409）；
+    提交/回滚后显式关闭连接。
+    """
+    conn = db.connect()
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        result = handler(conn)
+        conn.commit()
+        return result
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
+
+
 @app.get("/api/state")
 def read_state() -> dict[str, Any]:
-    with db.connect() as conn:
+    with db.connection() as conn:
         return state.read_full_state(conn)
 
 
 @app.put("/api/state")
 def update_state(update: StateUpdate) -> dict[str, Any]:
-    with db.connect() as conn:
+    def _apply(conn: Any) -> Any:
         current = state.read_full_state(conn)
         if current["revision"] != update.base_revision:
             return JSONResponse(
@@ -366,6 +395,8 @@ def update_state(update: StateUpdate) -> dict[str, Any]:
             )
         state.write_state(conn, update.data, update.focus_stats)
         return state.read_full_state(conn)
+
+    return state_transaction(_apply)
 
 
 @app.post("/api/state/import")
@@ -391,16 +422,20 @@ def import_state(body: dict[str, Any]) -> dict[str, Any]:
         except ValidationError as exc:
             raise HTTPException(status_code=422, detail=f"专注统计格式不合法：{_first_validation_msg(exc)}") from exc
 
-    # 写入前自动落一份数据库快照，对应前端「导入前自动导出」行为
-    ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    # 写入前自动落一份数据库快照，对应前端「导入前自动导出」行为；
+    # 文件名含微秒，避免同秒多次导入互相覆盖（P2-14）
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S-%f")
     db.backup_db_to(db.BACKUP_DIR / f"pre-import-{ts}.db")
 
-    with db.connect() as conn:
+    def _apply(conn: Any) -> Any:
         if mode == "replace":
+            # focus_stats 缺省时保留现有统计（write_state 内处理）
             state.write_state(conn, data, focus_stats)
         else:
             state.merge_state(conn, data, focus_stats)
         return state.read_full_state(conn)
+
+    return state_transaction(_apply)
 
 
 @app.get("/api/state/export")
